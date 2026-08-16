@@ -1,64 +1,50 @@
 <?php
-return [
-    'base_url' => 'https://restaurantgrandplazasb.ro/wp-json/restaurant-sync/v1',
-    'api_key' => 'Hcpkszv9EQVSmkd65rmXNCpZ',
-    'api_secret' => '/,S8aDsm<[Ku#tw&X={:DUt0s,|aUL+?&U+/{VsU$>W9A|o}',
+$defaults = [
+    'base_url' => 'https://pizza-sibiu-amicii.ro/wp-json/restaurant-sync/v1',
+    'api_key' => (string)(getenv('AGECS_WOO_API_KEY') ?: ''),
+    'api_secret' => (string)(getenv('AGECS_WOO_API_SECRET') ?: ''),
+    'client_id' => 1008,
+    'location_id' => 1,
+    'statuses' => ['processing'],
     'timeout' => 20,
     'verify_ssl' => true,
+    'use_hmac' => false,
+    'initial_lookback_days' => 7,
+    'automatic_interval_seconds' => 30,
 
+    // Alias oferit de pluginul AGECS Offline WooCommerce Bridge pentru detalii complete.
+    'wp_order_details_endpoint' => 'https://pizza-sibiu-amicii.ro/wp-json/grandplaza-pos/v1/order-details',
+    'wp_order_details_api_key' => (string)(getenv('AGECS_WOO_DETAILS_API_KEY') ?: (getenv('AGECS_WOO_API_KEY') ?: '')),
 
-    'order_json_base_url' => 'https://restaurantgrandplazasb.ro/wp-content/uploads/comenzi',
     'printer_queue_base_dir' => defined('RESTAURANT_OFFLINE_API_DIR')
         ? RESTAURANT_OFFLINE_API_DIR
         : dirname(dirname(dirname(__DIR__))) . '/api_offline_taverna_amicii',
 
-    // Endpoint securizat WordPress pentru detalii complete comandă WooCommerce.
-    'wp_order_details_endpoint' => 'https://restaurantgrandplazasb.ro/wp-json/grandplaza-pos/v1/order-details',
-    'wp_order_details_api_key' => 'gp_pos_LrVUUiycQE4MV3s7pPuQeZyRxbDgGKISovolUIP39sYH20okaDnvfZlrZP1Jymo4',
-
-    // Taxă transport aplicată automat la importul comenzilor Woo în POS.
-    // Se aplică doar dacă NU este comandă cu ridicare de la restaurant.
-    // Pluginul Woo trebuie să trimită transportul clar: shipping_total_excl_tax, shipping_tax și shipping_total_incl_tax.
+    // In SQLite offline transportul se mapeaza explicit dupa suma cu TVA
+    // (ex. shipping:10.00 / shipping:15.00), fara coduri POS hardcodate.
+    // Sectiunea ramane pentru compatibilitatea importerului MySQL existent.
     'delivery_fee' => [
         'enabled' => true,
-
-        // Toleranță la comparația sumelor venite din WooCommerce, pentru diferențe de rotunjire.
         'amount_tolerance' => 0.01,
-
         'pickup_keywords' => [
-            'ridicare',
-            'ridică',
-            'ridica',
-            'ridicare restaurant',
-            'ridicare de la restaurant',
-            'pickup',
-            'pick-up',
-            'pick up',
-            'local_pickup',
-            'local pickup',
-            'takeaway',
-            'take away',
-            'take-away',
+            'ridicare', 'ridică', 'ridica', 'ridicare restaurant',
+            'ridicare de la restaurant', 'pickup', 'pick-up', 'pick up',
+            'local_pickup', 'local pickup', 'takeaway', 'take away', 'take-away',
         ],
-
-        // Mapare configurabilă: valoarea transportului cu TVA inclus -> produs POS pentru transport.
-        // Pentru o taxă nouă se adaugă o intrare nouă aici, nu se mai modifică logica din helpers.
-        'mappings' => [
-            [
-                'label' => 'Livrare 10 lei',
-                'amount' => 10.00,
-                'cod_produs' => 436,
-                'price' => 10.00,
-            ],
-            [
-                'label' => 'Livrare 15 lei',
-                'amount' => 15.00,
-                'cod_produs' => 1680,
-                'price' => 15.00,
-            ],
-        ],
+        'mappings' => [],
     ],
-
-    // Dacă HMAC este activ în plugin, pune true.
-    'use_hmac' => false,
 ];
+
+$localFile = __DIR__ . '/woo_sync_config.local.php';
+if (is_file($localFile)) {
+    $local = require $localFile;
+    if (is_array($local)) {
+        $defaults = array_replace_recursive($defaults, $local);
+    }
+}
+
+if (trim((string)$defaults['wp_order_details_api_key']) === '') {
+    $defaults['wp_order_details_api_key'] = (string)$defaults['api_key'];
+}
+
+return $defaults;
