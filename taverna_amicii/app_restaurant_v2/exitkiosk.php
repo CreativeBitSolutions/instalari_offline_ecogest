@@ -1,0 +1,1 @@
+Daca nu s-a inchis aplicatia apasa alt+F4

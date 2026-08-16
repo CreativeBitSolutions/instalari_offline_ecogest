@@ -1,0 +1,91 @@
+[2026-08-14 12:50:20] Aplicația a pornit.
+[2026-08-14 12:50:20] Pornesc scanarea, sursă: pornire automată.
+[2026-08-14 12:50:20] Deschid baza locală.
+[2026-08-14 12:50:20] Calculez semnătura produselor locale.
+[2026-08-14 12:50:20] Verific nomenclatorul disponibil online.
+[2026-08-14 12:50:20] Nomenclatorul este deja sincronizat. Produse verificate: 99.
+[2026-08-14 13:01:35] Aplicația a pornit.
+[2026-08-14 13:01:35] Pornesc scanarea, sursă: pornire automată.
+[2026-08-14 13:01:35] Deschid baza locală.
+[2026-08-14 13:01:35] Calculez semnătura produselor locale.
+[2026-08-14 13:01:35] Verific nomenclatorul disponibil online.
+[2026-08-14 13:01:35] Nomenclatorul este deja sincronizat. Produse verificate: 99.
+[2026-08-14 13:01:46] Aplicația a pornit.
+[2026-08-14 13:01:47] Pornesc scanarea, sursă: pornire automată.
+[2026-08-14 13:01:47] Deschid baza locală.
+[2026-08-14 13:01:47] Calculez semnătura produselor locale.
+[2026-08-14 13:01:47] Verific nomenclatorul disponibil online.
+[2026-08-14 13:01:47] Nomenclatorul este deja sincronizat. Produse verificate: 99.
+[2026-08-14 13:02:21] Aplicația a pornit.
+[2026-08-14 13:02:21] Pornesc scanarea, sursă: pornire automată.
+[2026-08-14 13:02:21] Scanarea a eșuat: Baza SQLite nu a fost găsită.
+[2026-08-14 13:02:30] Setările au fost salvate. Interval: 1440 minute.
+[2026-08-14 13:02:30] Pornesc scanarea, sursă: comandă manuală.
+[2026-08-14 13:02:30] Deschid baza locală.
+[2026-08-14 13:02:30] Calculez semnătura produselor locale.
+[2026-08-14 13:02:30] Verific nomenclatorul disponibil online.
+[2026-08-14 13:02:30] Nomenclatorul este deja sincronizat. Produse verificate: 99.
+[2026-08-14 13:09:39] Aplicația a pornit.
+[2026-08-14 13:09:39] Pornesc scanarea, sursă: pornire automată.
+[2026-08-14 13:09:39] Deschid baza locală.
+[2026-08-14 13:09:39] Calculez semnătura produselor locale.
+[2026-08-14 13:09:39] Verific nomenclatorul disponibil online.
+[2026-08-14 13:09:39] Nomenclatorul este deja sincronizat. Produse verificate: 99.
+[2026-08-14 13:17:08] Aplicația a pornit.
+[2026-08-14 13:17:08] Pornesc scanarea, sursă: pornire automată.
+[2026-08-14 13:17:08] Deschid baza locală.
+[2026-08-14 13:17:08] Calculez semnătura produselor locale.
+[2026-08-14 13:17:08] Verific nomenclatorul disponibil online.
+[2026-08-14 13:17:08] Import produse început. Online: 361 produse.
+[2026-08-14 13:17:09] Copie de siguranță creată: C:\xampp\htdocs\instalari_offline_restaurant\api_offline_taverna_amicii\backups_products_sync\restaurant_before_products_sync_20260814_131708.sqlite
+[2026-08-14 13:17:09] Nomenclatorul este deja sincronizat. Produse verificate: 361.
+[2026-08-14 13:17:47] Setările au fost salvate. Interval: 10 minute.
+[2026-08-14 13:17:50] Setările au fost salvate. Interval: 10 minute.
+[2026-08-14 13:17:50] Pornesc scanarea, sursă: comandă manuală.
+[2026-08-14 13:17:50] Deschid baza locală.
+[2026-08-14 13:17:50] Calculez semnătura produselor locale.
+[2026-08-14 13:17:50] Verific nomenclatorul disponibil online.
+[2026-08-14 13:17:50] Import produse început. Online: 361 produse.
+[2026-08-14 13:17:50] Copie de siguranță creată: C:\xampp\htdocs\instalari_offline_restaurant\api_offline_taverna_amicii\backups_products_sync\restaurant_before_products_sync_20260814_131750.sqlite
+[2026-08-14 13:17:50] Import finalizat: 0 adăugate, 1 actualizate, 0 șterse, 360 neschimbate.
+[2026-08-14 13:27:47] Pornesc scanarea, sursă: programare automată.
+[2026-08-14 13:27:47] Deschid baza locală.
+[2026-08-14 13:27:47] Calculez semnătura produselor locale.
+[2026-08-14 13:27:47] Verific nomenclatorul disponibil online.
+[2026-08-14 13:27:48] Nomenclatorul este deja sincronizat. Produse verificate: 361.
+[2026-08-14 13:37:48] Pornesc scanarea, sursă: programare automată.
+[2026-08-14 13:37:48] Deschid baza locală.
+[2026-08-14 13:37:48] Calculez semnătura produselor locale.
+[2026-08-14 13:37:48] Verific nomenclatorul disponibil online.
+[2026-08-14 13:37:48] Nomenclatorul este deja sincronizat. Produse verificate: 361.
+[2026-08-14 13:47:48] Pornesc scanarea, sursă: programare automată.
+[2026-08-14 13:47:48] Deschid baza locală.
+[2026-08-14 13:47:48] Calculez semnătura produselor locale.
+[2026-08-14 13:47:48] Verific nomenclatorul disponibil online.
+[2026-08-14 13:47:48] Nomenclatorul este deja sincronizat. Produse verificate: 361.
+[2026-08-14 13:57:48] Pornesc scanarea, sursă: programare automată.
+[2026-08-14 13:57:48] Deschid baza locală.
+[2026-08-14 13:57:48] Calculez semnătura produselor locale.
+[2026-08-14 13:57:48] Verific nomenclatorul disponibil online.
+[2026-08-14 13:57:48] Nomenclatorul este deja sincronizat. Produse verificate: 361.
+[2026-08-14 14:03:17] Aplicația a pornit.
+[2026-08-14 14:03:17] Pornesc scanarea, sursă: pornire automată.
+[2026-08-14 14:03:17] Deschid baza locală.
+[2026-08-14 14:03:17] Calculez semnătura produselor locale.
+[2026-08-14 14:03:17] Verific nomenclatorul disponibil online.
+[2026-08-14 14:03:17] Nomenclatorul este deja sincronizat. Produse verificate: 361.
+[2026-08-14 14:13:17] Pornesc scanarea, sursă: programare automată.
+[2026-08-14 14:13:17] Deschid baza locală.
+[2026-08-14 14:13:17] Calculez semnătura produselor locale.
+[2026-08-14 14:13:17] Verific nomenclatorul disponibil online.
+[2026-08-14 14:13:17] Nomenclatorul este deja sincronizat. Produse verificate: 361.
+[2026-08-14 14:23:17] Pornesc scanarea, sursă: programare automată.
+[2026-08-14 14:23:17] Deschid baza locală.
+[2026-08-14 14:23:17] Calculez semnătura produselor locale.
+[2026-08-14 14:23:17] Verific nomenclatorul disponibil online.
+[2026-08-14 14:23:18] Nomenclatorul este deja sincronizat. Produse verificate: 361.
+[2026-08-14 14:33:18] Pornesc scanarea, sursă: programare automată.
+[2026-08-14 14:33:18] Deschid baza locală.
+[2026-08-14 14:33:18] Calculez semnătura produselor locale.
+[2026-08-14 14:33:18] Verific nomenclatorul disponibil online.
+[2026-08-14 14:33:18] Nomenclatorul este deja sincronizat. Produse verificate: 361.

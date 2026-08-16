@@ -1,0 +1,704 @@
+/* ========== vanzare_css.css (MODERN REDESIGN) ========== */
+
+/* === VARIABILE GLOBALE === */
+:root {
+  --primary-accent: #007aff;
+  --primary-hover: #0056b3;
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --info-color: #17a2b8;
+  --secondary-color: #6c757d;
+
+  --background-main: #f0f2f5;
+  --surface-color: #ffffff;
+  --border-color: #dee2e6;
+
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --text-on-accent: #ffffff;
+
+  --border-radius-main: 12px;
+  --box-shadow-main: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --transition-speed: 0.2s;
+}
+
+/* === STILURI DE BAZĂ ȘI LAYOUT === */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--background-main);
+  color: var(--text-primary);
+  overflow: hidden;
+  font-size: 16px;
+}
+
+.page-container { display: flex; flex-direction: column; height: 100vh; }
+
+.page-header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 10px;
+  padding: 10px 15px;
+  background-color: var(--surface-color);
+  border-bottom: 1px solid var(--border-color);
+  overflow-x: auto;
+}
+
+.main-content { flex-grow: 1; display: flex; gap: 15px; padding: 15px; overflow: hidden; }
+
+/* === PANOURI PRINCIPALE === */
+.left-panel, .right-panel, .actions-panel {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--surface-color);
+  border-radius: var(--border-radius-main);
+  box-shadow: var(--box-shadow-main);
+  overflow: hidden;
+}
+.left-panel { flex: 1 1 35%; }
+.right-panel { flex: 1 1 45%; }
+.actions-panel { flex: 0 0 280px; padding: 15px; gap: 15px; }
+
+/* === PANOU DREAPTA (Categorii și Produse) === */
+.category-wrapper{
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  align-items: stretch;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Categorii afișate pe mai multe rânduri, fără scroll orizontal */
+#category-tabs{
+  min-width: 0;
+  width: 100%;
+  overflow: visible;
+  padding: 2px;
+}
+
+#category-tabs::-webkit-scrollbar{
+  display: none;
+}
+
+.category-columns{
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 8px;
+  align-items: stretch;
+  width: 100%;
+}
+
+.category-col{
+  display: grid;
+  grid-template-rows: repeat(3, minmax(34px, auto));
+  gap: 8px;
+  min-width: 0;
+}
+
+.category-tab-btn{
+  width: 100%;
+  min-height: 38px;
+  padding: 6px 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.1;
+  border-radius: 9px;
+  border: 1px solid var(--border-color);
+  background: #ffffff;
+  color: var(--text-primary);
+  cursor: pointer;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  position: relative;
+  transition: transform .15s ease, font-size .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+
+.category-tab-btn:hover{
+  background-color: #e2e6ea;
+}
+
+.category-tab-btn.active{
+  background-color: var(--primary-accent);
+  color: var(--text-on-accent);
+  border-color: var(--primary-accent);
+  font-size: 0.82rem;
+  font-weight: 700;
+  transform: scale(1.02);
+  box-shadow: 0 2px 8px rgba(0,0,0,.12);
+  z-index: 2;
+}
+
+.category-tab-btn-placeholder{
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Nu mai sunt necesare săgețile, pentru că toate categoriile se împart pe rânduri */
+#scroll-cat-left,
+#scroll-cat-right{
+  display: none !important;
+}
+
+@media (max-width: 991.98px){
+  .category-wrapper{
+    gap: 5px;
+    padding: 5px 6px;
+  }
+
+  .category-columns{
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    gap: 5px;
+  }
+
+  .category-col{
+    grid-template-rows: repeat(3, minmax(32px, auto));
+    gap: 5px;
+  }
+
+  .category-tab-btn{
+    min-height: 32px;
+    padding: 4px 4px;
+    font-size: 0.68rem;
+    line-height: 1.05;
+    border-radius: 7px;
+  }
+
+  .category-tab-btn.active{
+    font-size: 0.72rem;
+    transform: none;
+  }
+}
+
+@media (max-width: 700px){
+  .category-columns{
+    gap: 4px;
+  }
+
+  .category-col{
+    gap: 4px;
+  }
+
+  .category-tab-btn{
+    min-height: 30px;
+    padding: 3px 3px;
+    font-size: 0.62rem;
+    line-height: 1;
+  }
+
+  .category-tab-btn.active{
+    font-size: 0.66rem;
+  }
+}
+
+.product-grid-wrapper {
+  flex-grow: 1;
+  display: flex;
+  position: relative;
+  padding: 15px;
+  overflow: hidden;
+}
+
+/* 🔒 FIX 4 CARDURI/ROW */
+.product-grid {
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) !important; /* mereu 4 pe linie */
+  gap: 12px;
+  overflow-y: auto;
+  scrollbar-width: none; -ms-overflow-style: none;
+}
+.product-grid::-webkit-scrollbar { display: none; }
+
+/* === CARD PRODUS (dreapta) — font puțin mai mare + limită 80% pentru nume+preț === */
+.product-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  min-height: 100px;         /* un pic mai înalt decât varianta anterioară */
+  padding: 10px;
+
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-main);
+  background-color: var(--surface-color);
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+
+  container-type: inline-size;
+
+  --meta-cap: 80%;
+  --name-cap: 64%;
+  --price-cap: 16%;
+}
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  border-color: var(--primary-accent);
+}
+
+.product-card .product-name {
+  /* puțin mai mare decât înainte dar controlat */
+  font-size: clamp(1rem, 2.2cqw, 1rem);
+  font-weight: 600;
+  line-height: 1.12;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+  max-height: var(--name-cap);
+  overflow: hidden;
+  margin: 0;
+}
+
+.product-card .product-price {
+  font-size: 0.82rem;      /* puțin mai mare decât 0.75rem */
+  color: var(--text-secondary);
+  margin-top: 6px;
+  line-height: 1.15;
+  max-height: var(--price-cap);
+  overflow: hidden;
+}
+
+/* Scroll Buttons (catalog produse) */
+.scroll-btn, .scroll-btn-v {
+  background-color: var(--surface-color);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--transition-speed) ease;
+  z-index: 10;
+}
+.scroll-btn:hover, .scroll-btn-v:hover { background-color: var(--primary-accent); color: var(--text-on-accent); border-color: var(--primary-accent); }
+.scroll-btn { border-radius: 50%; width: 36px; height: 36px; font-size: 1rem; flex-shrink: 0; }
+.product-scroll-buttons { display: flex; flex-direction: column; gap: 10px; padding-left: 10px; }
+.scroll-btn-v { flex-grow: 1; font-size: 1.3rem; border-radius: var(--border-radius-main); }
+
+/* === PANOU STÂNGA (Bonul curent) === */
+#one { padding: 10px; display: flex; flex-direction: column; }
+
+/* wrapper pentru lista bonului + butoanele de scroll */
+.receipt-list-wrapper {
+  display: flex;
+  gap: 8px;
+  min-height: 0;
+  flex: 1 1 auto;
+}
+
+.receipt-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+}
+.receipt-items::-webkit-scrollbar { width: 6px; }
+.receipt-items::-webkit-scrollbar-thumb { background-color: var(--border-color); border-radius: 3px; }
+
+/* butoane mici de scroll în stânga (afis_prod) */
+.receipt-scroll-buttons {
+  position: sticky;
+  top: 6px;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.receipt-scroll-buttons .r-scroll {
+  width: 30px; height: 30px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--surface-color);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: .95rem;
+  line-height: 1;
+}
+
+/* === Item produs în bon — coloană acțiuni mai lată + butoane mai mici */
+.receipt-item {
+  display: grid;
+  grid-template-columns: 1fr 180px;
+  gap: 10px;
+  align-items: start;
+  padding: 10px;
+  border-bottom: 1px solid #f0f2f5;
+  transition: background-color var(--transition-speed);
+}
+.receipt-item.status-new { background-color: #fffacd; }
+.receipt-item.status-sent { background-color: #e6ffed; }
+.receipt-item.status-collected { background-color: #e0f7fa; }
+
+.receipt-item .product-info .name { font-weight: 600; font-size: 1rem; margin: 0; }
+.receipt-item .product-info .obs { font-size: 0.8rem; color: var(--secondary-color); font-style: italic; }
+.receipt-item .product-info .price-details { font-size: 0.85rem; color: var(--text-primary); margin-top: 4px; }
+.receipt-item .product-info .price-original { font-size: 0.78rem; color: var(--danger-color); text-decoration: line-through; margin-left: 5px; }
+
+.receipt-item .item-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 6px;
+}
+.receipt-item .item-actions .btn {
+  padding: 4px 6px;
+  font-size: 0.72rem;
+  height: 38px;
+  line-height: 1.15;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+
+/* === FOOTER BON === */
+.receipt-footer { flex-shrink: 0; padding: 12px 10px 6px; margin-top: auto; border-top: 2px solid var(--border-color); }
+.total-container { display: flex; justify-content: space-between; align-items: center; }
+.total-container .total-text { margin: 0; font-size: 1.6rem; font-weight: 800; color: var(--primary-accent); }
+.total-container #cif_client { border: 1px solid var(--border-color); border-radius: 6px; padding: 5px 8px; width: 140px; text-align: center; }
+
+/* === PANOU ACȚIUNI (Dreapta) === */
+.actions-panel { display: flex; flex-direction: column; justify-content: space-between; }
+.header-actions, .payment-section, .grup-stanga, .grup-dreapta { display: flex; flex-direction: column; gap: 10px; }
+
+.action-btn {
+  width: 100%;
+  min-height: 55px;
+  font-weight: 600;
+  font-size: 1.05rem;
+  padding: 10px;
+  border-radius: var(--border-radius-main);
+  border: none;
+  color: var(--text-on-accent);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  text-align: center;
+  transition: all var(--transition-speed) ease;
+}
+.action-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+.action-btn:disabled { opacity: .6; cursor: not-allowed; transform: none; box-shadow: none; }
+
+.action-btn.btn-success { background-color: var(--success-color); }
+.action-btn.btn-primary { background-color: var(--primary-accent); }
+.action-btn.btn-info { background-color: var(--info-color); }
+.action-btn.btn-secondary { background-color: var(--secondary-color); }
+.action-btn.btn-warning { background-color: var(--warning-color); color: #212529; }
+.action-btn.btn-danger { background-color: var(--danger-color); }
+.action-btn.btn-outline-secondary { background-color: var(--surface-color); color: var(--secondary-color); border: 1px solid var(--secondary-color); }
+.action-btn.has-pending-items { background-color: #ff8c00 !important; animation: pulse 1.5s infinite; }
+
+.payment-section { border-top: 1px solid var(--border-color); padding-top: 15px; }
+
+.banner1 {
+  background: #e9ecef; color: var(--text-secondary); border: none; text-align: center;
+  font-size: 0.9rem; border-radius: var(--border-radius-main); padding: 10px;
+  cursor: default !important; transform: none !important; box-shadow: none !important;
+}
+
+/* === MODIFICĂRI DE COMPATIBILITATE === */
+.hide { display: none !important; }
+.confirmable { position: relative; }
+.confirm-overlay { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-weight:700; background:rgba(0,0,0,.55); color:#fff; border-radius: var(--border-radius-main); }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 140, 0, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(255, 140, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 140, 0, 0); } }
+
+/* responsive: păstrăm 4/row și pe ecrane mai mici ale POS-ului */
+@media screen and (max-width:1280px) {
+  .actions-panel { flex-basis: 240px; }
+  .product-grid { grid-template-columns: repeat(4, 1fr) !important; }
+  .action-btn { font-size: 0.95rem; min-height: 50px; }
+  .total-container .total-text { font-size: 1.5rem; }
+}
+@media screen and (max-width:1024px) {
+  .main-content { flex-direction: column; }
+  .actions-panel { order: 3; flex-basis: auto; }
+  .payment-section { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; border: none; padding: 0; }
+  .product-grid { grid-template-columns: repeat(4, 1fr) !important; }
+}
+
+/* === MODAL SETARE MASA FULLSCREEN & LOCK === */
+.modal.modal-lock .modal-dialog { width: 100vw; max-width: 100vw; margin: 0; }
+.modal.modal-lock .modal-content { height: 100vh; border-radius: 0; }
+body.modal-open .modal.modal-lock { padding-right: 0 !important; }
+
+#setare_masa [data-dismiss="modal"], #setare_masa [data-bs-dismiss="modal"], #setare_masa .close, #setare_masa .btn-close { display: none !important; }
+
+/* === FULLSCREEN generic (compat) === */
+.modal.modal-fullscreen .modal-dialog { width: 100vw; max-width: 100vw; height: 100vh; max-height: 100vh; margin: 0; }
+.modal.modal-fullscreen .modal-content { height: 100vh; border-radius: 0; border: none; }
+body.modal-open .modal.modal-fullscreen { padding-right: 0 !important; }
+#setare_masa .close, #setare_masa [data-dismiss="modal"] { display: none !important; }
+
+/* === SETARE MASĂ — grid mic + butoane scroll (FIX STICKY) === */
+.masa-grid-scroll {
+  display: flex; flex-direction: row; align-items: flex-start; gap: 10px;
+  overflow-y: auto; flex: 1 1 auto; min-height: 0; padding-right: 0;
+}
+.masa-grid-scroll > .tabcontent { flex: 1 1 auto; order: 1; }
+
+.tablesGrid {
+    display: grid;
+    /* Grid-ul se va adapta la lățimea disponibilă (cei 75% din ecran) */
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); 
+    gap: 10px;
+    padding-bottom: 20px; /* Spațiu jos pentru scroll */
+}
+
+.masaCard { width: 100%; aspect-ratio: 1 / 1; }
+
+.table-btn {
+  width: 100%; height: 100%;
+  padding: 6px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: #fff; color: #000;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  line-height: 1.1;
+  transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+.table-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,.08); }
+.table-btn .masa-title { font-size: .95rem; font-weight: 600; text-align: center; }
+.table-btn .masa-sub { margin-top: 2px; font-size: .75rem; opacity: .85; text-align: center; }
+
+.masa-scroll-buttons {
+  order: 2;
+  position: sticky; top: 8px;
+  align-self: flex-start;
+  display: flex; flex-direction: column; gap: 10px;
+  z-index: 5; margin-right: 8px;
+}
+.masa-scroll-buttons .scroll-btn-v {
+  width: 36px; height: 36px; border-radius: 10px; font-size: 1rem;
+  border: 1px solid var(--border-color); background: var(--surface-color);
+}
+.masa-scroll-buttons .scroll-btn-v:hover { background: var(--primary-accent); color: var(--text-on-accent); border-color: var(--primary-accent); }
+
+.modal.modal-lock .modal-content {
+    height: 100vh;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+}
+#setare_masa .modal-body { flex: 1; display: flex; overflow: hidden; min-height: 0; }
+#setare_masa .modal-body > div[style*="width:75%"] { display: flex !important; flex-direction: column !important; min-height: 0; }
+
+/* === Scroll mic în actions-panel (dreapta) === */
+.actions-panel {
+  overflow: hidden;              /* ascunde “excesul” exterior */
+}
+
+.actions-scroll {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1 1 auto;                /* ocupă spațiul de sus */
+  min-height: 0;                 /* ca overflow-ul vertical să funcționeze */
+  overflow-y: auto;              /* scroll doar pentru conținutul acțiunilor */
+  padding-right: 44px;           /* loc pentru coloana cu butoane ↑/↓ */
+  scroll-behavior: smooth;       /* derulare lină */
+}
+
+/* coloana cu butoane ↑/↓, lipită pe dreapta conținutului scrollabil */
+.actions-scroll-buttons {
+  position: sticky;
+  top: 8px;
+  right: 0;
+  align-self: flex-end;
+  display: block;
+  gap: 8px;
+  z-index: 3;
+}
+
+/* butoane mici (reutilizează stilul existent .scroll-btn-v, dar mai compacte aici) */
+.actions-scroll-buttons .scroll-btn-v {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  border: 1px solid var(--border-color);
+  background: var(--surface-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.actions-scroll-buttons .scroll-btn-v:hover {
+  background: var(--primary-accent);
+  color: var(--text-on-accent);
+  border-color: var(--primary-accent);
+}
+
+/* No text selection anywhere inside the grid */
+.product-grid, .product-card, .product-card * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none; /* stops iOS long-press menu */
+}
+
+/* Make it feel like a button */
+.product-card {
+  cursor: pointer;
+  border: 1;
+  background: #fff;           /* keep your theme */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: .5rem;
+}
+
+.product-card:focus {
+  outline: 2px solid #3b82f6; /* keyboard focus visible */
+  outline-offset: 2px;
+}
+
+.product-card:active {
+  transform: scale(0.98);
+}
+
+/* (Optional) avoid ugly tap highlight on mobile */
+.product-card, .product-card * { -webkit-tap-highlight-color: transparent; }
+:root{
+  --tile-bg: #EAF3EE;      /* pick one from above */
+  --tile-bg-hover: #DAEAE1;
+  --tile-text: #1F2937;    /* near-black for contrast */
+  --tile-ring: #3B82F6;    /* focus/brand accent */
+}
+
+.product-card{
+  background: var(--tile-bg);
+  color: var(--tile-text);
+  border-radius: 10px;
+  box-shadow: 0 1px 0 rgba(0,0,0,.03);
+  transition: transform .05s ease, background-color .15s ease, box-shadow .15s ease;
+}
+
+.product-card:hover,
+.product-card:focus-visible{
+  background: var(--tile-bg-hover);
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+}
+
+.product-card:focus-visible{
+  outline: 2px solid var(--tile-ring);
+  outline-offset: 2px;
+}
+
+.product-card:active{
+  transform: scale(.98);
+}
+.quick-actions-box{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:8px;
+  width:100%;
+  padding:8px;
+  border:1px solid #d7dbe0;
+  border-radius:12px;
+  background:#ffffff;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+
+.quick-action-form{
+  width:100%;
+}
+
+.quick-action-form .quick-action-tile{
+  width:100%;
+}
+
+.quick-action-tile{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  min-height:88px;
+  height:100%;
+  width:100%;
+  padding:2px;
+  border-radius:10px !important;
+  font-weight:600;
+  line-height:1.15;
+  white-space:normal !important;
+  word-break:break-word;
+  overflow-wrap:anywhere;
+  font-size:clamp(12px, 1.15vw, 15px);
+}
+
+.quick-action-tile span{
+  display:block;
+  width:100%;
+  white-space:normal !important;
+  word-break:break-word;
+  overflow-wrap:anywhere;
+}
+
+.quick-action-tile i{
+  font-size:.95em;
+}
+
+@media (max-width: 1400px){
+  .quick-action-tile{
+    min-height:82px;
+    padding:2px;
+  }
+}
+
+@media (max-width: 1200px){
+  .quick-action-tile{
+    min-height:76px;
+    font-size:12px;
+  }
+}
+
+.woo-import-tile{
+  position:relative;
+  overflow:visible;
+}
+
+.woo-import-badge{
+  position:absolute;
+  top:6px;
+  right:6px;
+  min-width:22px;
+  height:22px;
+  padding:0 6px;
+  border-radius:999px;
+  background:#dc3545;
+  color:#fff;
+  font-size:12px;
+  font-weight:700;
+  line-height:22px;
+  text-align:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.18);
+  display:none;
+  z-index:2;
+}
+
+.woo-import-tile.has-woo-new{
+  border-color:#dc3545 !important;
+  color:#dc3545 !important;
+}
+
+.woo-import-tile.has-woo-new .woo-import-badge{
+  display:block;
+}
+
+.woo-import-tile.is-pulsing{
+  animation: wooImportTilePulse 1.35s ease-in-out infinite;
+}
+
+@keyframes wooImportTilePulse{
+  0%   { transform:scale(1); }
+  50%  { transform:scale(1.06); }
+  100% { transform:scale(1); }
+}
