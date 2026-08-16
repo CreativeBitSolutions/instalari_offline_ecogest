@@ -1,0 +1,11 @@
+﻿<b><size="11">COMANDA:</size></b>
+<b><size="11">Nr. nota: 11</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">TAVERNA AMICII</size></b>
+<b><size="11">2026-08-14 14:36:48</size></b>
+<b><size="11">OPERATOR: OSPATAR1 -</size></b>
+<b><size="11">Masa: F03</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">------ FEL 0 -------</size></b>
+<b><size="11">1 x ALBA 500G</size></b>
+<b><size="11">--------------------</size></b>

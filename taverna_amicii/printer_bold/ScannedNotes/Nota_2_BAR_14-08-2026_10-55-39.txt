@@ -1,0 +1,10 @@
+﻿<b><size="11">Nr. nota: 2</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">TAVERNA AMICII</size></b>
+<b><size="11">2026-08-14 10:55:35</size></b>
+<b><size="11">OPERATOR: OSPATAR1 -</size></b>
+<b><size="11">Masa: F01</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">------ FEL 0 -------</size></b>
+<b><size="11">1 x ALUNE 150G = 9.00 LEI--------------------</size></b>
+<b><size="11">TOTAL: 9.00 LEI</size></b>

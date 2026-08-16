@@ -1,0 +1,15 @@
+﻿<b><size="11">NOTA DE PLATA</size></b>
+<b><size="11">TAVERNA AMICII</size></b>
+<b><size="11">2026-08-14 13:18:15</size></b>
+<b><size="11">OPERATOR: OSPATAR1 -</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">BALLANTINES 50 ML</size></b>
+<b><size="11">  1.0 x 14.00 = 14.00 LEI (TVA 21.0%)</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">TOTAL: 14.00 LEI</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">Prot.: 14.00 LEI</size></b>
+<b><size="11">TOTAL 21.0%: 14.00 LEI</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">Nr. nota: 3</size></b>
+<b><size="11">Va multumim!</size></b>

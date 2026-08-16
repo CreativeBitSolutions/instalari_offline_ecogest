@@ -1,0 +1,22 @@
+﻿<b><size="11">NOTĂ DE PLATĂ</size></b>
+<b><size="11">Nr. nota: 7</size></b>
+<b><size="11">-----</size></b>
+<b><size="11">TAVERNA AMICII</size></b>
+<b><size="11">2026-08-14 13:21:00</size></b>
+<b><size="11">OPERATOR: OSPATAR1 -</size></b>
+<b><size="11">Masa: F01</size></b>
+<b><size="11">-----</size></b>
+<b><size="11">1 x AGLIO OLIO E PEPERONCINO 400G = 42.00 LEI</size></b>
+<b><size="11">-----</size></b>
+<b><size="11">TOTAL: 42.00 LEI</size></b>
+
+<b><size="11">Bacșișul nu este inclus / Tips not included</size></b>
+
+<b><size="11">Sugestii bacșiș / Suggested tips:</size></b>
+
+<b><size="11">Bacșiș	Total notă</size></b>
+<b><size="11">10%	4.20	46.20</size></b>
+<b><size="11">12%	5.04	47.04</size></b>
+<b><size="11">15%	6.30	48.30</size></b>
+
+<b><size="11">Altă valoare: ...</size></b>

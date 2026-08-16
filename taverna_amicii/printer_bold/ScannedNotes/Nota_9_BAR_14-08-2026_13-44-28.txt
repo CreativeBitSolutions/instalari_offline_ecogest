@@ -1,0 +1,22 @@
+﻿<b><size="11">NOTĂ DE PLATĂ</size></b>
+<b><size="11">Nr. nota: 9</size></b>
+<b><size="11">-----</size></b>
+<b><size="11">TAVERNA AMICII</size></b>
+<b><size="11">2026-08-14 13:44:25</size></b>
+<b><size="11">OPERATOR: OSPATAR1 -</size></b>
+<b><size="11">Masa: F01</size></b>
+<b><size="11">-----</size></b>
+<b><size="11">1 x ANANAS = 2.00 LEI</size></b>
+<b><size="11">-----</size></b>
+<b><size="11">TOTAL: 2.00 LEI</size></b>
+
+<b><size="11">Bacșișul nu este inclus / Tips not included</size></b>
+
+<b><size="11">Sugestii bacșiș / Suggested tips:</size></b>
+
+<b><size="11">Bacșiș	Total notă</size></b>
+<b><size="11">10%	0.20	2.20</size></b>
+<b><size="11">12%	0.24	2.24</size></b>
+<b><size="11">15%	0.30	2.30</size></b>
+
+<b><size="11">Altă valoare: ...</size></b>

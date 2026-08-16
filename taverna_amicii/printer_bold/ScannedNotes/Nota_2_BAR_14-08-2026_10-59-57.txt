@@ -1,0 +1,23 @@
+﻿<b><size="11">NOTĂ DE PLATĂ</size></b>
+<b><size="11">Nr. nota: 2</size></b>
+<b><size="11">-----</size></b>
+<b><size="11">TAVERNA AMICII</size></b>
+<b><size="11">2026-08-14 10:59:56</size></b>
+<b><size="11">OPERATOR: OSPATAR1 -</size></b>
+<b><size="11">Masa: F01</size></b>
+<b><size="11">-----</size></b>
+<b><size="11">1 x ALUNE 150G = 9.00 LEI</size></b>
+<b><size="11">-----</size></b>
+<b><size="11">-----</size></b>
+<b><size="11">TOTAL: 9.00 LEI</size></b>
+
+<b><size="11">Bacșișul nu este inclus / Tips not included</size></b>
+
+<b><size="11">Vă oferim următoarele sugestii pentru calculul bacșișului / Please consider the following suggestions for tips calculation:</size></b>
+
+<b><size="11">Bacșiș	Total notă</size></b>
+<b><size="11">10%	0.90	9.90</size></b>
+<b><size="11">12%	1.08	10.08</size></b>
+<b><size="11">15%	1.35	10.35</size></b>
+
+<b><size="11">Altă valoare: ...</size></b>

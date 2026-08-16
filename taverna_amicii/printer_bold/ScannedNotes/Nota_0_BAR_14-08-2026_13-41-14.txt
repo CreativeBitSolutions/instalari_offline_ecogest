@@ -1,0 +1,22 @@
+﻿<b><size="11">RAPORT Z PRODUSE VÂNDUTE</size></b>
+<b><size="11">Nr. raport Z: 2</size></b>
+<b><size="11">2026-08-14 13:41:12</size></b>
+<b><size="11">Interval vânzări note: 2026-08-14 - 2026-08-14</size></b>
+<b><size="11">Interval ore bonuri: 13:41:00 - 13:41:00</size></b>
+<b><size="11">Locația: 1</size></b>
+<b><size="11">---</size></b>
+<b><size="11">1.000 x AL FORNO 450G = 44.00 LEI</size></b>
+<b><size="11">---</size></b>
+<b><size="11">TOTAL PRODUSE: 44.00 LEI</size></b>
+<b><size="11">====================</size></b>
+<b><size="11">ÎNCASĂRI PE OSPĂTAR</size></b>
+<b><size="11">---</size></b>
+<b><size="11">1 OSPATAR1 - : 44.00 LEI (Numerar 44.00 | Card 0.00 | Virament bancar 0.00 | Bacșiș 0.00)</size></b>
+<b><size="11">---</size></b>
+<b><size="11">TOTAL ÎNCASĂRI:      44.00 LEI</size></b>
+<b><size="11">TOTAL NUMERAR:       44.00 LEI</size></b>
+<b><size="11">TOTAL CARD:          0.00 LEI</size></b>
+<b><size="11">TOTAL VIRAMENT BANCAR: 0.00 LEI</size></b>
+<b><size="11">TOTAL BACȘIȘ:        0.00 LEI</size></b>
+<b><size="11">TOTAL ONLINE:        0.00 LEI</size></b>
+<b><size="11">====================</size></b>

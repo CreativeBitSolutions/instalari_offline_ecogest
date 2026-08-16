@@ -1,0 +1,23 @@
+﻿<b><size="11">NOTĂ DE PLATĂ</size></b>
+<b><size="11">Nr. nota: 4</size></b>
+<b><size="11">-----</size></b>
+<b><size="11">TAVERNA AMICII</size></b>
+<b><size="11">2026-08-14 12:38:29</size></b>
+<b><size="11">OPERATOR: OSPATAR2 -</size></b>
+<b><size="11">Masa: F19</size></b>
+<b><size="11">-----</size></b>
+<b><size="11">1 x AMICII 600G = 45.00 LEI</size></b>
+<b><size="11">-----</size></b>
+<b><size="11">-----</size></b>
+<b><size="11">TOTAL: 45.00 LEI</size></b>
+
+<b><size="11">Bacșișul nu este inclus / Tips not included</size></b>
+
+<b><size="11">Vă oferim următoarele sugestii pentru calculul bacșișului / Please consider the following suggestions for tips calculation:</size></b>
+
+<b><size="11">Bacșiș	Total notă</size></b>
+<b><size="11">10%	4.50	49.50</size></b>
+<b><size="11">12%	5.40	50.40</size></b>
+<b><size="11">15%	6.75	51.75</size></b>
+
+<b><size="11">Altă valoare: ...</size></b>

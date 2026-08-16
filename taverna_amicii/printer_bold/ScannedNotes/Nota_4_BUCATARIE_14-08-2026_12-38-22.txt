@@ -1,0 +1,9 @@
+﻿<b><size="11">Nr. nota: 4</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">TAVERNA AMICII</size></b>
+<b><size="11">2026-08-14 12:38:19</size></b>
+<b><size="11">OPERATOR: OSPATAR2 -</size></b>
+<b><size="11">Masa: F19</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">------ FEL 0 -------</size></b>
+<b><size="11">1 x AMICII 600G--------------------</size></b>
