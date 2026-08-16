@@ -1,3 +1,11 @@
 php_flag log_errors off
 php_value error_reporting 0
 php_value error_log "error_log.txt"
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+# Taverna Amicii ruleaza pe SQLite offline: pastram URL-urile cunoscute de interfata,
+# dar folosim integrarea Woo REST + inbox SQLite dedicata acestei instalari.
+RewriteRule ^vanzare_restaurant\.php$ vanzare_restaurant_woo.php [L,QSA]
+RewriteRule ^vanzare_importa_comanda_woo\.php$ woo_offline_import.php [L,QSA]
+</IfModule>
