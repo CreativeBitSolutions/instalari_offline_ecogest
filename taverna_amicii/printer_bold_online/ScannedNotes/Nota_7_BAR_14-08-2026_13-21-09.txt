@@ -1,0 +1,15 @@
+﻿<b><size="11">NOTA PROTOCOL</size></b>
+<b><size="11">TAVERNA AMICII</size></b>
+<b><size="11">2026-08-14 13:21:02</size></b>
+<b><size="11">OPERATOR: OSPATAR1 -</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">AGLIO OLIO E PEPERONCINO 400G</size></b>
+<b><size="11">  1.0 x 42.00 = 42.00 LEI (TVA 11.0%)</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">TOTAL: 42.00 LEI</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">Prot.: 42.00 LEI</size></b>
+<b><size="11">TOTAL 11.0%: 42.00 LEI</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">Nr. nota: 7</size></b>
+<b><size="11">Va multumim!</size></b>

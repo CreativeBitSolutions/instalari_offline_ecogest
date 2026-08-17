@@ -1,0 +1,12 @@
+﻿<b><size="11">COMANDA:</size></b>
+<b><size="11">Nr. nota: 5</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">TAVERNA AMICII</size></b>
+<b><size="11">2026-08-14 13:01:25</size></b>
+<b><size="11">OPERATOR: OSPATAR2 -</size></b>
+<b><size="11">Masa: F03</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">------ FEL 0 -------</size></b>
+<b><size="11">1 x ABSOLUT 50ML = 17.00 LEI</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">TOTAL: 17.00 LEI</size></b>

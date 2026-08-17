@@ -1,0 +1,9 @@
+﻿<b><size="11">NOTĂ ÎNCHIDERE TURĂ</size></b>
+<b><size="11">Data: 2026-08-14 13:22:10</size></b>
+<b><size="11">Cod închidere: 2</size></b>
+<b><size="11">Interval note: 4-5</size></b>
+<b><size="11">------------------</size></b>
+<b><size="11">Protocol total: 62.00 LEI</size></b>
+<b><size="11">==================</size></b>
+<b><size="11">OPERATOR TURĂ: OSPATAR2 -</size></b>
+<b><size="11">ÎNCHIS DE ȘEF SALĂ: SEF SALA1 -</size></b>
