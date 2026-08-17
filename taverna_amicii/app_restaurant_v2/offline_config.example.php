@@ -40,6 +40,7 @@ return [
         'automatic' => true,
         'automatic_interval_seconds' => 30,
         'api_url' => 'https://domeniu.ro/api/offline-tablet-orders.php',
+        'twofa_api_url' => 'https://domeniu.ro/api/offline-tablet-2fa.php',
         'api_key' => 'CHEIA_CLIENTULUI',
         'client_id' => 1008,
         'cod_locatie' => 1,
