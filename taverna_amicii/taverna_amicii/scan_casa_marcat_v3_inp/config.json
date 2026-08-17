@@ -1,7 +1,7 @@
 {
   "client_id": "1008",
-  "CasaMarcatFolder": "C:\\xampp\\htdocs\\instalari_offline_restaurant\\api_offline_taverna_amicii\\bonuri_trimise",
-  "BackupFolder": "C:\\xampp\\htdocs\\instalari_offline_restaurant\\api_offline_taverna_amicii\\bonuri_backup",
+  "CasaMarcatFolder": "C:\\xampp\\htdocs\\github\\instalari_offline_ecogest\\taverna_amicii\\api_offline_taverna_amicii\\bonuri_trimise",
+  "BackupFolder": "C:\\xampp\\htdocs\\github\\instalari_offline_ecogest\\taverna_amicii\\api_offline_taverna_amicii\\bonuri_backup",
   "LocationId": "1",
   "Extensie": "inp"
 }

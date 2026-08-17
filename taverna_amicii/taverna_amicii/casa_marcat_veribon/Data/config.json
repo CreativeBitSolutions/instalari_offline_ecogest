@@ -3,27 +3,27 @@
   "LocationId": "1",
   "Pairs": [
     {
-      "Input": "C:\\xampp\\htdocs\\instalari_offline_restaurant\\api_offline_taverna_amicii\\raspunsuri_casa_marcat\\BonANSWER",
-      "Output": "C:\\xampp\\htdocs\\instalari_offline_restaurant\\api_offline_taverna_amicii\\raspunsuri_casa_marcat_procesate\\BonANSWER"
+      "Input": "C:\\xampp\\htdocs\\instalari_offline_ecogest\\api_offline_taverna_amicii\\raspunsuri_casa_marcat\\BonANSWER",
+      "Output": "C:\\xampp\\htdocs\\instalari_offline_ecogest\\api_offline_taverna_amicii\\raspunsuri_casa_marcat_procesate\\BonANSWER"
     },
     {
-      "Input": "C:\\xampp\\htdocs\\instalari_offline_restaurant\\api_offline_taverna_amicii\\raspunsuri_casa_marcat\\BonERR",
-      "Output": "C:\\xampp\\htdocs\\instalari_offline_restaurant\\api_offline_taverna_amicii\\raspunsuri_casa_marcat_procesate\\BonERR"
+      "Input": "C:\\xampp\\htdocs\\instalari_offline_ecogest\\api_offline_taverna_amicii\\raspunsuri_casa_marcat\\BonERR",
+      "Output": "C:\\xampp\\htdocs\\instalari_offline_ecogest\\api_offline_taverna_amicii\\raspunsuri_casa_marcat_procesate\\BonERR"
     },
     {
-      "Input": "C:\\xampp\\htdocs\\instalari_offline_restaurant\\api_offline_taverna_amicii\\raspunsuri_casa_marcat\\BonOK",
-      "Output": "C:\\xampp\\htdocs\\instalari_offline_restaurant\\api_offline_taverna_amicii\\raspunsuri_casa_marcat_procesate\\BonOK"
+      "Input": "C:\\xampp\\htdocs\\instalari_offline_ecogest\\api_offline_taverna_amicii\\raspunsuri_casa_marcat\\BonOK",
+      "Output": "C:\\xampp\\htdocs\\instalari_offline_ecogest\\api_offline_taverna_amicii\\raspunsuri_casa_marcat_procesate\\BonOK"
     }
   ],
   "InputFolders": [
-    "C:\\xampp\\htdocs\\instalari_offline_restaurant\\api_offline_taverna_amicii\\raspunsuri_casa_marcat\\BonANSWER",
-    "C:\\xampp\\htdocs\\instalari_offline_restaurant\\api_offline_taverna_amicii\\raspunsuri_casa_marcat\\BonERR",
-    "C:\\xampp\\htdocs\\instalari_offline_restaurant\\api_offline_taverna_amicii\\raspunsuri_casa_marcat\\BonOK"
+    "C:\\xampp\\htdocs\\instalari_offline_ecogest\\api_offline_taverna_amicii\\raspunsuri_casa_marcat\\BonANSWER",
+    "C:\\xampp\\htdocs\\instalari_offline_ecogest\\api_offline_taverna_amicii\\raspunsuri_casa_marcat\\BonERR",
+    "C:\\xampp\\htdocs\\instalari_offline_ecogest\\api_offline_taverna_amicii\\raspunsuri_casa_marcat\\BonOK"
   ],
   "OutputFolders": [
-    "C:\\xampp\\htdocs\\instalari_offline_restaurant\\api_offline_taverna_amicii\\raspunsuri_casa_marcat_procesate\\BonANSWER",
-    "C:\\xampp\\htdocs\\instalari_offline_restaurant\\api_offline_taverna_amicii\\raspunsuri_casa_marcat_procesate\\BonERR",
-    "C:\\xampp\\htdocs\\instalari_offline_restaurant\\api_offline_taverna_amicii\\raspunsuri_casa_marcat_procesate\\BonOK"
+    "C:\\xampp\\htdocs\\instalari_offline_ecogest\\api_offline_taverna_amicii\\raspunsuri_casa_marcat_procesate\\BonANSWER",
+    "C:\\xampp\\htdocs\\instalari_offline_ecogest\\api_offline_taverna_amicii\\raspunsuri_casa_marcat_procesate\\BonERR",
+    "C:\\xampp\\htdocs\\instalari_offline_ecogest\\api_offline_taverna_amicii\\raspunsuri_casa_marcat_procesate\\BonOK"
   ],
   "PollIntervalSeconds": 5,
   "StartOnStartup": true,

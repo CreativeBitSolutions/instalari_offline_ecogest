@@ -1,6 +1,6 @@
 {
-  "RestaurantPath": "C:\\xampp\\htdocs\\instalari_offline_restaurant\\taverna_amicii\\app_restaurant_v2",
-  "DatabasePath": "C:\\xampp\\htdocs\\instalari_offline_restaurant\\api_offline_taverna_amicii\\restaurant.sqlite",
+  "RestaurantPath": "C:\\xampp\\htdocs\\github\\instalari_offline_ecogest\\taverna_amicii\\taverna_amicii\\app_restaurant_v2",
+  "DatabasePath": "C:\\xampp\\htdocs\\github\\instalari_offline_ecogest\\taverna_amicii\\api_offline_taverna_amicii\\restaurant.sqlite",
   "ProductsApiUrl": "https://agecs.agecs.in/sincronizare_online_app_restaurant/sincronizare_date_offline.php",
   "ClientId": 1008,
   "LocationId": 1,

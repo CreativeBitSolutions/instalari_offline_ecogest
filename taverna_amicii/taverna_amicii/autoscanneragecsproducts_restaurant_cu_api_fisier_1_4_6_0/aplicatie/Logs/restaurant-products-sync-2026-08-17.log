@@ -10,3 +10,46 @@
 [2026-08-17 15:54:02] Calculez semnătura produselor locale.
 [2026-08-17 15:54:02] Verific nomenclatorul disponibil online.
 [2026-08-17 15:54:02] Nomenclatorul este deja sincronizat. Produse verificate: 361.
+[2026-08-17 16:14:13] Aplicația a pornit.
+[2026-08-17 16:14:13] Pornesc scanarea, sursă: pornire automată.
+[2026-08-17 16:14:13] Scanarea a eșuat: Folderul restaurantului nu există: C:\xampp\htdocs\instalari_offline_ecogest\taverna_amicii\app_restaurant_v2
+[2026-08-17 16:14:27] Setările nu au fost salvate: Fișierul bazei de date indicat prin DatabasePath în settings.json nu există.
+[2026-08-17 16:14:46] Aplicația a pornit.
+[2026-08-17 16:14:46] Pornesc scanarea, sursă: pornire automată.
+[2026-08-17 16:14:46] Scanarea a eșuat: Folderul restaurantului nu există: C:\xampp\htdocs\instalari_offline_ecogest\taverna_amicii\app_restaurant_v2
+[2026-08-17 16:14:47] Setările nu au fost salvate: Folderul restaurantului nu există.
+[2026-08-17 16:15:01] Setările nu au fost salvate: Fișierul bazei de date indicat prin DatabasePath în settings.json nu există.
+[2026-08-17 16:15:35] Setările nu au fost salvate: Fișierul bazei de date indicat prin DatabasePath în settings.json nu există.
+[2026-08-17 16:15:41] Aplicația a pornit.
+[2026-08-17 16:15:41] Pornesc scanarea, sursă: pornire automată.
+[2026-08-17 16:15:41] Scanarea a eșuat: Folderul restaurantului nu există: C:\xampp\htdocs\instalari_offline_ecogest\taverna_amicii\app_restaurant_v2
+[2026-08-17 16:15:42] Setările nu au fost salvate: Folderul restaurantului nu există.
+[2026-08-17 16:15:52] Setările nu au fost salvate: Fișierul bazei de date indicat prin DatabasePath în settings.json nu există.
+[2026-08-17 16:16:42] Setările nu au fost salvate: Fișierul bazei de date indicat prin DatabasePath în settings.json nu există.
+[2026-08-17 16:16:52] Aplicația a pornit.
+[2026-08-17 16:16:52] Pornesc scanarea, sursă: pornire automată.
+[2026-08-17 16:16:52] Scanarea a eșuat: Folderul restaurantului nu există: C:\xampp\htdocs\github\instalari_offline_ecogest\taverna_amicii\app_restaurant_v2
+[2026-08-17 16:16:53] Setările nu au fost salvate: Folderul restaurantului nu există.
+[2026-08-17 16:17:11] Setările au fost salvate. Interval: 10 minute.
+[2026-08-17 16:17:15] Setările au fost salvate. Interval: 10 minute.
+[2026-08-17 16:17:15] Pornesc scanarea, sursă: comandă manuală.
+[2026-08-17 16:17:15] Deschid baza locală.
+[2026-08-17 16:17:15] Calculez semnătura produselor locale.
+[2026-08-17 16:17:15] Verific nomenclatorul disponibil online.
+[2026-08-17 16:17:15] Nomenclatorul este deja sincronizat. Produse verificate: 361.
+[2026-08-17 16:17:37] Setările au fost salvate. Interval: 10 minute.
+[2026-08-17 16:17:37] Pornesc scanarea, sursă: comandă manuală.
+[2026-08-17 16:17:37] Deschid baza locală.
+[2026-08-17 16:17:37] Calculez semnătura produselor locale.
+[2026-08-17 16:17:38] Verific nomenclatorul disponibil online.
+[2026-08-17 16:17:38] Import produse început. Online: 362 produse.
+[2026-08-17 16:17:38] Copie de siguranță creată: C:\xampp\htdocs\github\instalari_offline_ecogest\taverna_amicii\api_offline_taverna_amicii\backups_products_sync\restaurant_before_products_sync_20260817_161738.sqlite
+[2026-08-17 16:17:38] Import finalizat: 1 adăugate, 0 actualizate, 0 șterse, 361 neschimbate.
+[2026-08-17 16:17:45] Setările au fost salvate. Interval: 10 minute.
+[2026-08-17 16:17:45] Pornesc scanarea, sursă: comandă manuală.
+[2026-08-17 16:17:45] Deschid baza locală.
+[2026-08-17 16:17:45] Calculez semnătura produselor locale.
+[2026-08-17 16:17:45] Verific nomenclatorul disponibil online.
+[2026-08-17 16:17:45] Import produse început. Online: 361 produse.
+[2026-08-17 16:17:45] Copie de siguranță creată: C:\xampp\htdocs\github\instalari_offline_ecogest\taverna_amicii\api_offline_taverna_amicii\backups_products_sync\restaurant_before_products_sync_20260817_161745.sqlite
+[2026-08-17 16:17:45] Import finalizat: 0 adăugate, 0 actualizate, 1 șterse, 361 neschimbate.

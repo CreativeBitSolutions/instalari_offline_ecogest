@@ -5,9 +5,9 @@
 - Client: `1008`
 - Locație: `1`
 - Sufix operațional: `12`
-- Aplicație: `C:\xampp\htdocs\instalari_offline_restaurant\taverna_amicii\app_restaurant_v2`
-- API local și stocare: `C:\xampp\htdocs\instalari_offline_restaurant\api_offline_taverna_amicii`
-- Bază SQLite: `C:\xampp\htdocs\instalari_offline_restaurant\api_offline_taverna_amicii\restaurant.sqlite`
+- Aplicație: `C:\xampp\htdocs\instalari_offline_ecogest\taverna_amicii\app_restaurant_v2`
+- API local și stocare: `C:\xampp\htdocs\instalari_offline_ecogest\api_offline_taverna_amicii`
+- Bază SQLite: `C:\xampp\htdocs\instalari_offline_ecogest\api_offline_taverna_amicii\restaurant.sqlite`
 - Shortcut: `INTERFATA VANZARE - TAVERNA AMICII.url`
 
 ## Structura instalării

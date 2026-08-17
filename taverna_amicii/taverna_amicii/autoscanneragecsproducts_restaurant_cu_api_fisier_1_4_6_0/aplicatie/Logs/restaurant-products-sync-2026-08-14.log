@@ -37,7 +37,7 @@
 [2026-08-14 13:17:08] Calculez semnătura produselor locale.
 [2026-08-14 13:17:08] Verific nomenclatorul disponibil online.
 [2026-08-14 13:17:08] Import produse început. Online: 361 produse.
-[2026-08-14 13:17:09] Copie de siguranță creată: C:\xampp\htdocs\instalari_offline_restaurant\api_offline_taverna_amicii\backups_products_sync\restaurant_before_products_sync_20260814_131708.sqlite
+[2026-08-14 13:17:09] Copie de siguranță creată: C:\xampp\htdocs\instalari_offline_ecogest\api_offline_taverna_amicii\backups_products_sync\restaurant_before_products_sync_20260814_131708.sqlite
 [2026-08-14 13:17:09] Nomenclatorul este deja sincronizat. Produse verificate: 361.
 [2026-08-14 13:17:47] Setările au fost salvate. Interval: 10 minute.
 [2026-08-14 13:17:50] Setările au fost salvate. Interval: 10 minute.
@@ -46,7 +46,7 @@
 [2026-08-14 13:17:50] Calculez semnătura produselor locale.
 [2026-08-14 13:17:50] Verific nomenclatorul disponibil online.
 [2026-08-14 13:17:50] Import produse început. Online: 361 produse.
-[2026-08-14 13:17:50] Copie de siguranță creată: C:\xampp\htdocs\instalari_offline_restaurant\api_offline_taverna_amicii\backups_products_sync\restaurant_before_products_sync_20260814_131750.sqlite
+[2026-08-14 13:17:50] Copie de siguranță creată: C:\xampp\htdocs\instalari_offline_ecogest\api_offline_taverna_amicii\backups_products_sync\restaurant_before_products_sync_20260814_131750.sqlite
 [2026-08-14 13:17:50] Import finalizat: 0 adăugate, 1 actualizate, 0 șterse, 360 neschimbate.
 [2026-08-14 13:27:47] Pornesc scanarea, sursă: programare automată.
 [2026-08-14 13:27:47] Deschid baza locală.
