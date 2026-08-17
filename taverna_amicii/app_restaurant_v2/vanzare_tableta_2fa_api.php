@@ -17,6 +17,105 @@ function offline_2fa_out(array $payload, int $httpCode = 200): void
     exit;
 }
 
+function offline_2fa_table_columns(PDO $pdo, string $table): array
+{
+    if (!preg_match('/^[A-Za-z0-9_]+$/', $table)) {
+        throw new RuntimeException('Numele tabelului admins este invalid.');
+    }
+
+    $columns = [];
+    $stmt = $pdo->query('PRAGMA table_info("' . $table . '")');
+    foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+        $name = (string)($row['name'] ?? '');
+        if ($name !== '') {
+            $columns[$name] = true;
+        }
+    }
+    return $columns;
+}
+
+function offline_2fa_sync_tablet_user(PDO $pdo, string $table, array $tabletUser, int $operatorId, int $codLocatie): array
+{
+    $tabletAdminId = (int)($tabletUser['admin_id'] ?? 0);
+    if ($tabletAdminId <= 0) {
+        throw new RuntimeException('AGECS online nu a transmis admin_id pentru utilizatorul tableta.');
+    }
+
+    $columns = offline_2fa_table_columns($pdo, $table);
+    if (!isset($columns['admin_id'])) {
+        throw new RuntimeException('Tabela locala admins nu contine admin_id.');
+    }
+
+    $select = $pdo->prepare('SELECT * FROM "' . $table . '" WHERE admin_id = ? LIMIT 1');
+    $select->execute([$tabletAdminId]);
+    $existing = $select->fetch(PDO::FETCH_ASSOC) ?: null;
+    if ($existing) {
+        $existingRank = strtolower(trim((string)($existing['rank'] ?? '')));
+        if ($existingRank !== '' && $existingRank !== 'tableta') {
+            throw new RuntimeException('admin_id ' . $tabletAdminId . ' exista local si nu este utilizator tableta.');
+        }
+    }
+
+    // Nu sincronizam parola. Tableta se autentifica online; local pastram doar identitatea si asocierea.
+    $values = [
+        'admin_firstname' => (string)($tabletUser['admin_firstname'] ?? ''),
+        'admin_lastname' => (string)($tabletUser['admin_lastname'] ?? ''),
+        'admin_email_address' => (string)($tabletUser['admin_email_address'] ?? ''),
+        'rank' => 'tableta',
+        'nr_tableta' => $operatorId,
+        'cod_tableta' => $operatorId,
+        'locatie' => $codLocatie,
+        'cod_locatie' => $codLocatie,
+        'conectat' => 0,
+        'lucreaza_la' => 'restaurant_tableta',
+        'cod_2fa_tableta' => (int)($tabletUser['cod_2fa_tableta'] ?? 0),
+        'data_generare_cod_2fa_tableta' => (string)($tabletUser['data_generare_cod_2fa_tableta'] ?? '0000-00-00 00:00:00'),
+    ];
+
+    foreach (array_keys($values) as $column) {
+        if (!isset($columns[$column])) {
+            unset($values[$column]);
+        }
+    }
+
+    if ($existing) {
+        if ($values) {
+            $sets = [];
+            $params = [];
+            foreach ($values as $column => $value) {
+                $sets[] = '"' . $column . '" = ?';
+                $params[] = $value;
+            }
+            $params[] = $tabletAdminId;
+            $update = $pdo->prepare('UPDATE "' . $table . '" SET ' . implode(', ', $sets) . ' WHERE admin_id = ?');
+            $update->execute($params);
+        }
+        $change = 'updated';
+    } else {
+        $insertValues = ['admin_id' => $tabletAdminId] + $values;
+        $columnSql = [];
+        $placeholders = [];
+        $params = [];
+        foreach ($insertValues as $column => $value) {
+            $columnSql[] = '"' . $column . '"';
+            $placeholders[] = '?';
+            $params[] = $value;
+        }
+        $insert = $pdo->prepare(
+            'INSERT INTO "' . $table . '" (' . implode(', ', $columnSql) . ') VALUES (' . implode(', ', $placeholders) . ')'
+        );
+        $insert->execute($params);
+        $change = 'inserted';
+    }
+
+    return [
+        'status' => 'success',
+        'change' => $change,
+        'tablet_admin_id' => $tabletAdminId,
+        'owner_operator_id' => $operatorId,
+    ];
+}
+
 try {
     if (!function_exists('restaurantIsOfflineSqlite') || !restaurantIsOfflineSqlite()) {
         offline_2fa_out(['status' => 'error', 'message' => 'Endpoint disponibil doar in instalarea offline.'], 409);
@@ -124,6 +223,24 @@ try {
             'status' => 'error',
             'message' => $message !== '' ? $message : ('AGECS online HTTP ' . $httpCode),
         ], $httpCode >= 400 && $httpCode <= 599 ? $httpCode : 502);
+    }
+
+    if (is_array($response['tablet_user'] ?? null)) {
+        try {
+            $response['local_tablet_sync'] = offline_2fa_sync_tablet_user(
+                $pdo,
+                isset($tabel_final_admins) ? (string)$tabel_final_admins : 'admins_12',
+                $response['tablet_user'],
+                $operatorId,
+                $codLocatie
+            );
+        } catch (Throwable $syncError) {
+            error_log('[offline-vanzare-tableta-2fa][sync-user] ' . $syncError->getMessage());
+            $response['local_tablet_sync'] = [
+                'status' => 'error',
+                'message' => $syncError->getMessage(),
+            ];
+        }
     }
 
     offline_2fa_out($response, 200);
