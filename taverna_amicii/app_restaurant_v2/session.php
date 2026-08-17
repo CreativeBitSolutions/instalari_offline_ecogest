@@ -22,6 +22,28 @@ $zstmt->execute([':admin_id' => $user_check]);
 	  
   	    $live_id=12;
 
+// In instalarea SQLite offline, incarca UI-ul 2FA doar pe cele doua ecrane unde este necesar.
+// Scriptul este injectat la finalul documentului pentru a nu modifica markup-ul paginilor existente.
+$currentScript = basename((string)($_SERVER['SCRIPT_NAME'] ?? ''));
+$offline2faPages = ['vanzare_restaurant.php', 'vanzare_importa_comanda_tableta.php'];
+if (
+    function_exists('restaurantIsOfflineSqlite')
+    && restaurantIsOfflineSqlite()
+    && in_array($currentScript, $offline2faPages, true)
+) {
+    ob_start(function ($html) {
+        $tag = '<script src="offline_tablet_2fa_ui.js?v=20260817"></script>';
+        if (stripos($html, 'offline_tablet_2fa_ui.js') !== false) {
+            return $html;
+        }
+        $bodyPos = strripos($html, '</body>');
+        if ($bodyPos !== false) {
+            return substr($html, 0, $bodyPos) . $tag . substr($html, $bodyPos);
+        }
+        return $html . $tag;
+    });
+}
+
    
    
 			 
