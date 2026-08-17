@@ -1,4 +1,0 @@
-offline_config.local.php
-includes/woo_sync_config.local.php
-data/*.sqlite
-data/*.sqlite-*
