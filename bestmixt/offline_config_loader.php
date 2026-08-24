@@ -63,6 +63,12 @@ if (!function_exists('offline_config_all')) {
                 throw new RuntimeException('Configurarea externa nu contine cheia obligatorie: ' . $key);
             }
         }
+
+        $caBundlePath = trim((string)($decoded['ca_bundle_path'] ?? ''));
+        if ($caBundlePath !== '' && is_file($caBundlePath)) {
+            putenv('CURL_CA_BUNDLE=' . $caBundlePath);
+            putenv('SSL_CERT_FILE=' . $caBundlePath);
+        }
         $config = $decoded;
         return $config;
     }

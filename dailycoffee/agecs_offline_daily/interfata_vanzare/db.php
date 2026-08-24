@@ -2,6 +2,8 @@
 // db.php
 
 require_once __DIR__ . '/config_loader.php';
+require_once __DIR__ . '/offline_license_lib.php';
+offline_license_enforce();
 
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');

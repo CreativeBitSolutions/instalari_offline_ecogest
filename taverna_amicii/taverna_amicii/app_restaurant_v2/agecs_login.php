@@ -131,7 +131,10 @@ $cust_id = 12; // rămâne neschimbat
     <div class="d-flex flex-column align-items-center text-center text-white mb-4">
         
         <h5 class="mb-2">Locație <?php echo $_SESSION['cod_locatie']; ?></h5>
-        <a class="btn btn-outline-light btn-sm" href="offline_products_sync.php?force=1&rewrite_existing=1">Sincronizare Produse</a>
+        <div class="d-flex flex-wrap justify-content-center" style="gap:.5rem;">
+            <a class="btn btn-outline-light btn-sm" href="offline_products_sync.php?force=1&rewrite_existing=1">Sincronizare Produse</a>
+            <a class="btn btn-outline-light btn-sm" href="offline_license_check.php">Verifică licența offline</a>
+        </div>
     </div>
 
     <!---------------------- ZONA PRINCIPALĂ: GRID + KEYPAD ---------------------->

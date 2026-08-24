@@ -128,10 +128,10 @@ $unitate_masura = ($row['um'] == 'H87' || empty($row['um'])) ? 'buc' : htmlspeci
         <div class="tab-pane fade" id="cif-tab-content" role="tabpanel" aria-labelledby="cif-tab-link">
             <div class="cif-container">
                 <div class="input-group">
-                    <input type="text" id="cif_client_input" class="form-control" placeholder="Introduceți C.I.F..." value="<?php echo $cif_curent; ?>">
+                    <input type="text" id="cif_client_input" class="form-control offline-cui-trigger" placeholder="Apăsați pentru verificare CUI" value="<?php echo $cif_curent; ?>" readonly>
                     <div class="input-group-append">
-                        <button id="cif-kbd-btn" type="button" class="btn btn-secondary cif-kbd-btn" title="Deschide tastatura C.I.F.">
-                            <i class="fas fa-keyboard"></i>
+                        <button id="cif-kbd-btn" type="button" class="btn btn-secondary cif-kbd-btn" title="Verifică CUI client">
+                            <i class="fas fa-search" aria-hidden="true"></i>
                         </button>
                     </div>
                 </div>

@@ -32,6 +32,9 @@ if (!defined('RESTAURANT_OFFLINE_API_DIR')) {
     define('RESTAURANT_OFFLINE_API_DIR', rtrim(str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $restaurantOfflineApiPath), DIRECTORY_SEPARATOR));
 }
 
+require_once __DIR__ . '/offline_license_lib.php';
+offline_license_enforce();
+
 if (!defined('RESTAURANT_DB_DRIVER')) {
     define('RESTAURANT_DB_DRIVER', $restaurantDriver);
 }

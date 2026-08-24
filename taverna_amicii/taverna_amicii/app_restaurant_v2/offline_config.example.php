@@ -4,10 +4,16 @@ return [
     'live_id' => 12,
     'client_id' => 1008,
     'cod_locatie' => 1,
+    'installation_uuid' => 'identificator-unic-instalare',
+    'app_name' => 'App Restaurant Offline',
     'offline_api_path' => dirname(dirname(__DIR__)) . '/api_offline_taverna_amicii',
     'sqlite_path' => dirname(dirname(__DIR__)) . '/api_offline_taverna_amicii/restaurant.sqlite',
     'sync_export_path' => dirname(dirname(__DIR__)) . '/api_offline_taverna_amicii/offline_sync_exports',
     'no_session_validation' => 0,
+    'offline_license' => [
+        'api_url' => 'https://domeniu.ro/sincronizare_online_app_vanzare/api_verificare_licenta_offline.php',
+        'valid_days' => 30,
+    ],
     'online_products_sync' => [
         'enabled' => false,
         'auto_check' => false,

@@ -10,16 +10,6 @@ agecs_ensure_det_note_departament_listare(
     isset($tabel_final_det_note) ? $tabel_final_det_note : 'det_note'
 );
 
-if (isset($_POST['save_cif_client'])) {
-    $cif_from_modal = isset($_POST['cif_client_modal']) ? $_POST['cif_client_modal'] : '';
-    if (!is_string($cif_from_modal)) { $cif_from_modal = ''; }
-    // Normalizez: uppercase și fără spații
-    $cif_from_modal = strtoupper(trim(preg_replace('/\s+/', '', $cif_from_modal)));
-    $_SESSION['cif_client'] = $cif_from_modal;
-    // opțional: după salvare, reîncarc pagina ca să se vadă valoarea
-    echo "<script>location.href='vanzare_restaurant.php'</script>";
-    exit;
-}
 // === END: Salvare CIF/CUI client din modal personalizat (ADĂUGAT) ===
 // verific dacă există cod_locatie și admin_id în sesiune
 if (!isset($_SESSION['cod_locatie'], $_SESSION['admin_id'])) {

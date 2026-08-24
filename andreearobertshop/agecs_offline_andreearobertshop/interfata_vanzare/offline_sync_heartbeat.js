@@ -7,8 +7,24 @@
     window.__agecsOfflineSyncStarted = true;
 
     var running = false;
-    var intervalMs = 15000;
+    var timer = null;
+    var idleIntervalMs = 30000;
+    var retryIntervalMs = 15000;
+    var drainIntervalMs = 2500;
+    var licenseIntervalMs = 3600000;
+    var licenseRunning = false;
+    var licenseTimer = null;
     var badge = null;
+
+    function schedule(delay) {
+        window.clearTimeout(timer);
+        timer = window.setTimeout(tick, delay);
+    }
+
+    function scheduleLicense(delay) {
+        window.clearTimeout(licenseTimer);
+        licenseTimer = window.setTimeout(licenseTick, delay);
+    }
 
     function ensureBadge() {
         if (badge || !document.body) {
@@ -51,6 +67,7 @@
             return;
         }
         running = true;
+        var nextDelay = idleIntervalMs;
         var controller = window.AbortController ? new AbortController() : null;
         var timeout = window.setTimeout(function () { if (controller) { controller.abort(); } }, 14000);
         fetch('offline_sync_worker.php', {
@@ -60,18 +77,62 @@
             signal: controller ? controller.signal : undefined
         }).then(function (response) {
             return response.json();
-        }).then(render).catch(function () {
+        }).then(function (data) {
+            render(data);
+            var queue = data && data.queue ? data.queue : {};
+            var active = (queue.pending || 0) + (queue.sending || 0);
+            if (active > 0) {
+                nextDelay = drainIntervalMs;
+            } else if ((queue.retry || 0) > 0) {
+                nextDelay = retryIntervalMs;
+            }
+        }).catch(function () {
+            nextDelay = retryIntervalMs;
         }).finally(function () {
             window.clearTimeout(timeout);
             running = false;
+            schedule(nextDelay);
+        });
+    }
+
+    function licenseTick() {
+        if (licenseRunning) {
+            return;
+        }
+        licenseRunning = true;
+        fetch('offline_license_background.php', {
+            method: 'POST',
+            headers: { 'Accept': 'application/json' },
+            cache: 'no-store'
+        }).then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            if (data && data.status === 'refreshed' && /offline_license_check\.php$/i.test(window.location.pathname)) {
+                window.location.reload();
+            }
+        }).catch(function () {
+        }).finally(function () {
+            licenseRunning = false;
+            scheduleLicense(licenseIntervalMs);
         });
     }
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function () { window.setTimeout(tick, 2000); });
+        document.addEventListener('DOMContentLoaded', function () {
+            schedule(2000);
+            scheduleLicense(5000);
+        });
     } else {
-        window.setTimeout(tick, 2000);
+        schedule(2000);
+        scheduleLicense(5000);
     }
-    window.setInterval(tick, intervalMs);
+    window.addEventListener('online', function () {
+        schedule(250);
+        scheduleLicense(500);
+    });
+    document.addEventListener('visibilitychange', function () {
+        if (!document.hidden) {
+            schedule(250);
+        }
+    });
 }());
-

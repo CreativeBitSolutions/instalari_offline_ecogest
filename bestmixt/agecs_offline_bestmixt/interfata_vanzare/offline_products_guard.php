@@ -454,7 +454,7 @@ function opg_fetch_online_hash(array $config, string $localHash): array
 
     if (extension_loaded('curl')) {
         $ch = curl_init($url);
-        curl_setopt_array($ch, [
+        $curlOptions = [
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_CONNECTTIMEOUT => $config['timeout_seconds'],
@@ -462,7 +462,11 @@ function opg_fetch_online_hash(array $config, string $localHash): array
             CURLOPT_HTTPHEADER => $headers,
             CURLOPT_SSL_VERIFYPEER => $config['verify_ssl'],
             CURLOPT_SSL_VERIFYHOST => $config['verify_ssl'] ? 2 : 0,
-        ]);
+        ];
+        if ($config['verify_ssl'] && $config['ca_bundle_path'] !== '' && is_file($config['ca_bundle_path'])) {
+            $curlOptions[CURLOPT_CAINFO] = $config['ca_bundle_path'];
+        }
+        curl_setopt_array($ch, $curlOptions);
         $raw = curl_exec($ch);
         $error = curl_error($ch);
         $httpCode = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -472,16 +476,20 @@ function opg_fetch_online_hash(array $config, string $localHash): array
             throw new RuntimeException('Endpointul de produse nu a putut fi apelat: ' . $error);
         }
     } else {
+        $sslOptions = [
+            'verify_peer' => $config['verify_ssl'],
+            'verify_peer_name' => $config['verify_ssl'],
+        ];
+        if ($config['verify_ssl'] && $config['ca_bundle_path'] !== '' && is_file($config['ca_bundle_path'])) {
+            $sslOptions['cafile'] = $config['ca_bundle_path'];
+        }
         $context = stream_context_create([
             'http' => [
                 'method' => 'GET',
                 'timeout' => $config['timeout_seconds'],
                 'header' => implode("\r\n", $headers),
             ],
-            'ssl' => [
-                'verify_peer' => $config['verify_ssl'],
-                'verify_peer_name' => $config['verify_ssl'],
-            ],
+            'ssl' => $sslOptions,
         ]);
         $raw = @file_get_contents($url, false, $context);
         $httpCode = 0;
@@ -529,7 +537,7 @@ function opg_fetch_online_products_full(array $config, string $localHash): array
 
     if (extension_loaded('curl')) {
         $ch = curl_init($url);
-        curl_setopt_array($ch, [
+        $curlOptions = [
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_CONNECTTIMEOUT => $config['timeout_seconds'],
@@ -537,7 +545,11 @@ function opg_fetch_online_products_full(array $config, string $localHash): array
             CURLOPT_HTTPHEADER => $headers,
             CURLOPT_SSL_VERIFYPEER => $config['verify_ssl'],
             CURLOPT_SSL_VERIFYHOST => $config['verify_ssl'] ? 2 : 0,
-        ]);
+        ];
+        if ($config['verify_ssl'] && $config['ca_bundle_path'] !== '' && is_file($config['ca_bundle_path'])) {
+            $curlOptions[CURLOPT_CAINFO] = $config['ca_bundle_path'];
+        }
+        curl_setopt_array($ch, $curlOptions);
         $raw = curl_exec($ch);
         $error = curl_error($ch);
         $httpCode = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -547,16 +559,20 @@ function opg_fetch_online_products_full(array $config, string $localHash): array
             throw new RuntimeException('Endpointul de produse nu a putut fi apelat: ' . $error);
         }
     } else {
+        $sslOptions = [
+            'verify_peer' => $config['verify_ssl'],
+            'verify_peer_name' => $config['verify_ssl'],
+        ];
+        if ($config['verify_ssl'] && $config['ca_bundle_path'] !== '' && is_file($config['ca_bundle_path'])) {
+            $sslOptions['cafile'] = $config['ca_bundle_path'];
+        }
         $context = stream_context_create([
             'http' => [
                 'method' => 'GET',
                 'timeout' => $config['timeout_seconds'],
                 'header' => implode("\r\n", $headers),
             ],
-            'ssl' => [
-                'verify_peer' => $config['verify_ssl'],
-                'verify_peer_name' => $config['verify_ssl'],
-            ],
+            'ssl' => $sslOptions,
         ]);
         $raw = @file_get_contents($url, false, $context);
         $httpCode = 0;
@@ -1040,6 +1056,11 @@ function opg_products_sync_config(array $restaurantConfig): array
     $syncConfig = isset($restaurantConfig['online_products_sync']) && is_array($restaurantConfig['online_products_sync'])
         ? $restaurantConfig['online_products_sync']
         : [];
+    $apiRoot = trim((string)($restaurantConfig['api_root_absolute'] ?? $restaurantConfig['offline_api_path'] ?? ''));
+    $caBundlePath = trim((string)($syncConfig['ca_bundle_path'] ?? $restaurantConfig['ca_bundle_path'] ?? ''));
+    if ($caBundlePath === '' && $apiRoot !== '') {
+        $caBundlePath = rtrim($apiRoot, "\\/") . DIRECTORY_SEPARATOR . 'certificates' . DIRECTORY_SEPARATOR . 'cacert.pem';
+    }
 
     return [
         'enabled' => opg_bool($syncConfig['enabled'] ?? false, false),
@@ -1051,6 +1072,7 @@ function opg_products_sync_config(array $restaurantConfig): array
         'dry_run' => opg_bool($syncConfig['dry_run'] ?? false, false),
         'send_api_key_in_query' => opg_bool($syncConfig['send_api_key_in_query'] ?? true, true),
         'verify_ssl' => opg_bool($syncConfig['verify_ssl'] ?? true, true),
+        'ca_bundle_path' => $caBundlePath,
     ];
 }
 

@@ -48,7 +48,8 @@ $_SESSION['cod_locatie'] = (int)$_config['cod_locatie_default'];
    
 	<div class="buttons">	<b>Conectare Locatie <?php echo $_SESSION['cod_locatie'];?></b>
 
-<a style="text-decoration:none; width:auto; height:auto; font-size:1em; padding:8px 16px;" class="button2" href="export_vanzari_offline.php">Export BD</a></div>
+<a style="text-decoration:none; width:auto; height:auto; font-size:1em; padding:8px 16px;" class="button2" href="export_vanzari_offline.php">Export BD</a>
+<a style="text-decoration:none; width:auto; height:auto; font-size:1em; padding:8px 16px;" class="button2" href="offline_license_check.php">VERIFICA LICENTA OFFLINE</a></div>
 <?php include __DIR__ . '/offline_pending_closures_notice.php'; ?>
 
 		<style>figure{

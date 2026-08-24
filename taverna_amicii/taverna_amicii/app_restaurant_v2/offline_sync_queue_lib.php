@@ -42,6 +42,7 @@ function restaurant_sync_queue_config(array $restaurantConfig): array
         'timeout_seconds' => max(5, (int)($sync['timeout_seconds'] ?? 45)),
         'send_api_key_in_query' => filter_var($sync['send_api_key_in_query'] ?? true, FILTER_VALIDATE_BOOL),
         'verify_ssl' => filter_var($sync['verify_ssl'] ?? true, FILTER_VALIDATE_BOOL),
+        'ca_bundle_path' => trim((string)($restaurantConfig['ca_bundle_path'] ?? '')),
         'debug_db' => filter_var($sync['debug_db'] ?? false, FILTER_VALIDATE_BOOL),
         'export_path' => (string)($restaurantConfig['sync_export_path'] ?? (RESTAURANT_OFFLINE_API_DIR . DIRECTORY_SEPARATOR . 'offline_sync_exports')),
     ];
@@ -400,7 +401,7 @@ function restaurant_sync_queue_send(string $json, array $config): array
     ];
 
     $ch = curl_init($url);
-    curl_setopt_array($ch, [
+    $curlOptions = [
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_POST => true,
@@ -410,7 +411,11 @@ function restaurant_sync_queue_send(string $json, array $config): array
         CURLOPT_HTTPHEADER => $headers,
         CURLOPT_SSL_VERIFYPEER => $config['verify_ssl'],
         CURLOPT_SSL_VERIFYHOST => $config['verify_ssl'] ? 2 : 0,
-    ]);
+    ];
+    if ($config['verify_ssl'] && $config['ca_bundle_path'] !== '' && is_file($config['ca_bundle_path'])) {
+        $curlOptions[CURLOPT_CAINFO] = $config['ca_bundle_path'];
+    }
+    curl_setopt_array($ch, $curlOptions);
     $raw = curl_exec($ch);
     $error = curl_error($ch);
     $errno = curl_errno($ch);

@@ -53,8 +53,9 @@ $_SESSION['cod_locatie'] = (int)$_config['cod_locatie_default'];
         </div>
         <b class="login-location-title">Conectare Locatie <?php echo $_SESSION['cod_locatie'];?></b>
         <div class="sync-actions">
-            <button type="button" class="sync-button" id="syncButton" title="Trimite la aplicatia online vanzarile si documentele generate offline">TRIMITE VANZARILE LA ONLINE</button>
+            <button type="button" class="sync-button" id="syncButton" title="Descopera operatiunile finalizate si trimite imediat pachetele din coada">TRIMITE ACUM DIN COADA</button>
             <a class="button2 export-button" href="export_vanzari_offline.php" title="Deschide exportul manual de vanzari in format XML sau SQL">DESCARCA FISIER VANZARI (XML / SQL)</a>
+            <a class="button2 license-button" href="offline_license_check.php" title="Afiseaza seria HDD si verifica licenta aplicatiei offline">VERIFICA LICENTA OFFLINE</a>
         </div>
         <span id="syncStatus" class="sync-status"></span>
         
@@ -101,15 +102,25 @@ margin-left:0.5em;
             syncButton.addEventListener('click', function() {
                 syncButton.disabled = true;
                 syncStatus.style.color = '#475569';
-                syncStatus.textContent = 'Sincronizare in curs...';
+                syncStatus.textContent = 'Se verifica si se trimite coada...';
 
-                fetch('sincronizare_offline/sincronizare_online.php', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                })
-                    .then(function(response) {
+                let requests = 0;
+                let sent = 0;
+                const maxRequests = 120;
+
+                function finish(message, isError) {
+                    syncStatus.style.color = isError ? '#991b1b' : '#166534';
+                    syncStatus.textContent = message;
+                    syncButton.disabled = false;
+                }
+
+                function drainNext() {
+                    requests += 1;
+                    fetch('offline_sync_worker.php', {
+                        method: 'POST',
+                        headers: { 'Accept': 'application/json' },
+                        cache: 'no-store'
+                    }).then(function(response) {
                         return response.text().then(function(text) {
                             let data = null;
                             try {
@@ -122,30 +133,40 @@ margin-left:0.5em;
                             }
                             return data;
                         });
-                    })
-                    .then(function(data) {
-                        let inserted = 0;
-                        const results = data && data.remote && data.remote.results ? data.remote.results : {};
-                        Object.keys(results).forEach(function(table) {
-                            inserted += parseInt(results[table].inserted || 0, 10);
-                        });
+                    }).then(function(data) {
+                        const queue = data && data.queue ? data.queue : {};
+                        const pending = parseInt(queue.pending || 0, 10);
+                        const sending = parseInt(queue.sending || 0, 10);
+                        const retry = parseInt(queue.retry || 0, 10);
+                        const blocked = parseInt(queue.blocked || 0, 10);
+                        if (data.status === 'sent') {
+                            sent += 1;
+                        }
 
-                        syncStatus.style.color = '#166534';
-                        const noteNoi = results.note ? parseInt(results.note.inserted || 0, 10) : 0;
-                        const detaliiNoi = results.det_note ? parseInt(results.det_note.inserted || 0, 10) : 0;
-                        const casaNoi = results.bonuri_casa_marcat ? parseInt(results.bonuri_casa_marcat.inserted || 0, 10) : 0;
-                        const miscariNoi = results.miscari ? parseInt(results.miscari.inserted || 0, 10) : 0;
-                        syncStatus.textContent = (inserted > 0
-                            ? 'Sincronizare finalizata. Randuri noi total: ' + inserted + ' (bonuri: ' + noteNoi + ', produse: ' + detaliiNoi + ', casa: ' + casaNoi + ', miscari: ' + miscariNoi + ').'
-                            : 'Sincronizare finalizata. Nu au fost randuri noi.');
-                    })
-                    .catch(function(error) {
-                        syncStatus.style.color = '#991b1b';
-                        syncStatus.textContent = error && error.message ? error.message : 'Sincronizarea a esuat.';
-                    })
-                    .finally(function() {
-                        syncButton.disabled = false;
+                        if ((pending + sending) > 0 && requests < maxRequests) {
+                            syncStatus.textContent = 'Pachete trimise: ' + sent + '. Ramase in coada: ' + (pending + sending + retry) + '.';
+                            window.setTimeout(drainNext, 600);
+                            return;
+                        }
+                        if (blocked > 0) {
+                            finish('Trimise acum: ' + sent + '. Pachete blocate: ' + blocked + '. Verifica situatia sincronizarii.', true);
+                            return;
+                        }
+                        if (retry > 0) {
+                            finish('Trimise acum: ' + sent + '. In asteptare pentru reincercare: ' + retry + '.', false);
+                            return;
+                        }
+                        if (requests >= maxRequests && pending > 0) {
+                            finish('Trimise acum: ' + sent + '. Coada va continua automat in fundal.', false);
+                            return;
+                        }
+                        finish(sent > 0 ? 'Coada a fost trimisa. Pachete confirmate: ' + sent + '.' : 'Coada este actualizata. Nu exista pachete noi de trimis.', false);
+                    }).catch(function(error) {
+                        finish(error && error.message ? error.message : 'Trimiterea cozii a esuat. Reincercarea automata ramane activa.', true);
                     });
+                }
+
+                drainNext();
             });
         }
     });

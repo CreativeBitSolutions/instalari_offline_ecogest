@@ -1,0 +1,396 @@
+.offline-login-page {
+  min-height: 100vh;
+  background: #293036 !important;
+  color: #20272d;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
+.offline-login-page .container {
+  width: 100%;
+  max-width: 1080px;
+  padding: 26px 22px 48px;
+}
+
+.offline-login-page .row {
+  justify-content: center;
+  margin: 0;
+}
+
+.offline-login-page .card.card-login {
+  width: min(860px, 100%);
+  max-width: 860px;
+  margin-top: 24px !important;
+  border: 1px solid #cfd6dc;
+  border-radius: 6px;
+  background: #ffffff;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.offline-login-page .card-header {
+  padding: 0;
+  border: 0;
+  background: #ffffff;
+}
+
+.login-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 92px;
+  padding: 18px 24px;
+  border-bottom: 1px solid #d9dfe4;
+  background: #f6f8f9;
+}
+
+.login-kicker,
+.section-heading span,
+.pin-heading span,
+.actions-label {
+  display: block;
+  margin: 0 0 4px;
+  color: #65717b;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.login-heading h1,
+.section-heading h2,
+.pin-heading h2 {
+  margin: 0;
+  color: #192126;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.login-heading h1 {
+  font-size: 27px;
+}
+
+.section-heading h2,
+.pin-heading h2 {
+  font-size: 21px;
+}
+
+.location-badge {
+  flex: 0 0 auto;
+  padding: 9px 13px;
+  border: 1px solid #9fb1bd;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #31424d;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.offline-login-page .buttons {
+  display: block;
+  padding: 20px 24px 22px;
+  text-align: left;
+}
+
+.offline-login-page .products-sync-notice {
+  display: grid;
+  grid-template-columns: minmax(150px, 1fr) minmax(250px, 1.6fr);
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e6c967;
+  border-radius: 5px;
+  background: #fff7da;
+  color: #5d4800;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.offline-login-page .products-sync-notice .products-sync-btn,
+.offline-login-page .buttons .button2,
+.offline-login-page .sync-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+  height: 46px;
+  min-height: 46px;
+  margin: 0;
+  padding: 8px 13px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  box-shadow: none;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.15;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.offline-login-page .products-sync-notice .products-sync-btn,
+.offline-login-page .sync-button {
+  background: #16734f;
+}
+
+.offline-login-page .products-sync-notice .products-sync-btn:hover,
+.offline-login-page .sync-button:hover {
+  background: #105d40;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.offline-login-page .actions-label {
+  margin: 18px 0 8px;
+}
+
+.offline-login-page .sync-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  width: 100%;
+}
+
+.offline-login-page .buttons .button2 {
+  background: #286f9f;
+}
+
+.offline-login-page .buttons .license-button {
+  border-color: #7b8790;
+  background: #66737c;
+}
+
+.offline-login-page .buttons .button2:hover {
+  background: #205a81;
+  color: #ffffff;
+  filter: none;
+}
+
+.offline-login-page .buttons .license-button:hover {
+  background: #515d65;
+}
+
+.offline-login-page .products-sync-btn:active,
+.offline-login-page .sync-button:active,
+.offline-login-page .buttons .button2:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+.offline-login-page .sync-status {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.operators-section {
+  padding: 20px 24px 24px;
+  border-top: 1px solid #d9dfe4;
+}
+
+.section-heading {
+  margin-bottom: 14px;
+}
+
+.operators-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.offline-login-page figure {
+  float: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  margin: 0;
+  padding: 13px;
+  border: 1px solid #d8dee3;
+  border-radius: 5px;
+  background: #f8f9fa;
+}
+
+.offline-login-page .my_button {
+  width: 98px;
+  height: 98px;
+  padding: 4px;
+  border: 2px solid #b9c3ca;
+  border-radius: 5px;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.offline-login-page .my_button img {
+  display: block;
+  width: 86px !important;
+  height: 86px !important;
+  object-fit: contain;
+}
+
+.offline-login-page .my_button:hover,
+.offline-login-page .my_button:focus,
+.offline-login-page .my_button.active {
+  outline: 0;
+  border-color: #16734f;
+  box-shadow: 0 0 0 3px rgba(22, 115, 79, 0.16);
+}
+
+.offline-login-page .my_button:disabled {
+  cursor: not-allowed;
+  filter: grayscale(1);
+  opacity: 0.5;
+}
+
+.offline-login-page figcaption {
+  width: 100%;
+  margin-top: 9px;
+  color: #20272d;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.25;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.offline-login-page hr {
+  display: none;
+}
+
+.offline-login-page .card-body {
+  padding: 0 24px 18px;
+}
+
+.offline-login-page .card-body h4,
+.offline-login-page h4[align="center"] {
+  margin: 0;
+  padding: 0 24px 18px;
+  color: #a3261b !important;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.offline-login-page #c.pin-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 1051;
+  width: min(390px, calc(100% - 24px));
+  max-width: 390px;
+  max-height: calc(100vh - 24px);
+  margin: 0 !important;
+  overflow: auto;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 22px 65px rgba(0, 0, 0, 0.42);
+}
+
+.pin-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1050;
+  background: rgba(14, 20, 24, 0.72);
+}
+
+.pin-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid #d9dfe4;
+}
+
+.pin-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 38px;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid #aeb8bf;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #37434c;
+  font-size: 27px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.pin-close:hover {
+  border-color: #7e8b94;
+  background: #e9edef;
+}
+
+.offline-login-page .calculator {
+  width: 100%;
+  height: 390px;
+  margin: 0;
+  padding: 12px;
+  border: 0;
+  border-spacing: 8px;
+  background: #f3f5f6;
+}
+
+.offline-login-page .calc_result {
+  width: 100%;
+  height: 52px;
+  padding: 0 14px;
+  border: 1px solid #9eabb4;
+  border-radius: 4px;
+  background: #ffffff;
+  font-size: 25px;
+  text-align: center;
+}
+
+.offline-login-page .calc_btn {
+  width: 100%;
+  height: 58px;
+  border: 1px solid #aeb8bf;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #20272d;
+  font-size: 25px;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.offline-login-page .calc_btn:hover {
+  border-color: #65747e;
+  background: #e9edef;
+}
+
+.offline-login-page input[name="continua"] {
+  border-color: #16734f;
+  background: #16734f;
+  color: #ffffff !important;
+  font-size: 17px;
+}
+
+@media (max-width: 760px) {
+  .offline-login-page .container {
+    padding: 12px;
+  }
+
+  .login-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .offline-login-page .products-sync-notice,
+  .offline-login-page .sync-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .offline-login-page .calculator {
+    width: 100%;
+    height: 360px;
+  }
+}

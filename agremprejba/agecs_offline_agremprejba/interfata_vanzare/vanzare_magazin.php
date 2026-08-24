@@ -533,39 +533,7 @@ $loc_curenta = (int)$cod_locatie;
 <?php include('modal_situatie_sincronizare.php');?>
 <?php include('vanzare_modal_edit_cantitate.php');?>
 
-<div class="modal fade" id="cif-keyboard-modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Introduceți C.I.F.</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <input type="text" id="cif-keyboard-display" class="form-control" placeholder="Introduceți..." readonly>
-                    <div class="cif-keyboard mt-3">
-                        <button class="btn btn-light key" data-key="-">-</button>
-                        <button class="btn btn-light key" data-key="1">1</button>
-                        <button class="btn btn-light key" data-key="2">2</button>
-                        <button class="btn btn-light key" data-key="3">3</button>
-                        <button class="btn btn-light key" data-key="4">4</button>
-                        <button class="btn btn-light key" data-key="5">5</button>
-                        <button class="btn btn-light key" data-key="6">6</button>
-                        <button class="btn btn-light key" data-key="7">7</button>
-                        <button class="btn btn-light key" data-key="8">8</button>
-                        <button class="btn btn-light key" data-key="9">9</button>
-                        <button class="btn btn-info key" data-action="prefix-ro">RO</button>
-                        <button class="btn btn-light key" data-key="0">0</button>
-                        <button class="btn btn-warning key" data-action="backspace"><i class="fas fa-backspace"></i></button>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger mr-auto key" data-action="clear">Șterge Tot</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Anulează</button>
-                    <button type="button" class="btn btn-primary" id="cif-keyboard-save">Salvează</button>
-                </div>
-            </div>
-        </div>
-    </div>
+<?php include('modal_cui_verificare_offline.php'); ?>
 <div class="modal fade" id="numeric-keyboard-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document" style="max-width: 320px;">
         <div class="modal-content">
@@ -875,7 +843,6 @@ const updateProductNameEndpoint = isClient1005 ? "vanzare_update_product_name_10
 const updateProductPermanentEndpoint = isClient1005 ? "vanzare_update_product_permanent_1005.php" : "vanzare_update_product_permanent.php";
 
 let inactivityTimer = null;
-let cifInputTimer = null;
 let barcodeTimeout;
 let isReadingScale = false;
 
@@ -2294,11 +2261,6 @@ $('#btn_clear_debug_micotex').on('click', function() {
         inactivityTimer = setTimeout(() => { $("#continuati").modal("show"); }, 1800000);
     }
     
-    function saveCifToSession(cifValue) {
-        $.post("save_cif_to_session.php", { cif_client: cifValue })
-         .fail(function() { alert("Eroare la salvarea CIF în sesiune."); });
-    }
-
     async function processBarcode() {
         const codBare = barcodeFilterInput.val();
         if (!codBare) return;
@@ -2729,35 +2691,7 @@ $('#btn_clear_debug_micotex').on('click', function() {
     });
 
     // ======== GESTIONAREA EVENIMENTELOR (Originale + Modernizate) ========
-    $('#cif-keyboard-modal .key').on('click', function() {
-        const display = $('#cif-keyboard-display');
-        let currentValue = display.val();
-        const action = $(this).data('action');
-        const key = $(this).data('key');
-        if (action === 'backspace') display.val(currentValue.slice(0, -1));
-        else if (action === 'clear') display.val('');
-        else if (action === 'prefix-ro') { if (!currentValue.toUpperCase().startsWith('RO')) { display.val('RO' + currentValue); } }
-        else if (key !== undefined) { if (currentValue.length < 15) { display.val(currentValue + key); } }
-    });
-
-    $('#cif-keyboard-save').on('click', function() {
-        const cifValue = $('#cif-keyboard-display').val();
-        $('#cif_client_input').val(cifValue);
-        saveCifToSession(cifValue);
-        $('#cif-keyboard-modal').modal('hide');
-    });
-    
     $(document)
-        .on('keyup', '#cif_client_input', function() {
-            clearTimeout(cifInputTimer);
-            const cifValue = $(this).val();
-            cifInputTimer = setTimeout(() => saveCifToSession(cifValue), 500);
-        })
-        .on('click', '#cif-kbd-btn', function() {
-            const currentValue = $('#cif_client_input').val();
-            $('#cif-keyboard-display').val(currentValue);
-            $('#cif-keyboard-modal').modal('show');
-        })
         .on('click', '.discount', function() {
             $("#Discount").find("[name='idvanzare']").val($(this).attr("name")).end().modal("show");
         })

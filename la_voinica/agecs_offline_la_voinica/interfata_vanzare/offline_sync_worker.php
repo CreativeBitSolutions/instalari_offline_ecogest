@@ -89,7 +89,7 @@ try {
     ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
     $ch = curl_init($config['url']);
-    curl_setopt_array($ch, [
+    $curlOptions = [
         CURLOPT_POST => true,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_CONNECTTIMEOUT => 3,
@@ -102,7 +102,11 @@ try {
             'X-Sync-Api-Key: ' . $config['api_key'],
         ],
         CURLOPT_POSTFIELDS => $body,
-    ]);
+    ];
+    if ($config['ca_bundle_path'] !== '' && is_file($config['ca_bundle_path'])) {
+        $curlOptions[CURLOPT_CAINFO] = $config['ca_bundle_path'];
+    }
+    curl_setopt_array($ch, $curlOptions);
     $responseBody = curl_exec($ch);
     $curlError = curl_error($ch);
     $httpCode = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);

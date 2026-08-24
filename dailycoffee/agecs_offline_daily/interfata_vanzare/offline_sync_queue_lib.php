@@ -7,6 +7,11 @@ function offline_sync_queue_config(): array
     $config = offline_config_all();
     $clientId = (int)($config['sync_client_id'] ?? $config['client_id'] ?? 0);
     $location = (int)($config['cod_locatie_default'] ?? 1);
+    $apiRoot = trim((string)($config['api_root_absolute'] ?? $config['offline_api_path'] ?? ''));
+    $caBundlePath = trim((string)($config['ca_bundle_path'] ?? ''));
+    if ($caBundlePath === '' && $apiRoot !== '') {
+        $caBundlePath = rtrim($apiRoot, "\\/") . DIRECTORY_SEPARATOR . 'certificates' . DIRECTORY_SEPARATOR . 'cacert.pem';
+    }
     return [
         'client_id' => $clientId,
         'cod_locatie' => $location,
@@ -14,6 +19,7 @@ function offline_sync_queue_config(): array
         'profile' => (string)($config['sync_profile'] ?? ($clientId === 2 ? 'dailycoffee' : 'agremprejba')),
         'url' => trim((string)($config['sync_import_url'] ?? '')),
         'api_key' => trim((string)($config['sync_api_key'] ?? '')),
+        'ca_bundle_path' => $caBundlePath,
     ];
 }
 
