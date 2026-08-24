@@ -108,6 +108,68 @@
   font-weight: 800;
 }
 
+.offline-login-page .products-autosync-status {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding-top: 10px;
+  border-top: 1px solid rgba(93, 72, 0, 0.2);
+  color: #44515a;
+  font-weight: 400;
+}
+
+.offline-login-page .products-autosync-dot {
+  flex: 0 0 10px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #7b8790;
+  box-shadow: 0 0 0 3px rgba(123, 135, 144, 0.14);
+}
+
+.offline-login-page .products-autosync-copy {
+  display: block;
+  min-width: 0;
+}
+
+.offline-login-page .products-autosync-copy strong,
+.offline-login-page .products-autosync-copy small {
+  display: block;
+  letter-spacing: 0;
+}
+
+.offline-login-page .products-autosync-copy strong {
+  color: #26343c;
+  font-size: 13px;
+  line-height: 1.25;
+}
+
+.offline-login-page .products-autosync-copy small {
+  margin-top: 2px;
+  color: #596770;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.offline-login-page .products-autosync-status.is-ok .products-autosync-dot {
+  background: #16824f;
+  box-shadow: 0 0 0 3px rgba(22, 130, 79, 0.15);
+}
+
+.offline-login-page .products-autosync-status.is-warning .products-autosync-dot {
+  background: #b7791f;
+  box-shadow: 0 0 0 3px rgba(183, 121, 31, 0.16);
+}
+
+.offline-login-page .products-autosync-status.is-error .products-autosync-dot {
+  background: #b42318;
+  box-shadow: 0 0 0 3px rgba(180, 35, 24, 0.15);
+}
+
 .offline-login-page .products-sync-notice .products-sync-btn,
 .offline-login-page .buttons .button2,
 .offline-login-page .sync-button {

@@ -29,6 +29,8 @@ $restaurantConfig = [
     'client_id' => (int)($restaurantAppConfig['client_id'] ?? ($_SESSION['client_id'] ?? 0)),
     'cod_locatie' => (int)($restaurantAppConfig['cod_locatie_default'] ?? ($_SESSION['cod_locatie'] ?? 1)),
     'sqlite_path' => (string)$restaurantAppConfig['db_runtime_file'],
+    'api_root_absolute' => (string)($restaurantAppConfig['api_root_absolute'] ?? ''),
+    'ca_bundle_path' => (string)($restaurantAppConfig['ca_bundle_path'] ?? ''),
     'no_session_validation' => (int)($restaurantAppConfig['no_session_validation'] ?? ($_SESSION['no_session_validation'] ?? 0)),
     'online_products_sync' => is_array($restaurantAppConfig['online_products_sync'] ?? null) ? $restaurantAppConfig['online_products_sync'] : [],
 ];

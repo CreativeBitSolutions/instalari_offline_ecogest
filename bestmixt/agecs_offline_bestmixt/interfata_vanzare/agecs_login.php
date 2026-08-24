@@ -59,6 +59,13 @@ $_SESSION['cod_locatie'] = (int)$_config['cod_locatie_default'];
         <div class="products-sync-notice">
             <span>Nomenclator produse</span>
             <a href="offline_products_check.php" class="products-sync-btn" title="Verifica lista online si actualizeaza local produsele, categoriile si gestiunile">VERIFICA SI ACTUALIZEAZA</a>
+            <div class="products-autosync-status is-loading" id="productsAutosyncStatus" role="status" aria-live="polite">
+                <span class="products-autosync-dot" aria-hidden="true"></span>
+                <span class="products-autosync-copy">
+                    <strong>Autosincronizare produse</strong>
+                    <small id="productsAutosyncMessage">Se citește ultima stare locală...</small>
+                </span>
+            </div>
         </div>
         <span class="actions-label">Operatiuni online si export</span>
         <div class="sync-actions">
@@ -96,6 +103,7 @@ $_SESSION['cod_locatie'] = (int)$_config['cod_locatie_default'];
   <!-- Core plugin JavaScript-->
   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
   <script src="offline_sync_heartbeat.js"></script>
+  <script src="offline_products_autosync_status.js"></script>
   
   <script>
     document.addEventListener("DOMContentLoaded", function() {
