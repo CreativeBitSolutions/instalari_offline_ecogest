@@ -1,0 +1,23 @@
+[2026-08-14 12:44:13] Aplicația a pornit.
+[2026-08-14 12:44:13] Pornesc scanarea, sursă: pornire automată.
+[2026-08-14 12:44:13] Deschid baza locală.
+[2026-08-14 12:44:13] Calculez semnătura produselor locale.
+[2026-08-14 12:44:14] Verific nomenclatorul disponibil online.
+[2026-08-14 12:44:16] Import produse început. Online: 13259 produse.
+[2026-08-14 12:44:16] Copie de siguranță creată: C:\xampp\htdocs\api_offline_agecs\db_local\backups_products_sync\pos_before_products_sync_20260814_124416.db
+[2026-08-14 12:44:18] Import finalizat: 0 adăugate, 4 actualizate, 0 șterse, 13255 neschimbate.
+[2026-08-14 12:45:06] Aplicația a pornit.
+[2026-08-14 12:45:06] Pornesc scanarea, sursă: pornire automată.
+[2026-08-14 12:45:06] Deschid baza locală.
+[2026-08-14 12:45:06] Calculez semnătura produselor locale.
+[2026-08-14 12:45:07] Verific nomenclatorul disponibil online.
+[2026-08-14 12:45:08] Nomenclatorul este deja sincronizat. Produse verificate: 13259.
+[2026-08-14 12:45:20] Aplicația a pornit.
+[2026-08-14 12:45:20] Pornesc scanarea, sursă: pornire automată.
+[2026-08-14 12:45:20] Scanarea a eșuat: Baza SQLite nu a fost găsită.
+[2026-08-14 12:45:59] Aplicația a pornit.
+[2026-08-14 12:45:59] Pornesc scanarea, sursă: pornire automată.
+[2026-08-14 12:45:59] Deschid baza locală.
+[2026-08-14 12:45:59] Calculez semnătura produselor locale.
+[2026-08-14 12:46:00] Verific nomenclatorul disponibil online.
+[2026-08-14 12:46:01] Nomenclatorul este deja sincronizat. Produse verificate: 13259.
