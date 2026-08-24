@@ -1,0 +1,16 @@
+{
+    "status": "success",
+    "message": "Bonuri preluate cu succes.",
+    "data": [
+        {
+            "id": "110072",
+            "data": "2026-08-11",
+            "ora": "19:54:53",
+            "continut_bon": "H,1,______,_,__;\r\nS,1,______,_,__;5 WATERMELON;7;1.0;1;1;2;0;0;BUC\r\nT,1,______,_,__;0;7.0;;;;\r\n",
+            "de_trimis_la_casa_marcat": "1",
+            "locatie": "1",
+            "nrbon": "110012",
+            "id_factura": null
+        }
+    ]
+}

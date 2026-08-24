@@ -1,0 +1,15 @@
+{
+    "status": "success",
+    "message": "Date pentru imprimantă generate cu succes.",
+    "data": [
+        {
+            "data": "2026-08-11",
+            "ora": "19:54:53",
+            "de_trimis_la_imprimanta": 1,
+            "nrbon": 110012,
+            "locatie": 1,
+            "departament_listare": "MAGAZIN",
+            "continut": "\n\nC.I.F.: \nC.I.F. CLIENT: \n2026-08-11 19:54:53\nLEI\nOPERATOR:  \n\nProdus: 5 WATERMELON\nCantitate: 1.0 H87 X 7.00 LEI\nValoare Vânzare: 7.00 LEI\n\nTOTAL LEI: 7.00 LEI\nRest: 0.00 LEI\n\nFARA TVA: 0.690 LEI\nTOTAL TVA: 0.690 LEI\n\nNr. nota: 110012\n"
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "status": "success",
+    "message": "Date pentru imprimantă generate cu succes.",
+    "data": [
+        {
+            "data": "2026-06-12",
+            "ora": "09:28:42",
+            "de_trimis_la_imprimanta": 1,
+            "nrbon": 28,
+            "locatie": 1,
+            "departament_listare": "MAGAZIN",
+            "continut": "\n\nC.I.F.: \nC.I.F. CLIENT: \n2026-06-12 09:28:42\nLEI\nOPERATOR:  \n\nProdus: BIO MACESE&HIBISCUS \nCantitate: 1 H87 X 90.00 LEI\nValoare Vânzare: 90.00 LEI\n\nProdus: APA MINERALA\nCantitate: 1 H87 X 6.00 LEI\nValoare Vânzare: 6.00 LEI\n\nTOTAL LEI: 96.00 LEI\nRest: 0.00 LEI\n\nTOTAL TVA: 0.000 LEI\n\nNr. nota: 28\n"
+        }
+    ]
+}

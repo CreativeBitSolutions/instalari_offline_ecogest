@@ -1,0 +1,1 @@
+[12-Aug-2026 14:42:16 Europe/Berlin] PHP Fatal error:  Cannot redeclare offline_sync_queue_config() (previously declared in C:\xampp\htdocs\instalari_offline\agecs_offline_andreearobertshop\interfata_vanzare\offline_sync_queue_lib.php:7) in C:\xampp\htdocs\instalari_offline\agecs_offline_andreearobertshop\interfata_vanzare\offline_sync_queue_lib.php on line 5

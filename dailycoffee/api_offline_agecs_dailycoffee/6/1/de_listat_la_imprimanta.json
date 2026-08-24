@@ -1,0 +1,15 @@
+{
+    "status": "success",
+    "message": "Date pentru imprimantă generate cu succes.",
+    "data": [
+        {
+            "data": "2026-06-12",
+            "ora": "09:23:28",
+            "de_trimis_la_imprimanta": 1,
+            "nrbon": 24,
+            "locatie": 1,
+            "departament_listare": "BAR",
+            "continut": "\n\nC.I.F.: \nC.I.F. CLIENT: \n2026-06-12 09:23:28\nLEI\nOPERATOR:  \n\nProdus: ABSOLUT\nCantitate: 1 H87 X 14.00 LEI\nValoare Vânzare: 14.00 LEI\n\nTOTAL LEI: 14.00 LEI\nRest: 0.00 LEI\n\nFARA TVA: 2.430 LEI\nTOTAL TVA: 2.430 LEI\n\nNr. nota: 24\n"
+        }
+    ]
+}

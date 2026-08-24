@@ -1,0 +1,16 @@
+{
+    "status": "success",
+    "message": "Bonuri preluate cu succes.",
+    "data": [
+        {
+            "id": 640,
+            "data": "2026-06-12",
+            "ora": "09:23:28",
+            "continut_bon": "H,1,______,_,__;\r\nS,1,______,_,__;ABSOLUT;14.00;1.000;1;1;1;0;0;BUC\r\nT,1,______,_,__;0;14.00;;;;\r\n",
+            "de_trimis_la_casa_marcat": 1,
+            "locatie": 2,
+            "nrbon": 24,
+            "id_factura": 0
+        }
+    ]
+}

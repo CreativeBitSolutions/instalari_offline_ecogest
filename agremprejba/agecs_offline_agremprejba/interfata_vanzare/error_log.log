@@ -1,0 +1,9 @@
+[12-Aug-2026 04:38:50 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "config" in Command line code:1
+Stack trace:
+#0 {main}
+  thrown in Command line code on line 1
+[12-Aug-2026 04:38:57 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "config" in Command line code:1
+Stack trace:
+#0 {main}
+  thrown in Command line code on line 1
+[12-Aug-2026 14:42:16 Europe/Berlin] PHP Fatal error:  Cannot redeclare offline_sync_queue_config() (previously declared in C:\xampp\htdocs\instalari_offline\agecs_offline_agremprejba\interfata_vanzare\offline_sync_queue_lib.php:7) in C:\xampp\htdocs\instalari_offline\agecs_offline_agremprejba\interfata_vanzare\offline_sync_queue_lib.php on line 5

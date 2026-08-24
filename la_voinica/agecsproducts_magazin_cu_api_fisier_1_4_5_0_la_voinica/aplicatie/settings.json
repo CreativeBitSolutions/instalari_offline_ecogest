@@ -1,0 +1,11 @@
+{
+  "OfflineApiPath": "C:\\xampp\\htdocs\\api_offline_agecs",
+  "ProductsApiUrl": "https://agecs.agecs.in/sincronizare_online_app_restaurant/sincronizare_date_offline.php",
+  "ClientId": 18,
+  "ScanIntervalMinutes": 1440,
+  "RequestTimeoutMinutes": 15,
+  "SchedulerEnabled": true,
+  "RunImmediatelyOnLaunch": true,
+  "StartWithWindows": false,
+  "StartMinimized": false
+}
