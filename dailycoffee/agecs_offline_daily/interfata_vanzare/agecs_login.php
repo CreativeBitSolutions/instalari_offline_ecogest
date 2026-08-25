@@ -195,7 +195,7 @@ while ($row = $dstmt->fetch(PDO::FETCH_ASSOC)) {
     <div class="buttons">
         <span class="actions-label">Export si administrare locala</span>
         <div class="sync-actions">
-            <a class="button2 export-button" href="export_vanzari_offline.php" title="Deschide exportul manual de vanzari in format XML sau SQL">DESCARCA EXPORT XML / SQL</a>
+            <a class="button2 export-button" href="export_vanzari_offline.php" title="Deschide exportul manual de vanzari in format XML sau SQL" hidden aria-hidden="true">DESCARCA EXPORT XML / SQL</a>
             <a class="button2 license-button" href="offline_license_check.php" title="Verifica licenta aplicatiei offline">VERIFICA LICENTA</a>
             <a class="button2 cleanup-button" href="curatare_date_locale.php" title="Deschide preview-ul pentru curatarea bazei locale">CURATARE DATE LOCALE</a>
         </div>

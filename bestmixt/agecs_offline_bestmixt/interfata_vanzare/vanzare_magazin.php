@@ -183,14 +183,14 @@ $offlinePendingReceiptCount = array_sum(array_map(static function (array $closur
     
     <link rel="stylesheet" href="vendor/offline/bootstrap4/bootstrap.min.css">
     <link rel="stylesheet" href="vendor/offline/fontawesome5/css/all.min.css">
-        <link rel="stylesheet" href="vanzare_css.css">
+        <link rel="stylesheet" href="vanzare_css.css?v=20260825-header4">
 <style>
     /* Fix pentru a permite scroll în pagină când sunt deschise mai multe modale */
     .modal {
       overflow-y: auto;
     }
     </style>
-<script src="js/offline-persistent-zoom.js"></script>
+<script src="js/offline-persistent-zoom.js?v=20260825-header2"></script>
 </head>
 <body>
     <div id="loading"></div>
@@ -205,6 +205,7 @@ $offlinePendingReceiptCount = array_sum(array_map(static function (array $closur
 
     <div class="page-container">
         <header class="page-header">
+            <div class="header-primary-actions">
             <?php
             $client_agecs = $_SESSION['client_id'] ?? null;
             if ($client_agecs == 2 || $client_agecs == 8) echo "<a href='vanzare_facturi.php'><button class='header-btn'>🧾 Facturi</button></a>";
@@ -232,7 +233,8 @@ $offlinePendingReceiptCount = array_sum(array_map(static function (array $closur
 <?php if ((int)$client_agecs === 1007 || (int)$client_agecs === 8): ?> 
             <a href='vanzare_importa_comenzi_online.php'><button class='header-btn'>📥 Import Comenzi Online</button></a>
             <?php endif; ?>
-            <div class="grup-actiuni" style="margin-left: auto; display: flex; gap: 10px; align-items: center;">
+            </div>
+            <div class="grup-actiuni header-secondary-actions">
                <?php if ($client_agecs != 22): ?>
     <?php
     $bon_sql = "SELECT COUNT(*) FROM $tabel_final_note WHERE cod_inchidere=0 AND status='F' AND locatie=:locatie AND operator=:adm_id";
@@ -251,7 +253,7 @@ $offlinePendingReceiptCount = array_sum(array_map(static function (array $closur
                         <i class="fas fa-file-invoice"></i> Raport Z, <?php echo $offlinePendingClosureCount; ?> ture
                     </button>
                 <?php endif; ?>
-                <a href="export_vanzari_offline.php" class="header-btn btn-primary" style="text-decoration:none;color:#fff;">Export offline</a>
+                <a href="export_vanzari_offline.php" class="header-btn btn-primary" style="text-decoration:none;color:#fff;" hidden aria-hidden="true">Export offline</a>
                 <button type="button" class="header-btn btn-info" data-toggle="modal" data-target="#offlineSyncStatusModal" title="Situație transmitere date online"><i class="fas fa-cloud-upload-alt"></i> Transmitere online</button>
                  <div class="user-info">
                     <span>👤 <?php echo htmlspecialchars($admin_firstname . ' ' . $admin_lastname); ?></span>
@@ -259,15 +261,26 @@ $offlinePendingReceiptCount = array_sum(array_map(static function (array $closur
                 </div>
 
 
-    <button type="button" class="header-btn btn-info" data-toggle="modal" data-target="#helpModal" title="Ghiduri și Ajutor">
-        <i class="fas fa-question-circle"></i>
-        <button type="button" id="btn-fullscreen" class="header-btn btn-secondary" title="Mod Ecran Complet" style="margin-right:5px;">
-        <i class="fas fa-expand"></i>
-    </button>
-    <button type="button" id="btn_hard_refresh" class="header-btn btn-danger" title="Șterge Cache și Reîncarcă Tot (Ctrl+F5)">
-    <i class="fas fa-sync-alt"></i> 
-</button>
-    </button>
+                <div class="header-tool-cluster" role="group" aria-label="Instrumente interfață">
+                    <button type="button" class="header-btn btn-info header-icon-btn" data-toggle="modal" data-target="#helpModal" title="Ghiduri și ajutor" aria-label="Ghiduri și ajutor">
+                        <i class="fas fa-question-circle"></i>
+                    </button>
+                    <button type="button" id="btn-fullscreen" class="header-btn btn-secondary header-icon-btn" title="Mod ecran complet" aria-label="Mod ecran complet">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <div class="header-zoom-controls" role="group" aria-label="Control zoom">
+                        <button type="button" class="header-btn header-icon-btn" data-agecs-zoom-action="out" title="Micșorează interfața" aria-label="Micșorează interfața">
+                            <i class="fas fa-search-minus"></i>
+                        </button>
+                        <button type="button" class="header-btn header-zoom-level" data-agecs-zoom-action="reset" data-agecs-zoom-value title="Revino la zoom 100%">100%</button>
+                        <button type="button" class="header-btn header-icon-btn" data-agecs-zoom-action="in" title="Mărește interfața" aria-label="Mărește interfața">
+                            <i class="fas fa-search-plus"></i>
+                        </button>
+                    </div>
+                    <button type="button" id="btn_hard_refresh" class="header-btn btn-danger header-icon-btn" title="Șterge cache și reîncarcă tot" aria-label="Șterge cache și reîncarcă tot">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
                 <form method="POST" action="procesare_vanzare.php" class="m-0">
                     <button name="deconectare" class='header-btn btn-dark' type="submit">🚪 Deconectare</button>
                 </form>

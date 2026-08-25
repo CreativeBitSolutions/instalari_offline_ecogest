@@ -203,20 +203,21 @@ $offlinePendingReceiptCount = array_sum(array_map(static function (array $closur
     
     <link rel="stylesheet" href="vendor/offline/bootstrap4/bootstrap.min.css">
     <link rel="stylesheet" href="vendor/offline/fontawesome5/css/all.min.css">
-        <link rel="stylesheet" href="vanzare_css.css">
+        <link rel="stylesheet" href="vanzare_css.css?v=20260825-header4">
 <style>
     /* Fix pentru a permite scroll în pagină când sunt deschise mai multe modale */
     .modal {
       overflow-y: auto;
     }
     </style>
-<script src="js/offline-persistent-zoom.js"></script>
+<script src="js/offline-persistent-zoom.js?v=20260825-header2"></script>
 </head>
 <body>
     <div id="loading"></div>
 
     <div class="page-container">
         <header class="page-header">
+            <div class="header-primary-actions">
             <?php
             $client_agecs = $_SESSION['client_id'] ?? null;
             if ($client_agecs == 2 || $client_agecs == 8) echo "<a href='vanzare_facturi.php'><button class='header-btn'>🧾 Facturi</button></a>";
@@ -237,7 +238,7 @@ $offlinePendingReceiptCount = array_sum(array_map(static function (array $closur
             <button type="button" class="header-btn" data-toggle="modal" data-target="#adminModal"><i class="fas fa-tools"></i> Admin</button>
             <button type="button" class="header-btn btn-info" data-toggle="modal" data-target="#offlineSyncStatusModal" title="Situație transmitere date online"><i class="fas fa-cloud-upload-alt"></i> Transmitere online</button>
             <!-- Buton Export -->
-<button class="header-btn" data-toggle="modal" data-target="#exportOfflineModal">
+<button class="header-btn" data-toggle="modal" data-target="#exportOfflineModal" hidden aria-hidden="true">
     💾 Export BD
 </button>
 <div class="modal fade" id="exportOfflineModal" tabindex="-1" role="dialog" aria-labelledby="exportOfflineLabel" aria-hidden="true">
@@ -357,7 +358,8 @@ $offlinePendingReceiptCount = array_sum(array_map(static function (array $closur
 </div>
 
 
-            <div class="grup-actiuni" style="margin-left: auto; display: flex; gap: 10px; align-items: center;">
+            </div>
+            <div class="grup-actiuni header-secondary-actions">
                <?php if ($client_agecs != 22): ?>
     <?php
     $bon_sql = "SELECT COUNT(*) FROM $tabel_final_note WHERE cod_inchidere=0 AND status='F' AND locatie=:locatie AND operator=:adm_id";
@@ -389,9 +391,20 @@ $offlinePendingReceiptCount = array_sum(array_map(static function (array $closur
                 </div>
 
 
-    <button type="button" class="header-btn btn-info" data-toggle="modal" data-target="#helpModal" title="Ghiduri și Ajutor">
-        <i class="fas fa-question-circle"></i>
-    </button>
+                <div class="header-tool-cluster" role="group" aria-label="Instrumente interfață">
+                    <button type="button" class="header-btn btn-info header-icon-btn" data-toggle="modal" data-target="#helpModal" title="Ghiduri și ajutor" aria-label="Ghiduri și ajutor">
+                        <i class="fas fa-question-circle"></i>
+                    </button>
+                    <div class="header-zoom-controls" role="group" aria-label="Control zoom">
+                        <button type="button" class="header-btn header-icon-btn" data-agecs-zoom-action="out" title="Micșorează interfața" aria-label="Micșorează interfața">
+                            <i class="fas fa-search-minus"></i>
+                        </button>
+                        <button type="button" class="header-btn header-zoom-level" data-agecs-zoom-action="reset" data-agecs-zoom-value title="Revino la zoom 100%">100%</button>
+                        <button type="button" class="header-btn header-icon-btn" data-agecs-zoom-action="in" title="Mărește interfața" aria-label="Mărește interfața">
+                            <i class="fas fa-search-plus"></i>
+                        </button>
+                    </div>
+                </div>
                 <form method="POST" action="procesare_vanzare.php" class="m-0">
                     <button name="deconectare" class='header-btn btn-dark' type="submit">🚪 Deconectare</button>
                 </form>
