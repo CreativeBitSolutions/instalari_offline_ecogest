@@ -1,0 +1,22 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7337</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-04 20:02:01</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">Masa: F06</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 2 -------</size></b></align>
+<align="left"><b><size="11">1 x CIORBA FASOLE = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">- CU CARNE</size></b></align>
+<align="left"><b><size="11">------ FEL 3 -------</size></b></align>
+<align="left"><b><size="11">1 x CASCAVAL PANE = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x MIX GRILL = 88.00 LEI</size></b></align>
+<align="left"><b><size="11">- CARTOFI AURII</size></b></align>
+<align="left"><b><size="11">3 x MICI = 21.00 LEI</size></b></align>
+<align="left"><b><size="11">------ FEL 5 -------</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CEAPA ROSIE 85G = 5.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ARDEI COPT = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 182.00 LEI</size></b></align>

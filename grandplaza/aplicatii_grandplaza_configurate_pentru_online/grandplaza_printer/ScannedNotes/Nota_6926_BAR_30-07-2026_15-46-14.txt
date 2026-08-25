@@ -1,0 +1,26 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6926</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-30 15:46:14</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">Masa: S3</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 3 -------</size></b></align>
+<align="left"><b><size="11">1 x CIORBA DE BURTA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA PERISOARE = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA DE FAS CIOLAN = 33.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUI PANE = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">- MAMALIGA</size></b></align>
+<align="left"><b><size="11">1 x COASTE  SOS = 50.00 LEI</size></b></align>
+<align="left"><b><size="11">- CARTOFI TARANESTI</size></b></align>
+<align="left"><b><size="11">------ FEL 4 -------</size></b></align>
+<align="left"><b><size="11">3 x PAPANASI GEM CASA = 78.00 LEI</size></b></align>
+<align="left"><b><size="11">- la 1 gem sep</size></b></align>
+<align="left"><b><size="11">------ FEL 5 -------</size></b></align>
+<align="left"><b><size="11">1 x ARDEI IUTE = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SMANTANA = 3.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ROSI CU TELEMEA = 15.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 268.00 LEI</size></b></align>

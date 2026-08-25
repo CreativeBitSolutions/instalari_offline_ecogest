@@ -1,0 +1,20 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-10 11:42:43</size></b></align>
+<align="left"><b><size="11">OPERATOR: MARIUS -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">CIORBA DE LEGUME</size></b></align>
+<align="left"><b><size="11">  1.00000 x 20.00 = 20.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CIORBA FASOLE FARA CARNE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 20.00 = 20.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PUNGA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 1.00 = 1.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 41.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 41.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 40.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 1.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7765</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

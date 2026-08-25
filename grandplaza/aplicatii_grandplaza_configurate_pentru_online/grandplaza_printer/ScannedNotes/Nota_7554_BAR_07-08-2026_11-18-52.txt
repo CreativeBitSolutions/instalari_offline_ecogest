@@ -1,0 +1,28 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7554</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-07 11:18:48</size></b></align>
+<align="left"><b><size="11">OPERATOR: ADI BACILA -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M4</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">2 x FEL 2 MENIU CASTRAVETI MURATI = 50.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SPAGHETE CARBON = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x OMLETA SUN SI CASC = 25.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA PUI = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x TRANS 10 = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">5 x TACAM PLASTIC = 5.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 160.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	16.00	176.00</size></b></align>
+<align="left"><b><size="11">12%	19.20	179.20</size></b></align>
+<align="left"><b><size="11">15%	24.00	184.00</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

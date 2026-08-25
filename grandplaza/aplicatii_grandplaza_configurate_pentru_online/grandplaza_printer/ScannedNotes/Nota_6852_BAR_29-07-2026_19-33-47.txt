@@ -1,0 +1,29 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6852</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-29 19:33:46</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">Masa: F05</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x BORSEC 1L = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA DE BURTA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ARDEI IUTE = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SMANTANA = 3.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">5 x MICI = 35.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x M CARTOFI-PRAJITI = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x VARZA ALBA = 9.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 98.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	9.80	107.80</size></b></align>
+<align="left"><b><size="11">12%	11.76	109.76</size></b></align>
+<align="left"><b><size="11">15%	14.70	112.70</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

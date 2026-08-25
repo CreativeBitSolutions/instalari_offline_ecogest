@@ -1,0 +1,32 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8501</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-17 19:46:42</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">Masa: S2</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x URSUS BLACK = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x PILSNER URQUELL = 30.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x TIMISOREANA = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x URSUS = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CREMA CIUPERCI = 34.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA PORC = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x CIORBA PUI = 40.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x CREIER PANE CARTOFI PRAJITI = 76.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SALAU GR TARTAR MAMALIGA = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PULPE DE PUI CARTOFI PRAJITI = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x VARZA ALBA = 18.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 342.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	34.20	376.20</size></b></align>
+<align="left"><b><size="11">12%	41.04	383.04</size></b></align>
+<align="left"><b><size="11">15%	51.30	393.30</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

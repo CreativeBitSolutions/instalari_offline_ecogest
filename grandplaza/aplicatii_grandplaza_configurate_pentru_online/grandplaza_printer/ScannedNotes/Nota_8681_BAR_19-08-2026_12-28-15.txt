@@ -1,0 +1,21 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-19 12:28:13</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x CIORBA DE BURTA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8681</size></b></align>
+<align="left"><b><size="11">Masa: Masa Temporara 26</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 24.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacsisul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Va oferim urmatoarele sugestii pentru calculul bacsisului / Please consider the following suggestions for tips calculation:</size></b></align>
+
+<align="left"><b><size="11">Bacsis	Total nota</size></b></align>
+<align="left"><b><size="11">10%	2.40	26.40</size></b></align>
+<align="left"><b><size="11">12%	2.88	26.88</size></b></align>
+<align="left"><b><size="11">15%	3.60	27.60</size></b></align>
+
+<align="left"><b><size="11">Alta valoare: ...</size></b></align>

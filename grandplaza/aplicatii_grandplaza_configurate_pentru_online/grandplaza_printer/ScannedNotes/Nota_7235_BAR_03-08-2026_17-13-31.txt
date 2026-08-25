@@ -1,0 +1,13 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7235</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-03 17:13:29</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">Masa: F05</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 0 -------</size></b></align>
+<align="left"><b><size="11">1 x FANTA = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x URSUS = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 24.00 LEI</size></b></align>

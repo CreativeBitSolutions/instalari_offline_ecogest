@@ -1,0 +1,37 @@
+<?php
+return [
+    'driver' => 'sqlite',
+    'live_id' => 12,
+    'client_id' => 26,
+    'cod_locatie' => 1,
+    'installation_uuid' => 'glovograndplaza-c26-l1',
+    'installation_identity_format' => 'restaurant',
+    'app_name' => 'App Restaurant Offline Glovo Grand Plaza',
+    'offline_api_path' => dirname(dirname(__DIR__)) . '/api_offline_glovograndplaza',
+    'ca_bundle_path' => dirname(dirname(__DIR__)) . '/api_offline_glovograndplaza/certificates/cacert.pem',
+    'sqlite_path' => dirname(dirname(__DIR__)) . '/api_offline_glovograndplaza/restaurant.sqlite',
+    'sync_export_path' => dirname(dirname(__DIR__)) . '/api_offline_glovograndplaza/offline_sync_exports',
+    'online_products_sync' => [
+        'enabled' => false,
+        'auto_check' => false,
+        'api_url' => 'https://agecs.agecs.in/sincronizare_online_app_restaurant/sincronizare_date_offline.php',
+        'api_key' => 'CHEIE_API_CLIENT_26',
+        'cod_client' => 26,
+    ],
+    'offline_sales_sync' => [
+        'enabled' => false,
+        'automatic' => false,
+        'allow_login_worker' => true,
+        'api_url' => 'https://agecs.agecs.in/sincronizare_online_app_restaurant/sincronizare_date_offline.php',
+        'api_key' => 'CHEIE_API_CLIENT_26',
+    ],
+    'online_tablet_sync' => [
+        'enabled' => false,
+        'automatic' => false,
+        'api_url' => 'https://agecs.agecs.in/api/offline-tablet-orders.php',
+        'api_key' => 'CHEIE_API_CLIENT_26',
+        'client_id' => 26,
+        'cod_locatie' => 1,
+        'installation_uuid' => 'glovograndplaza-c26-l1',
+    ],
+];

@@ -1,0 +1,15 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8424</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-17 09:59:57</size></b></align>
+<align="left"><b><size="11">OPERATOR: MARIUS -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M4</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 2 -------</size></b></align>
+<align="left"><b><size="11">1 x MENIUL ZILEI</size></b></align>
+<align="left"><b><size="11">- VARZA ALBA  11 30</size></b></align>
+<align="left"><b><size="11">1 x MENIUL ZILEI</size></b></align>
+<align="left"><b><size="11">- VARZA ALBA</size></b></align>
+<align="left"><b><size="11">1 x CIORBA MENIU ZILEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>

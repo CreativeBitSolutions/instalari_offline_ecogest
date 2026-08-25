@@ -1,0 +1,22 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8431</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-17 11:33:07</size></b></align>
+<align="left"><b><size="11">OPERATOR: MARIUS -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M6</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 2 -------</size></b></align>
+<align="left"><b><size="11">5 x CIORBA DE BURTA = 120.00 LEI</size></b></align>
+<align="left"><b><size="11">- 12 30</size></b></align>
+<align="left"><b><size="11">1 x Z GALEATA 5 L = 9.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA VACUTA = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">------ FEL 3 -------</size></b></align>
+<align="left"><b><size="11">1 x CIOLAN = 46.00 LEI</size></b></align>
+<align="left"><b><size="11">- VARZA CALITA</size></b></align>
+<align="left"><b><size="11">3 x CIOLAN = 138.00 LEI</size></b></align>
+<align="left"><b><size="11">- VARZA CALITA</size></b></align>
+<align="left"><b><size="11">2 x PUI PANE = 76.00 LEI</size></b></align>
+<align="left"><b><size="11">- CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 411.00 LEI</size></b></align>

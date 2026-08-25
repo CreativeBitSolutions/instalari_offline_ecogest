@@ -1,0 +1,8 @@
+﻿<align="left"><b><size="11">---------NOTA STORNARE----------</size></b></align>
+<align="left"><b><size="11">Data: 08.08.2026 13:15</size></b></align>
+<align="left"><b><size="11">Masa: F01 / Op: SEF SALA ADI BACILA -</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7662</size></b></align>
+<align="left"><b><size="11">--------------------------------</size></b></align>
+<align="left"><b><size="11">ANULARE: MICI x -3.00</size></b></align>
+<align="left"><b><size="11">Motiv: Adăugat din greșeală</size></b></align>
+<align="left"><b><size="11">--------------------------------</size></b></align>

@@ -1,0 +1,34 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-05 18:48:02</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">APA PLATA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 7.00 = 7.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">FUZETEA</size></b></align>
+<align="left"><b><size="11">  2 x 12.00 = 24.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">CAPUCCINO CLASIC</size></b></align>
+<align="left"><b><size="11">  1.00000 x 15.00 = 15.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">HARGHITA 500ML</size></b></align>
+<align="left"><b><size="11">  1.00000 x 7.00 = 7.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">FICATEI CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 38.00 = 38.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">MICI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 7.00 = 7.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">SALAU GR MUJDEI MAMALIGA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 48.00 = 48.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CREIER PANE OREZ</size></b></align>
+<align="left"><b><size="11">  1.00000 x 38.00 = 38.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">VARZA ALBA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 9.00 = 9.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  1.00000 x 6.00 = 6.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 199.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 199.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 160.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 39.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7412</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

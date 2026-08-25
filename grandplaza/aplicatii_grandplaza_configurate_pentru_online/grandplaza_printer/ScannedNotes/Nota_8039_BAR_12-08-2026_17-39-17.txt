@@ -1,0 +1,24 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8039</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-12 17:39:13</size></b></align>
+<align="left"><b><size="11">OPERATOR: ADI BACILA -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M22</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x SALAU IN FULGI CARTOFI AURII = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUNGA = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SPAGHETE CARBON = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 93.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	9.30	102.30</size></b></align>
+<align="left"><b><size="11">12%	11.16	104.16</size></b></align>
+<align="left"><b><size="11">15%	13.95	106.95</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

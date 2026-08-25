@@ -1,0 +1,15 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8635</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-18 21:16:39</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: S3</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 4 -------</size></b></align>
+<align="left"><b><size="11">1 x PAPANASI GEM CASA = 26.00 LEI</size></b></align>
+<align="left"><b><size="11">- la 2 farf</size></b></align>
+<align="left"><b><size="11">1 x CLATITE CIOCOLATA = 16.00 LEI</size></b></align>
+<align="left"><b><size="11">- la 2 farf</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 42.00 LEI</size></b></align>

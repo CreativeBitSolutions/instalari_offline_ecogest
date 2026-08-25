@@ -1,0 +1,29 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8235</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-14 14:26:28</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">Masa: S6</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">2 x BORSEC 1L = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">5 x CIORBA DE BURTA = 120.00 LEI</size></b></align>
+<align="left"><b><size="11">5 x ARDEI IUTE = 5.00 LEI</size></b></align>
+<align="left"><b><size="11">5 x SMANTANA = 15.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x PAINE COS = 18.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUI PANE PIURE = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">4 x MICI 2 2 = 28.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x COCA COLA = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 256.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	25.60	281.60</size></b></align>
+<align="left"><b><size="11">12%	30.72	286.72</size></b></align>
+<align="left"><b><size="11">15%	38.40	294.40</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

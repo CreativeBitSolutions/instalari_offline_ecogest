@@ -1,0 +1,11 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7215</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-03 14:47:28</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: F04</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 5 -------</size></b></align>
+<align="left"><b><size="11">1 x CEAPA ROSIE 170G</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>

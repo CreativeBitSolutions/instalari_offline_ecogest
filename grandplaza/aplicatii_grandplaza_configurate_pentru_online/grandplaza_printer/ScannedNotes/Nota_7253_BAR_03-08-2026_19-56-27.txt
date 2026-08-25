@@ -1,0 +1,21 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7253</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-03 19:56:23</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: F06</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 3 -------</size></b></align>
+<align="left"><b><size="11">2 x MICI = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x M CARTOFI-PRAJITI = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x M CARTOFI-PRAJITI = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x TELE RASA = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x TELE RASA = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">- pe cartofi</size></b></align>
+<align="left"><b><size="11">1 x CASCAVAL PANE = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">- cu micii...1 cu 1</size></b></align>
+<align="left"><b><size="11">------ FEL 0 -------</size></b></align>
+<align="left"><b><size="11">1 x PERONI = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 102.00 LEI</size></b></align>

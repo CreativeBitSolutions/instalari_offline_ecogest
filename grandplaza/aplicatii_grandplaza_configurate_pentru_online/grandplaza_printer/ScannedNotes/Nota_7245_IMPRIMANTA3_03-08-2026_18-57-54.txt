@@ -1,0 +1,14 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7245</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-03 18:57:49</size></b></align>
+<align="left"><b><size="11">OPERATOR: ADI BACILA -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M9</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 0 -------</size></b></align>
+<align="left"><b><size="11">1 x MENIUL ZILEI</size></b></align>
+<align="left"><b><size="11">- varza alba | salata: varza alba | Opțiune meniu: Meniu complet</size></b></align>
+<align="left"><b><size="11">1 x MENIUL ZILEI</size></b></align>
+<align="left"><b><size="11">- muraturi | salata: muraturi | Opțiune meniu: Felul 2 meniul zilei + salată</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>

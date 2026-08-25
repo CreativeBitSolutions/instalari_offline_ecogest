@@ -1,0 +1,20 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-03 13:29:27</size></b></align>
+<align="left"><b><size="11">OPERATOR: ADI BACILA -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">PUI PANE CARTOFI PRAJITI 12 45</size></b></align>
+<align="left"><b><size="11">  1.00000 x 38.00 = 38.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">VARZA ALBA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 9.00 = 9.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PUNGA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 1.00 = 1.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 48.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 48.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 47.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 1.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7177</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

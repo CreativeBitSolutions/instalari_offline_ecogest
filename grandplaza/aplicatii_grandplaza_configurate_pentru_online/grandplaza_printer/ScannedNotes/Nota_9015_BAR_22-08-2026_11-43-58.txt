@@ -1,0 +1,31 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 9015</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-22 11:43:56</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">Masa: F06</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x COCA COLA = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x FANTA = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x LIMO MENTA MIERE = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x CIORBA DE BURTA = 72.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x ARDEI IUTE = 3.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x SMANTANA = 9.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x PAINE COS = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x PUI PANE CARTOFI PRAJITI = 76.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x SALAU GR MUJDEI MAMALIGA = 96.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x VARZA ALBA = 18.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 354.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	35.40	389.40</size></b></align>
+<align="left"><b><size="11">12%	42.48	396.48</size></b></align>
+<align="left"><b><size="11">15%	53.10	407.10</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

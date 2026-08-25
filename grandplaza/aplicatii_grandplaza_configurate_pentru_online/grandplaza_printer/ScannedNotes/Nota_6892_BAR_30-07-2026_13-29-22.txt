@@ -1,0 +1,25 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6892</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-30 13:29:19</size></b></align>
+<align="left"><b><size="11">OPERATOR: ADI BACILA -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M20</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x CIOLAN IAHNIE DE FASOLE = 46.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x IAHNIE DE FASOLE = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x CASTRAV IN OTET = 18.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUNGA = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 75.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	7.50	82.50</size></b></align>
+<align="left"><b><size="11">12%	9.00	84.00</size></b></align>
+<align="left"><b><size="11">15%	11.25	86.25</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

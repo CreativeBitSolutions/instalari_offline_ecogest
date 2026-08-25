@@ -1,0 +1,25 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7803</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-10 14:07:09</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">Masa: TM2</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x LIMONADA = 18.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x MIERE BUC = 2.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MENIUL ZILEI VARZA ALBA = 36.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ARDEI IUTE = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 57.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	5.70	62.70</size></b></align>
+<align="left"><b><size="11">12%	6.84	63.84</size></b></align>
+<align="left"><b><size="11">15%	8.55	65.55</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

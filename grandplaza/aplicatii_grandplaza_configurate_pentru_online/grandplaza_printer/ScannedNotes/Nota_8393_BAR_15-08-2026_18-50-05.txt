@@ -1,0 +1,26 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8393</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-15 18:50:04</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: TM2</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA DE BURTA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x SALAU GR MUJDEI MAMALIGA = 96.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x GREEN APPLE = 50.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CAFE FRAPPE (CU ALCOOL ) = 26.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 202.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	20.20	222.20</size></b></align>
+<align="left"><b><size="11">12%	24.24	226.24</size></b></align>
+<align="left"><b><size="11">15%	30.30	232.30</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

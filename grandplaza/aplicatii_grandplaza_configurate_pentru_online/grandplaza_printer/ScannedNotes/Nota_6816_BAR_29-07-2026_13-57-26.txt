@@ -1,0 +1,23 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-29 13:57:23</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">HARGHITA 500ML</size></b></align>
+<align="left"><b><size="11">  1.00000 x 7.00 = 7.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">MENIUL ZILEI CASTRAVETI MURATI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 36.00 = 36.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CARFTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 10.00 = 10.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CEAPA ROSIE 85G</size></b></align>
+<align="left"><b><size="11">  1.00000 x 5.00 = 5.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">ARDEI IUTE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 1.00 = 1.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 59.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 59.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 59.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6816</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

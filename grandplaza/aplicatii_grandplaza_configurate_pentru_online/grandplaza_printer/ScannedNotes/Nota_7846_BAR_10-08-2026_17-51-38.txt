@@ -1,0 +1,28 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7846</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-10 17:51:33</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: S1</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x COCA COLA = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ARDEI IUTE = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA DE BURTA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SMANTANA = 3.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PIEPT DE PUI CARTOFI PRAJITI = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x VARZA ALBA = 9.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 87.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	8.70	95.70</size></b></align>
+<align="left"><b><size="11">12%	10.44	97.44</size></b></align>
+<align="left"><b><size="11">15%	13.05	100.05</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

@@ -1,0 +1,28 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8984</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-21 19:09:05</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">Masa: S6</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">2 x URSUS RETRO = 28.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x URSUS COOLER = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA PUI = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x R PAINE 3 LEI = 3.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x COTLET CARTOFI NATUR = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CASTRAV CU ROSI cu ceapa = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">0.5 x OCHIURI SIMPLE = 7.50 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 112.50 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	11.25	123.75</size></b></align>
+<align="left"><b><size="11">12%	13.50	126.00</size></b></align>
+<align="left"><b><size="11">15%	16.88	129.38</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

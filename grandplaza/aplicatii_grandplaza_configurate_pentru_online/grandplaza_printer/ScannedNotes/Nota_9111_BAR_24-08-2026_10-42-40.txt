@@ -1,0 +1,29 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 9111</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-24 10:42:38</size></b></align>
+<align="left"><b><size="11">OPERATOR: ADI BACILA -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M7</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">2 x CEAFA AFMUMATA CARTOFI TARANESTI = 68.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x X  COTLET DE MIEL CARTOFI TARANESTI = 144.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CARNATI CARTOFI TARANESTI = 34.00 LEI</size></b></align>
+<align="left"><b><size="11">7 x MICI = 49.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x CREIER PANE CARTOFI TARANESTI = 76.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PULPE DE PUI CARTOFI TARANESTI = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUI IN CRUSTA AURIE CARTOFI TARANESTI = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PLATOU+AMBALAJ = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 473.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	47.30	520.30</size></b></align>
+<align="left"><b><size="11">12%	56.76	529.76</size></b></align>
+<align="left"><b><size="11">15%	70.95	543.95</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

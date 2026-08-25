@@ -1,0 +1,30 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8061</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-12 22:08:47</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">Masa: S4</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x VIN DE CASA 1L ALB = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x URSUS = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x TIMISOREANA = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA PORC = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">5 x MICI = 35.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x M CARTOFI-PRAJITI = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x STROGANOFF MAMALIGA = 72.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SARMALUTE MAMALIGA = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 249.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	24.90	273.90</size></b></align>
+<align="left"><b><size="11">12%	29.88	278.88</size></b></align>
+<align="left"><b><size="11">15%	37.35	286.35</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

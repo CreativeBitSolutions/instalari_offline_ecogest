@@ -1,0 +1,32 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7257</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-03 21:33:09</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: Masa Temporara 14</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x CIOLAN IAHNIE DE FASOLE = 46.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x MICI = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x M CARTOFI-PRAJITI = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x PULPE DE PUI CARTOFI PRAJITI = 76.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIOLAN CARTOFI AURII = 46.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x GREEN APPLE = 25.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x LIMONADA = 36.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x INGHETATA = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CLATITE BANANE CIOC = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x VARZA ALBA = 9.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 340.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	34.00	374.00</size></b></align>
+<align="left"><b><size="11">12%	40.80	380.80</size></b></align>
+<align="left"><b><size="11">15%	51.00	391.00</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

@@ -1,0 +1,15 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8123</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-13 15:11:05</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M2</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 1 -------</size></b></align>
+<align="left"><b><size="11">3 x PLATOU CU BUC ROM = 210.00 LEI</size></b></align>
+<align="left"><b><size="11">------ FEL 2 -------</size></b></align>
+<align="left"><b><size="11">5 x CIORBA DE BURTA = 120.00 LEI</size></b></align>
+<align="left"><b><size="11">5 x CIORBA PERISOARE = 100.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 430.00 LEI</size></b></align>

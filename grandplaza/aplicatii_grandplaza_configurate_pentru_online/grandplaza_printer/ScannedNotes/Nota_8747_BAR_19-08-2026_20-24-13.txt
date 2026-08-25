@@ -1,0 +1,26 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8747</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-19 20:24:11</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: TM1</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x URSUS = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAHAR DE VIN = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SARMALUTE MAMALIGA = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x STROGANOFF MAMALIGA = 72.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x BORSEC 1L = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 150.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	15.00	165.00</size></b></align>
+<align="left"><b><size="11">12%	18.00	168.00</size></b></align>
+<align="left"><b><size="11">15%	22.50	172.50</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

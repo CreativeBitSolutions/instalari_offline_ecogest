@@ -1,0 +1,20 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-06 12:30:52</size></b></align>
+<align="left"><b><size="11">OPERATOR: MARIUS -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">MICI</size></b></align>
+<align="left"><b><size="11">  12.00000 x 7.00 = 84.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">M CARTOFI-PRAJITI</size></b></align>
+<align="left"><b><size="11">  3 x 10.00 = 30.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PUNGA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 1.00 = 1.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 115.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 115.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 114.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 1.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7461</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

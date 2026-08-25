@@ -1,0 +1,12 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8426</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-17 10:51:08</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">Masa: F06</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 3 -------</size></b></align>
+<align="left"><b><size="11">0.5 x SARMALUTE</size></b></align>
+<align="left"><b><size="11">- MAMALIGA</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>

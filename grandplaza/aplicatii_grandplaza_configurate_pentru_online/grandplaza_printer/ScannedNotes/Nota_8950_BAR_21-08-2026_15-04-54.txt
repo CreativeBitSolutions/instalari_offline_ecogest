@@ -1,0 +1,40 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8950</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-21 15:04:53</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">Masa: S10</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x URSUS = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PERONI = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CUBA LIBRE = 25.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x BORSEC 1L = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x COCA COLA = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x CRAMELE PURCARI = 150.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAHAR DE VIN ALB = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x TIMISOREANA = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">6 x MENIUL ZILEI 4 castr 2 varza = 216.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x SALAU GR TARTAR MAMALIGA = 96.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CARTOFI AURII = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x CIORBA DE BURTA = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x ARDEI IUTE = 2.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x SMANTANA = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIOLAN CARTOFI TARANESTI = 46.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PULPE DE PUI CARTOFI TARANESTI = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ARDEI COPT = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CAFE FRAPPE (CU ALCOOL ) Fara alc = 26.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAHAR DE VIN ALB = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 767.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	76.70	843.70</size></b></align>
+<align="left"><b><size="11">12%	92.04	859.04</size></b></align>
+<align="left"><b><size="11">15%	115.05	882.05</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

@@ -1,0 +1,20 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-19 10:48:35</size></b></align>
+<align="left"><b><size="11">OPERATOR: ADI BACILA -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">CIORBA MENIU ZILEI Fără salată</size></b></align>
+<align="left"><b><size="11">  4.00000 x 13.00 = 52.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">MENIUL ZILEI</size></b></align>
+<align="left"><b><size="11">  8.00000 x 25.00 = 200.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">TACAM PLASTIC</size></b></align>
+<align="left"><b><size="11">  12 x 1.00 = 12.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 264.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Virament bancar: 264.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 252.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 12.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8658</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

@@ -1,0 +1,29 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7511</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-06 16:18:49</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: S1</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">2 x CIORBA VACUTA = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SMANTANA = 3.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SARMALUTE MAMALIGA,,,la 2 farf = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CLATITE GEM AFINE = 16.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x URSUS = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PERONI = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x INGHETATA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 163.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	16.30	179.30</size></b></align>
+<align="left"><b><size="11">12%	19.56	182.56</size></b></align>
+<align="left"><b><size="11">15%	24.45	187.45</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

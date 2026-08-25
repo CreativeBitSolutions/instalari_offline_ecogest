@@ -1,0 +1,22 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-18 11:48:02</size></b></align>
+<align="left"><b><size="11">OPERATOR: MARIUS -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">MENIUL ZILEI</size></b></align>
+<align="left"><b><size="11">  11 x 36.00 = 330.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CIORBA MENIU ZILEI Fără salată</size></b></align>
+<align="left"><b><size="11">  1.00000 x 13.00 = 13.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CEAPA ROSIE 85G</size></b></align>
+<align="left"><b><size="11">  6.00000 x 5.00 = 30.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">TACAM PLASTIC</size></b></align>
+<align="left"><b><size="11">  17 x 1.00 = 17.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 390.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Virament bancar: 390.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 373.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 17.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8537</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

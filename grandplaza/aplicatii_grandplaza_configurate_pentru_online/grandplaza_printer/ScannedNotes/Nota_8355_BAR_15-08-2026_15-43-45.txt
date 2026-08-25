@@ -1,0 +1,35 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8355</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-15 15:43:43</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">Masa: S5</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">2 x URSUS = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x FRESH DE PORTOCALE = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x FUZETEA = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x GREEN APPLE = 25.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA DE BURTA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ARDEI IUTE = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SMANTANA = 3.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CASCAVAL PANE = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x BURGER BLACK ANGUS CARTOFI PRAJITI = 96.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SOMON LA GRATAR CARTOFI NATUR = 64.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SALAU IN FULGI CARTOFI PRAJITI = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x APA PLATA = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUNGA = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 357.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	35.70	392.70</size></b></align>
+<align="left"><b><size="11">12%	42.84	399.84</size></b></align>
+<align="left"><b><size="11">15%	53.55	410.55</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

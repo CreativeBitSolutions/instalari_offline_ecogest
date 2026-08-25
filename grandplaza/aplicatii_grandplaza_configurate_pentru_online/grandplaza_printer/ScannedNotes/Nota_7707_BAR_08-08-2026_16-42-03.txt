@@ -1,0 +1,30 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7707</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-08 16:41:59</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">Masa: F05</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x BORSEC 1L = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x CIORBA FASOLE FARA CARNE = 40.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x FICATEI CARTOFI AURII = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x FICATEI CARTOFI PRAJITI = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x VARZA ALBA = 9.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CEAPA ROSIE 85G = 5.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MUJDEI = 4.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUNGA = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 151.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	15.10	166.10</size></b></align>
+<align="left"><b><size="11">12%	18.12	169.12</size></b></align>
+<align="left"><b><size="11">15%	22.65	173.65</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

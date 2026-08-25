@@ -1,0 +1,30 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6736</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-28 15:32:35</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">Masa: TM4</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x CIOLAN IAHNIE DE FASOLE = 46.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MURATURI ASORTATE CASA = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x PUI IN CRUSTA AURIE PIURE = 88.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x VARZA ALBA = 18.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x COCA COLA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x LAMAIE = 3.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x HARGHITA 500ML = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x X CASEROLA 1 CIORBA = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 203.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	20.30	223.30</size></b></align>
+<align="left"><b><size="11">12%	24.36	227.36</size></b></align>
+<align="left"><b><size="11">15%	30.45	233.45</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

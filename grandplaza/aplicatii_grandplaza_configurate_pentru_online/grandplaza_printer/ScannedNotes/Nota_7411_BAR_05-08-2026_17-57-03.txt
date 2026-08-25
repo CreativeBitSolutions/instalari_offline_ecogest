@@ -1,0 +1,29 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7411</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-05 17:57:00</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">Masa: S2</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">4 x MICI = 28.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x M CARTOFI-PRAJITI = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PULPE DE PUI CARTOFI PRAJITI = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ROSI CU TELEMEA = 15.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x COCA COLA = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CEAFA CARTOFI PRAJITI = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUNGA = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 142.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	14.20	156.20</size></b></align>
+<align="left"><b><size="11">12%	17.04	159.04</size></b></align>
+<align="left"><b><size="11">15%	21.30	163.30</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

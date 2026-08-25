@@ -1,0 +1,29 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7538</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-06 21:24:38</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: S7</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x LIMONADA = 18.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x URSUS 0% ALCOOL = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x LIMONADA  MENTA = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x APA PLATA = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x BORSEC 1L = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAHAR LAPTE = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SALAU IN FULGI MAMALIGA = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PLATOU BOIERESC MAMALIGA = 124.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 250.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	25.00	275.00</size></b></align>
+<align="left"><b><size="11">12%	30.00	280.00</size></b></align>
+<align="left"><b><size="11">15%	37.50	287.50</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

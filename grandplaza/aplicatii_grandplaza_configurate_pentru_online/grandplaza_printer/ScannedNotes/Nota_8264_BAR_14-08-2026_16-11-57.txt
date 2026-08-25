@@ -1,0 +1,24 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8264</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-14 16:11:55</size></b></align>
+<align="left"><b><size="11">OPERATOR: MARIUS -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M4</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">5 x CIORBA DE BURTA = 120.00 LEI</size></b></align>
+<align="left"><b><size="11">5 x CIORBA VACUTA = 110.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x Z GALEATA 5 L = 18.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 248.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	24.80	272.80</size></b></align>
+<align="left"><b><size="11">12%	29.76	277.76</size></b></align>
+<align="left"><b><size="11">15%	37.20	285.20</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

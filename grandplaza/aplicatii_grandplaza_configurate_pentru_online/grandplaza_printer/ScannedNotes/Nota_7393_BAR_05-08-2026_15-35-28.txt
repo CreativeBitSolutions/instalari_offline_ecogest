@@ -1,0 +1,34 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-05 15:35:28</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">PLATOU ARDELENESC CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 88.00 = 88.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">ARDEI IUTE</size></b></align>
+<align="left"><b><size="11">  2 x 1.00 = 2.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">SMANTANA</size></b></align>
+<align="left"><b><size="11">  2 x 3.00 = 6.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  1.00000 x 6.00 = 6.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CIORBA DE BURTA</size></b></align>
+<align="left"><b><size="11">  2 x 24.00 = 48.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PUI PANE CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 38.00 = 38.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">VARZA ALBA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 9.00 = 9.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">BORSEC 1L</size></b></align>
+<align="left"><b><size="11">  1.00000 x 10.00 = 10.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">COCA COLA</size></b></align>
+<align="left"><b><size="11">  3.00000 x 12.00 = 36.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">TUICA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 12.00 = 12.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 255.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 255.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 207.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 48.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7393</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

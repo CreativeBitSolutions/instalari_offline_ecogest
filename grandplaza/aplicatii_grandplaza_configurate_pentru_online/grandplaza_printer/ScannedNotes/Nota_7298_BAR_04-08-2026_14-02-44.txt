@@ -1,0 +1,28 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7298</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-04 14:02:41</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">Masa: S5</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x PIEPT DE PUI CARTOFI PRAJITI = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x KETCHUP = 4.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x LIMO MENTA MIERE = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MENIUL ZILEI VARZA ALBA = 36.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA DE FAS CIOLAN = 33.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x HARGHITA 500ML = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MENIUL ZILEI VARZA ALBA = 36.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 170.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	17.00	187.00</size></b></align>
+<align="left"><b><size="11">12%	20.40	190.40</size></b></align>
+<align="left"><b><size="11">15%	25.50	195.50</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

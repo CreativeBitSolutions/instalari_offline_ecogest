@@ -1,0 +1,30 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-31 12:52:32</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">CAFEA ESPRESSO LUNGA</size></b></align>
+<align="left"><b><size="11">  2.00000 x 11.00 = 22.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">CIORBA VACUTA</size></b></align>
+<align="left"><b><size="11">  2.00000 x 22.00 = 44.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CIORBA DE BURTA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 24.00 = 24.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">ARDEI IUTE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 1.00 = 1.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">SMANTANA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 3.00 = 3.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  1.00000 x 6.00 = 6.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">HARGHITA 500ML</size></b></align>
+<align="left"><b><size="11">  1.00000 x 7.00 = 7.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">URSUS</size></b></align>
+<align="left"><b><size="11">  4 x 12.00 = 48.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 155.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 155.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 85.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 70.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6975</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

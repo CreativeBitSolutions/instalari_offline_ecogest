@@ -1,0 +1,17 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8772</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-20 11:01:55</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">Masa: F06</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 1 -------</size></b></align>
+<align="left"><b><size="11">1 x PLATOU CU BUC ROM = 70.00 LEI</size></b></align>
+<align="left"><b><size="11">------ FEL 5 -------</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">------ FEL 0 -------</size></b></align>
+<align="left"><b><size="11">1 x LIMO MENTA MIERE = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CAPUCCINO CLASIC = 15.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 113.00 LEI</size></b></align>

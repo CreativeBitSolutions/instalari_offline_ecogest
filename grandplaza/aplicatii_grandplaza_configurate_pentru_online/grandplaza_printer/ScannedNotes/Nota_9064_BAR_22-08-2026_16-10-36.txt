@@ -1,0 +1,25 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 9064</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-22 16:10:35</size></b></align>
+<align="left"><b><size="11">OPERATOR: MARIUS -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M4</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x CIOLAN IAHNIE DE FASOLE = 46.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x IAHNIE DE FASOLE = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CASTRAV IN OTET = 9.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUNGA = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 66.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	6.60	72.60</size></b></align>
+<align="left"><b><size="11">12%	7.92	73.92</size></b></align>
+<align="left"><b><size="11">15%	9.90	75.90</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

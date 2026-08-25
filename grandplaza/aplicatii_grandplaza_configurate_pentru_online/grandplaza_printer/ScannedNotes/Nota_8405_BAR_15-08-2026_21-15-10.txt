@@ -1,0 +1,28 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8405</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-15 21:15:06</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: TM4</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x BORSEC 1L = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIOLAN IAHNIE DE FASOLE = 46.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAHAR DE VIN ROSU = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PLATOU BOIERESC CARTOFI TARANESTI = 124.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x X SALATA CRUDITATI = 36.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CLATITE BANANE CIOC = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ESPRESSO DECOF JULIUS MEIN = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 263.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	26.30	289.30</size></b></align>
+<align="left"><b><size="11">12%	31.56	294.56</size></b></align>
+<align="left"><b><size="11">15%	39.45	302.45</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

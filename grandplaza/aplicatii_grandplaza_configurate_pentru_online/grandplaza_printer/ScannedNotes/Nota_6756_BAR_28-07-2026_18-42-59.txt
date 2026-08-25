@@ -1,0 +1,23 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-28 18:42:55</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">BORSEC 1L</size></b></align>
+<align="left"><b><size="11">  1.00000 x 10.00 = 10.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CIORBA DE FAS CIOLAN</size></b></align>
+<align="left"><b><size="11">  2.00000 x 33.00 = 66.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CIORBA DE BURTA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 24.00 = 24.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CEAPA ROSIE 85G</size></b></align>
+<align="left"><b><size="11">  1.00000 x 5.00 = 5.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  1.00000 x 6.00 = 6.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 111.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 111.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 111.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6756</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

@@ -1,0 +1,19 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7767</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-10 12:05:30</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">Masa: TM3</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 3 -------</size></b></align>
+<align="left"><b><size="11">3 x CIORBA DE BURTA = 72.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x PIEPT DE PUI = 96.00 LEI</size></b></align>
+<align="left"><b><size="11">- CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">------ FEL 5 -------</size></b></align>
+<align="left"><b><size="11">3 x ARDEI IUTE = 3.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x SMANTANA = 9.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x PAINE COS = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ROSII = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 203.00 LEI</size></b></align>

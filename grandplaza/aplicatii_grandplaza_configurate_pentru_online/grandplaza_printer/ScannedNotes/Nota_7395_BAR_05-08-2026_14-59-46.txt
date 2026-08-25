@@ -1,0 +1,17 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7395</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-05 14:59:40</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">Masa: TM2</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 3 -------</size></b></align>
+<align="left"><b><size="11">1 x MIX GRILL = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">- CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">1 x X  COTLET DE MIEL = 72.00 LEI</size></b></align>
+<align="left"><b><size="11">- CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">1 x SARMALUTE = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">- MAMALIGA</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 160.00 LEI</size></b></align>

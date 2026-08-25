@@ -1,0 +1,24 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-03 20:27:47</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">PERONI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 14.00 = 14.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">CIORBA PERISOARE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 20.00 = 20.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  1.00000 x 6.00 = 6.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">SPAGHETE CARBON far smt</size></b></align>
+<align="left"><b><size="11">  1.00000 x 44.00 = 44.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CLATITE GEM AFINE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 16.00 = 16.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 100.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 100.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 70.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 30.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7251</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

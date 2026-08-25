@@ -1,0 +1,36 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8977</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-21 19:23:26</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">Masa: TM1</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">2 x APA PLATA = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x LIMO MENTA MIERE = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">7 x NENEA IANCU = 154.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA PERISOARE = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x PAINE COS = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CEAFA CARTOFI PRAJITI = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SOS BRUN CU CIUPERCI = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x FICATEI PIURE = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CEAFA CARTOFI AURII = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x CEAFA CARTOFI AURII = 64.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SOMON LA GRATAR SPANAC = 64.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIOLAN = 46.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x CAFEA ESPRESSO LUNGA = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x LAPTE CAFEA = 2.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ARDEI IUTE = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 535.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	53.50	588.50</size></b></align>
+<align="left"><b><size="11">12%	64.20	599.20</size></b></align>
+<align="left"><b><size="11">15%	80.25	615.25</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

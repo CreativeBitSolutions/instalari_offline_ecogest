@@ -1,0 +1,14 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7624</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-07 16:57:22</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">Masa: S2</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 4 -------</size></b></align>
+<align="left"><b><size="11">1 x PAPANASI GEM CASA = 26.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAPANASI GEM CASA = 26.00 LEI</size></b></align>
+<align="left"><b><size="11">- 2 far</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 52.00 LEI</size></b></align>

@@ -1,0 +1,25 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7637</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-07 18:58:42</size></b></align>
+<align="left"><b><size="11">OPERATOR: ADI BACILA -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M2</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x SALAU IN FULGI cartofi natur | garnitura: cartofi natur = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CLATITE GEM COMBINAT = 16.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CLATITE CIOCOLATA = 16.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x TRANS 10 Taxă transport Woo = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 90.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	9.00	99.00</size></b></align>
+<align="left"><b><size="11">12%	10.80	100.80</size></b></align>
+<align="left"><b><size="11">15%	13.50	103.50</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

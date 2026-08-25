@@ -1,0 +1,22 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 9277</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-25 16:21:40</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">Masa: S4</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 3 -------</size></b></align>
+<align="left"><b><size="11">1 x CIOLAN = 46.00 LEI</size></b></align>
+<align="left"><b><size="11">- IAHNIE DE FASOLE</size></b></align>
+<align="left"><b><size="11">1 x CIOLAN = 46.00 LEI</size></b></align>
+<align="left"><b><size="11">- VARZA CALITA</size></b></align>
+<align="left"><b><size="11">------ FEL 5 -------</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x W SALATA GRECEASCA = 72.00 LEI</size></b></align>
+<align="left"><b><size="11">------ FEL 0 -------</size></b></align>
+<align="left"><b><size="11">1 x LIMO MENTA MIERE = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CHIVAS REGAL 12 YO = 34.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x MOJITO = 50.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 276.00 LEI</size></b></align>

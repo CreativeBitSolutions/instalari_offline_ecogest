@@ -1,0 +1,19 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7206</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-03 14:30:18</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">Masa: F07</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 3 -------</size></b></align>
+<align="left"><b><size="11">2 x PUI PANE = 76.00 LEI</size></b></align>
+<align="left"><b><size="11">- CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">1 x CIOBANESC = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CARFTOFI PRAJITI = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">------ FEL 5 -------</size></b></align>
+<align="left"><b><size="11">3 x VARZA ALBA = 27.00 LEI</size></b></align>
+<align="left"><b><size="11">------ FEL 6 -------</size></b></align>
+<align="left"><b><size="11">2 x KETCHUP = 8.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 165.00 LEI</size></b></align>

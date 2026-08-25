@@ -1,0 +1,25 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8827</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-20 15:47:32</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">Masa: F05</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">2 x MENIUL ZILEI CASTRAVETI MURATI = 72.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUI IN CRUSTA AURIE CARTOFI PRAJITI = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x URSUS NEFITRATA = 15.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x APA PLATA = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 138.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	13.80	151.80</size></b></align>
+<align="left"><b><size="11">12%	16.56	154.56</size></b></align>
+<align="left"><b><size="11">15%	20.70	158.70</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

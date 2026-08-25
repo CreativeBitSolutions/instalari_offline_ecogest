@@ -1,0 +1,16 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8709</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-19 14:45:59</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: F06</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 3 -------</size></b></align>
+<align="left"><b><size="11">1 x SARMALUTE = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">- MAMALIGA</size></b></align>
+<align="left"><b><size="11">1 x BURGER BLACK ANGUS = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">- CARTOFI PRAJITI.....fr rosie</size></b></align>
+<align="left"><b><size="11">1 x IAHNIE DE FASOLE = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 102.00 LEI</size></b></align>

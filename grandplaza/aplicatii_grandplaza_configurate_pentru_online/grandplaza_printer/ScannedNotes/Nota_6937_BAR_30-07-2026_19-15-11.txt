@@ -1,0 +1,28 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-30 19:15:07</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GIN TONIC</size></b></align>
+<align="left"><b><size="11">  1.00000 x 25.00 = 25.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">URSUS COOLER</size></b></align>
+<align="left"><b><size="11">  1.00000 x 12.00 = 12.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PLATOU CU BUC ROM</size></b></align>
+<align="left"><b><size="11">  1.00000 x 70.00 = 70.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  1.00000 x 6.00 = 6.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">COCA COLA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 12.00 = 12.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">HARGHITA 500ML</size></b></align>
+<align="left"><b><size="11">  1.00000 x 7.00 = 7.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAPANASI GEM CASA la 2 farf</size></b></align>
+<align="left"><b><size="11">  1.00000 x 26.00 = 26.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 158.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 158.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 95.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 63.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6937</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

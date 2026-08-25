@@ -1,0 +1,24 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-30 18:01:31</size></b></align>
+<align="left"><b><size="11">OPERATOR: ADI BACILA -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">VIN DE CASA 1L ALB</size></b></align>
+<align="left"><b><size="11">  5.00000 x 38.00 = 190.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">TUICA</size></b></align>
+<align="left"><b><size="11">  10.00000 x 12.00 = 120.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">LA GIOIOSA PROSECO</size></b></align>
+<align="left"><b><size="11">  1.00000 x 90.00 = 90.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">LIMO MENTA MIERE</size></b></align>
+<align="left"><b><size="11">  2.00000 x 22.00 = 44.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">INGHETATA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 24.00 = 24.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 468.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 468.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 68.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 400.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6934</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

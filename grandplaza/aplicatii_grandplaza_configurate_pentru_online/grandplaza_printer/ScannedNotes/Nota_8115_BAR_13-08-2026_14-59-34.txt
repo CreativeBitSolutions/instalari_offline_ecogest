@@ -1,0 +1,26 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8115</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-13 14:59:31</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">Masa: TM3</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x CAFEA ESPRESSO LUNGA = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x APA PLATA = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CLATITE BANANE CIOC = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA PORC = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x R PAINE 3 LEI = 3.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 72.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	7.20	79.20</size></b></align>
+<align="left"><b><size="11">12%	8.64	80.64</size></b></align>
+<align="left"><b><size="11">15%	10.80	82.80</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

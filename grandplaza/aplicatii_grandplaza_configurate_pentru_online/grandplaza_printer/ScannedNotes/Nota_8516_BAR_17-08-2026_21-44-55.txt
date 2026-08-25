@@ -1,0 +1,30 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8516</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-17 21:44:52</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">Masa: TM4</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x URSUS RETRO = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA PUI = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA DE BURTA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x APA PLATA = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x OMLETA SIMPLA = 15.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIOLAN CARTOFI PRAJITI = 46.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ROSI CU CEAPA = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SMANTANA = 3.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 145.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	14.50	159.50</size></b></align>
+<align="left"><b><size="11">12%	17.40	162.40</size></b></align>
+<align="left"><b><size="11">15%	21.75	166.75</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

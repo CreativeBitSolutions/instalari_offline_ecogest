@@ -1,0 +1,22 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-03 17:28:05</size></b></align>
+<align="left"><b><size="11">OPERATOR: ADI BACILA -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">CIORBA DE BURTA</size></b></align>
+<align="left"><b><size="11">  5.00000 x 24.00 = 120.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">Z GALEATA 5 L</size></b></align>
+<align="left"><b><size="11">  1.00000 x 9.00 = 9.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">APA PLATA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 7.00 = 7.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">MUJDEI</size></b></align>
+<align="left"><b><size="11">  2.00000 x 4.00 = 8.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 144.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 144.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 135.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 9.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7232</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

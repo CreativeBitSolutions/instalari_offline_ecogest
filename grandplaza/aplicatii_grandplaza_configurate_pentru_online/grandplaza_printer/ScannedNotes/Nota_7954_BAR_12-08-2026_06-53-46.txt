@@ -1,0 +1,25 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7954</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-12 06:53:41</size></b></align>
+<align="left"><b><size="11">OPERATOR: ADI BACILA -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M3</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x MAMA BR VACI SI SMANT = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MAMA BURDUF SI SMANT = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x OCHIURI RO MAMA CASC = 30.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CLATITE GEM AFINE = 16.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 122.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	12.20	134.20</size></b></align>
+<align="left"><b><size="11">12%	14.64	136.64</size></b></align>
+<align="left"><b><size="11">15%	18.30	140.30</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

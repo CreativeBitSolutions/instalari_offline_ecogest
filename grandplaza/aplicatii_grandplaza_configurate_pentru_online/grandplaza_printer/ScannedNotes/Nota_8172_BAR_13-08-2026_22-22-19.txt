@@ -1,0 +1,32 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8172</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-13 22:22:14</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">Masa: TM4</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x HARGHITA 500ML = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x URSUS = 36.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAHAR DE VIN ALB = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CARFTOFI PRAJITI = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x ARDEI COPT = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CREMA CIUPERCI = 34.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x FICATEI OREZ = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUI PANE CARTOFI PRAJITI = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x TELE RASA = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAHAR DE VIN ALB = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 219.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	21.90	240.90</size></b></align>
+<align="left"><b><size="11">12%	26.28	245.28</size></b></align>
+<align="left"><b><size="11">15%	32.85	251.85</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

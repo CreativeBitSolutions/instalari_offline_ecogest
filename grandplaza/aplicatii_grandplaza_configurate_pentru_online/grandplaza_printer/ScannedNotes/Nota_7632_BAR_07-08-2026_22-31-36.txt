@@ -1,0 +1,48 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-07 22:31:32</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">NENEA IANCU</size></b></align>
+<align="left"><b><size="11">  8 x 22.00 = 176.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">COCA COLA</size></b></align>
+<align="left"><b><size="11">  2.00000 x 12.00 = 24.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">URSUS</size></b></align>
+<align="left"><b><size="11">  3 x 12.00 = 36.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">LIMO MENTA MIERE</size></b></align>
+<align="left"><b><size="11">  2 x 22.00 = 44.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CAFE FRAPPE (CU ALCOOL )</size></b></align>
+<align="left"><b><size="11">  1.00000 x 26.00 = 26.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">COASTE  SOS CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  2 x 50.00 = 100.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CEAFA AFMUMATA CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 34.00 = 34.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">ARDEI COPT</size></b></align>
+<align="left"><b><size="11">  3 x 10.00 = 30.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CORDON BLEU PORC PIURE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 44.00 = 44.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">MUSCHI VACA CARTOFI PRAJITI med</size></b></align>
+<align="left"><b><size="11">  1.00000 x 72.00 = 72.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CASTRAV CU ROSI cu ceapa</size></b></align>
+<align="left"><b><size="11">  2 x 10.00 = 20.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CASCAVAL PANE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 32.00 = 32.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">MICI</size></b></align>
+<align="left"><b><size="11">  5 x 7.00 = 35.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CARFTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 10.00 = 10.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">URSUS BLACK</size></b></align>
+<align="left"><b><size="11">  2 x 14.00 = 28.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  1.00000 x 6.00 = 6.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAPANASI GEM CASA 3 far</size></b></align>
+<align="left"><b><size="11">  1.50000 x 26.00 = 39.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 756.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 756.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 427.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 329.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7632</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

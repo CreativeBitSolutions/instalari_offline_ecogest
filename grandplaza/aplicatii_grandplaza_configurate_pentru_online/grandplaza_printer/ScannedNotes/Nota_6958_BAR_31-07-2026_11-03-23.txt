@@ -1,0 +1,26 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-31 11:03:20</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">CAFEA ESPRESSO LUNGA</size></b></align>
+<align="left"><b><size="11">  2.00000 x 11.00 = 22.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">OCHIURI SIMPLE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 15.00 = 15.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">OMLETA CASEI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 30.00 = 30.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  1.00000 x 6.00 = 6.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">UNT</size></b></align>
+<align="left"><b><size="11">  1.00000 x 6.00 = 6.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">GEM</size></b></align>
+<align="left"><b><size="11">  1.00000 x 6.00 = 6.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 85.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 85.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 63.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 22.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6958</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

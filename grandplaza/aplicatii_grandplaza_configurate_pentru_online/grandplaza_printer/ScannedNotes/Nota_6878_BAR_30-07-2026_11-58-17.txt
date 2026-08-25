@@ -1,0 +1,27 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6878</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-30 11:58:15</size></b></align>
+<align="left"><b><size="11">OPERATOR: ADI BACILA -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M4</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">3 x CIORBA VACUTA = 66.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x TOCHITURA MUJDEI mujdei cu smantana | sos: mujdei cu smantana = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CLATITE GEM COMBINAT = 16.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x TACAM PLASTIC = 3.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x TRANS 10 Taxă transport Woo = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 145.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	14.50	159.50</size></b></align>
+<align="left"><b><size="11">12%	17.40	162.40</size></b></align>
+<align="left"><b><size="11">15%	21.75	166.75</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

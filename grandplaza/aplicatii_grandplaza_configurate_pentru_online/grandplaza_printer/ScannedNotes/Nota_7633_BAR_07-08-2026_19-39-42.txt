@@ -1,0 +1,30 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-07 19:39:38</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">CAFEA ESPRESSO LUNGA</size></b></align>
+<align="left"><b><size="11">  2.00000 x 11.00 = 22.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">BORSEC 1L</size></b></align>
+<align="left"><b><size="11">  1.00000 x 10.00 = 10.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">SPAGHETE CARBON</size></b></align>
+<align="left"><b><size="11">  2.00000 x 44.00 = 88.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CAMPARI ORANGE</size></b></align>
+<align="left"><b><size="11">  3 x 25.00 = 75.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">PAPANASI GEM CASA</size></b></align>
+<align="left"><b><size="11">  2.00000 x 26.00 = 52.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">MIX GRILL CARTOFI TARANESTI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 44.00 = 44.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PUNGA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 1.00 = 1.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">CUBA LIBRE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 25.00 = 25.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 317.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 317.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 142.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 175.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7633</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

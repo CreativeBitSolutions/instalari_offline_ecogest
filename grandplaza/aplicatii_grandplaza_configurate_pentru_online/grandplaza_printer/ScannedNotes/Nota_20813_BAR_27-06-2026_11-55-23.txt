@@ -1,0 +1,29 @@
+﻿<align="left"><b><size="11">Comanda Noua: #20813 (27-06-2026 11:55)</size></b></align>
+<align="left"><b><size="11">Ai primit urmatoarea comanda de la</size></b></align>
+<align="left"><b><size="11">Adrian Cornoiu</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">1 x Pulpe de pui la grătar cu garnitura - piure de cartofi = 38 lei</size></b></align>
+<align="left"><b><size="11">1 x Ciorbă ţărănească de văcuţă = 22 lei</size></b></align>
+<align="left"><b><size="11">1 x Garnitură 170g - cartofi prăjiţi = 10 lei</size></b></align>
+<align="left"><b><size="11">1 x Ardei copt = 10 lei</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+
+<align="left"><b><size="11">piure de cartofi</size></b></align>
+<align="left"><b><size="11">cartofi prăjiţi</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+
+<align="left"><b><size="11">Total: 80 lei</size></b></align>
+<align="left"><b><size="11">Livrare: 10 lei</size></b></align>
+<align="left"><b><size="11">Metoda de plata: Numerar</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">Metoda de livrare: Taxa de transport</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">Pret final: 90 lei</size></b></align>
+<align="left"><b><size="11">Telefon: +40754240044</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">Adresa de livrare:</size></b></align>
+<align="left"><b><size="11">Adrian Cornoiu, Cuptorului bl B2 sc B ap 58, Cuptorului bl. B2 sc. B ap.58, Sibiu, SB, RO</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">Nota comanda:</size></b></align>
+<align="left"><b><size="11">Plata care se va face la livrare. Starea comenzii a fost modificată din Plată în așteptare în În procesare.</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>

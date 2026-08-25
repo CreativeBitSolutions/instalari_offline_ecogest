@@ -1,0 +1,26 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7504</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-06 15:35:42</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">Masa: TM3</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">0.5 x STALINSKAYA = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA FASOLE CU CARNE = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ARDEI IUTE = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x URSUS = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 46.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	4.60	50.60</size></b></align>
+<align="left"><b><size="11">12%	5.52	51.52</size></b></align>
+<align="left"><b><size="11">15%	6.90	52.90</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

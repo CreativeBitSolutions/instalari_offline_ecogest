@@ -1,0 +1,15 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6969</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-31 11:17:30</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">Masa: F05</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 0 -------</size></b></align>
+<align="left"><b><size="11">1 x CAFEA ESPRESSO = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">- LUNGA</size></b></align>
+<align="left"><b><size="11">1 x CAPUCCINO CLASIC = 15.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x FRESH DE PORTOCALE = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 40.00 LEI</size></b></align>

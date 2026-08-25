@@ -1,0 +1,35 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7429</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-05 21:33:38</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">Masa: F05</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x PAHAR DE VIN ALB = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIOCOLATA CALDA = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x FUZETEA = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x BITTER LEMON = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ARDEI IUTE = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA DE BURTA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SMANTANA = 3.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x VR SALATA PUI = 36.00 LEI</size></b></align>
+<align="left"><b><size="11">4 x MICI = 28.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x M CARTOFI-PRAJITI = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x KETCHUP = 4.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PULPE DE PUI PIURE = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAHAR DE VIN ALB = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 209.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	20.90	229.90</size></b></align>
+<align="left"><b><size="11">12%	25.08	234.08</size></b></align>
+<align="left"><b><size="11">15%	31.35	240.35</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

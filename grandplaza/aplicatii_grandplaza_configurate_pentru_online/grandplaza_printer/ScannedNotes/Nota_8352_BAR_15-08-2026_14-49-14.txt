@@ -1,0 +1,31 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8352</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-15 14:49:12</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">Masa: S8</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x CIOLAN IAHNIE DE FASOLE = 46.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CEAFA CARTOFI PRAJITI = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x SOS CHILI = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ARDEI IUTE = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PULPE DE PUI CARTOFI AURII = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x COASTE  SOS CARTOFI AURII = 100.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CASTRAV CU ROSI cu ceapa = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x BORSEC 1L = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CAPPY = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 279.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	27.90	306.90</size></b></align>
+<align="left"><b><size="11">12%	33.48	312.48</size></b></align>
+<align="left"><b><size="11">15%	41.85	320.85</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

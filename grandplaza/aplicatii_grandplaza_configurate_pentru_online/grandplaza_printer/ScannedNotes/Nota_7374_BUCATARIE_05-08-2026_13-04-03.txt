@@ -1,0 +1,13 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7374</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-05 13:03:59</size></b></align>
+<align="left"><b><size="11">OPERATOR: MARIUS -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M9</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 0 -------</size></b></align>
+<align="left"><b><size="11">3 x CIORBA VACUTA</size></b></align>
+<align="left"><b><size="11">1 x MUSCHI IMPANAT</size></b></align>
+<align="left"><b><size="11">- cartofi aurii | garnitura: cartofi aurii</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>

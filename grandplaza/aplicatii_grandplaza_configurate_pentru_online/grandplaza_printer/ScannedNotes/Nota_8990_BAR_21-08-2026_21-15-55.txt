@@ -1,0 +1,28 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8990</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-21 21:15:53</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">Masa: S3</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x CRAMELE PURCARI = 75.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x URSUS = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x PLATOU SIBIAN = 160.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SARMALUTE MAMALIGA = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">4 x MICI = 28.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x PAPANASI GEM CASA 4 far = 52.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x APA PLATA = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 378.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	37.80	415.80</size></b></align>
+<align="left"><b><size="11">12%	45.36	423.36</size></b></align>
+<align="left"><b><size="11">15%	56.70	434.70</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

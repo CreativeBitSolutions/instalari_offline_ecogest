@@ -1,0 +1,30 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7489</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-06 15:47:57</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: S6</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x X  COTLET DE MIEL CARTOFI PRAJITI = 72.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAHAR DE VIN ROSU = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x URSUS = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x APA PLATA = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MUSCHI SIBIAN CARTOFI NATUR = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PIEPT DE PUI LEGUME = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">0.5 x CLATITE CIOCOLATA = 8.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x INGHETATA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 217.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	21.70	238.70</size></b></align>
+<align="left"><b><size="11">12%	26.04	243.04</size></b></align>
+<align="left"><b><size="11">15%	32.55	249.55</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

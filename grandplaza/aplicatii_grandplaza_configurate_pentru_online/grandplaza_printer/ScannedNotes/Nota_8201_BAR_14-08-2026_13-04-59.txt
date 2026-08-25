@@ -1,0 +1,33 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8201</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-14 13:04:58</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: F04</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x CAFEA ESPRESSO LUNGA = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CAFEA ESPRESSO LUNGA = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x OMLETA CU SUNCA = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x OMLETA CASEI = 30.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CAFEA ESPRESSO SCURTA = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x APA PLATA = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x OMLETA CU CASCAVA = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x LIMO MENTA MIERE = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ROSI CU CEAPA = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x LAPTE CAFEA = 2.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x OMLETA SUN SI CASC = 25.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 175.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	17.50	192.50</size></b></align>
+<align="left"><b><size="11">12%	21.00	196.00</size></b></align>
+<align="left"><b><size="11">15%	26.25	201.25</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

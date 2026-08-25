@@ -1,0 +1,15 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8621</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-18 19:23:31</size></b></align>
+<align="left"><b><size="11">OPERATOR: MARIUS -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M5</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 0 -------</size></b></align>
+<align="left"><b><size="11">2 x CIORBA PORC</size></b></align>
+<align="left"><b><size="11">1 x TOCHITURA MUJDEI</size></b></align>
+<align="left"><b><size="11">- mujdei cu smantana | sos: mujdei cu smantana</size></b></align>
+<align="left"><b><size="11">1 x ESCALOP</size></b></align>
+<align="left"><b><size="11">- varză călită | garnitura: varză călită</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>

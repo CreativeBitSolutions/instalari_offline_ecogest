@@ -1,0 +1,34 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8759</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-19 22:16:22</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">Masa: S10</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x URSUS BLACK = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x URSUS 0% ALCOOL = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x URSUS NEFITRATA = 15.00 LEI</size></b></align>
+<align="left"><b><size="11">4 x LIMO MENTA MIERE = 88.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUI PANE CARTOFI PRAJITI = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CARNATI CARTOFI PRAJITI = 34.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CARNATI CARTOFI AURII = 34.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x TOCHITURA MUJDEI MAMALIGA = 88.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MIX GRILL CARTOFI NATUR = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PORC PANE CARTOFI AURII = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x CASTRAV IN OTET = 27.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA PUI = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x PAPANASI GEM CASA 6 far = 78.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 530.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	53.00	583.00</size></b></align>
+<align="left"><b><size="11">12%	63.60	593.60</size></b></align>
+<align="left"><b><size="11">15%	79.50	609.50</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

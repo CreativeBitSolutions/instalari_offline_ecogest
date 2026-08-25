@@ -1,0 +1,18 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8064</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-13 10:42:23</size></b></align>
+<align="left"><b><size="11">OPERATOR: MARIUS -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M14</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 1 -------</size></b></align>
+<align="left"><b><size="11">1 x OMLETA SIMPLA</size></b></align>
+<align="left"><b><size="11">- 11 40</size></b></align>
+<align="left"><b><size="11">1 x OMLETA TARANEASCA</size></b></align>
+<align="left"><b><size="11">1 x OMLETA SUN SI CASC</size></b></align>
+<align="left"><b><size="11">------ FEL 3 -------</size></b></align>
+<align="left"><b><size="11">3 x FEL 2 MENIU</size></b></align>
+<align="left"><b><size="11">- VARZA ALBA</size></b></align>
+<align="left"><b><size="11">1 x CASCAVAL PANE</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>

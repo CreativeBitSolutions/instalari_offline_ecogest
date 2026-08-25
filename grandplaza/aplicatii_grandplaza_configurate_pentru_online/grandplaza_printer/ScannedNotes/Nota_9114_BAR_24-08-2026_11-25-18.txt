@@ -1,0 +1,17 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 9114</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-24 11:25:17</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">Masa: TM1</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 1 -------</size></b></align>
+<align="left"><b><size="11">1 x PLATOU SIBIAN = 80.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x OMLETA SIMPLA = 15.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x GEM = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x UNT = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">------ FEL 0 -------</size></b></align>
+<align="left"><b><size="11">1 x BORSEC 1L = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 123.00 LEI</size></b></align>

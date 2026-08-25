@@ -1,0 +1,44 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-01 17:43:26</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">VIN DE CASA 1L ALB</size></b></align>
+<align="left"><b><size="11">  1.00000 x 38.00 = 38.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">APA PLATA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 7.00 = 7.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">BORSEC 1L</size></b></align>
+<align="left"><b><size="11">  1.00000 x 10.00 = 10.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CIORBA DE LEGUME</size></b></align>
+<align="left"><b><size="11">  1.00000 x 20.00 = 20.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PIEPT DE PUI CARTOFI NATUR</size></b></align>
+<align="left"><b><size="11">  1.00000 x 32.00 = 32.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CASTRAV CU ROSI cu ceapa</size></b></align>
+<align="left"><b><size="11">  1.00000 x 10.00 = 10.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CLATITE GEM AFINE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 16.00 = 16.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">CIORBA PUI</size></b></align>
+<align="left"><b><size="11">  3.00000 x 20.00 = 60.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">SALAU IN FULGI CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 48.00 = 48.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">SALAU IN FULGI MAMALIGA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 48.00 = 48.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">SALAU IN FULGI CARTOFI NATUR</size></b></align>
+<align="left"><b><size="11">  1.00000 x 48.00 = 48.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CEAFA CARTOFI AURII</size></b></align>
+<align="left"><b><size="11">  1.00000 x 32.00 = 32.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAPANASI GEM CASA</size></b></align>
+<align="left"><b><size="11">  2 x 26.00 = 52.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">ARDEI COPT</size></b></align>
+<align="left"><b><size="11">  1.00000 x 10.00 = 10.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  1.00000 x 6.00 = 6.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 437.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 437.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 331.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 106.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7113</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

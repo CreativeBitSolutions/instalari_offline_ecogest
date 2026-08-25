@@ -1,0 +1,30 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8487</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-17 16:24:51</size></b></align>
+<align="left"><b><size="11">OPERATOR: MARIUS -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M4</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x CIORBA VACUTA = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x CIORBA PERISOARE = 40.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUI PANE cartofi prăjiţi | garnitura: cartofi prăjiţi = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUI PANE cartofi ţărăneşti | garnitura: cartofi ţărăneşti = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUI PANE cartofi natur | garnitura: cartofi natur = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x SPAGHETE CARBON = 88.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CEAFA AFMUMATA cartofi prăjiţi | garnitura: cartofi prăjiţi = 34.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAPANASI GEM CASA = 26.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CLATITE BANANE CIOC = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 348.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	34.80	382.80</size></b></align>
+<align="left"><b><size="11">12%	41.76	389.76</size></b></align>
+<align="left"><b><size="11">15%	52.20	400.20</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

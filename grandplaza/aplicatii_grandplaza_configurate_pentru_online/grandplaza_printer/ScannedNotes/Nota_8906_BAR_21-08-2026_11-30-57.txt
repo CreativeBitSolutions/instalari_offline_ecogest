@@ -1,0 +1,20 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8906</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-21 11:30:54</size></b></align>
+<align="left"><b><size="11">OPERATOR: MARIUS -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M2</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 0 -------</size></b></align>
+<align="left"><b><size="11">1 x CIORBA MENIU ZILEI = 13.00 LEI</size></b></align>
+<align="left"><b><size="11">- Fără salată</size></b></align>
+<align="left"><b><size="11">6 x FEL 2 MEN ZILEI + MURATURI</size></b></align>
+<align="left"><b><size="11">2 x CARNATI = 68.00 LEI</size></b></align>
+<align="left"><b><size="11">- cartofi prăjiţi | garnitura: cartofi prăjiţi</size></b></align>
+<align="left"><b><size="11">1 x TOCHITURA MUJDEI = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">- mujdei cu smantana | sos: mujdei cu smantana</size></b></align>
+<align="left"><b><size="11">3 x CASTRAV IN OTET = 27.00 LEI</size></b></align>
+<align="left"><b><size="11">7 x TACAM PLASTIC = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 309.00 LEI</size></b></align>

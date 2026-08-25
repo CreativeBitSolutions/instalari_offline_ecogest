@@ -1,0 +1,23 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-31 19:54:07</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x PLATOU ARDELENESC CARTOFI TARANESTI = 88.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x URSUS RETRO = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x NENEA IANCU = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7049</size></b></align>
+<align="left"><b><size="11">Masa: Masa Temporara 21</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 124.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacsisul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Va oferim urmatoarele sugestii pentru calculul bacsisului / Please consider the following suggestions for tips calculation:</size></b></align>
+
+<align="left"><b><size="11">Bacsis	Total nota</size></b></align>
+<align="left"><b><size="11">10%	12.40	136.40</size></b></align>
+<align="left"><b><size="11">12%	14.88	138.88</size></b></align>
+<align="left"><b><size="11">15%	18.60	142.60</size></b></align>
+
+<align="left"><b><size="11">Alta valoare: ...</size></b></align>

@@ -1,0 +1,24 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-28 18:58:25</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">CAFEA ESPRESSO SCURTA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 11.00 = 11.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">TIMISOREANA</size></b></align>
+<align="left"><b><size="11">  3 x 12.00 = 36.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">APA PLATA</size></b></align>
+<align="left"><b><size="11">  2 x 7.00 = 14.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">X  COTLET DE MIEL MAMALIGA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 72.00 = 72.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAPANASI GEM CASA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 26.00 = 26.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 159.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 159.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 86.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 73.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6753</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

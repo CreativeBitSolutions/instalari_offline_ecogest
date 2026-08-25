@@ -1,0 +1,19 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8642</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-18 23:35:38</size></b></align>
+<align="left"><b><size="11">OPERATOR: MARIUS -</size></b></align>
+<align="left"><b><size="11">Masa: F02</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 0 -------</size></b></align>
+<align="left"><b><size="11">2 x TIMISOREANA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PERONI 0%ALCOOL = 15.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PERONI = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x AZUGA = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAHAR SPART = 8.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x URSUS = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x URSUS IPA = 16.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x URSUS BLACK = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 137.00 LEI</size></b></align>

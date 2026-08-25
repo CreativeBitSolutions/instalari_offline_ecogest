@@ -1,0 +1,26 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 9218</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-25 12:39:34</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">Masa: F04</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">2 x AZUGA = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PERONI = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x MENIUL ZILEI CASTRAVETI MURATI = 108.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MENIUL ZILEI VARZA ALBA = 36.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x COCA COLA ZERO = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 214.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	21.40	235.40</size></b></align>
+<align="left"><b><size="11">12%	25.68	239.68</size></b></align>
+<align="left"><b><size="11">15%	32.10	246.10</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

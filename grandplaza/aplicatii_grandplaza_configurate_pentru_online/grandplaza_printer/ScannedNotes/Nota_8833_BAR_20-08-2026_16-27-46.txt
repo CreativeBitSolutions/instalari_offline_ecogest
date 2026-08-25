@@ -1,0 +1,29 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8833</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-20 16:27:43</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">Masa: TM4</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x CAPUCCINO CLASIC = 15.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x CAFEA ESPRESSO LUNGA = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x COCA COLA = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x COCA COLA ZERO = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x HARGHITA 500ML = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x APA PLATA = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ESPRESSO DECOF JULIUS MEIN = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x BORSEC 1L = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 103.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	10.30	113.30</size></b></align>
+<align="left"><b><size="11">12%	12.36	115.36</size></b></align>
+<align="left"><b><size="11">15%	15.45	118.45</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

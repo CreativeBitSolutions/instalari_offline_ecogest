@@ -1,0 +1,38 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7441</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-06 10:09:53</size></b></align>
+<align="left"><b><size="11">OPERATOR: MARIUS -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M4</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 2 -------</size></b></align>
+<align="left"><b><size="11">1 x CIORBA VACUTA = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA VACUTA = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">------ FEL 3 -------</size></b></align>
+<align="left"><b><size="11">1 x PULPE DE PUI = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">- LEGUME</size></b></align>
+<align="left"><b><size="11">1 x PORC PANE VARZA ALBA = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">- CARTOFI AURII</size></b></align>
+<align="left"><b><size="11">1 x CEAFA VARZA ALBA = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">- CARTOFI TARANESTI</size></b></align>
+<align="left"><b><size="11">3 x SALAU IN FULGI = 144.00 LEI</size></b></align>
+<align="left"><b><size="11">- CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">1 x SALAU IN FULGI = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">- CARTOFI NATUR</size></b></align>
+<align="left"><b><size="11">1 x SALAU GR MUJDEI = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">- MAMALIGA</size></b></align>
+<align="left"><b><size="11">1 x SALAU IN FULGI = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">- SPANAC</size></b></align>
+<align="left"><b><size="11">1 x SALAU IN FULGI = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">- LEGUME</size></b></align>
+<align="left"><b><size="11">6 x MICI = 42.00 LEI</size></b></align>
+<align="left"><b><size="11">6 x MICI = 42.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CEAFA VARZA ALBA = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">- CARTOFI TARANESTI</size></b></align>
+<align="left"><b><size="11">1 x PUI PANE VARZA = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">- CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">------ FEL 0 -------</size></b></align>
+<align="left"><b><size="11">4 x PUNGA = 4.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 670.00 LEI</size></b></align>

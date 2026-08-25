@@ -1,0 +1,26 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7443</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-06 11:03:52</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: S5</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x OMLETA CU CASCAVA = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ROSI CU TELEMEA = 15.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CEAI JULIUS MEINL = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MIERE BUC = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 53.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	5.30	58.30</size></b></align>
+<align="left"><b><size="11">12%	6.36	59.36</size></b></align>
+<align="left"><b><size="11">15%	7.95	60.95</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

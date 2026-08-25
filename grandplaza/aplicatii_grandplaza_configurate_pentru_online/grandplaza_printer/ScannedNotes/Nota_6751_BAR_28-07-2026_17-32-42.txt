@@ -1,0 +1,34 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-28 17:32:38</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">PERONI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 14.00 = 14.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">COCA COLA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 12.00 = 12.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">CIORBA PUI</size></b></align>
+<align="left"><b><size="11">  2.00000 x 20.00 = 40.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  1.00000 x 6.00 = 6.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PIEPT DE PUI CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  2 x 32.00 = 64.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">MICI</size></b></align>
+<align="left"><b><size="11">  3.00000 x 7.00 = 21.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">M CARTOFI-PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 10.00 = 10.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PUNGA</size></b></align>
+<align="left"><b><size="11">  2 x 1.00 = 2.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">TACAM PLASTIC</size></b></align>
+<align="left"><b><size="11">  1.00000 x 1.00 = 1.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">APA PLATA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 7.00 = 7.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 177.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 177.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 148.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 29.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6751</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

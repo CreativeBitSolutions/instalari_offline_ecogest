@@ -1,0 +1,38 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 9162</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-24 16:10:11</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">Masa: S8</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x LIMO MENTA MIERE = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x COCA COLA = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x URSUS = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x FUZETEA = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x CAPPY = 28.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x BURGER BLACK ANGUS CARTOFI PRAJITI = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA PORC = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA VACUTA = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x TOCHITURA MUJDEI MAMALIGA = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ARDEI IUTE = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA DE BURTA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SMANTANA = 3.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CEAFA CARTOFI PRAJITI = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x VARZA ALBA = 9.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA FASOLE CU CARNE = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CEAFA CARTOFI PRAJITI = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MUJDEI = 4.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 345.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	34.50	379.50</size></b></align>
+<align="left"><b><size="11">12%	41.40	386.40</size></b></align>
+<align="left"><b><size="11">15%	51.75	396.75</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

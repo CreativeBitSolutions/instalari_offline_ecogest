@@ -1,0 +1,27 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7374</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-05 13:13:10</size></b></align>
+<align="left"><b><size="11">OPERATOR: MARIUS -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M9</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">3 x CIORBA VACUTA = 66.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MUSCHI IMPANAT cartofi aurii | garnitura: cartofi aurii = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MUJDEI CU SMANTANA = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x TACAM PLASTIC = 2.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x TRANS 10 Taxă transport Woo = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 135.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	13.50	148.50</size></b></align>
+<align="left"><b><size="11">12%	16.20	151.20</size></b></align>
+<align="left"><b><size="11">15%	20.25	155.25</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

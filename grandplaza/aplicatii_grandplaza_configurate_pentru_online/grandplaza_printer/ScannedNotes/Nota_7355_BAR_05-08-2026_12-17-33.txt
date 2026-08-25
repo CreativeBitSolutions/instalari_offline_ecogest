@@ -1,0 +1,26 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-05 12:17:30</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">APA PLATA</size></b></align>
+<align="left"><b><size="11">  2.00000 x 7.00 = 14.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CAPPY</size></b></align>
+<align="left"><b><size="11">  1.00000 x 14.00 = 14.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">ARDEI IUTE</size></b></align>
+<align="left"><b><size="11">  3.00000 x 1.00 = 3.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CIORBA DE BURTA</size></b></align>
+<align="left"><b><size="11">  3.00000 x 24.00 = 72.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  4 x 6.00 = 24.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">SMANTANA</size></b></align>
+<align="left"><b><size="11">  3.00000 x 3.00 = 9.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 136.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 136.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 122.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 14.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7355</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

@@ -1,0 +1,27 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7748</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-10 11:27:45</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">Masa: TM1</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x CAFEA ESPRESSO LUNGA = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x OMLETA SUN SI CASC = 25.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MIC DEJUN = 45.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x FRESH DE PORTOCALE = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x LIMO MENTA MIERE = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CAFEA ESPRESSO LUNGA = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 128.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	12.80	140.80</size></b></align>
+<align="left"><b><size="11">12%	15.36	143.36</size></b></align>
+<align="left"><b><size="11">15%	19.20	147.20</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

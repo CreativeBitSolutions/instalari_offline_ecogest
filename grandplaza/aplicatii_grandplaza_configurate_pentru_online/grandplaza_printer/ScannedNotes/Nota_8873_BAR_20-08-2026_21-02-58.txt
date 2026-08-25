@@ -1,0 +1,24 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8873</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-20 21:02:58</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">Masa: F06</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x VIN DE CASA 0,5L ROSU = 19.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SARMALUTE MAMALIGA = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x BIFTEC TARTAR PAINE PRAJ = 72.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 135.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	13.50	148.50</size></b></align>
+<align="left"><b><size="11">12%	16.20	151.20</size></b></align>
+<align="left"><b><size="11">15%	20.25	155.25</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

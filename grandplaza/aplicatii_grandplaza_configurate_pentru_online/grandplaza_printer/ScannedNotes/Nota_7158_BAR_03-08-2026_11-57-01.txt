@@ -1,0 +1,30 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7158</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-03 11:56:58</size></b></align>
+<align="left"><b><size="11">OPERATOR: ADI BACILA -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M2</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">2 x FEL 2 MENIU CASTRAVETI MURATI  11 45 = 50.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x OMLETA SUN SI CASC = 25.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA DE LEGUME = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA DE BURTA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x OMLETA CASEI = 30.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CASTRAV IN OTET = 9.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x PAINE COS = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUNGA = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">6 x TACAM PLASTIC = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 177.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	17.70	194.70</size></b></align>
+<align="left"><b><size="11">12%	21.24	198.24</size></b></align>
+<align="left"><b><size="11">15%	26.55	203.55</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

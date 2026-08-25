@@ -1,0 +1,28 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8181</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-14 11:05:02</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">Masa: F05</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">2 x TUICA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x HARGHITA 500ML = 21.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x CIOLAN IAHNIE DE FASOLE = 138.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ARDEI COPT = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x CASTRAV CU ROSI cu ceapa = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x PAINE COS = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUNGA = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 226.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	22.60	248.60</size></b></align>
+<align="left"><b><size="11">12%	27.12	253.12</size></b></align>
+<align="left"><b><size="11">15%	33.90	259.90</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

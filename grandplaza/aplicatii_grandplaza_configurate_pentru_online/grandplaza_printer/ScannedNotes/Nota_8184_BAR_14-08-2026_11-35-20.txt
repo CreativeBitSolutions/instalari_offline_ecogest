@@ -1,0 +1,29 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8184</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-14 11:35:18</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">Masa: S1</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">4 x JIDVEI = 96.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x HARGHITA 500ML = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x CIORBA DE BURTA = 72.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x ARDEI IUTE = 3.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x SMANTANA = 9.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PULPE DE PUI CARTOFI NATUR = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CASTRAV CU ROSI cu ceapa = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 241.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	24.10	265.10</size></b></align>
+<align="left"><b><size="11">12%	28.92	269.92</size></b></align>
+<align="left"><b><size="11">15%	36.15	277.15</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

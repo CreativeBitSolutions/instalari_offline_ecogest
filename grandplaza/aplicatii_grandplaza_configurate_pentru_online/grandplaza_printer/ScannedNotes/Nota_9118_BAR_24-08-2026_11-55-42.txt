@@ -1,0 +1,26 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 9118</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-24 11:55:39</size></b></align>
+<align="left"><b><size="11">OPERATOR: ADI BACILA -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M7</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x PULPE DE PUI piure de cartofi | garnitura: piure de cartofi = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA VACUTA = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x GARNITURA cartofi prăjiţi | alege-garnitura: cartofi prăjiţi = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ARDEI COPT = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x TRANS 10 Taxă transport Woo = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 90.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	9.00	99.00</size></b></align>
+<align="left"><b><size="11">12%	10.80	100.80</size></b></align>
+<align="left"><b><size="11">15%	13.50	103.50</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

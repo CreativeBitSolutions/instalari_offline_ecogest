@@ -1,0 +1,30 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 9003</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-21 22:00:28</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">Masa: S4</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x TUICA = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x BORSEC 1L = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x PILSNER URQUELL = 30.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x MICI = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x Y VIRSLI DE OAIE CARTOFI PRAJITI separat = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x CEAPA ROSIE 170G = 18.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CASTRAV IN OTET = 9.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x VIN DE CASA 0,5L ALB = 19.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 176.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	17.60	193.60</size></b></align>
+<align="left"><b><size="11">12%	21.12	197.12</size></b></align>
+<align="left"><b><size="11">15%	26.40	202.40</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

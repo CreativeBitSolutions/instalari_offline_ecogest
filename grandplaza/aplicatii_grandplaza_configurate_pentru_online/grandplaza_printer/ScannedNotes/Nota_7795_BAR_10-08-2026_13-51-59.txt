@@ -1,0 +1,17 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-10 13:51:57</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">APA PLATA</size></b></align>
+<align="left"><b><size="11">  3 x 7.00 = 21.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">MENIUL ZILEI VARZA ALBA</size></b></align>
+<align="left"><b><size="11">  3 x 36.00 = 108.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 129.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 129.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 129.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7795</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

@@ -1,0 +1,26 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-30 15:46:23</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">URSUS</size></b></align>
+<align="left"><b><size="11">  2.00000 x 12.00 = 24.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">CIORBA DE BURTA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 24.00 = 24.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">ARDEI IUTE</size></b></align>
+<align="left"><b><size="11">  2.00000 x 1.00 = 2.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">SMANTANA</size></b></align>
+<align="left"><b><size="11">  2.00000 x 3.00 = 6.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  1.00000 x 6.00 = 6.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CIOLAN VARZA CALITA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 46.00 = 46.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 108.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 108.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 84.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 24.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6921</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

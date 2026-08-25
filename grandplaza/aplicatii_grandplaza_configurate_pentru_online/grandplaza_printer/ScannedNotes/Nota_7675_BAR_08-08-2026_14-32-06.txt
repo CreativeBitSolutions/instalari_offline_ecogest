@@ -1,0 +1,9 @@
+﻿<align="left"><b><size="11">---------NOTA STORNARE----------</size></b></align>
+<align="left"><b><size="11">Data: 08.08.2026 14:32</size></b></align>
+<align="left"><b><size="11">Masa: S10 / Op: SEF SALA ADI BACILA -</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7675</size></b></align>
+<align="left"><b><size="11">--------------------------------</size></b></align>
+<align="left"><b><size="11">CORECTIE: MENIU PARASTAS x -1.00</size></b></align>
+<align="left"><b><size="11">Cant. Veche: 46.00 -> Cant. Noua: 45.00</size></b></align>
+<align="left"><b><size="11">Motiv: Corecție cantitate</size></b></align>
+<align="left"><b><size="11">--------------------------------</size></b></align>

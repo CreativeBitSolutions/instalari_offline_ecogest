@@ -1,0 +1,38 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-08 14:27:55</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">FANTA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 12.00 = 12.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">BORSEC 1L</size></b></align>
+<align="left"><b><size="11">  1.00000 x 10.00 = 10.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">LIMO MENTA MIERE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 22.00 = 22.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">APA PLATA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 7.00 = 7.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CIORBA PERISOARE</size></b></align>
+<align="left"><b><size="11">  4.00000 x 20.00 = 80.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  2.00000 x 6.00 = 12.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CORDON BLEU PORC CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 44.00 = 44.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">VARZA ALBA</size></b></align>
+<align="left"><b><size="11">  2 x 9.00 = 18.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CEAFA CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 32.00 = 32.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">MAMA BR VACI SI SMANT</size></b></align>
+<align="left"><b><size="11">  1.00000 x 38.00 = 38.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PORC PANE CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 38.00 = 38.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAPANASI GEM CASA</size></b></align>
+<align="left"><b><size="11">  2.00000 x 26.00 = 52.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 365.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 365.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 301.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 64.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7672</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

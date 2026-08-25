@@ -1,0 +1,25 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-28 19:48:01</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">PIEPT DE PUI MAMALIGA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 32.00 = 32.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CASTRAV CU ROSI cu ceapa</size></b></align>
+<align="left"><b><size="11">  1.00000 x 10.00 = 10.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">BORSEC 1L</size></b></align>
+<align="left"><b><size="11">  1.00000 x 10.00 = 10.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">MICI</size></b></align>
+<align="left"><b><size="11">  3 x 7.00 = 21.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">M CARTOFI-PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 10.00 = 10.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  1.00000 x 6.00 = 6.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 89.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 89.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 89.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6765</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

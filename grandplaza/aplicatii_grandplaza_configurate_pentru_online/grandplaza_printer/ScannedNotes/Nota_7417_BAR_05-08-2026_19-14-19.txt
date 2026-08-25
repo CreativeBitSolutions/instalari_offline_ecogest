@@ -1,0 +1,30 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-05 19:14:15</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">FANTA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 12.00 = 12.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">COCA COLA ZERO</size></b></align>
+<align="left"><b><size="11">  1.00000 x 12.00 = 12.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">COCA COLA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 12.00 = 12.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">SARMALUTE MAMALIGA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 44.00 = 44.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PUI PANE CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 38.00 = 38.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CORDON BLEU PORC CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 44.00 = 44.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">MUJDEI CU SMANTANA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 7.00 = 7.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  1.00000 x 6.00 = 6.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 175.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 175.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 139.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 36.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7417</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

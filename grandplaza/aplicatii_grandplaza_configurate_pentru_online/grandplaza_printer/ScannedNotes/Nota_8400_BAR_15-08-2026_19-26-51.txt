@@ -1,0 +1,29 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8400</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-15 19:26:46</size></b></align>
+<align="left"><b><size="11">OPERATOR: ADI BACILA -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M5</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">5 x CIORBA DE BURTA = 120.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x Z GALEATA 5 L = 9.00 LEI</size></b></align>
+<align="left"><b><size="11">5 x ARDEI IUTE = 5.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x PORC PANE VARZA ALBA CARTOFI PRAJITI = 132.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x COTLET CARTOFI PRAJITI = 64.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x CASCAVAL PANE = 64.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CREIER PANE CARTOFI PRAJITI = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x PUNGA = 3.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 435.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	43.50	478.50</size></b></align>
+<align="left"><b><size="11">12%	52.20	487.20</size></b></align>
+<align="left"><b><size="11">15%	65.25	500.25</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

@@ -1,0 +1,18 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7519</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-06 16:32:13</size></b></align>
+<align="left"><b><size="11">OPERATOR: MARIUS -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M1</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 0 -------</size></b></align>
+<align="left"><b><size="11">1 x COTLET = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">- cartofi prăjiţi | garnitura: cartofi prăjiţi</size></b></align>
+<align="left"><b><size="11">1 x PLATOU BOIERESC = 62.00 LEI</size></b></align>
+<align="left"><b><size="11">- 2 persoane | garnitura: cartofi aurii | numar-de-persoane: 1 persoană - 550g</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x TOCHITURA MUJDEI = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">- mujdei | sos: mujdei</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 144.00 LEI</size></b></align>

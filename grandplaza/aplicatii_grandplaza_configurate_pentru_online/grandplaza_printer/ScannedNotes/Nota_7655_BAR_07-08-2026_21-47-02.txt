@@ -1,0 +1,31 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-07 21:46:58</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x VARZA ALBA = 9.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CEAFA CARTOFI AURII = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x PAINE COS = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA PUI = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MAMA BURDUF SI SMANT = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIOLAN VARZA CALITA = 46.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CASTRAV IN OTET = 9.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIOLAN IAHNIE DE FASOLE = 46.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x APA PLATA = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x HARGHITA 500ML = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x LIMONADA  MENTA = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7655</size></b></align>
+<align="left"><b><size="11">Masa: Masa Temporara 10</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 253.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacsisul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Va oferim urmatoarele sugestii pentru calculul bacsisului / Please consider the following suggestions for tips calculation:</size></b></align>
+
+<align="left"><b><size="11">Bacsis	Total nota</size></b></align>
+<align="left"><b><size="11">10%	25.30	278.30</size></b></align>
+<align="left"><b><size="11">12%	30.36	283.36</size></b></align>
+<align="left"><b><size="11">15%	37.95	290.95</size></b></align>
+
+<align="left"><b><size="11">Alta valoare: ...</size></b></align>

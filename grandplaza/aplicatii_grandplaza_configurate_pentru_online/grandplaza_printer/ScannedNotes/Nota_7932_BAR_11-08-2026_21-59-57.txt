@@ -1,0 +1,30 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7932</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-11 21:59:53</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: S3</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">0.5 x TUICA = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x BORSEC 1L = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PLATOU ARDELENESC CARTOFI TARANESTI = 88.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CASTRAV CU ROSI cu ceapa = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ESCALOP CARTOFI PRAJITI = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SARMALUTE MAMALIGA = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAPANASI GEM CASA la 2 farf = 26.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CLATITE CIOCOLATA = 16.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 250.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	25.00	275.00</size></b></align>
+<align="left"><b><size="11">12%	30.00	280.00</size></b></align>
+<align="left"><b><size="11">15%	37.50	287.50</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

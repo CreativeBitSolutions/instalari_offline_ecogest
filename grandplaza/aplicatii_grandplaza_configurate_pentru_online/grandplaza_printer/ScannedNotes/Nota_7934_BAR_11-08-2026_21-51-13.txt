@@ -1,0 +1,29 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7934</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-11 21:51:12</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: F04</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">3 x URSUS = 36.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x URSUS 0% ALCOOL = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x APA PLATA = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PLATOU BRANZETURI = 60.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MUSCHI SIBIAN PIURE = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SARMALUTE MAMALIGA = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x VR SALATA PUI = 36.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 252.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	25.20	277.20</size></b></align>
+<align="left"><b><size="11">12%	30.24	282.24</size></b></align>
+<align="left"><b><size="11">15%	37.80	289.80</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

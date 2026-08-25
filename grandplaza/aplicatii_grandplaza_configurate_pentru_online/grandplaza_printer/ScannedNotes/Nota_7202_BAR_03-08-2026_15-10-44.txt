@@ -1,0 +1,24 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-03 15:10:43</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">LIMO MENTA MIERE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 22.00 = 22.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">URSUS 0% ALCOOL</size></b></align>
+<align="left"><b><size="11">  1.00000 x 12.00 = 12.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CREIER PANE CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 38.00 = 38.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">BURGER BLACK ANGUS CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 48.00 = 48.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAPANASI GEM CASA 2 far</size></b></align>
+<align="left"><b><size="11">  1.00000 x 26.00 = 26.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 146.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 146.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 120.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 26.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7202</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

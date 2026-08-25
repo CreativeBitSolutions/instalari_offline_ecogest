@@ -1,0 +1,24 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-05 10:08:21</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">PUI PANE CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  3.00000 x 38.00 = 114.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">BURTA PACHETTT</size></b></align>
+<align="left"><b><size="11">  1.00000 x 25.00 = 25.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CIORBA FASOLE CU CARNE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 20.00 = 20.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAPANASI GEM CASA</size></b></align>
+<align="left"><b><size="11">  2.00000 x 26.00 = 52.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">PUNGA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 1.00 = 1.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 212.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 212.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 159.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 53.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7344</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

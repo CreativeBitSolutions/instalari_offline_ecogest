@@ -1,0 +1,26 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7330</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-04 19:10:32</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">Masa: S5</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x BURGER BLACK ANGUS CARTOFI PRAJITI = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIOBANESC = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SPAGHETE CARBON = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x URSUS = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SALAU IN FULGI CARTOFI NATUR = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 196.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	19.60	215.60</size></b></align>
+<align="left"><b><size="11">12%	23.52	219.52</size></b></align>
+<align="left"><b><size="11">15%	29.40	225.40</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

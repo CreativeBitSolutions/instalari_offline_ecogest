@@ -1,0 +1,13 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7297</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-04 13:25:56</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">Masa: F05</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 2 -------</size></b></align>
+<align="left"><b><size="11">2 x CIORBA DE BURTA</size></b></align>
+<align="left"><b><size="11">1 x MENIUL ZILEI</size></b></align>
+<align="left"><b><size="11">- CASTRAVETI MURATI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>

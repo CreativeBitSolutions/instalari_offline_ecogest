@@ -1,0 +1,24 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-28 20:21:45</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">PLATOU GRAND PLAZA CARTOFI NATUR</size></b></align>
+<align="left"><b><size="11">  1.00000 x 88.00 = 88.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PUI PANE CARTOFI NATUR</size></b></align>
+<align="left"><b><size="11">  1.00000 x 38.00 = 38.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  1.00000 x 6.00 = 6.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">TACAM PLASTIC</size></b></align>
+<align="left"><b><size="11">  2.00000 x 1.00 = 2.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">PUNGA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 1.00 = 1.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 135.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 135.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 132.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 3.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6771</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

@@ -1,0 +1,29 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7065</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-31 22:20:59</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">Masa: F06</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">2 x FUZETEA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x COCA COLA = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x CIORBA VACUTA = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x Y SALATA BULGAREASC = 36.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x W SALATA GRECEASCA = 36.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUI IN CRUSTA AURIE CARTOFI PRAJITI = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x PAPANASI GEM CASA = 78.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 280.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	28.00	308.00</size></b></align>
+<align="left"><b><size="11">12%	33.60	313.60</size></b></align>
+<align="left"><b><size="11">15%	42.00	322.00</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

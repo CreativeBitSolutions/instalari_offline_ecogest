@@ -1,0 +1,38 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7533</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-06 21:45:11</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">Masa: F01</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">3 x URSUS = 36.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x VIN DE CASA 0,5L ALB = 19.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x HARGHITA 500ML = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x LIMO MENTA MIERE = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x PILSNER URQUELL = 45.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SARMALUTE MAMALIGA = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CARNATI CARTOFI TARANESTI = 34.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x FICATEI MAMALIGA = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MUSCHI SIBIAN CARTOFI TARANESTI = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ARDEI COPT = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CASTRAV IN OTET = 9.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x VARZA MURATA = 18.00 LEI</size></b></align>
+<align="left"><b><size="11">0.5 x TUICA = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CORDON BLEU PORC PIURE = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAHAR DE VIN ALB = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAPANASI GEM CASA = 26.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CLATITE BRZ VA SI SMANT = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 460.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	46.00	506.00</size></b></align>
+<align="left"><b><size="11">12%	55.20	515.20</size></b></align>
+<align="left"><b><size="11">15%	69.00	529.00</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

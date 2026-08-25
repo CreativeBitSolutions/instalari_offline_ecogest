@@ -1,0 +1,23 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7482</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-06 13:33:18</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: Masa Temporara 3</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">2 x CLATITE BANANE CIOC = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CLATITE CIOCOLATA = 16.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 64.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	6.40	70.40</size></b></align>
+<align="left"><b><size="11">12%	7.68	71.68</size></b></align>
+<align="left"><b><size="11">15%	9.60	73.60</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

@@ -1,0 +1,31 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7218</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-03 16:13:44</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: TM4</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">2 x CIORBA PERISOARE = 40.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x MICI = 21.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SARMALUTE MAMALIGA = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SPAGHETE CARBON = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SPRITE = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PULPE DE PUI PIURE = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x W SALATA GRECEASCA = 36.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CEAI JULIUS MEINL = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x BORSEC 1L = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x APA PLATA = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 270.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	27.00	297.00</size></b></align>
+<align="left"><b><size="11">12%	32.40	302.40</size></b></align>
+<align="left"><b><size="11">15%	40.50	310.50</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

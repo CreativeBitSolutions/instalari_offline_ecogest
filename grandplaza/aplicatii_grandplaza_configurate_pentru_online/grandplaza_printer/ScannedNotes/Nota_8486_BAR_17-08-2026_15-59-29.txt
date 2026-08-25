@@ -1,0 +1,8 @@
+﻿<align="left"><b><size="11">---------NOTA STORNARE----------</size></b></align>
+<align="left"><b><size="11">Data: 17.08.2026 15:59</size></b></align>
+<align="left"><b><size="11">Masa: S3 / Op: SEF SALA MARIUS -</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8486</size></b></align>
+<align="left"><b><size="11">--------------------------------</size></b></align>
+<align="left"><b><size="11">ANULARE: ARDEI IUTE x -1.00</size></b></align>
+<align="left"><b><size="11">Motiv: Adăugat din greșeală</size></b></align>
+<align="left"><b><size="11">--------------------------------</size></b></align>

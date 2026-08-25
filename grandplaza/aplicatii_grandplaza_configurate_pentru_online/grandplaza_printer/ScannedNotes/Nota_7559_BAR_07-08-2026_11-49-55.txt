@@ -1,0 +1,40 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-07 11:49:54</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">APA PLATA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 7.00 = 7.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">BORSEC 1L</size></b></align>
+<align="left"><b><size="11">  2.00000 x 10.00 = 20.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">COTLET PIURE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 32.00 = 32.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CIOLAN CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  3.00000 x 46.00 = 138.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CIOLAN IAHNIE DE FASOLE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 46.00 = 46.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  2.00000 x 6.00 = 12.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">MUJDEI</size></b></align>
+<align="left"><b><size="11">  2 x 4.00 = 8.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CEAPA ROSIE 170G</size></b></align>
+<align="left"><b><size="11">  3.00000 x 9.00 = 27.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">VARZA ALBA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 9.00 = 9.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">BURTA PACHETTT</size></b></align>
+<align="left"><b><size="11">  1.00000 x 25.00 = 25.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PUNGA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 1.00 = 1.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">ARDEI IUTE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 1.00 = 1.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">SMANTANA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 3.00 = 3.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 329.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 329.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 328.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 1.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7559</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

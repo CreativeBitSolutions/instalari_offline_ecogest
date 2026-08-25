@@ -1,0 +1,9 @@
+﻿<align="left"><b><size="11">---------NOTA STORNARE----------</size></b></align>
+<align="left"><b><size="11">Data: 10.08.2026 10:20</size></b></align>
+<align="left"><b><size="11">Masa: TM1 / Op: SEF SALA MARIUS -</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7748</size></b></align>
+<align="left"><b><size="11">--------------------------------</size></b></align>
+<align="left"><b><size="11">CORECTIE: CAFEA ESPRESSO x -1.00</size></b></align>
+<align="left"><b><size="11">Cant. Veche: 2.00 -> Cant. Noua: 1.00</size></b></align>
+<align="left"><b><size="11">Motiv: Corecție cantitate</size></b></align>
+<align="left"><b><size="11">--------------------------------</size></b></align>

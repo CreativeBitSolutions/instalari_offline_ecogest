@@ -1,0 +1,14 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8131</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-13 15:41:56</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">Masa: S4</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 3 -------</size></b></align>
+<align="left"><b><size="11">1 x PULPE DE PUI</size></b></align>
+<align="left"><b><size="11">- CARTOFI AURII</size></b></align>
+<align="left"><b><size="11">1 x SOMON LA GRATAR</size></b></align>
+<align="left"><b><size="11">- OREZ</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>

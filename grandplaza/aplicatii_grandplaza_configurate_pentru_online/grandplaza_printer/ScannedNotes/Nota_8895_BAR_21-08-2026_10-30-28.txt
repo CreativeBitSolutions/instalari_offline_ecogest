@@ -1,0 +1,15 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8895</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-21 10:30:26</size></b></align>
+<align="left"><b><size="11">OPERATOR: MARIUS -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M3</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 0 -------</size></b></align>
+<align="left"><b><size="11">20 x URSUS = 240.00 LEI</size></b></align>
+<align="left"><b><size="11">20 x TIMISOREANA = 240.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PALINCA ZETEA = 60.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x METAXA = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 560.00 LEI</size></b></align>

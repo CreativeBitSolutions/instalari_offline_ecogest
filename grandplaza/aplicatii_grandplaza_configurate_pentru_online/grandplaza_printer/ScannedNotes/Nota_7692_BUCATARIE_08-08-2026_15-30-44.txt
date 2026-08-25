@@ -1,0 +1,12 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7692</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-08 15:30:44</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">Masa: S4</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 4 -------</size></b></align>
+<align="left"><b><size="11">1 x PAPANASI GEM CASA</size></b></align>
+<align="left"><b><size="11">- 2farf</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>

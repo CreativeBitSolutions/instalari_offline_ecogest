@@ -1,0 +1,17 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7240</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-03 18:45:23</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">Masa: S3</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 6 -------</size></b></align>
+<align="left"><b><size="11">2 x KETCHUP = 8.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x MAIONEZA = 8.00 LEI</size></b></align>
+<align="left"><b><size="11">------ FEL 0 -------</size></b></align>
+<align="left"><b><size="11">1 x CUBA LIBRE = 25.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x GIN TONIC = 25.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MOJITO = 25.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 91.00 LEI</size></b></align>

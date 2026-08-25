@@ -1,0 +1,37 @@
+<?php
+return [
+    'driver' => 'sqlite',
+    'live_id' => 12,
+    'client_id' => 25,
+    'cod_locatie' => 1,
+    'installation_uuid' => 'grandplaza-c25-l1',
+    'installation_identity_format' => 'restaurant',
+    'app_name' => 'App Restaurant Offline Grand Plaza',
+    'offline_api_path' => dirname(dirname(__DIR__)) . '/api_offline_grandplaza',
+    'ca_bundle_path' => dirname(dirname(__DIR__)) . '/api_offline_grandplaza/certificates/cacert.pem',
+    'sqlite_path' => dirname(dirname(__DIR__)) . '/api_offline_grandplaza/restaurant.sqlite',
+    'sync_export_path' => dirname(dirname(__DIR__)) . '/api_offline_grandplaza/offline_sync_exports',
+    'online_products_sync' => [
+        'enabled' => true,
+        'auto_check' => false,
+        'api_url' => 'https://agecs.agecs.in/sincronizare_online_app_restaurant/sincronizare_date_offline.php',
+        'api_key' => 'CHEIE_API_CLIENT_25',
+        'cod_client' => 25,
+    ],
+    'offline_sales_sync' => [
+        'enabled' => true,
+        'automatic' => true,
+        'allow_login_worker' => true,
+        'api_url' => 'https://agecs.agecs.in/sincronizare_online_app_restaurant/sincronizare_date_offline.php',
+        'api_key' => 'CHEIE_API_CLIENT_25',
+    ],
+    'online_tablet_sync' => [
+        'enabled' => true,
+        'automatic' => true,
+        'api_url' => 'https://agecs.agecs.in/api/offline-tablet-orders.php',
+        'api_key' => 'CHEIE_API_CLIENT_25',
+        'client_id' => 25,
+        'cod_locatie' => 1,
+        'installation_uuid' => 'grandplaza-c25-l1',
+    ],
+];

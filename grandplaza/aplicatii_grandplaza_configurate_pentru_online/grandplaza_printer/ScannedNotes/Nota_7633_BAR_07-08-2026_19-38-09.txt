@@ -1,0 +1,29 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7633</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-07 19:38:06</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: TM2</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">2 x CAFEA ESPRESSO LUNGA = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x BORSEC 1L = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x SPAGHETE CARBON = 88.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x CAMPARI ORANGE = 75.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x PAPANASI GEM CASA = 52.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MIX GRILL CARTOFI TARANESTI = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUNGA = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CUBA LIBRE = 25.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 317.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	31.70	348.70</size></b></align>
+<align="left"><b><size="11">12%	38.04	355.04</size></b></align>
+<align="left"><b><size="11">15%	47.55	364.55</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

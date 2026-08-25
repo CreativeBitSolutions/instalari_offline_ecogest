@@ -1,0 +1,15 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6833</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-29 15:14:35</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: S2</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 3 -------</size></b></align>
+<align="left"><b><size="11">1 x CIORBA DE BURTA</size></b></align>
+<align="left"><b><size="11">1 x MAMALIGA</size></b></align>
+<align="left"><b><size="11">- cu sos alb ciup</size></b></align>
+<align="left"><b><size="11">------ FEL 6 -------</size></b></align>
+<align="left"><b><size="11">1 x SOS ALB CIUPERCI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>

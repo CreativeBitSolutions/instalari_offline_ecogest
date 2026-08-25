@@ -1,0 +1,41 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 9073</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-22 17:08:03</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: S3</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x CIORBA DE BURTA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA PERISOARE = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA FASOLE CU CARNE = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA PUI = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA PORC = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ARDEI IUTE = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SMANTANA = 3.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CEAFA Fr gar = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIOLAN VARZA CALITA = 46.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MAMALIGA = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUI PANE PIURE = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CASTRAV CU ROSI fara ceapa = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x COASTE  SOS CARTOFI TARANESTI = 50.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MIX GRILL CARTOFI TARANESTI = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x URSUS = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x URSUS 0% ALCOOL = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x GREEN APPLE = 25.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x LIMO MENTA MIERE = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUNGA = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 450.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	45.00	495.00</size></b></align>
+<align="left"><b><size="11">12%	54.00	504.00</size></b></align>
+<align="left"><b><size="11">15%	67.50	517.50</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

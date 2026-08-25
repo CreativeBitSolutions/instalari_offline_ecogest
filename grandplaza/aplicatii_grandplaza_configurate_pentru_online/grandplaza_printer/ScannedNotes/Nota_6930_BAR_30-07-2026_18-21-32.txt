@@ -1,0 +1,35 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6930</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-30 18:21:29</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: TM2</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x CAFE FRAPPE (CU ALCOOL ) Fr alc = 26.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x LIMONADA = 54.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SPAGHETE CARBON = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x GREEN APPLE = 25.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SOMON LA GRATAR CARTOFI PRAJITI = 64.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x URSUS IPA = 16.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x BURGER BLACK ANGUS CARTOFI PRAJITI = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CARFTOFI PRAJITI = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x TELE RASA = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x PILSNER URQUELL = 30.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x HARGHITA 500ML = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CLATITE CIOCOLATA = 16.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x BURTA PACHETTT = 50.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUNGA = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 397.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	39.70	436.70</size></b></align>
+<align="left"><b><size="11">12%	47.64	444.64</size></b></align>
+<align="left"><b><size="11">15%	59.55	456.55</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

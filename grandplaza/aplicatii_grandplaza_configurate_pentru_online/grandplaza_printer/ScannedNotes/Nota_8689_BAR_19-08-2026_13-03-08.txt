@@ -1,0 +1,19 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8689</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-19 13:03:06</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">Masa: S6</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 3 -------</size></b></align>
+<align="left"><b><size="11">1 x CIOLAN = 46.00 LEI</size></b></align>
+<align="left"><b><size="11">- VARZA CALITA</size></b></align>
+<align="left"><b><size="11">1 x PUI IN CRUSTA AURIE = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">- CARTOFI AURII</size></b></align>
+<align="left"><b><size="11">1 x CIOBANESC = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CARTOFI AURII = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">------ FEL 5 -------</size></b></align>
+<align="left"><b><size="11">2 x ARDEI COPT = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 164.00 LEI</size></b></align>

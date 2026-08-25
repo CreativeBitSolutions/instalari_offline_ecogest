@@ -1,0 +1,24 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-03 20:38:16</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">COCA COLA ZERO</size></b></align>
+<align="left"><b><size="11">  1.00000 x 12.00 = 12.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">SPRITE</size></b></align>
+<align="left"><b><size="11">  2 x 12.00 = 24.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">PUI PANE CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  3.00000 x 38.00 = 114.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAPANASI GEM CASA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 26.00 = 26.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">MUJDEI CU SMANTANA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 7.00 = 7.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 183.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 183.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 121.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 62.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7252</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

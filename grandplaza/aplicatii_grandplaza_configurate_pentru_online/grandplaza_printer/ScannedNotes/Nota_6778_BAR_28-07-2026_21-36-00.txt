@@ -1,0 +1,33 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6778</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-28 21:35:58</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">Masa: TM4</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">0.5 x TUICA = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PERONI = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x HUGO = 30.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PERONI 0%ALCOOL = 15.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x COASTE  SOS CARTOFI TARANESTI = 50.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ARDEI IUTE = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA DE BURTA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SMANTANA = 3.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x MICI = 21.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PASTRAMA CARTOFI AURII = 34.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x HREAN = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 210.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	21.00	231.00</size></b></align>
+<align="left"><b><size="11">12%	25.20	235.20</size></b></align>
+<align="left"><b><size="11">15%	31.50	241.50</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

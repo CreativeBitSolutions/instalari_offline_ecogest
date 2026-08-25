@@ -1,0 +1,47 @@
+<?php
+$defaults = [
+    'base_url' => 'https://restaurantgrandplazasb.ro/wp-json/restaurant-sync/v1',
+    'api_key' => (string)(getenv('AGECS_WOO_API_KEY') ?: ''),
+    'api_secret' => (string)(getenv('AGECS_WOO_API_SECRET') ?: ''),
+    'client_id' => 25,
+    'location_id' => 1,
+    'statuses' => ['processing'],
+    'timeout' => 20,
+    'verify_ssl' => true,
+    'use_hmac' => false,
+    'initial_lookback_days' => 7,
+    'automatic_interval_seconds' => 30,
+    'order_json_base_url' => 'https://restaurantgrandplazasb.ro/wp-content/uploads/comenzi',
+    'wp_order_details_endpoint' => 'https://restaurantgrandplazasb.ro/wp-json/grandplaza-pos/v1/order-details',
+    'wp_order_details_api_key' => (string)(getenv('AGECS_WOO_DETAILS_API_KEY') ?: (getenv('AGECS_WOO_API_KEY') ?: '')),
+    'printer_queue_base_dir' => defined('RESTAURANT_OFFLINE_API_DIR')
+        ? RESTAURANT_OFFLINE_API_DIR
+        : dirname(dirname(dirname(__DIR__))) . '/api_offline_grandplaza',
+    'delivery_fee' => [
+        'enabled' => true,
+        'amount_tolerance' => 0.01,
+        'pickup_keywords' => [
+            'ridicare', 'ridică', 'ridica', 'ridicare restaurant',
+            'ridicare de la restaurant', 'pickup', 'pick-up', 'pick up',
+            'local_pickup', 'local pickup', 'takeaway', 'take away', 'take-away',
+        ],
+        'mappings' => [
+            ['label' => 'Livrare 13 lei', 'amount' => 13.00, 'cod_produs' => 436, 'price' => 13.00],
+            ['label' => 'Livrare 18 lei', 'amount' => 18.00, 'cod_produs' => 1680, 'price' => 18.00],
+        ],
+    ],
+];
+
+$localFile = __DIR__ . '/woo_sync_config.local.php';
+if (is_file($localFile)) {
+    $local = require $localFile;
+    if (is_array($local)) {
+        $defaults = array_replace_recursive($defaults, $local);
+    }
+}
+
+if (trim((string)$defaults['wp_order_details_api_key']) === '') {
+    $defaults['wp_order_details_api_key'] = (string)$defaults['api_key'];
+}
+
+return $defaults;

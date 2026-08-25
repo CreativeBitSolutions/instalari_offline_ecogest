@@ -1,0 +1,28 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8763</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-19 21:49:27</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: S1</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x BORSEC 1L = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x APA PLATA = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x CIORBA VACUTA = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x CIORBA DE LEGUME = 40.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PLATOU GRAND PLAZA CARTOFI PRAJITI = 88.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PULPE DE PUI PIURE = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SARMALUTE MAMALIGA = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 271.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	27.10	298.10</size></b></align>
+<align="left"><b><size="11">12%	32.52	303.52</size></b></align>
+<align="left"><b><size="11">15%	40.65	311.65</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

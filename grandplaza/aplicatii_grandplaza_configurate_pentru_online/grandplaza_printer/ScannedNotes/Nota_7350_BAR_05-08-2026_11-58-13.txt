@@ -1,0 +1,18 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-05 11:58:09</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TIMISOREANA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 12.00 = 12.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">FEL 2 MENIU FARA SALATA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 25.00 = 25.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 37.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 37.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 25.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 12.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7350</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

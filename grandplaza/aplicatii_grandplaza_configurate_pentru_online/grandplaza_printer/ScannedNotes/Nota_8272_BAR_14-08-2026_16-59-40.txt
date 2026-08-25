@@ -1,0 +1,17 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8272</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-14 16:59:39</size></b></align>
+<align="left"><b><size="11">OPERATOR: MARIUS -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M4</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 0 -------</size></b></align>
+<align="left"><b><size="11">1 x CIULAMA DE PUI = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">- cartofi prăjiţi | garnitura: cartofi prăjiţi</size></b></align>
+<align="left"><b><size="11">1 x PUI IN CRUSTA AURIE = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">- cartofi ţărăneşti | garnitura: cartofi ţărăneşti</size></b></align>
+<align="left"><b><size="11">1 x TRANS 10 = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">- Taxă transport Woo</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 98.00 LEI</size></b></align>

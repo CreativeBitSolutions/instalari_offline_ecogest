@@ -1,0 +1,30 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7755</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-10 11:46:19</size></b></align>
+<align="left"><b><size="11">OPERATOR: MARIUS -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M4</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x PULPE PUI VARZA ALBA PIURE = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CREMA CIUPERCI = 34.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PIEPT DE PUI PIURE = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x CROCHETE DE CASCAVAL = 21.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x FEL 2 MENIU VARZA ALBA = 50.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUNGA = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">6 x TACAM PLASTIC = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x TRANS 10 = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 204.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	20.40	224.40</size></b></align>
+<align="left"><b><size="11">12%	24.48	228.48</size></b></align>
+<align="left"><b><size="11">15%	30.60	234.60</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

@@ -1,0 +1,35 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 9091</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-22 20:33:18</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: S2</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x METAXA = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x BORSEC 1L = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x BURGER BLACK ANGUS FARA GARNI = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x BURGER BLACK ANGUS CARTOFI PRAJITI = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x IAHNIE DE FASOLE = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAPANASI GEM CASA La 2 farf = 26.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA DE BURTA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ARDEI IUTE = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SMANTANA = 3.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAPANASI GEM CASA -la 2 farf = 26.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x AZUGA = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CAMPARI ORANGE = 25.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x HUGO = 30.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 299.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	29.90	328.90</size></b></align>
+<align="left"><b><size="11">12%	35.88	334.88</size></b></align>
+<align="left"><b><size="11">15%	44.85	343.85</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

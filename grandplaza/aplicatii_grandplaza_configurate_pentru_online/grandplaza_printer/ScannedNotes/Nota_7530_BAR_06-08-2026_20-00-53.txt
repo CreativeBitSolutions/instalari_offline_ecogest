@@ -1,0 +1,20 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-06 20:00:47</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">LIMONADA  MENTA</size></b></align>
+<align="left"><b><size="11">  2.00000 x 20.00 = 40.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">CORDON BLEU PORC CARTOFI TARANESTI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 44.00 = 44.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">BURGER BLACK ANGUS CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 48.00 = 48.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 132.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 132.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 92.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 40.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7530</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

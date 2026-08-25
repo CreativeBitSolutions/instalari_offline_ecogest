@@ -1,0 +1,26 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-30 14:28:19</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">PLATOU SIBIAN</size></b></align>
+<align="left"><b><size="11">  1.00000 x 80.00 = 80.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PLATOU BOIERESC CARTOFI TARANESTI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 124.00 = 124.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">SALAU IN FULGI PIURE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 48.00 = 48.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  2.00000 x 6.00 = 12.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PUNGA</size></b></align>
+<align="left"><b><size="11">  2.00000 x 1.00 = 2.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">CAPUCCINO CLASIC</size></b></align>
+<align="left"><b><size="11">  1.00000 x 15.00 = 15.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 281.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 281.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 264.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 17.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6908</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

@@ -1,0 +1,22 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-29 21:30:38</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">CARNATI CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 34.00 = 34.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">MUSCHI IMPANAT CARTOFI TARANESTI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 44.00 = 44.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">VIN DE CASA 1L ALB</size></b></align>
+<align="left"><b><size="11">  1.00000 x 38.00 = 38.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">BORSEC 1L</size></b></align>
+<align="left"><b><size="11">  1.00000 x 10.00 = 10.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 126.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 126.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 88.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 38.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6855</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

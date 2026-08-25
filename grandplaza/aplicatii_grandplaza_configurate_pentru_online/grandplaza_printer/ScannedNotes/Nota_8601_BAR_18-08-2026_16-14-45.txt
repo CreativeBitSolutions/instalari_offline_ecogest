@@ -1,0 +1,36 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-18 16:14:39</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">HUGO</size></b></align>
+<align="left"><b><size="11">  1.00000 x 30.00 = 30.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">FUZETEA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 12.00 = 12.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">LIMONADA  MENTA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 20.00 = 20.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">BORSEC 1L</size></b></align>
+<align="left"><b><size="11">  1.00000 x 10.00 = 10.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CIORBA PERISOARE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 20.00 = 20.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CIORBA DE BURTA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 24.00 = 24.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">ARDEI IUTE</size></b></align>
+<align="left"><b><size="11">  3 x 1.00 = 3.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">SMANTANA</size></b></align>
+<align="left"><b><size="11">  3 x 3.00 = 9.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  2 x 6.00 = 12.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CIOLAN VARZA CALITA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 46.00 = 46.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PLATOU GRAND PLAZA CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 88.00 = 88.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 274.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Virament bancar: 274.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 212.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 62.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8601</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

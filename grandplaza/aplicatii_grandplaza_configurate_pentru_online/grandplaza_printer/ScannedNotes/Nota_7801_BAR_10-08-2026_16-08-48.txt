@@ -1,0 +1,34 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7801</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-10 16:08:45</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">Masa: TM4</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x LIMO MENTA MIERE = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x INGHETATA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1.5 x ALEXANDRION = 21.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x COCA COLA = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x SALAU GR MUJDEI MAMALIGA = 96.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x PAPANASI GEM CASA = 52.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUNGA = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x FRESH DE PORTOCALE = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x HARGHITA 500ML = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x CIORBA DE BURTA = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x ARDEI IUTE = 2.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x SMANTANA = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 311.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	31.10	342.10</size></b></align>
+<align="left"><b><size="11">12%	37.32	348.32</size></b></align>
+<align="left"><b><size="11">15%	46.65	357.65</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

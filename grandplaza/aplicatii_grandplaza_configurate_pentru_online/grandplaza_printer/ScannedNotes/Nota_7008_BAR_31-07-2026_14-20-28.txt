@@ -1,0 +1,32 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-31 14:20:26</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">URSUS RETRO</size></b></align>
+<align="left"><b><size="11">  1.00000 x 14.00 = 14.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">PERONI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 14.00 = 14.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">CIOLAN IAHNIE DE FASOLE</size></b></align>
+<align="left"><b><size="11">  2.00000 x 46.00 = 92.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CORDON BLEU PORC CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 44.00 = 44.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CASTRAV IN OTET</size></b></align>
+<align="left"><b><size="11">  1.00000 x 9.00 = 9.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">MUJDEI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 4.00 = 4.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  1.00000 x 6.00 = 6.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">TUICA</size></b></align>
+<align="left"><b><size="11">  0.50000 x 12.00 = 6.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">COCA COLA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 12.00 = 12.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 201.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 201.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 155.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 46.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7008</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

@@ -1,0 +1,394 @@
+:root {
+    --login-bg: #171c20;
+    --login-grid: rgba(255, 255, 255, .025);
+    --login-paper: #ffffff;
+    --login-soft: #f4f6f7;
+    --login-line: #d2d9dd;
+    --login-line-strong: #aebbc2;
+    --login-text: #182126;
+    --login-muted: #59676f;
+    --login-green: #087a55;
+    --login-green-dark: #056443;
+    --login-blue: #176ca4;
+    --login-blue-dark: #115882;
+    --login-amber: #d49a24;
+    --login-red: #9f2f25;
+    --login-font: Bahnschrift, "Segoe UI Variable", "Segoe UI", Tahoma, sans-serif;
+}
+
+html {
+    min-height: 100%;
+    background: var(--login-bg);
+}
+
+.restaurant-login-page {
+    min-height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
+    background-color: var(--login-bg) !important;
+    background-image:
+        linear-gradient(var(--login-grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--login-grid) 1px, transparent 1px);
+    background-size: 34px 34px;
+    color: var(--login-text);
+    font-family: var(--login-font);
+    letter-spacing: 0;
+}
+
+.restaurant-login-page::before {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--login-green) 0 48%, var(--login-amber) 48% 63%, var(--login-blue) 63% 100%);
+    content: "";
+}
+
+.restaurant-login-page .login-shell {
+    position: relative;
+    z-index: 1;
+    width: min(1180px, calc(100% - 32px));
+    max-width: 1180px;
+    padding: 22px 0 44px !important;
+}
+
+.login-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    min-height: 92px;
+    margin-bottom: 18px;
+    padding: 17px 20px 17px 28px;
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: 8px;
+    background: var(--login-paper);
+    box-shadow: 0 20px 55px rgba(0, 0, 0, .28);
+}
+
+.login-brand {
+    position: relative;
+    min-width: 0;
+}
+
+.login-brand::before {
+    position: absolute;
+    top: 1px;
+    bottom: 1px;
+    left: -28px;
+    width: 5px;
+    background: var(--login-green);
+    content: "";
+}
+
+.login-brand span,
+.workspace-heading span {
+    display: block;
+    margin: 0 0 5px;
+    color: var(--login-muted);
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.login-brand h1,
+.workspace-heading h2 {
+    margin: 0;
+    color: var(--login-text);
+    font-family: var(--login-font);
+    font-weight: 750;
+    letter-spacing: 0;
+}
+
+.login-brand h1 {
+    font-size: 25px;
+    line-height: 1.15;
+}
+
+.login-meta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.location-badge {
+    flex: 0 0 auto;
+    padding: 9px 12px;
+    border: 1px solid #8fa5af;
+    border-radius: 5px;
+    background: var(--login-soft);
+    color: #263840;
+    font-size: 13px;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.login-tools {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(138px, 1fr));
+    gap: 8px;
+}
+
+.restaurant-login-page .login-tools .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 7px 10px;
+    border: 1px solid var(--login-blue-dark);
+    border-radius: 5px;
+    background: var(--login-blue);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1.2;
+    white-space: normal;
+}
+
+.restaurant-login-page .login-tools .btn:hover {
+    border-color: #0c466b;
+    background: var(--login-blue-dark);
+    color: #fff;
+}
+
+.restaurant-login-page .login-tools .cleanup-link {
+    border-color: #7a2019;
+    background: var(--login-red);
+}
+
+.restaurant-login-page .login-tools .cleanup-link:hover {
+    border-color: #641812;
+    background: #85251d;
+}
+
+.workspace-heading {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    margin: 0;
+    padding: 16px 20px 13px;
+    border: 1px solid var(--login-line);
+    border-bottom: 0;
+    border-radius: 8px 8px 0 0;
+    background: var(--login-soft);
+}
+
+.workspace-heading::after {
+    flex: 1 1 auto;
+    height: 1px;
+    margin-bottom: 5px;
+    background: var(--login-line);
+    content: "";
+}
+
+.workspace-heading h2 {
+    font-size: 20px;
+    line-height: 1.2;
+}
+
+.restaurant-login-page #loginUsersArea {
+    align-items: stretch;
+    margin: 0 0 18px;
+    padding: 18px;
+    border: 1px solid var(--login-line);
+    border-radius: 0 0 8px 8px;
+    background: var(--login-paper);
+    box-shadow: 0 20px 55px rgba(0, 0, 0, .25);
+}
+
+.restaurant-login-page .users-wrapper {
+    max-height: 66vh;
+    padding: 4px 10px 4px 4px;
+    scrollbar-color: #9eabb2 #eef1f2;
+}
+
+.restaurant-login-page .users-wrapper > .row {
+    margin: 0;
+}
+
+.restaurant-login-page .users-wrapper .col-6 {
+    min-width: 142px;
+    padding: 6px;
+    text-align: center;
+}
+
+.restaurant-login-page .user-btn {
+    width: 100%;
+    min-height: 112px;
+    padding: 12px;
+    border: 2px solid var(--login-line-strong);
+    border-radius: 6px;
+    background: var(--login-paper);
+    box-shadow: 0 2px 0 rgba(24, 33, 38, .06);
+}
+
+.restaurant-login-page .user-btn:hover,
+.restaurant-login-page .user-btn.active {
+    border-color: var(--login-green);
+    box-shadow: 0 0 0 4px rgba(8, 122, 85, .14);
+    transform: translateY(-2px);
+}
+
+.restaurant-login-page .user-btn:disabled,
+.restaurant-login-page .user-btn.disabled {
+    cursor: not-allowed;
+    filter: grayscale(1);
+    opacity: .5;
+}
+
+.restaurant-login-page .user-btn img {
+    width: 82px;
+    height: 82px;
+    object-fit: contain;
+}
+
+.restaurant-login-page .user-name,
+.restaurant-login-page .user-name.text-white {
+    min-height: 34px;
+    margin: 8px 0 0;
+    color: var(--login-text) !important;
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+}
+
+.restaurant-login-page #keypadCol {
+    display: flex;
+    align-items: flex-start;
+}
+
+.restaurant-login-page #keypadCard {
+    width: 100%;
+    margin: 4px 0 0;
+    overflow: hidden;
+    border: 1px solid var(--login-line-strong);
+    border-radius: 6px;
+    box-shadow: 0 12px 30px rgba(24, 33, 38, .15) !important;
+}
+
+.restaurant-login-page #keypadCard .card-body {
+    padding: 16px;
+    background: #eef1f2;
+}
+
+.restaurant-login-page #calc_result {
+    height: 52px;
+    border: 2px solid var(--login-line-strong);
+    border-radius: 5px;
+    color: var(--login-text);
+    font-size: 24px;
+    letter-spacing: 4px;
+}
+
+.restaurant-login-page #keypad .btn {
+    min-height: 58px;
+    padding: 9px 0;
+    border: 1px solid var(--login-line-strong);
+    border-radius: 5px;
+    background: var(--login-paper);
+    color: var(--login-text);
+    font-size: 22px;
+    font-weight: 750;
+    box-shadow: 0 2px 0 rgba(24, 33, 38, .08);
+}
+
+.restaurant-login-page #keypad .btn:hover {
+    border-color: #84969f;
+    background: #e2e8ea;
+}
+
+.restaurant-login-page #keypad .btn-warning {
+    border-color: #b98318;
+    background: #e9ad36;
+    color: #2d2109;
+}
+
+.restaurant-login-page #keypad .btn-submit {
+    border-color: var(--login-green-dark);
+    background: var(--login-green);
+    color: #fff;
+    font-size: 13px;
+}
+
+.restaurant-login-page #keypad .btn-submit:hover {
+    background: var(--login-green-dark);
+}
+
+.restaurant-login-page .alert,
+.restaurant-login-page .card.border-warning,
+.restaurant-login-page .card.border-danger {
+    border-radius: 7px;
+    box-shadow: 0 14px 38px rgba(0, 0, 0, .2);
+}
+
+.restaurant-login-page .card.border-warning .card-body,
+.restaurant-login-page .card.border-danger .card-body {
+    padding: 20px;
+}
+
+.restaurant-login-page .btn:focus-visible,
+.restaurant-login-page .user-btn:focus-visible,
+.restaurant-login-page #calc_result:focus-visible {
+    outline: 3px solid rgba(23, 108, 164, .3);
+    outline-offset: 2px;
+}
+
+@media (max-width: 991px) {
+    .login-topbar,
+    .login-meta {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .login-meta,
+    .login-tools {
+        width: 100%;
+    }
+
+    .restaurant-login-page .users-wrapper {
+        max-height: none;
+    }
+}
+
+@media (max-width: 680px) {
+    .restaurant-login-page .login-shell {
+        width: min(100% - 20px, 1180px);
+        padding-top: 10px !important;
+    }
+
+    .login-topbar {
+        padding: 16px 16px 16px 23px;
+    }
+
+    .login-brand::before {
+        left: -23px;
+    }
+
+    .login-brand h1 {
+        font-size: 22px;
+    }
+
+    .login-tools {
+        grid-template-columns: 1fr;
+    }
+
+    .restaurant-login-page #loginUsersArea {
+        padding: 10px;
+    }
+
+    .restaurant-login-page .users-wrapper .col-6 {
+        min-width: 50%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .restaurant-login-page * {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+    }
+}

@@ -1,0 +1,19 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 9110</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-24 10:29:46</size></b></align>
+<align="left"><b><size="11">OPERATOR: ADI BACILA -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M6</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 2 -------</size></b></align>
+<align="left"><b><size="11">1 x CIORBA DE LEGUME</size></b></align>
+<align="left"><b><size="11">1 x BURTA PACHETTT</size></b></align>
+<align="left"><b><size="11">------ FEL 3 -------</size></b></align>
+<align="left"><b><size="11">1 x PUI PANE</size></b></align>
+<align="left"><b><size="11">- CARTOFI TARANESTI</size></b></align>
+<align="left"><b><size="11">1 x CEAFA</size></b></align>
+<align="left"><b><size="11">- IAHNIE DE FASOLE</size></b></align>
+<align="left"><b><size="11">1 x SARMALUTE</size></b></align>
+<align="left"><b><size="11">- MAMALIGA</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>

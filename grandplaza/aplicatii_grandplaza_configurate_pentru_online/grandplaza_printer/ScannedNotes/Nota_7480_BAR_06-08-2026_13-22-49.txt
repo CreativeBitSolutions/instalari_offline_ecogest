@@ -1,0 +1,8 @@
+﻿<align="left"><b><size="11">---------NOTA STORNARE----------</size></b></align>
+<align="left"><b><size="11">Data: 06.08.2026 13:22</size></b></align>
+<align="left"><b><size="11">Masa: S5 / Op: SEF SALA MARIUS -</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7480</size></b></align>
+<align="left"><b><size="11">--------------------------------</size></b></align>
+<align="left"><b><size="11">ANULARE: PUI PANE x -1.00</size></b></align>
+<align="left"><b><size="11">Motiv: Adăugat din greșeală</size></b></align>
+<align="left"><b><size="11">--------------------------------</size></b></align>

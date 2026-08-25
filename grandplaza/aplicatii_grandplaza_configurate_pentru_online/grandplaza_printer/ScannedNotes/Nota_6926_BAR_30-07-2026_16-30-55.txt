@@ -1,0 +1,35 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6926</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-30 16:30:52</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">Masa: S3</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x LIMO MENTA MIERE = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x URSUS 0% ALCOOL = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x URSUS BLACK = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA DE BURTA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA PERISOARE = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA DE FAS CIOLAN = 33.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ARDEI IUTE = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SMANTANA = 3.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUI PANE MAMALIGA = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x COASTE  SOS CARTOFI TARANESTI = 50.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ROSI CU TELEMEA = 15.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x PAPANASI GEM CASA la 1 gem sep = 78.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CEAPA ROSIE 85G = 5.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 333.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	33.30	366.30</size></b></align>
+<align="left"><b><size="11">12%	39.96	372.96</size></b></align>
+<align="left"><b><size="11">15%	49.95	382.95</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

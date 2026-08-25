@@ -1,0 +1,18 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-30 12:24:28</size></b></align>
+<align="left"><b><size="11">OPERATOR: ADI BACILA -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">MENIUL ZILEI VARZA ALBA</size></b></align>
+<align="left"><b><size="11">  2.00000 x 36.00 = 72.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">TRANS 10</size></b></align>
+<align="left"><b><size="11">  1.00000 x 10.00 = 10.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 82.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 82.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 72.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 10.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6890</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

@@ -1,0 +1,20 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8062</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-12 22:36:26</size></b></align>
+<align="left"><b><size="11">OPERATOR: ADI BACILA -</size></b></align>
+<align="left"><b><size="11">Masa: TM2</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 0 -------</size></b></align>
+<align="left"><b><size="11">20 x AZUGA = 440.00 LEI</size></b></align>
+<align="left"><b><size="11">10 x URSUS = 120.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x AFINATA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ALEXANDRION = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x APEROL = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x BAILEY IRISHCREM = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x BELVEDERE VODKA = 56.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x BRANCOVEANU XO = 90.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x STRONGBOW = 13.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 805.00 LEI</size></b></align>

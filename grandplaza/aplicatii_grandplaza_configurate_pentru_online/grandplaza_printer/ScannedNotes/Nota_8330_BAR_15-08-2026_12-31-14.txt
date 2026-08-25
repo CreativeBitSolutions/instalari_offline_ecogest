@@ -1,0 +1,25 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8330</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-15 12:31:13</size></b></align>
+<align="left"><b><size="11">OPERATOR: ADI BACILA -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M11</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">4 x CIORBA PORC = 80.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUNGA = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">4 x MICI = 28.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x PULPE DE PUI CARTOFI AURII = 76.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 185.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	18.50	203.50</size></b></align>
+<align="left"><b><size="11">12%	22.20	207.20</size></b></align>
+<align="left"><b><size="11">15%	27.75	212.75</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

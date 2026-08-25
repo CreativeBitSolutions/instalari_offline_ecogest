@@ -1,0 +1,8 @@
+﻿<align="left"><b><size="11">---------NOTA STORNARE----------</size></b></align>
+<align="left"><b><size="11">Data: 17.08.2026 19:42</size></b></align>
+<align="left"><b><size="11">Masa: S2 / Op: SEF SALA MARIUS -</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8501</size></b></align>
+<align="left"><b><size="11">--------------------------------</size></b></align>
+<align="left"><b><size="11">ANULARE: SMANTANA x -1.00</size></b></align>
+<align="left"><b><size="11">Motiv: Adăugat din greșeală</size></b></align>
+<align="left"><b><size="11">--------------------------------</size></b></align>

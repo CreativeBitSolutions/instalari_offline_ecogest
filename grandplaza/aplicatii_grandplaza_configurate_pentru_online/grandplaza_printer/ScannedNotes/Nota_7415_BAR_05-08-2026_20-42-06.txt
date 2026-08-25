@@ -1,0 +1,55 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7415</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-05 20:42:04</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">Masa: S10</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">5 x URSUS = 60.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x SPRITE = 36.00 LEI</size></b></align>
+<align="left"><b><size="11">5 x TIMISOREANA = 60.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x BORSEC 1L = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x APEROL SPRITZ = 30.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x COCA COLA ZERO = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x LIMO MENTA MIERE = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x GIN TONIC = 25.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PERONI 0%ALCOOL = 15.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x HUGO = 60.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x LIMONADA  MENTA = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x HARGHITA 500ML = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MAMALIGA = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x BIFTEC TARTAR PAINE PRAJ = 72.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x Y VIRSLI DE OAIE CARTOFI TARANESTI = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x ARDEI COPT = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x IAHNIE DE FASOLE = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIOLAN IAHNIE DE FASOLE = 46.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SOMON LA GRATAR LEGUME = 64.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIOLAN VARZA CALITA = 46.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ESCALOP CARTOFI TARANESTI = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x LEGUME = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x CIOBANESC = 132.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MUSCHI VACA CARTOFI PRAJITI = 72.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SOMON LA GRATAR CARTOFI PRAJITI = 64.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MUSCHI VACA CARTOFI PRAJITI = 72.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x X SALATA CRUDITATI = 36.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x VARZA ALBA = 27.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PIEPT DE PUI CARTOFI PRAJITI = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x PAINE COS = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAPANASI GEM CASA 2 far = 26.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CLATITE CIOCOLATA = 16.00 LEI</size></b></align>
+<align="left"><b><size="11">4 x CAFEA ESPRESSO LUNGA = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CAPUCCINO CLASIC = 15.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 1,287.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	128.70	1,415.70</size></b></align>
+<align="left"><b><size="11">12%	154.44	1,441.44</size></b></align>
+<align="left"><b><size="11">15%	193.05	1,480.05</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

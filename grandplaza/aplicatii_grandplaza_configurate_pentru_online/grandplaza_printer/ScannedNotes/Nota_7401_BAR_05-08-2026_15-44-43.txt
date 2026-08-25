@@ -1,0 +1,23 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7401</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-05 15:44:41</size></b></align>
+<align="left"><b><size="11">OPERATOR: MARIUS -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M2</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">2 x CEAFA cartofi prăjiţi, Salata de Varză albă | garnitura: cartofi prăjiţi | salata: Salata de Varză albă = 76.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CEAFA cartofi ţărăneşti, Salata de Varză albă | garnitura: cartofi ţărăneşti | salata: Salata de Varză alb = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 114.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	11.40	125.40</size></b></align>
+<align="left"><b><size="11">12%	13.68	127.68</size></b></align>
+<align="left"><b><size="11">15%	17.10	131.10</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

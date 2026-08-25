@@ -1,0 +1,36 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">0000-00-00 00:00:00</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">5 x URSUS = 60.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x COCA COLA ZERO = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x TIMISOREANA = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x URSUS 0% ALCOOL = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x TUICA = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SARMALUTE MAMALIGA = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA VACUTA = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA FASOLE CU CARNE = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SMANTANA = 3.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SARMALUTE MAMALIGA = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CORDON BLEU PORC CARTOFI PRAJITI = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x X  COTLET DE MIEL CARTOFI PRAJITI = 72.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ROSI CU CEAPA = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CEAPA ROSIE 85G = 5.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA PUI = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x HARGHITA 500ML = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8276</size></b></align>
+<align="left"><b><size="11">Masa: S10</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 399.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacsisul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Va oferim urmatoarele sugestii pentru calculul bacsisului / Please consider the following suggestions for tips calculation:</size></b></align>
+
+<align="left"><b><size="11">Bacsis	Total nota</size></b></align>
+<align="left"><b><size="11">10%	39.90	438.90</size></b></align>
+<align="left"><b><size="11">12%	47.88	446.88</size></b></align>
+<align="left"><b><size="11">15%	59.85	458.85</size></b></align>
+
+<align="left"><b><size="11">Alta valoare: ...</size></b></align>

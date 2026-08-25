@@ -1,0 +1,9 @@
+﻿<align="left"><b><size="11">---------NOTA STORNARE----------</size></b></align>
+<align="left"><b><size="11">Data: 31.07.2026 13:26</size></b></align>
+<align="left"><b><size="11">Masa: F06 / Op: SEF SALA ADI BACILA -</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7002</size></b></align>
+<align="left"><b><size="11">--------------------------------</size></b></align>
+<align="left"><b><size="11">CORECTIE: M CARTOFI-PRAJITI x -1.00</size></b></align>
+<align="left"><b><size="11">Cant. Veche: 3.00 -> Cant. Noua: 2.00</size></b></align>
+<align="left"><b><size="11">Motiv: Corecție cantitate</size></b></align>
+<align="left"><b><size="11">--------------------------------</size></b></align>

@@ -1,0 +1,24 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-07 13:01:43</size></b></align>
+<align="left"><b><size="11">OPERATOR: ADI BACILA -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">PORC PANE CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 38.00 = 38.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PUNGA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 1.00 = 1.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">ROSI CU TELEMEA</size></b></align>
+<align="left"><b><size="11">  2.00000 x 15.00 = 30.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CIORBA DE BURTA</size></b></align>
+<align="left"><b><size="11">  2.00000 x 24.00 = 48.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">Y GALEATA 1 L</size></b></align>
+<align="left"><b><size="11">  1.00000 x 3.00 = 3.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 120.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 120.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 116.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 4.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7574</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

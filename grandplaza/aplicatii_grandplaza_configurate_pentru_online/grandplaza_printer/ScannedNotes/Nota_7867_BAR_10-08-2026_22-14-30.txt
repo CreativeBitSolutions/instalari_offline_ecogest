@@ -1,0 +1,46 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7867</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-10 22:14:30</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: S9</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">6 x BORSEC 1L = 60.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x CRAMELE PURCARI = 150.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x URSUS 0% ALCOOL = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x APA PLATA = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ESPRESSO DECOF JULIUS MEIN = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SUC MERE = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x SALAU GR TARTAR MAMALIGA cu us simplu7 = 96.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SALAU GR MUJDEI MAMALIGA = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SALAU GR MUJDEI CARTOFI PRAJITI = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SALAU IN FULGI MAMALIGA = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SALAU IN FULGI MAMALIGA = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PLATOU GRAND PLAZA CARTOFI TARANESTI = 88.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CREIER PANE CARTOFI TARANESTI = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ARDEI COPT = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SARMALUTE MAMALIGA = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x Y VIRSLI DE OAIE VARZA CALITA = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA DE BURTA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SMANTANA = 3.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x COTLET CARTOFI PRAJITI = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ROSII = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SALAU GR MUJDEI MAMALIGA = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SALAU GR MUJDEI CARTOFI NATUR = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x CREMA CIUPERCI = 68.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CAFEA ESPRESSO LUNGA = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 1,031.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	103.10	1,134.10</size></b></align>
+<align="left"><b><size="11">12%	123.72	1,154.72</size></b></align>
+<align="left"><b><size="11">15%	154.65	1,185.65</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

@@ -1,0 +1,38 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 9036</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-22 15:20:20</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: S9</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">3 x APA PLATA = 21.00 LEI</size></b></align>
+<align="left"><b><size="11">7 x URSUS = 84.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x HARGHITA 500ML = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">4 x BORSEC 1L = 40.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x COCA COLA = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PLATOU REGAL CARTOFI PRAJITI = 580.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PLATOU ARDELENESC CARTOFI PRAJITI = 88.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x W SALATA GRECEASCA = 72.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUI PANE CARTOFI PRAJITI = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIOLAN IAHNIE DE FASOLE = 46.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x CAPUCCINO CLASIC = 30.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x CAFEA ESPRESSO LUNGA = 33.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CAFEA ESPRESSO SCURTA = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CAFEA ESPRESSO LUNGA = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAPANASI GEM CASA = 26.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CLATITE CIOCOLATA = 16.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 1,121.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	112.10	1,233.10</size></b></align>
+<align="left"><b><size="11">12%	134.52	1,255.52</size></b></align>
+<align="left"><b><size="11">15%	168.15	1,289.15</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

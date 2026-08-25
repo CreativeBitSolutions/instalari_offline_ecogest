@@ -1,0 +1,26 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-10 22:20:23</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">BORSEC 1L</size></b></align>
+<align="left"><b><size="11">  1.00000 x 10.00 = 10.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">COCA COLA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 12.00 = 12.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">MICI 2 2 3</size></b></align>
+<align="left"><b><size="11">  7.00000 x 7.00 = 49.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">M CARTOFI-PRAJITI</size></b></align>
+<align="left"><b><size="11">  3.00000 x 10.00 = 30.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  1.00000 x 6.00 = 6.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CASTRAV CU ROSI cu ceapa</size></b></align>
+<align="left"><b><size="11">  3 x 10.00 = 30.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 137.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 137.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 125.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 12.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7873</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

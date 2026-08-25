@@ -1,0 +1,31 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8147</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-13 19:30:00</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">Masa: S8</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">2 x CAFE FRAPPE (CU ALCOOL ) = 52.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x URSUS COOLER = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x LIMONADA = 18.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x APA PLATA = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x LIMONADA  MENTA = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIOBANESC = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MIX GRILL CARTOFI PRAJITI = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x SALAU IN FULGI LEGUME = 96.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x VR SALATA PUI = 36.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SPAGHETE CARBON = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 373.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	37.30	410.30</size></b></align>
+<align="left"><b><size="11">12%	44.76	417.76</size></b></align>
+<align="left"><b><size="11">15%	55.95	428.95</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

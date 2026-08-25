@@ -1,0 +1,17 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7380</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-05 13:28:40</size></b></align>
+<align="left"><b><size="11">OPERATOR: MARIUS -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M4</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 0 -------</size></b></align>
+<align="left"><b><size="11">1 x MENIUL ZILEI: COMPLET + VARZA ALBA</size></b></align>
+<align="left"><b><size="11">1 x CIORBA FASOLE IN PAINE = 35.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CORDON BLEU PORC = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">- piure de cartofi | garnitura: piure de cartofi</size></b></align>
+<align="left"><b><size="11">1 x TRANS 10 = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">- Taxă transport Woo</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 125.00 LEI</size></b></align>

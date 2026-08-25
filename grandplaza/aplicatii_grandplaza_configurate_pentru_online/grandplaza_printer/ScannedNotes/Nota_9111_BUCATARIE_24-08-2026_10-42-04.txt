@@ -1,0 +1,25 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 9111</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-24 10:42:00</size></b></align>
+<align="left"><b><size="11">OPERATOR: ADI BACILA -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M7</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 3 -------</size></b></align>
+<align="left"><b><size="11">2 x CEAFA AFMUMATA</size></b></align>
+<align="left"><b><size="11">- CARTOFI TARANESTI</size></b></align>
+<align="left"><b><size="11">2 x X  COTLET DE MIEL</size></b></align>
+<align="left"><b><size="11">- CARTOFI TARANESTI</size></b></align>
+<align="left"><b><size="11">1 x CARNATI</size></b></align>
+<align="left"><b><size="11">- CARTOFI TARANESTI</size></b></align>
+<align="left"><b><size="11">7 x MICI</size></b></align>
+<align="left"><b><size="11">2 x CREIER PANE</size></b></align>
+<align="left"><b><size="11">- CARTOFI TARANESTI</size></b></align>
+<align="left"><b><size="11">1 x PULPE DE PUI</size></b></align>
+<align="left"><b><size="11">- CARTOFI TARANESTI</size></b></align>
+<align="left"><b><size="11">1 x PUI IN CRUSTA AURIE</size></b></align>
+<align="left"><b><size="11">- CARTOFI TARANESTI</size></b></align>
+<align="left"><b><size="11">------ FEL 0 -------</size></b></align>
+<align="left"><b><size="11">1 x PLATOU+AMBALAJ</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>

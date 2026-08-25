@@ -1,0 +1,30 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-20 19:43:55</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">URSUS</size></b></align>
+<align="left"><b><size="11">  1.00000 x 12.00 = 12.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">COCA COLA ZERO</size></b></align>
+<align="left"><b><size="11">  2.00000 x 12.00 = 24.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">LIMONADA  MENTA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 20.00 = 20.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">CORDON BLEU PORC CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  2.00000 x 44.00 = 88.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">MICI</size></b></align>
+<align="left"><b><size="11">  4.00000 x 7.00 = 28.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">M CARTOFI-PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 10.00 = 10.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">TOCHITURA MUJDEI MAMALIGA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 44.00 = 44.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  1.00000 x 6.00 = 6.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 232.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Virament bancar: 232.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 176.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 56.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8863</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

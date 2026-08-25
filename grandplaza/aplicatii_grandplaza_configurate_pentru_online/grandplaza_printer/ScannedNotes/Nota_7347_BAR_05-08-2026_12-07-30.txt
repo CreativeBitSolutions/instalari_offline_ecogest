@@ -1,0 +1,28 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-05 12:07:25</size></b></align>
+<align="left"><b><size="11">OPERATOR: MARIUS -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">MENIUL ZILEI</size></b></align>
+<align="left"><b><size="11">  7 x 36.00 = 219.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CIORBA MENIU ZILEI Fără salată</size></b></align>
+<align="left"><b><size="11">  4.00000 x 13.00 = 52.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">TACAM PLASTIC</size></b></align>
+<align="left"><b><size="11">  24 x 1.00 = 24.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">CEAPA ROSIE 85G</size></b></align>
+<align="left"><b><size="11">  6.00000 x 5.00 = 30.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">ARDEI IUTE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 1.00 = 1.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CIORBA FASOLE FARA CARNE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 20.00 = 20.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">MENIUL ZILEI GOGONELE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 36.00 = 36.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 382.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Virament bancar: 382.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 358.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 24.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7347</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

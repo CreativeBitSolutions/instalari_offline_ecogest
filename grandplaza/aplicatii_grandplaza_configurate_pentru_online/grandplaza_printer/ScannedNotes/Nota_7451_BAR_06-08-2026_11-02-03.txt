@@ -1,0 +1,23 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7451</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-06 11:01:59</size></b></align>
+<align="left"><b><size="11">OPERATOR: MARIUS -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M6</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 0 -------</size></b></align>
+<align="left"><b><size="11">2 x SALAU GRATAR MUJDEI = 96.00 LEI</size></b></align>
+<align="left"><b><size="11">- alege-sos: Mujdei</size></b></align>
+<align="left"><b><size="11">2 x CIOBANESC = 88.00 LEI</size></b></align>
+<align="left"><b><size="11">9 x MICI = 63.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CORDON BLEU PORC = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">- cartofi prăjiţi | garnitura: cartofi prăjiţi</size></b></align>
+<align="left"><b><size="11">2 x SALAU GRATAR MUJDEI = 96.00 LEI</size></b></align>
+<align="left"><b><size="11">- alege-sos: Mujdei cu smântână</size></b></align>
+<align="left"><b><size="11">3 x GARNITURA = 30.00 LEI</size></b></align>
+<align="left"><b><size="11">- cartofi prăjiţi | alege-garnitura: cartofi prăjiţi</size></b></align>
+<align="left"><b><size="11">1 x PAPANASI GEM CASA = 26.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x PAINE COS = 18.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 461.00 LEI</size></b></align>

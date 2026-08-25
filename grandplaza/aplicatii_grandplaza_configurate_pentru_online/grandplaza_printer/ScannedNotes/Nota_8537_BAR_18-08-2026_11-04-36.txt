@@ -1,0 +1,17 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8537</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-18 11:04:35</size></b></align>
+<align="left"><b><size="11">OPERATOR: MARIUS -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M1</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 0 -------</size></b></align>
+<align="left"><b><size="11">5 x MENIUL ZILEI: COMPLET + MURATURI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA MENIU ZILEI = 13.00 LEI</size></b></align>
+<align="left"><b><size="11">- Fără salată</size></b></align>
+<align="left"><b><size="11">6 x FEL 2 MEN ZILEI + VARZA ALBA</size></b></align>
+<align="left"><b><size="11">6 x CEAPA ROSIE 85G = 30.00 LEI</size></b></align>
+<align="left"><b><size="11">17 x TACAM PLASTIC = 17.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 390.00 LEI</size></b></align>

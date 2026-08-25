@@ -1,0 +1,38 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7819</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-10 15:48:37</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: S2</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x PLATOU SIBIAN = 80.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA DE BURTA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ARDEI IUTE = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SMANTANA = 3.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA DE LEGUME = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x MICI = 21.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PIURE = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PIEPT DE PUI VARZA CALITA = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x URSUS BLACK = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x PILSNER URQUELL = 30.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x BAILEY IRISHCREM = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x X  COTLET DE MIEL PIURE = 72.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x AFINATA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x STROGANOFF MAMALIGA = 72.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">4 x APA PLATA = 28.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CAFEA ESPRESSO LUNGA = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 472.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	47.20	519.20</size></b></align>
+<align="left"><b><size="11">12%	56.64	528.64</size></b></align>
+<align="left"><b><size="11">15%	70.80	542.80</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

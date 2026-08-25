@@ -1,0 +1,25 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">0000-00-00 00:00:00</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">3 x CAPPY = 42.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SMANTANA = 3.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SARMALUTE MAMALIGA = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x PAPANASI GEM CASA = 78.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUNGA = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8670</size></b></align>
+<align="left"><b><size="11">Masa: S1</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 168.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacsisul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Va oferim urmatoarele sugestii pentru calculul bacsisului / Please consider the following suggestions for tips calculation:</size></b></align>
+
+<align="left"><b><size="11">Bacsis	Total nota</size></b></align>
+<align="left"><b><size="11">10%	16.80	184.80</size></b></align>
+<align="left"><b><size="11">12%	20.16	188.16</size></b></align>
+<align="left"><b><size="11">15%	25.20	193.20</size></b></align>
+
+<align="left"><b><size="11">Alta valoare: ...</size></b></align>

@@ -1,0 +1,15 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 9115</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-24 11:30:58</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">Masa: TM4</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 3 -------</size></b></align>
+<align="left"><b><size="11">1 x CIORBA PORC</size></b></align>
+<align="left"><b><size="11">1 x MIC DEJUN</size></b></align>
+<align="left"><b><size="11">- a</size></b></align>
+<align="left"><b><size="11">1 x PUI PANE</size></b></align>
+<align="left"><b><size="11">- PIURE</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>

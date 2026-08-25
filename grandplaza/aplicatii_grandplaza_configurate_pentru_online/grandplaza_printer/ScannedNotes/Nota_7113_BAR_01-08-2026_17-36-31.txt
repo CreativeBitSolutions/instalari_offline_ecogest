@@ -1,0 +1,36 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7113</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-01 17:36:29</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">Masa: S7</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x VIN DE CASA 1L ALB = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x APA PLATA = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x BORSEC 1L = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA DE LEGUME = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PIEPT DE PUI CARTOFI NATUR = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CASTRAV CU ROSI cu ceapa = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CLATITE GEM AFINE = 16.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x CIORBA PUI = 60.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SALAU IN FULGI CARTOFI PRAJITI = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SALAU IN FULGI MAMALIGA = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SALAU IN FULGI CARTOFI NATUR = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CEAFA CARTOFI AURII = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x PAPANASI GEM CASA = 52.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ARDEI COPT = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 437.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	43.70	480.70</size></b></align>
+<align="left"><b><size="11">12%	52.44	489.44</size></b></align>
+<align="left"><b><size="11">15%	65.55	502.55</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

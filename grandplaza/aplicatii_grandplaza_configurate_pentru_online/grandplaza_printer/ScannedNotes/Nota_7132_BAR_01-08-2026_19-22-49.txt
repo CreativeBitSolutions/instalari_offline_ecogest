@@ -1,0 +1,42 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-01 19:22:45</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">LIMO MENTA MIERE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 22.00 = 22.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">FRESH DE PORTOCALE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 14.00 = 14.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">BORSEC 1L</size></b></align>
+<align="left"><b><size="11">  1.00000 x 10.00 = 10.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">SPAGHETE CARBON</size></b></align>
+<align="left"><b><size="11">  1.00000 x 44.00 = 44.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CLATITE BANANE CIOC</size></b></align>
+<align="left"><b><size="11">  1.00000 x 24.00 = 24.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">CIORBA FASOLE CU CARNE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 20.00 = 20.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">W SALATA GRECEASCA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 36.00 = 36.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  1.00000 x 6.00 = 6.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CEAPA ROSIE 85G</size></b></align>
+<align="left"><b><size="11">  1.00000 x 5.00 = 5.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CIORBA PUI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 20.00 = 20.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">BURGER BLACK ANGUS CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 48.00 = 48.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">BURGER BLACK ANGUS CARTOFI PRAJITI fara sos</size></b></align>
+<align="left"><b><size="11">  1.00000 x 48.00 = 48.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CLATITE CIOCOLATA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 16.00 = 16.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">PUNGA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 1.00 = 1.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 314.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 314.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 273.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 41.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7132</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

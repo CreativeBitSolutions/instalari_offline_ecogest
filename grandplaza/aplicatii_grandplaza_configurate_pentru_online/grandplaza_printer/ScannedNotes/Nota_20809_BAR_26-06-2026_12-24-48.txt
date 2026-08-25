@@ -1,0 +1,29 @@
+﻿<align="left"><b><size="11">Comanda Noua: #20809 (26-06-2026 12:24)</size></b></align>
+<align="left"><b><size="11">Ai primit urmatoarea comanda de la</size></b></align>
+<align="left"><b><size="11">constantin mardare</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">1 x Meniul zilei Sibiu - muraturi = 36 lei</size></b></align>
+<align="left"><b><size="11">1 x Ciorbă de burtă = 25 lei</size></b></align>
+<align="left"><b><size="11">2 x Mici la grătar cu muştar = 14 lei</size></b></align>
+<align="left"><b><size="11">2 x Lingură = 2 lei</size></b></align>
+<align="left"><b><size="11">1 x Furculiță+ Cuțit = 1 lei</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+
+<align="left"><b><size="11">muraturi</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+
+<align="left"><b><size="11">Total: 78 lei</size></b></align>
+<align="left"><b><size="11">Livrare: 10 lei</size></b></align>
+<align="left"><b><size="11">Metoda de plata: Numerar</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">Metoda de livrare: Taxa de transport</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">Pret final: 88 lei</size></b></align>
+<align="left"><b><size="11">Telefon: +40741622601</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">Adresa de livrare:</size></b></align>
+<align="left"><b><size="11">constantin mardare, stefan cel mare, nr 154, depozit a4, Sibiu, SB, RO</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">Nota comanda:</size></b></align>
+<align="left"><b><size="11">Plata care se va face la livrare. Starea comenzii a fost modificată din Plată în așteptare în În procesare.</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>

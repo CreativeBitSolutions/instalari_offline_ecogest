@@ -1,0 +1,28 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-31 18:10:23</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">URSUS</size></b></align>
+<align="left"><b><size="11">  2.00000 x 12.00 = 24.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">SPRITE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 12.00 = 12.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">MICI</size></b></align>
+<align="left"><b><size="11">  2.00000 x 7.00 = 14.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PORC PANE CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 38.00 = 38.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">VARZA CU ROSI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 11.00 = 11.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">COTLET CARTOFI AURII</size></b></align>
+<align="left"><b><size="11">  1.00000 x 32.00 = 32.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  1.00000 x 6.00 = 6.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 137.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 137.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 101.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 36.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7033</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

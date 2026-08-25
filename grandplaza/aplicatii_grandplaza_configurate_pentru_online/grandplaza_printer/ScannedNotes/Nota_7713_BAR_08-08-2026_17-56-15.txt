@@ -1,0 +1,19 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-08 17:56:08</size></b></align>
+<align="left"><b><size="11">OPERATOR: ADI BACILA -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">CARNATI OREZ</size></b></align>
+<align="left"><b><size="11">  1.00000 x 34.00 = 34.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">VARZA ALBA</size></b></align>
+<align="left"><b><size="11">  3.00000 x 9.00 = 27.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PULPE DE PUI PIURE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 38.00 = 38.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 99.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 99.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 99.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7713</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

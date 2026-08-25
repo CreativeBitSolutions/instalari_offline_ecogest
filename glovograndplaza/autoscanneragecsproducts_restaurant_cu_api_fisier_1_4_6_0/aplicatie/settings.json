@@ -1,0 +1,13 @@
+{
+  "RestaurantPath": "C:\\xampp\\htdocs\\github\\instalari_offline_ecogest\\glovograndplaza\\glovograndplaza\\app_restaurant_v2",
+  "DatabasePath": "C:\\xampp\\htdocs\\github\\instalari_offline_ecogest\\glovograndplaza\\api_offline_glovograndplaza\\restaurant.sqlite",
+  "ProductsApiUrl": "https://agecs.agecs.in/sincronizare_online_app_restaurant/sincronizare_date_offline.php",
+  "ClientId": 26,
+  "LocationId": 1,
+  "ScanIntervalMinutes": 10,
+  "RequestTimeoutMinutes": 15,
+  "SchedulerEnabled": false,
+  "RunImmediatelyOnLaunch": false,
+  "StartWithWindows": false,
+  "StartMinimized": false
+}

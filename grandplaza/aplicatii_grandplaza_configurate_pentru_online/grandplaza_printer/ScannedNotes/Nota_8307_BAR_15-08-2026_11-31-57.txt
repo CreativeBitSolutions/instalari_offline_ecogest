@@ -1,0 +1,30 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8307</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-15 11:31:51</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: TM3</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">2 x CAPUCCINO CLASIC = 30.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CEAI JULIUS MEINL = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x OMLETA CU CASCAVA = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x OMLETA CU SUNCA = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x OCHIURI RO MAMA CASC Ciuperci in loc de mamaliga = 30.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CASTRAV CU ROSI fara ceapa = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x UNT = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CAFEA ESPRESSO SCURTA = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 144.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	14.40	158.40</size></b></align>
+<align="left"><b><size="11">12%	17.28	161.28</size></b></align>
+<align="left"><b><size="11">15%	21.60	165.60</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

@@ -1,0 +1,28 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7347</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-05 11:51:11</size></b></align>
+<align="left"><b><size="11">OPERATOR: MARIUS -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M1</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">7 x MENIUL ZILEI = 219.00 LEI</size></b></align>
+<align="left"><b><size="11">4 x CIORBA MENIU ZILEI Fără salată = 52.00 LEI</size></b></align>
+<align="left"><b><size="11">24 x TACAM PLASTIC = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">6 x CEAPA ROSIE 85G = 30.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ARDEI IUTE = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA FASOLE FARA CARNE = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MENIUL ZILEI GOGONELE = 36.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 382.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	38.20	420.20</size></b></align>
+<align="left"><b><size="11">12%	45.84	427.84</size></b></align>
+<align="left"><b><size="11">15%	57.30	439.30</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

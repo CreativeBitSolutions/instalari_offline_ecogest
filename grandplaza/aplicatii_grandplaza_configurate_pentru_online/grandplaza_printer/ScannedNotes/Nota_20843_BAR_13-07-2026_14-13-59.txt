@@ -1,0 +1,22 @@
+﻿<align="left"><b><size="11">Comanda Noua: #20843 (13-07-2026 14:13)</size></b></align>
+<align="left"><b><size="11">Ai primit urmatoarea comanda de la</size></b></align>
+<align="left"><b><size="11">TEST31 NU IMPORTA</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">4 x Ketchup 40g = 16 lei</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+
+<align="left"><b><size="11">Total: 16 lei</size></b></align>
+<align="left"><b><size="11">Livrare: 0 lei</size></b></align>
+<align="left"><b><size="11">Metoda de plata: Numerar</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">Metoda de livrare: Ridicare de la restaurant</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">Pret final: 16 lei</size></b></align>
+<align="left"><b><size="11">Telefon: 0746596109</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">Adresa de livrare:</size></b></align>
+<align="left"><b><size="11">TEST31 NU IMPORTA, TEST NU IMPORTA, TEST NU IMPORTA, Rasinari, SB, RO</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">Nota comanda:</size></b></align>
+<align="left"><b><size="11">Plata care se va face la livrare. Starea comenzii a fost modificată din Plată în așteptare în În procesare.</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>

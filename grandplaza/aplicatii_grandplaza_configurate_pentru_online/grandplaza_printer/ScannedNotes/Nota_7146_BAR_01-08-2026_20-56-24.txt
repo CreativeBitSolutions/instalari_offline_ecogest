@@ -1,0 +1,8 @@
+﻿<align="left"><b><size="11">---------NOTA STORNARE----------</size></b></align>
+<align="left"><b><size="11">Data: 01.08.2026 20:56</size></b></align>
+<align="left"><b><size="11">Masa: S3 / Op: SEF SALA MARIUS -</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7146</size></b></align>
+<align="left"><b><size="11">--------------------------------</size></b></align>
+<align="left"><b><size="11">ANULARE: CIORBA VACUTA x -1.00</size></b></align>
+<align="left"><b><size="11">Motiv: Adăugat din greșeală</size></b></align>
+<align="left"><b><size="11">--------------------------------</size></b></align>

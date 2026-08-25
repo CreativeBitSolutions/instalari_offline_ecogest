@@ -1,0 +1,30 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-07 12:31:06</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">AZUGA</size></b></align>
+<align="left"><b><size="11">  2.00000 x 22.00 = 44.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">POST FASOLE BATUTA VARZA ALBA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 32.00 = 32.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">MUSCHI IMPANAT CARTOFI AURII</size></b></align>
+<align="left"><b><size="11">  1.00000 x 44.00 = 44.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">VARZA ALBA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 9.00 = 9.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  1.00000 x 6.00 = 6.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">TUICA</size></b></align>
+<align="left"><b><size="11">  0.50000 x 12.00 = 6.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">PUNGA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 1.00 = 1.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">CLATITE GEM AFINE 2 far prajite</size></b></align>
+<align="left"><b><size="11">  1.00000 x 16.00 = 16.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 158.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 158.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 91.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 67.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7557</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

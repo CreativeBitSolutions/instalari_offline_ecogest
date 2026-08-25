@@ -1,0 +1,23 @@
+﻿<align="left"><b><size="11">Comanda Noua: #20814 (27-06-2026 14:40)</size></b></align>
+<align="left"><b><size="11">Ai primit urmatoarea comanda de la</size></b></align>
+<align="left"><b><size="11">Maria Magdalena Oancea</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">3 x Coș cu pâine = 18 lei</size></b></align>
+<align="left"><b><size="11">15 x Mici la grătar cu muştar = 105 lei</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+
+<align="left"><b><size="11">Total: 123 lei</size></b></align>
+<align="left"><b><size="11">Livrare: 10 lei</size></b></align>
+<align="left"><b><size="11">Metoda de plata: Numerar</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">Metoda de livrare: Taxa de transport</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">Pret final: 133 lei</size></b></align>
+<align="left"><b><size="11">Telefon: 0766697277</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">Adresa de livrare:</size></b></align>
+<align="left"><b><size="11">Maria Magdalena Oancea, Aleea Iasomiei Nr 5, bl. 39,, Ap. 34, Sibiu, SB, RO</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">Nota comanda:</size></b></align>
+<align="left"><b><size="11">Plata care se va face la livrare. Starea comenzii a fost modificată din Plată în așteptare în În procesare.</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>

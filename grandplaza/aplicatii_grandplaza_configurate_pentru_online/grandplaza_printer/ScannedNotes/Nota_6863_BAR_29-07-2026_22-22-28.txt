@@ -1,0 +1,25 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6863</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-29 22:22:26</size></b></align>
+<align="left"><b><size="11">OPERATOR: ALEXANDRA -</size></b></align>
+<align="left"><b><size="11">Masa: F06</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">3 x BURGER BLACK ANGUS CARTOFI PRAJITI = 144.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x CASCAVAL PANE = 96.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CRAMELE PURCARI = 75.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x APA PLATA = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 322.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	32.20	354.20</size></b></align>
+<align="left"><b><size="11">12%	38.64	360.64</size></b></align>
+<align="left"><b><size="11">15%	48.30	370.30</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

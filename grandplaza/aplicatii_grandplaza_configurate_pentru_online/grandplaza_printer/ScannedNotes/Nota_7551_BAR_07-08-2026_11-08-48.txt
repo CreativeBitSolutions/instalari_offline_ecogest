@@ -1,0 +1,32 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7551</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-07 11:08:46</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">Masa: S8</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x CAFEA ESPRESSO SCURTA = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CEAI JULIUS MEINL = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x APA PLATA = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x COCA COLA = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x FRESH DE PORTOCALE = 28.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x LIMO MENTA MIERE = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x OCHIURI RO MAMA CASC = 30.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x OCHIURI SUNCA SI CASCAVAL = 25.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x OMLETA SUN SI CASC = 25.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MIC DEJUN = 45.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ROSII = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 227.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	22.70	249.70</size></b></align>
+<align="left"><b><size="11">12%	27.24	254.24</size></b></align>
+<align="left"><b><size="11">15%	34.05	261.05</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

@@ -1,0 +1,39 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">0000-00-00 00:00:00</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">8 x NENEA IANCU = 176.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x COCA COLA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x URSUS = 36.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x LIMO MENTA MIERE = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CAFE FRAPPE (CU ALCOOL ) = 26.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x COASTE  SOS CARTOFI PRAJITI = 50.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CEAFA AFMUMATA CARTOFI PRAJITI = 34.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x ARDEI COPT = 30.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CORDON BLEU PORC PIURE = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MUSCHI VACA CARTOFI PRAJITI med = 72.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CASTRAV CU ROSI cu ceapa = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CASCAVAL PANE = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">5 x MICI = 35.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CARFTOFI PRAJITI = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x COASTE  SOS CARTOFI PRAJITI = 50.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CASTRAV CU ROSI cu ceapa = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x URSUS BLACK = 28.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1.5 x PAPANASI GEM CASA 3 far = 39.00 LEI</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7632</size></b></align>
+<align="left"><b><size="11">Masa: S10</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 756.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacsisul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Va oferim urmatoarele sugestii pentru calculul bacsisului / Please consider the following suggestions for tips calculation:</size></b></align>
+
+<align="left"><b><size="11">Bacsis	Total nota</size></b></align>
+<align="left"><b><size="11">10%	75.60	831.60</size></b></align>
+<align="left"><b><size="11">12%	90.72	846.72</size></b></align>
+<align="left"><b><size="11">15%	113.40	869.40</size></b></align>
+
+<align="left"><b><size="11">Alta valoare: ...</size></b></align>

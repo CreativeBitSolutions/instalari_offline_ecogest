@@ -1,0 +1,18 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-31 12:25:37</size></b></align>
+<align="left"><b><size="11">OPERATOR: ADI BACILA -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">MIX GRILL CARTOFI AURII</size></b></align>
+<align="left"><b><size="11">  19.00000 x 44.00 = 836.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PUNGA</size></b></align>
+<align="left"><b><size="11">  8.00000 x 1.00 = 8.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 844.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 844.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 836.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 8.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6989</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

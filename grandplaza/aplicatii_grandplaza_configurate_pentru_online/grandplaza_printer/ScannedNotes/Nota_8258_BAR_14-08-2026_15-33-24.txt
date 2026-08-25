@@ -1,0 +1,19 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8258</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-14 15:33:16</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">Masa: S8</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 0 -------</size></b></align>
+<align="left"><b><size="11">1 x HARGHITA 500ML = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x LIMO MENTA MIERE = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x LIMONADA = 36.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x LIMONADA  MENTA = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x MIERE BUC = 2.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CAFE FRAPPE (CU ALCOOL ) = 26.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAHAR DE VIN = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">- ALB</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 125.00 LEI</size></b></align>

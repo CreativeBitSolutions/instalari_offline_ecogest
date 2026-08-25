@@ -1,0 +1,26 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8063</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-13 11:20:13</size></b></align>
+<align="left"><b><size="11">OPERATOR: MARIUS -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M3</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">4 x CIORBA FASOLE IN PAINE = 140.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MENIUL ZILEI VARZA ALBA = 36.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x FEL 2 MENIU VARZA ALBA = 25.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUNGA = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA VACUTA = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 224.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	22.40	246.40</size></b></align>
+<align="left"><b><size="11">12%	26.88	250.88</size></b></align>
+<align="left"><b><size="11">15%	33.60	257.60</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

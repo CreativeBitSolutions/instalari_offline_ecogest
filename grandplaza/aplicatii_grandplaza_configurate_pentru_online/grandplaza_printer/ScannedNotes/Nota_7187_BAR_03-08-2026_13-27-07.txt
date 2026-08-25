@@ -1,0 +1,19 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-03 13:27:05</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">LIMO MENTA MIERE</size></b></align>
+<align="left"><b><size="11">  2.00000 x 22.00 = 44.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PIEPT DE PUI CARTOFI TARANESTI</size></b></align>
+<align="left"><b><size="11">  2.00000 x 32.00 = 64.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  1.00000 x 6.00 = 6.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 114.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 114.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 114.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7187</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

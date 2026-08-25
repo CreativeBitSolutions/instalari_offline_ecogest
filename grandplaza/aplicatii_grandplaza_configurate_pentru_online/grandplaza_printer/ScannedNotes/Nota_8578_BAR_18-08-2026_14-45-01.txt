@@ -1,0 +1,28 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8578</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-18 14:44:58</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">Masa: F01</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x W SALATA GRECEASCA = 36.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CARTOFI NATUR = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PIEPT DE PUI LEGUME = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x COASTE  SOS VARZA CALITA = 50.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ESCALOP CARTOFI PRAJITI = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x HUGO = 30.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 208.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	20.80	228.80</size></b></align>
+<align="left"><b><size="11">12%	24.96	232.96</size></b></align>
+<align="left"><b><size="11">15%	31.20	239.20</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

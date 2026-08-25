@@ -1,0 +1,18 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-13 12:16:10</size></b></align>
+<align="left"><b><size="11">OPERATOR: MARIUS -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">MENIUL ZILEI</size></b></align>
+<align="left"><b><size="11">  13 x 25.00 = 325.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">TACAM PLASTIC</size></b></align>
+<align="left"><b><size="11">  13.00000 x 1.00 = 13.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 338.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Virament bancar: 338.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 325.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 13.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8072</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

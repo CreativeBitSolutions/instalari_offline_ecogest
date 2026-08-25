@@ -1,0 +1,30 @@
+﻿<align="left"><b><size="11">Comanda Noua: #20811 (26-06-2026 15:47)</size></b></align>
+<align="left"><b><size="11">Ai primit urmatoarea comanda de la</size></b></align>
+<align="left"><b><size="11">maria seulean</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">1 x Platou Ardelenesc = 44 lei</size></b></align>
+<align="left"><b><size="11">1 x Coș cu pâine = 6 lei</size></b></align>
+<align="left"><b><size="11">1 x Platou Boieresc cu garnitură -1300g - 2 persoane = 62 lei</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+
+<align="left"><b><size="11">cartofi ţărăneşti</size></b></align>
+<align="left"><b><size="11">1 persoană - 400g</size></b></align>
+<align="left"><b><size="11">iahnie de fasole</size></b></align>
+<align="left"><b><size="11">1 persoană - 550g</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+
+<align="left"><b><size="11">Total: 112 lei</size></b></align>
+<align="left"><b><size="11">Livrare: 0 lei</size></b></align>
+<align="left"><b><size="11">Metoda de plata: Numerar</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">Metoda de livrare: Ridicare de la restaurant</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">Pret final: 112 lei</size></b></align>
+<align="left"><b><size="11">Telefon: 0743852977</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">Adresa de livrare:</size></b></align>
+<align="left"><b><size="11">maria seulean, constitutiei nr 24( clinica polisano), sibiu, SB, RO</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">Nota comanda:</size></b></align>
+<align="left"><b><size="11">Plata care se va face la livrare. Starea comenzii a fost modificată din Plată în așteptare în În procesare.</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>

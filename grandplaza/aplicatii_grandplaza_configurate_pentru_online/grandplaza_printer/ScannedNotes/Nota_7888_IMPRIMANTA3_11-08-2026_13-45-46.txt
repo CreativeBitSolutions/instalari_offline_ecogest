@@ -1,0 +1,11 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7888</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-11 13:45:42</size></b></align>
+<align="left"><b><size="11">OPERATOR: OPERATOR5 -</size></b></align>
+<align="left"><b><size="11">Masa: Masa Temporara 3</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 0 -------</size></b></align>
+<align="left"><b><size="11">1 x TEST TOATE IMPRIMANTELE</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>

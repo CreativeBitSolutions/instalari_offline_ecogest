@@ -1,0 +1,25 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6779</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-28 21:58:39</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">Masa: F06</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x ESCALOP PIURE = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x X  COTLET DE MIEL LEGUME     fara glutennn = 72.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x GIN TONIC = 25.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAHAR DE VIN ROSU = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 153.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	15.30	168.30</size></b></align>
+<align="left"><b><size="11">12%	18.36	171.36</size></b></align>
+<align="left"><b><size="11">15%	22.95	175.95</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

@@ -1,0 +1,16 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8807</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-20 14:01:26</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M5</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 2 -------</size></b></align>
+<align="left"><b><size="11">1 x CIORBA DE LEGUME</size></b></align>
+<align="left"><b><size="11">1 x CIORBA DE BURTA</size></b></align>
+<align="left"><b><size="11">1 x CIORBA PERISOARE</size></b></align>
+<align="left"><b><size="11">------ FEL 3 -------</size></b></align>
+<align="left"><b><size="11">1 x PIEPT PUI  VARZA ALBA</size></b></align>
+<align="left"><b><size="11">- OREZ</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>

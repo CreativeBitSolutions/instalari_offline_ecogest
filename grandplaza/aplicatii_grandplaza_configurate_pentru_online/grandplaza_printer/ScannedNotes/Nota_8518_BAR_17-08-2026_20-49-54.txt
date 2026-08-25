@@ -1,0 +1,29 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8518</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-17 20:49:53</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">Masa: SUP3</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">2 x TIMISOREANA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">4 x URSUS = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x COCA COLA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x FANTA = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x MOJITO = 50.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x JACK  DANIELS = 30.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CAFEA ESPRESSO LUNGA = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x APA PLATA = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 213.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	21.30	234.30</size></b></align>
+<align="left"><b><size="11">12%	25.56	238.56</size></b></align>
+<align="left"><b><size="11">15%	31.95	244.95</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

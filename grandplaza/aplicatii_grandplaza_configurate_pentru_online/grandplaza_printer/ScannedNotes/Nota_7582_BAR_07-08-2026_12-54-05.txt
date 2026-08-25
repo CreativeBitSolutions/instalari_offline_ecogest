@@ -1,0 +1,22 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-07 12:54:00</size></b></align>
+<align="left"><b><size="11">OPERATOR: ADI BACILA -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">MENIUL ZILEI VARZA ALBA</size></b></align>
+<align="left"><b><size="11">  2.00000 x 36.00 = 72.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">FEL 2 MENIU VARZA ALBA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 25.00 = 25.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">TACAM PLASTIC</size></b></align>
+<align="left"><b><size="11">  5.00000 x 1.00 = 5.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">TRANS 10</size></b></align>
+<align="left"><b><size="11">  1.00000 x 10.00 = 10.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 112.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 112.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 97.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 15.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7582</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

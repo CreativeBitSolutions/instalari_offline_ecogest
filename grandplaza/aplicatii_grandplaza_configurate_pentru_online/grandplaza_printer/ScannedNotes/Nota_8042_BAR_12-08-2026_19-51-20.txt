@@ -1,0 +1,39 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8042</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-12 19:51:15</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">Masa: S10</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">2 x URSUS = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">4 x URSUS RETRO = 56.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x LIMONADA = 36.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x LAMAIE = 3.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x HARGHITA 500ML = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x PERONI = 42.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x HUGO = 30.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x LIMONADA  MENTA = 40.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUI IN CRUSTA AURIE CARTOFI PRAJITI = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">4 x CIOLAN CARTOFI PRAJITI = 184.00 LEI</size></b></align>
+<align="left"><b><size="11">4 x MUJDEI = 16.00 LEI</size></b></align>
+<align="left"><b><size="11">4 x CIOLAN CARTOFI PRAJITI = 184.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUI IN CRUSTA AURIE CARTOFI PRAJITI = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x PAINE COS = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x APA PLATA = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CLATITE BANANE CIOC = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAPANASI GEM CASA 2farf = 26.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAPANASI GEM CASA 2farf = 26.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 805.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	80.50	885.50</size></b></align>
+<align="left"><b><size="11">12%	96.60	901.60</size></b></align>
+<align="left"><b><size="11">15%	120.75	925.75</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

@@ -1,0 +1,22 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-31 17:53:25</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">SALAU IN FULGI CARTOFI NATUR</size></b></align>
+<align="left"><b><size="11">  1.00000 x 48.00 = 48.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">VIN DE CASA 0,5L ALB</size></b></align>
+<align="left"><b><size="11">  1.00000 x 19.00 = 19.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">CAFEA ESPRESSO SCURTA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 11.00 = 11.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">PAHAR DE VIN ALB</size></b></align>
+<align="left"><b><size="11">  1.00000 x 12.00 = 12.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 90.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 90.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 48.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 42.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7029</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

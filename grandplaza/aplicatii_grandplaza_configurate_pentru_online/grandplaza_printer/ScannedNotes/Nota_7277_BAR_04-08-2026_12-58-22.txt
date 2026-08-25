@@ -1,0 +1,30 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7277</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-04 12:58:14</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">Masa: F02</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">1 x CAFEA ESPRESSO SCURTA = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x APA PLATA = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x COCA COLA = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MENIUL ZILEI CASTRAVETI MURATI = 36.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x FICATEI CARTOFI NATUR = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x FICATEI OREZ = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x CASTRAV IN OTET = 18.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PIURE = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x BORSEC 1L = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 180.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	18.00	198.00</size></b></align>
+<align="left"><b><size="11">12%	21.60	201.60</size></b></align>
+<align="left"><b><size="11">15%	27.00	207.00</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

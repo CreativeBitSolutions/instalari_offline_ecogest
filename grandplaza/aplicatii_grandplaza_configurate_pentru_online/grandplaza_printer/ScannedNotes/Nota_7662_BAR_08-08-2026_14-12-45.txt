@@ -1,0 +1,49 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7662</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-08 14:12:43</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">Masa: F01</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">2 x SPRITE = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x BORSEC 1L = 30.00 LEI</size></b></align>
+<align="left"><b><size="11">4 x LIMO MENTA MIERE = 88.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x APA PLATA = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">5 x ARDEI IUTE = 5.00 LEI</size></b></align>
+<align="left"><b><size="11">5 x CIORBA DE BURTA = 120.00 LEI</size></b></align>
+<align="left"><b><size="11">5 x SMANTANA = 15.00 LEI</size></b></align>
+<align="left"><b><size="11">5 x PAINE COS = 30.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CEAFA CARTOFI PRAJITI = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CASTRAV CU ROSI cu ceapa = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x MICI = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x M CARTOFI-PRAJITI = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA PUI = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x CIORBA DE LEGUME = 60.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x POST CIUPERCI OREZ = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x POST IAHNIE VARZA ALBA = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CEAFA CARTOFI PRAJITI = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUI PANE CARTOFI PRAJITI = 38.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ROSI CU CEAPA = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MUSCHI SIBIAN PIURE = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CARFTOFI PRAJITI = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MAMALIGA = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x POST IAHNIE VARZA ALBA = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA PORC = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x POST CIUPERCI CARTOFI PRAJITI = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SALAU GR TARTAR MAMALIGA = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x CIORBA PUI reci = 40.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PUNGA = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 846.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	84.60	930.60</size></b></align>
+<align="left"><b><size="11">12%	101.52	947.52</size></b></align>
+<align="left"><b><size="11">15%	126.90	972.90</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

@@ -1,0 +1,22 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-03 19:27:50</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">AZUGA</size></b></align>
+<align="left"><b><size="11">  3 x 22.00 = 66.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">MICI</size></b></align>
+<align="left"><b><size="11">  3.00000 x 7.00 = 21.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">MUSCHI VACA CARTOFI PRAJITI med spr bine</size></b></align>
+<align="left"><b><size="11">  1.00000 x 72.00 = 72.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CASTRAV CU ROSI cu ceapa</size></b></align>
+<align="left"><b><size="11">  2.00000 x 10.00 = 20.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 179.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 179.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 113.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 66.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7239</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

@@ -1,0 +1,32 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-31 20:23:06</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">URSUS</size></b></align>
+<align="left"><b><size="11">  3 x 12.00 = 36.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">URSUS 0% ALCOOL</size></b></align>
+<align="left"><b><size="11">  2 x 12.00 = 24.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">COCA COLA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 12.00 = 12.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">PUI PANE CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 38.00 = 38.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PULPE DE PUI CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 38.00 = 38.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">X  COTLET DE MIEL CARTOFI TARANESTI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 72.00 = 72.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">SOMON LA GRATAR CARTOFI TARANESTI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 64.00 = 64.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">VARZA ALBA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 9.00 = 9.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">W SALATA GRECEASCA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 36.00 = 36.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 329.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 329.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 281.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 48.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7046</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

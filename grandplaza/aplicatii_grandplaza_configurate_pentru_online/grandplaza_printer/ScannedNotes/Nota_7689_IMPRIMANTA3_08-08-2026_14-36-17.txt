@@ -1,0 +1,8 @@
+﻿<align="left"><b><size="11">---------NOTA STORNARE----------</size></b></align>
+<align="left"><b><size="11">Data: 08.08.2026 14:36</size></b></align>
+<align="left"><b><size="11">Masa: S3 / Op: SEF SALA ADI BACILA -</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7689</size></b></align>
+<align="left"><b><size="11">--------------------------------</size></b></align>
+<align="left"><b><size="11">ANULARE: PLATOU BOIERESC x -1.00</size></b></align>
+<align="left"><b><size="11">Motiv: Adăugat din greșeală</size></b></align>
+<align="left"><b><size="11">--------------------------------</size></b></align>

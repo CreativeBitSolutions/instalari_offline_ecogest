@@ -1,0 +1,80 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-05 20:54:22</size></b></align>
+<align="left"><b><size="11">OPERATOR: RARES -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">URSUS</size></b></align>
+<align="left"><b><size="11">  5 x 12.00 = 60.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">SPRITE</size></b></align>
+<align="left"><b><size="11">  3 x 12.00 = 36.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">TIMISOREANA</size></b></align>
+<align="left"><b><size="11">  5 x 12.00 = 60.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">BORSEC 1L</size></b></align>
+<align="left"><b><size="11">  1.00000 x 10.00 = 10.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">APEROL SPRITZ</size></b></align>
+<align="left"><b><size="11">  1.00000 x 30.00 = 30.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">COCA COLA ZERO</size></b></align>
+<align="left"><b><size="11">  2 x 12.00 = 24.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">LIMO MENTA MIERE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 22.00 = 22.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">GIN TONIC</size></b></align>
+<align="left"><b><size="11">  1.00000 x 25.00 = 25.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">PERONI 0%ALCOOL</size></b></align>
+<align="left"><b><size="11">  1.00000 x 15.00 = 15.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">HUGO</size></b></align>
+<align="left"><b><size="11">  2.00000 x 30.00 = 60.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">LIMONADA  MENTA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 20.00 = 20.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">HARGHITA 500ML</size></b></align>
+<align="left"><b><size="11">  1.00000 x 7.00 = 7.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">MAMALIGA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 10.00 = 10.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">BIFTEC TARTAR PAINE PRAJ</size></b></align>
+<align="left"><b><size="11">  1.00000 x 72.00 = 72.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">Y VIRSLI DE OAIE CARTOFI TARANESTI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 48.00 = 48.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">ARDEI COPT</size></b></align>
+<align="left"><b><size="11">  2 x 10.00 = 20.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">IAHNIE DE FASOLE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 10.00 = 10.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CIOLAN IAHNIE DE FASOLE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 46.00 = 46.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">SOMON LA GRATAR LEGUME</size></b></align>
+<align="left"><b><size="11">  1.00000 x 64.00 = 64.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CIOLAN VARZA CALITA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 46.00 = 46.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">ESCALOP CARTOFI TARANESTI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 44.00 = 44.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">LEGUME</size></b></align>
+<align="left"><b><size="11">  1.00000 x 10.00 = 10.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">CIOBANESC</size></b></align>
+<align="left"><b><size="11">  3 x 44.00 = 132.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">MUSCHI VACA CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  2 x 72.00 = 144.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">SOMON LA GRATAR CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 64.00 = 64.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">X SALATA CRUDITATI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 36.00 = 36.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">VARZA ALBA</size></b></align>
+<align="left"><b><size="11">  3 x 9.00 = 27.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PIEPT DE PUI CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 32.00 = 32.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  2.00000 x 6.00 = 12.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAPANASI GEM CASA 2 far</size></b></align>
+<align="left"><b><size="11">  1.00000 x 26.00 = 26.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">CLATITE CIOCOLATA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 16.00 = 16.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">CAFEA ESPRESSO LUNGA</size></b></align>
+<align="left"><b><size="11">  4.00000 x 11.00 = 44.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">CAPUCCINO CLASIC</size></b></align>
+<align="left"><b><size="11">  1.00000 x 15.00 = 15.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 1,287.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 1,287.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 871.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 416.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7415</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

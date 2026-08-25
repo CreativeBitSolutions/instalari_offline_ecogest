@@ -1,0 +1,24 @@
+﻿<align="left"><b><size="11">Comanda Noua: #20849 (14-07-2026 13:46)</size></b></align>
+<align="left"><b><size="11">Ai primit urmatoarea comanda de la</size></b></align>
+<align="left"><b><size="11">ALEXANDRA TUTELEA</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">1 x Coș cu pâine = 6 lei</size></b></align>
+<align="left"><b><size="11">1 x Ciorbă de pui a la grec = 20 lei</size></b></align>
+<align="left"><b><size="11">2 x Ciorbă ţărănească de văcuţă = 44 lei</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+
+<align="left"><b><size="11">Total: 70 lei</size></b></align>
+<align="left"><b><size="11">Livrare: 10 lei</size></b></align>
+<align="left"><b><size="11">Metoda de plata: Numerar</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">Metoda de livrare: Taxa de transport</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">Pret final: 80 lei</size></b></align>
+<align="left"><b><size="11">Telefon: 0747476238</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">Adresa de livrare:</size></b></align>
+<align="left"><b><size="11">ALEXANDRA TUTELEA, Strada Deventer ,nr 25, bl 5, ap 3, Sibiu, SB, RO</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>
+<align="left"><b><size="11">Nota comanda:</size></b></align>
+<align="left"><b><size="11">Plata care se va face la livrare. Starea comenzii a fost modificată din Plată în așteptare în În procesare.</size></b></align>
+<align="left"><b><size="11">------------------</size></b></align>

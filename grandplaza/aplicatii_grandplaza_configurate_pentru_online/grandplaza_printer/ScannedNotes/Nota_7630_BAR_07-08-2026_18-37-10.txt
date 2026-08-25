@@ -1,0 +1,30 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-07 18:37:06</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">LIMO MENTA MIERE</size></b></align>
+<align="left"><b><size="11">  3.00000 x 22.00 = 66.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">COCA COLA</size></b></align>
+<align="left"><b><size="11">  3 x 12.00 = 36.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">PIEPT DE PUI CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  2.00000 x 32.00 = 64.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">MIX GRILL CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  2.00000 x 44.00 = 88.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">PAINE COS</size></b></align>
+<align="left"><b><size="11">  2.00000 x 6.00 = 12.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">W SALATA GRECEASCA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 36.00 = 36.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">KETCHUP</size></b></align>
+<align="left"><b><size="11">  2.00000 x 4.00 = 8.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">MAIONEZA</size></b></align>
+<align="left"><b><size="11">  2.00000 x 4.00 = 8.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 318.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 318.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 282.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 36.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7630</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

@@ -1,0 +1,56 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7904</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-11 14:59:38</size></b></align>
+<align="left"><b><size="11">OPERATOR: ADI BACILA -</size></b></align>
+<align="left"><b><size="11">Masa: PACHET-M3</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">15 x MENIUL ZILEI VARZA ALBA = 540.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA DE LEGUME = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA FASOLE CU CARNE = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA PERISOARE = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">2 x CIORBA PORC = 40.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA PUI = 20.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIORBA VACUTA = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE PRAJITA COS = 8.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PAINE COS = 6.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MENIUL ZILEI CASTRAVETI MURATI = 36.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CEAFA CARTOFI PRAJITI = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CLATITE BANANE CIOC = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CLATITE BRANZA BURDUF = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CLATITE BRZ VA SI SMANT = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CIULAMA DE PUI CARTOFI AURII = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x MIX GRILL CARTOFI AURII = 44.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x AZUGA = 66.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ARDEI COPT = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ARDEI IUTE = 1.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x APA PLATA = 7.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x APA TONICA = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x APEROL = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PIEPT DE PUI VARZA CALITA = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x POST IAHNIE CASTRAVETI MURATI = 32.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x SALAU GR MUJDEI VARZA CALITA = 48.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x BORSEC 1L = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x BURTA PACHETTT = 25.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x KOZEL = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x NENEA IANCU = 22.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PERONI CAPRI = 15.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x PERONI = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">3 x STRONGBOW = 39.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x TIMISOREANA = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x URSUS = 12.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x CAFEA ESPRESSO LUNGA = 11.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 1,328.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	132.80	1,460.80</size></b></align>
+<align="left"><b><size="11">12%	159.36	1,487.36</size></b></align>
+<align="left"><b><size="11">15%	199.20	1,527.20</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

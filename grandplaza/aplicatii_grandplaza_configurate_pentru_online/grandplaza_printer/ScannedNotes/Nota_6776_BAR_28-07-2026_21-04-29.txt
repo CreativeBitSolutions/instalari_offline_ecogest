@@ -1,0 +1,26 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-07-28 21:04:24</size></b></align>
+<align="left"><b><size="11">OPERATOR: OVIDIU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">PIEPT DE PUI CARTOFI PRAJITI</size></b></align>
+<align="left"><b><size="11">  2.00000 x 32.00 = 64.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">MIX GRILL CARTOFI TARANESTI</size></b></align>
+<align="left"><b><size="11">  1.00000 x 44.00 = 44.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">SARMALUTE MAMALIGA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 44.00 = 44.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">FRESH DE PORTOCALE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 14.00 = 14.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">SUC MERE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 12.00 = 12.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">URSUS RETRO</size></b></align>
+<align="left"><b><size="11">  2.00000 x 14.00 = 28.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 206.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 206.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 166.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 40.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 6776</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

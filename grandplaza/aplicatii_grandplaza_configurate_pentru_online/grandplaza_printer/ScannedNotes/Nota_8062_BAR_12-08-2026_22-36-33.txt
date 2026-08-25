@@ -1,0 +1,30 @@
+﻿<align="left"><b><size="11">NOTĂ DE PLATĂ</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8062</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-12 22:36:31</size></b></align>
+<align="left"><b><size="11">OPERATOR: ADI BACILA -</size></b></align>
+<align="left"><b><size="11">Masa: TM2</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">20 x AZUGA = 440.00 LEI</size></b></align>
+<align="left"><b><size="11">10 x URSUS = 120.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x AFINATA = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x ALEXANDRION = 14.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x APEROL = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x BAILEY IRISHCREM = 24.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x BELVEDERE VODKA = 56.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x BRANCOVEANU XO = 90.00 LEI</size></b></align>
+<align="left"><b><size="11">1 x STRONGBOW = 13.00 LEI</size></b></align>
+<align="left"><b><size="11">-----</size></b></align>
+<align="left"><b><size="11">TOTAL: 805.00 LEI</size></b></align>
+
+<align="left"><b><size="11">Bacșișul nu este inclus / Tips not included</size></b></align>
+
+<align="left"><b><size="11">Sugestii bacșiș / Suggested tips:</size></b></align>
+
+<align="left"><b><size="11">Bacșiș	Total notă</size></b></align>
+<align="left"><b><size="11">10%	80.50	885.50</size></b></align>
+<align="left"><b><size="11">12%	96.60	901.60</size></b></align>
+<align="left"><b><size="11">15%	120.75	925.75</size></b></align>
+
+<align="left"><b><size="11">Altă valoare: ...</size></b></align>

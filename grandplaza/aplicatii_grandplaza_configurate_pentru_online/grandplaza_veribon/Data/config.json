@@ -1,0 +1,31 @@
+{
+  "ClientId": "25",
+  "LocationId": "1",
+  "Pairs": [
+    {
+      "Input": "C:\\fprint\\in\\BonANSWER",
+      "Output": "C:\\fprint\\in\\log_trimis_la_agecs\\BonANSWER"
+    },
+    {
+      "Input": "C:\\fprint\\in\\BonERR",
+      "Output": "C:\\fprint\\in\\log_trimis_la_agecs\\BonERR"
+    },
+    {
+      "Input": "C:\\fprint\\in\\BonOK",
+      "Output": "C:\\fprint\\in\\log_trimis_la_agecs\\BonOK"
+    }
+  ],
+  "InputFolders": [
+    "C:\\fprint\\in\\BonANSWER",
+    "C:\\fprint\\in\\BonERR",
+    "C:\\fprint\\in\\BonOK"
+  ],
+  "OutputFolders": [
+    "C:\\fprint\\in\\log_trimis_la_agecs\\BonANSWER",
+    "C:\\fprint\\in\\log_trimis_la_agecs\\BonERR",
+    "C:\\fprint\\in\\log_trimis_la_agecs\\BonOK"
+  ],
+  "PollIntervalSeconds": 5,
+  "StartOnStartup": true,
+  "EndpointUrl": "agecs.agecs.in/api/endpoint.php"
+}

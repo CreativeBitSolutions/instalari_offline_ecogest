@@ -1,0 +1,22 @@
+﻿<align="left"><b><size="11">NOTA DE PLATA</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-10 14:16:22</size></b></align>
+<align="left"><b><size="11">OPERATOR: DUMITRU -</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">LIMONADA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 18.00 = 18.00 LEI (TVA 21%)</size></b></align>
+<align="left"><b><size="11">MIERE BUC</size></b></align>
+<align="left"><b><size="11">  2 x 1.00 = 2.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">MENIUL ZILEI VARZA ALBA</size></b></align>
+<align="left"><b><size="11">  1.00000 x 36.00 = 36.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">ARDEI IUTE</size></b></align>
+<align="left"><b><size="11">  1.00000 x 1.00 = 1.00 LEI (TVA 11%)</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 57.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Prot.: 57.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 11%: 39.00 LEI</size></b></align>
+<align="left"><b><size="11">TOTAL 21%: 18.00 LEI</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">Nr. nota: 7803</size></b></align>
+<align="left"><b><size="11">Va multumim!</size></b></align>

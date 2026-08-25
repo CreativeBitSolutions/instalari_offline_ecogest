@@ -1,0 +1,17 @@
+﻿<align="left"><b><size="11">COMANDA:</size></b></align>
+<align="left"><b><size="11">Nr. nota: 8830</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">GRAND PLAZA</size></b></align>
+<align="left"><b><size="11">2026-08-20 15:27:04</size></b></align>
+<align="left"><b><size="11">OPERATOR: OPERATOR5 -</size></b></align>
+<align="left"><b><size="11">Masa: Masa Temporara 2</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">------ FEL 0 -------</size></b></align>
+<align="left"><b><size="11">2 x MENIUL ZILEI: COMPLET + VARZA ALBA</size></b></align>
+<align="left"><b><size="11">2 x CIORBA MENIU ZILEI = 26.00 LEI</size></b></align>
+<align="left"><b><size="11">- Fără salată</size></b></align>
+<align="left"><b><size="11">3 x FEL 2 MEN ZILEI + MURATURI</size></b></align>
+<align="left"><b><size="11">1 x TRANS 10 = 10.00 LEI</size></b></align>
+<align="left"><b><size="11">- Taxă transport Woo</size></b></align>
+<align="left"><b><size="11">--------------------</size></b></align>
+<align="left"><b><size="11">TOTAL: 183.00 LEI</size></b></align>
