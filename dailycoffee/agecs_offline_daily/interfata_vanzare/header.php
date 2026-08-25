@@ -26,6 +26,7 @@
   <script src="vendor/jquery/jquery.min.js"></script>
   <link href="vendor/offline/select2/select2.min.css" rel="stylesheet" />
   <script src="vendor/offline/select2/select2.min.js"></script>
+  <script src="js/offline-persistent-zoom.js"></script>
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">

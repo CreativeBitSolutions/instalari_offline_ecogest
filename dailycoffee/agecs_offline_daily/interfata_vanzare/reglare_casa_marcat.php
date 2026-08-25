@@ -84,6 +84,7 @@ $metode_plata = [
         }
         .helper-text { margin-top: 6px; font-size: 13px; color: var(--secondary-color); }
     </style>
+    <script src="js/offline-persistent-zoom.js"></script>
 </head>
 <body>
 

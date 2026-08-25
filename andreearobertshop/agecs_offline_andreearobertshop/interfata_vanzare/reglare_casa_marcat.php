@@ -1,17 +1,17 @@
-﻿<?php
+<?php
 // --- START PHP LOGIC ---
-ini_set('display_errors', 1); // Recomandat 1 pentru dezvoltare, 0 pentru producÈ›ie
+ini_set('display_errors', 1); // Recomandat 1 pentru dezvoltare, 0 pentru producție
 ini_set('log_errors', 1);
 ini_set('error_log', 'error_log.log');
 error_reporting(E_ALL);
 
-include('session.php'); // GestioneazÄƒ sesiunea È™i conexiunea $pdo
+include('session.php'); // Gestionează sesiunea și conexiunea $pdo
 
-// Preluare È™i validare date sesiune
+// Preluare și validare date sesiune
 $client_id = $_SESSION['client_id'] ?? null;
 $cod_locatie = $_SESSION['cod_locatie'] ?? null;
 if (!$client_id || !$cod_locatie) {
-    die("Eroare criticÄƒ: Sesiunea nu este validÄƒ. VÄƒ rugÄƒm sÄƒ vÄƒ autentificaÈ›i.");
+    die("Eroare critică: Sesiunea nu este validă. Vă rugăm să vă autentificați.");
 }
 
 // Preluare mapare TVA -> Departament Casa
@@ -26,7 +26,7 @@ try {
     die("Eroare la conectarea cu baza de date pentru a prelua cotele TVA.");
 }
 
-// Definirea metodelor de platÄƒ
+// Definirea metodelor de plată
 $metode_plata = [
     '0' => 'NUMERAR', '1' => 'CARD', '6' => 'PLATA MODERNA',
     '3' => 'TICHETE MASA', '4' => 'TICHETE VALORICE', '5' => 'VOUCHER', '2' => 'CREDIT'
@@ -37,7 +37,7 @@ $metode_plata = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generator Avansat Bon CasÄƒ de Marcat</title>
+    <title>Generator Avansat Bon Casă de Marcat</title>
     <!-- Select2 CSS -->
     <link href="vendor/offline/select2/select2.min.css" rel="stylesheet" />
     <style>
@@ -72,7 +72,7 @@ $metode_plata = [
         #status-message.success { background-color: #d4edda; color: #155724; display: block; }
         #status-message.error { background-color: #f8d7da; color: var(--error-color); display: block; }
 
-        /* AjustÄƒri vizuale pentru Select2 ca sÄƒ se potriveascÄƒ cu input-urile */
+        /* Ajustări vizuale pentru Select2 ca să se potrivească cu input-urile */
         .select2-container .select2-selection--single {
             height: 42px; border: 1px solid var(--border-color); border-radius: 8px;
         }
@@ -84,22 +84,23 @@ $metode_plata = [
         }
         .helper-text { margin-top: 6px; font-size: 13px; color: var(--secondary-color); }
     </style>
+    <script src="js/offline-persistent-zoom.js"></script>
 </head>
 <body>
 
 <div class="container" data-client-id="<?php echo htmlspecialchars($client_id); ?>">
 
     <h1>Generator Avansat de Bon</h1>
-    <h1>ATENÈšIE! ACEST PROCES VA TRIMITE UN BON FISCAL LA CASA DE MARCAT! FOLOSIÈšI-L DOAR DACÄ‚ AVEÈšI DIFERENÈšE PE CASÄ‚! NU SE VOR SCÄ‚DEA DIN STOC PRODUSELE!</h1>
-    <h2><a href="logout.php">ÃŽnapoi</a></h2>
+    <h1>ATENȚIE! ACEST PROCES VA TRIMITE UN BON FISCAL LA CASA DE MARCAT! FOLOSIȚI-L DOAR DACĂ AVEȚI DIFERENȚE PE CASĂ! NU SE VOR SCĂDEA DIN STOC PRODUSELE!</h1>
+    <h2><a href="logout.php">Înapoi</a></h2>
 
     <div class="session-info" style="display:none;">
         Client ID: <strong><?php echo htmlspecialchars($client_id); ?></strong> |
-        LocaÈ›ie ID: <strong><?php echo htmlspecialchars($cod_locatie); ?></strong>
+        Locație ID: <strong><?php echo htmlspecialchars($cod_locatie); ?></strong>
     </div>
 
     <div class="form-section">
-        <h2>AdaugÄƒ Produs pe Bon</h2>
+        <h2>Adaugă Produs pe Bon</h2>
         <div class="form-grid">
             <div class="form-group">
                 <label for="produs-select">Produs / Serviciu</label>
@@ -111,11 +112,11 @@ $metode_plata = [
                 <input type="number" id="produs-cantitate" value="1" step="any">
             </div>
             <div class="form-group">
-                <label for="produs-pret">PreÈ› Unitar (LEI)</label>
+                <label for="produs-pret">Preț Unitar (LEI)</label>
                 <input type="number" id="produs-pret" step="0.01">
             </div>
             <div class="form-group">
-                <button id="add-to-bon" class="btn-add">AdaugÄƒ</button>
+                <button id="add-to-bon" class="btn-add">Adaugă</button>
             </div>
         </div>
          <input type="hidden" id="produs-nume">
@@ -130,9 +131,9 @@ $metode_plata = [
                 <tr>
                     <th>Produs</th>
                     <th>Cant.</th>
-                    <th>PreÈ› Unitar</th>
+                    <th>Preț Unitar</th>
                     <th>Subtotal</th>
-                    <th>AcÈ›iune</th>
+                    <th>Acțiune</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -147,9 +148,9 @@ $metode_plata = [
     </div>
 
     <div class="form-section">
-        <h2>Finalizare È™i PlatÄƒ</h2>
+        <h2>Finalizare și Plată</h2>
         <div class="form-group">
-            <label for="metoda_plata">Metoda de PlatÄƒ</label>
+            <label for="metoda_plata">Metoda de Plată</label>
             <select id="metoda_plata">
                 <?php foreach ($metode_plata as $cod => $nume): ?>
                     <option value="<?php echo $cod; ?>"><?php echo htmlspecialchars($nume); ?></option>
@@ -157,10 +158,10 @@ $metode_plata = [
             </select>
         </div>
         <div id="summary-section" style="display:none; margin-top:20px;">
-            <h3>Sumar Detaliat È™i Previzualizare `continut_bon`</h3>
+            <h3>Sumar Detaliat și Previzualizare `continut_bon`</h3>
             <div id="summary-content"></div>
         </div>
-        <button id="generate-btn" class="btn-generate">GenereazÄƒ È™i SalveazÄƒ Bonul</button>
+        <button id="generate-btn" class="btn-generate">Generează și Salvează Bonul</button>
     </div>
     
     <div id="status-message"></div>
@@ -171,11 +172,11 @@ $metode_plata = [
 <script src="vendor/offline/select2/select2.min.js"></script>
 
 <script>
-// HartÄƒ TVA -> departament din PHP
+// Hartă TVA -> departament din PHP
 const tvaMap = <?php echo json_encode($cote_tva_map); ?>;
 
 let bonItems = [];                 // Liniile bonului
-let selectedProduct = null;        // Ultimul produs selectat din Select2 (obiectul cu cÃ¢mpuri extra)
+let selectedProduct = null;        // Ultimul produs selectat din Select2 (obiectul cu câmpuri extra)
 
 document.addEventListener('DOMContentLoaded', () => {
     const produsSelect = $('#produs-select');
@@ -196,31 +197,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 return { term: params.term };
             },
             processResults: function (data) {
-                // data.results trebuie sÄƒ fie [{id, text, pret_cu_tva, um, cota_tva}, ...]
+                // data.results trebuie să fie [{id, text, pret_cu_tva, um, cota_tva}, ...]
                 return { results: data.results || [] };
             },
             cache: true
         },
         language: {
-            inputTooShort: () => 'Scrie cel puÈ›in 3 caractere',
+            inputTooShort: () => 'Scrie cel puțin 3 caractere',
             noResults: () => 'Niciun rezultat',
-            searching: () => 'Se cautÄƒ...'
+            searching: () => 'Se caută...'
         }
     });
 
-    // CÃ¢nd selectÄƒm un produs din listÄƒ, pÄƒstrÄƒm obiectul ales È™i completÄƒm automat preÈ›ul
+    // Când selectăm un produs din listă, păstrăm obiectul ales și completăm automat prețul
     produsSelect.on('select2:select', function (e) {
         const d = e.params.data || {};
         selectedProduct = d; // {id, text, pret_cu_tva, um, cota_tva}
         document.getElementById('produs-pret').value = (parseFloat(d.pret_cu_tva || 0) || 0).toFixed(2);
         document.getElementById('produs-cantitate').value = 1;
-        // setÄƒm cÃ¢mpurile ascunse pentru compatibilitate cu restul logicii
+        // setăm câmpurile ascunse pentru compatibilitate cu restul logicii
         document.getElementById('produs-nume').value = d.text || '';
         document.getElementById('produs-um').value = d.um || '';
         document.getElementById('produs-cota-tva').value = d.cota_tva || '';
     });
 
-    // DacÄƒ se È™terge selecÈ›ia
+    // Dacă se șterge selecția
     produsSelect.on('select2:clear', function () {
         selectedProduct = null;
         document.getElementById('produs-pret').value = '';
@@ -235,28 +236,28 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function addProductToBon() {
-    // ValideazÄƒ selecÈ›ia
+    // Validează selecția
     const selectEl = document.getElementById('produs-select');
     const cod_produs = selectEl.value;
     if (!cod_produs || !selectedProduct) {
-        alert("VÄƒ rugÄƒm sÄƒ cÄƒutaÈ›i È™i sÄƒ selectaÈ›i un produs (minim 3 litere).");
+        alert("Vă rugăm să căutați și să selectați un produs (minim 3 litere).");
         return;
     }
 
-    // Cantitate + preÈ›
+    // Cantitate + preț
     const cantitate = parseFloat(document.getElementById('produs-cantitate').value);
-    // DacÄƒ nu a fost modificat manual, folosim preÈ›ul din produsul selectat
+    // Dacă nu a fost modificat manual, folosim prețul din produsul selectat
     let pret_unitar = parseFloat(document.getElementById('produs-pret').value);
     if (isNaN(pret_unitar) || pret_unitar <= 0) {
         pret_unitar = parseFloat(selectedProduct.pret_cu_tva || 0);
     }
 
     if (isNaN(cantitate) || cantitate <= 0 || isNaN(pret_unitar) || pret_unitar <= 0) {
-        alert("Cantitatea È™i preÈ›ul trebuie sÄƒ fie numere valide È™i pozitive.");
+        alert("Cantitatea și prețul trebuie să fie numere valide și pozitive.");
         return;
     }
 
-    // Date suplimentare din selecÈ›ie (sau din hidden fields deja setate)
+    // Date suplimentare din selecție (sau din hidden fields deja setate)
     const nume = selectedProduct.text || document.getElementById('produs-nume').value;
     const um = selectedProduct.um || document.getElementById('produs-um').value;
     const cota_tva = parseInt(selectedProduct.cota_tva || document.getElementById('produs-cota-tva').value) || 0;
@@ -276,7 +277,7 @@ function addProductToBon() {
     renderBonTable();
     updateTotals();
 
-    // opÈ›ional: reset dupÄƒ adÄƒugare
+    // opțional: reset după adăugare
     // $('#produs-select').val(null).trigger('change'); selectedProduct = null;
     // document.getElementById('produs-pret').value = '';
 }
@@ -293,7 +294,7 @@ function renderBonTable() {
             <td>${item.cantitate} ${item.um}</td>
             <td>${item.pret_unitar.toFixed(2)} LEI</td>
             <td>${item.subtotal.toFixed(2)} LEI</td>
-            <td><button class="btn-remove" data-line-id="${item.line_id}">È˜terge</button></td>
+            <td><button class="btn-remove" data-line-id="${item.line_id}">Șterge</button></td>
         `;
         tbody.appendChild(row);
     });
@@ -338,7 +339,7 @@ function buildContinutBonPreview() {
 
 async function generateAndSaveBon() {
     if (bonItems.length === 0) {
-        alert("Bonul este gol. VÄƒ rugÄƒm sÄƒ adÄƒugaÈ›i cel puÈ›in un produs.");
+        alert("Bonul este gol. Vă rugăm să adăugați cel puțin un produs.");
         return;
     }
 
@@ -359,8 +360,8 @@ async function generateAndSaveBon() {
     });
     summaryHTML += '</ul><hr>';
     summaryHTML += `<p><strong>Total General:</strong> ${payload.total_general.toFixed(2)} LEI</p>`;
-    summaryHTML += `<p><strong>Metoda de platÄƒ aleasÄƒ:</strong> ${document.querySelector('#metoda_plata option:checked').text}</p>`;
-    summaryHTML += '<h4>Previzualizare conÈ›inut fiÈ™ier:</h4>';
+    summaryHTML += `<p><strong>Metoda de plată aleasă:</strong> ${document.querySelector('#metoda_plata option:checked').text}</p>`;
+    summaryHTML += '<h4>Previzualizare conținut fișier:</h4>';
     summaryHTML += `<pre>${buildContinutBonPreview()}</pre>`;
     
     summaryContent.innerHTML = summaryHTML;
@@ -368,7 +369,7 @@ async function generateAndSaveBon() {
 
     if (!confirm("Sunt corecte datele din sumar?")) return;
     
-    showStatus('Se genereazÄƒ fiÈ™ierul...', 'info');
+    showStatus('Se generează fișierul...', 'info');
     try {
         const response = await fetch('reglare_casa_marcat_procesare_bon.php', {
             method: 'POST',
@@ -401,4 +402,3 @@ function showStatus(message, type = 'success') {
 </script>
 </body>
 </html>
-

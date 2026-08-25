@@ -210,6 +210,7 @@ $offlinePendingReceiptCount = array_sum(array_map(static function (array $closur
       overflow-y: auto;
     }
     </style>
+<script src="js/offline-persistent-zoom.js"></script>
 </head>
 <body>
     <div id="loading"></div>

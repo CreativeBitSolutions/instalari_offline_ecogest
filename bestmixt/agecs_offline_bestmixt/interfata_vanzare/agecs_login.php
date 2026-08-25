@@ -36,6 +36,7 @@ $_SESSION['cod_locatie'] = (int)$_config['cod_locatie_default'];
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
   <link href="css/offline-login.css" rel="stylesheet">
+  <script src="js/offline-persistent-zoom.js"></script>
 </head>
 
 <body class="bg-dark offline-login-page">

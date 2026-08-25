@@ -47,6 +47,7 @@ window.addEventListener('load', function () {
   }
 });
 </script>
+<script src="js/offline-persistent-zoom.js"></script>
 </head>
 <body>
 <div id="loading"></div>

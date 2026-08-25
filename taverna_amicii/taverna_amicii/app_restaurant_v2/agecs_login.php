@@ -125,6 +125,7 @@ $cust_id = 12; // rămâne neschimbat
             }
         }
     </style>
+    <script src="js/offline-persistent-zoom.js"></script>
 </head>
 <body class="offline-login-page restaurant-login-page">
 <div class="container py-4 login-shell">
