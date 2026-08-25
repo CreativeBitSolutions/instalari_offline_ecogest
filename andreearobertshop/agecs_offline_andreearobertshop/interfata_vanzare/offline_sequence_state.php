@@ -17,7 +17,7 @@ function offline_sequence_config(): array
     $config = [
         'client_id' => $clientId,
         'cod_locatie' => $location,
-        'installation_uuid' => preg_replace('/[^A-Za-z0-9_-]/', '_', (string)($decoded['installation_uuid'] ?? $fallback)),
+        'installation_uuid' => preg_replace('/[^A-Za-z0-9_-]/', '_', (string)($decoded['transaction_uuid'] ?? $decoded['installation_uuid'] ?? $fallback)),
     ];
     return $config;
 }

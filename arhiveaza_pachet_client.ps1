@@ -126,6 +126,7 @@ try {
         'bonuri_backup',
         'bonuri_trimise',
         'offline_sync_exports',
+        'backups_transaction_reset',
         'backups_products_sync',
         'licenta',
         'ScannedNotes',

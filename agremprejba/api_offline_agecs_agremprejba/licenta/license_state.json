@@ -1,0 +1,13 @@
+{
+    "license": {
+        "version": 1,
+        "client_id": 18,
+        "hardware_serial": "0000_0000_0000_0000_0026_B778_42D5_DC45.",
+        "installation_uuid": "agremprejba-c18-l1-pos1-i-8fffd3dc191e391a",
+        "issued_at": "2026-08-25T14:31:11+03:00",
+        "expires_at": "2026-09-24T14:31:11+03:00"
+    },
+    "signature": "LDCnMRLHZ4PzYgSctHCZZzEY3upUYKJu4eTn4Iy0yS2sY62qenPOKgfBsRAkDaEg0Oe0XmVQhq6gO7gSJOXRnWj4D2cqNH6w0YRqxqfdHZI2BeiUeX3HQNb/zJcHaF3AI0MEL72NYhwriDE55PSM3iIuTxAQ9+iJeLMygDr9ePPxe+oxoCCDtIjVvwewcQJ7WTbY4Hin9A9yBQRJziF6l51+PAdMg75PcC08y/k2pTzlPMbprdBO3j5UOwgI8MmtQK/RJi0tfvS14JqKMNN9FMe1NImu97G/Wc2Dzof4JwrXQWSaWJSohQwioElEu2utqAmNbmZ64uVqDSzJE2BT4Q==",
+    "signature_algorithm": "SHA256withRSA",
+    "saved_at": "2026-08-25T13:31:11+02:00"
+}

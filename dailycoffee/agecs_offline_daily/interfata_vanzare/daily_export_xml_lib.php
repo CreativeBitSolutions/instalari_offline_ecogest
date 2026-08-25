@@ -6,7 +6,7 @@ function daily_export_xml_config(): array
     $data = offline_config_all();
     $data['client_id'] = (int)$data['sync_client_id'];
     $data['cod_locatie'] = (int)$data['cod_locatie_default'];
-    $data['installation_uuid'] = preg_replace('/[^A-Za-z0-9_-]/', '_', (string)$data['installation_uuid']);
+    $data['installation_uuid'] = preg_replace('/[^A-Za-z0-9_-]/', '_', (string)($data['transaction_uuid'] ?? $data['installation_uuid']));
     if (empty($data['upload_url']) || empty($data['upload_key'])) {
         throw new RuntimeException('Configurarea trimiterii XML este invalida.');
     }

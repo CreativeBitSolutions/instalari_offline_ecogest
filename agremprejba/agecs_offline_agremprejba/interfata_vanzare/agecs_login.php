@@ -20,7 +20,7 @@ $_SESSION['cod_locatie'] = (int)$_config['cod_locatie_default'];
 	$cust_id = $_SESSION['client_id'];
 	?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ro">
 
 <head>
   <meta charset="utf-8">
@@ -28,16 +28,17 @@ $_SESSION['cod_locatie'] = (int)$_config['cod_locatie_default'];
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>Admin Login</title>
+  <title>Conectare operator</title>
   <!-- Bootstrap core CSS-->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom fonts for this template-->
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
+  <link href="css/offline-login.css" rel="stylesheet">
 </head>
 
-<body class="bg-dark">
+<body class="bg-dark offline-login-page">
   <div class="container">
           <div class="row">
 
@@ -45,28 +46,20 @@ $_SESSION['cod_locatie'] = (int)$_config['cod_locatie_default'];
 ' class="card card-login col-xs-6 mx-auto mt-5">
       <div class="card-header">
 
-   
-	<div class="buttons">
-        <div class="products-sync-notice">
-            <span>Actualizeaza nomenclatorul local numai cand exista internet</span>
-            <a href="offline_products_check.php" class="products-sync-btn" title="Verifica lista online si actualizeaza local produsele, categoriile si gestiunile">VERIFICA SI ACTUALIZEAZA PRODUSE DIN ONLINE</a>
+    <div class="login-heading">
+        <div>
+            <span class="login-kicker">AGECS POS OFFLINE</span>
+            <h1>Conectare operator</h1>
         </div>
-        <b class="login-location-title">Conectare Locatie <?php echo $_SESSION['cod_locatie'];?></b>
-        <div class="sync-actions">
-            <button type="button" class="sync-button" id="syncButton" title="Descopera operatiunile finalizate si trimite imediat pachetele din coada">TRIMITE ACUM DIN COADA</button>
-            <a class="button2 export-button" href="export_vanzari_offline.php" title="Deschide exportul manual de vanzari in format XML sau SQL">DESCARCA FISIER VANZARI (XML / SQL)</a>
-            <a class="button2 license-button" href="offline_license_check.php" title="Afiseaza seria HDD si verifica licenta aplicatiei offline">VERIFICA LICENTA OFFLINE</a>
-        </div>
-        <span id="syncStatus" class="sync-status"></span>
-        
+        <span class="location-badge">Locatia <?php echo (int)$_SESSION['cod_locatie'];?></span>
     </div>
-    <?php include __DIR__ . '/offline_pending_closures_notice.php'; ?>
 
-		<style>figure{
-float:left;
-display:inline-block;
-margin-left:0.5em;
-}</style><div style="display:block;">
+		<section class="operators-section">
+            <div class="section-heading">
+                <span>Acces vanzare</span>
+                <h2>Alege operatorul</h2>
+            </div>
+            <div class="operators-grid">
     <style>label{font-weight:bold;}
    
     </style>
@@ -86,6 +79,7 @@ margin-left:0.5em;
   <!-- Core plugin JavaScript-->
   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
   <script src="offline_sync_heartbeat.js"></script>
+  <script src="offline_products_autosync_status.js"></script>
   
   <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -178,6 +172,7 @@ margin-left:0.5em;
         
         $('.my_button').click(function() {
              $("#c").css("display", "inline-block");
+             $("#pinBackdrop").css("display", "block");
             var operator = $(this).val();
 $('[name=oper]').val(operator);
              document.getElementById("calc_result").focus();
@@ -222,7 +217,7 @@ while ($row = $dstmt->fetch(PDO::FETCH_ASSOC)) {
     if ($rank == "operator") {
         echo "
         <figure>
-            <button value='$id' class='my_button' $disabled>
+            <button type='button' value='$id' class='my_button' $disabled>
                 <img width='90px' height='90px' src='images/operator1.jpg' />
             </button>
             <figcaption style='text-align:center;'>$admin_firstname $admin_lastname</figcaption>
@@ -231,7 +226,7 @@ while ($row = $dstmt->fetch(PDO::FETCH_ASSOC)) {
     } elseif ($rank == "bucatar") {
         echo "
         <figure>
-            <button value='$id' class='my_button' $disabled>
+            <button type='button' value='$id' class='my_button' $disabled>
                 <img width='90px' height='90px' src='images/chef.jpg' />
             </button>
             <figcaption style='text-align:center;'>$admin_firstname $admin_lastname</figcaption>
@@ -240,7 +235,7 @@ while ($row = $dstmt->fetch(PDO::FETCH_ASSOC)) {
     } elseif ($rank == "ospatar") {
         echo "
         <figure>
-            <button value='$id' class='my_button' $disabled>
+            <button type='button' value='$id' class='my_button' $disabled>
                 <img width='90px' height='90px' src='images/waiter.png' />
             </button>
             <figcaption style='text-align:center;'>$admin_firstname $admin_lastname</figcaption>
@@ -249,7 +244,7 @@ while ($row = $dstmt->fetch(PDO::FETCH_ASSOC)) {
     } elseif ($rank == "barman") {
         echo "
         <figure>
-            <button value='$id' class='my_button' $disabled>
+            <button type='button' value='$id' class='my_button' $disabled>
                 <img width='90px' height='90px' src='images/barman.png' />
             </button>
             <figcaption style='text-align:center;'>$admin_firstname $admin_lastname</figcaption>
@@ -258,7 +253,7 @@ while ($row = $dstmt->fetch(PDO::FETCH_ASSOC)) {
     } elseif ($rank == "client") {
         echo "
         <figure>
-            <button value='$id' class='my_button' $disabled>
+            <button type='button' value='$id' class='my_button' $disabled>
                 <img width='90px' height='90px' src='images/ipad.png' />
             </button>
             <figcaption style='text-align:center;'>Tableta $nr_tableta</figcaption>
@@ -269,6 +264,29 @@ while ($row = $dstmt->fetch(PDO::FETCH_ASSOC)) {
 ?>
 
 	</div>
+    </section>
+    <div class="buttons">
+        <div class="products-sync-notice">
+            <span>Nomenclator produse</span>
+            <a href="offline_products_check.php" class="products-sync-btn" title="Verifica lista online si actualizeaza local produsele, categoriile si gestiunile">VERIFICA SI ACTUALIZEAZA</a>
+            <div class="products-autosync-status is-loading" id="productsAutosyncStatus" role="status" aria-live="polite">
+                <span class="products-autosync-dot" aria-hidden="true"></span>
+                <span class="products-autosync-copy">
+                    <strong>Autosincronizare produse</strong>
+                    <small id="productsAutosyncMessage">Se citește ultima stare locală...</small>
+                </span>
+            </div>
+        </div>
+        <span class="actions-label">Operatiuni online si export</span>
+        <div class="sync-actions">
+            <button type="button" class="sync-button" id="syncButton" title="Descopera operatiunile finalizate si trimite imediat pachetele din coada">TRIMITE OPERATIUNILE LA ADMINISTRATOR</button>
+            <a class="button2 export-button" href="export_vanzari_offline.php" title="Deschide exportul manual de vanzari in format XML sau SQL">DESCARCA EXPORT XML / SQL</a>
+            <a class="button2 license-button" href="offline_license_check.php" title="Verifica licenta aplicatiei offline">VERIFICA LICENTA</a>
+            <a class="button2 cleanup-button" href="curatare_date_locale.php" title="Deschide preview-ul pentru curatarea bazei locale">CURATARE DATE LOCALE</a>
+        </div>
+        <span id="syncStatus" class="sync-status"></span>
+    </div>
+    <?php include __DIR__ . '/offline_pending_closures_notice.php'; ?>
 <form method="POST" action="admin_logincheck.php">
 	<input hidden type="text" value="This is some text" name="oper"  />
 
@@ -667,8 +685,16 @@ echo isset($_SESSION['error']) ? $_SESSION['error'] : '';
   
   
   
-   <div id='c' style="display:none;float:right;" class="card card-login col-xs-6 mx-auto mt-5">
+   <div id="pinBackdrop" class="pin-backdrop" style="display:none;"></div>
+   <div id='c' style="display:none;" class="card card-login pin-card col-xs-6 mx-auto mt-5" role="dialog" aria-modal="true" aria-labelledby="pinTitle">
       <div class="card-header">
+      <div class="pin-heading">
+          <div>
+              <span>Operator selectat</span>
+              <h2 id="pinTitle">Introdu codul PIN</h2>
+          </div>
+          <button type="button" class="pin-close" id="pinClose" title="Inchide tastatura" aria-label="Inchide tastatura">&times;</button>
+      </div>
           
       <div>
 <table class="calculator"  id="calc">
@@ -731,6 +757,13 @@ echo isset($_SESSION['error']) ? $_SESSION['error'] : '';
         </table></form></div>
         <script type="text/javascript">
                 document.getElementById('calc').onload=init_calc('calc');
+                document.getElementById('pinClose').addEventListener('click', function() {
+                    document.getElementById('c').style.display = 'none';
+                    document.getElementById('pinBackdrop').style.display = 'none';
+                    document.querySelectorAll('.my_button').forEach(function(button) {
+                        button.classList.remove('active');
+                    });
+                });
         </script>
         
  

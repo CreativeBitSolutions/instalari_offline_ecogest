@@ -153,7 +153,9 @@ if (!function_exists('offline_installation_identity_for_row')) {
         $value = preg_replace('/[^A-Za-z0-9_-]/', '_', (string)($row[$pk] ?? '0'));
         $clientId = offline_installation_identity_client_id($config);
         $location = offline_installation_identity_location($config);
-        $uuid = offline_installation_identity_sanitize((string)($uuid ?? $config['installation_uuid'] ?? ''));
+        $uuid = offline_installation_identity_sanitize((string)(
+            $uuid ?? $config['transaction_uuid'] ?? $config['installation_uuid'] ?? ''
+        ));
         $format = strtolower(trim((string)($config['installation_identity_format'] ?? 'store')));
 
         if ($format === 'restaurant') {
@@ -265,12 +267,19 @@ if (!function_exists('offline_installation_identity_apply_config')) {
                     'created_at' => date('c'),
                     'legacy_backfill_completed' => false,
                 ];
+                $state['transaction_uuid'] = $state['installation_uuid'];
+                offline_installation_identity_write_state($statePath, $state);
+            }
+
+            if (trim((string)($state['transaction_uuid'] ?? '')) === '') {
+                $state['transaction_uuid'] = (string)$state['installation_uuid'];
                 offline_installation_identity_write_state($statePath, $state);
             }
 
             $config['installation_uuid_configured'] = $legacyUuid;
             $config['installation_uuid_legacy'] = offline_installation_identity_sanitize((string)($state['legacy_installation_uuid'] ?? $legacyUuid));
             $config['installation_uuid'] = offline_installation_identity_sanitize((string)$state['installation_uuid']);
+            $config['transaction_uuid'] = offline_installation_identity_sanitize((string)$state['transaction_uuid']);
             $config['installation_identity_file'] = $statePath;
             if (isset($config['online_tablet_sync']) && is_array($config['online_tablet_sync'])) {
                 $config['online_tablet_sync']['installation_uuid'] = $config['installation_uuid'];
@@ -312,5 +321,54 @@ if (!function_exists('offline_installation_identity_stabilize_rows')) {
         }
         unset($row);
         return $rows;
+    }
+}
+
+if (!function_exists('offline_installation_identity_rotate')) {
+    function offline_installation_identity_rotate(array $config): string
+    {
+        $statePath = offline_installation_identity_state_path($config);
+        $lockPath = $statePath . '.lock';
+        $lockDir = dirname($lockPath);
+        if (!is_dir($lockDir) && !mkdir($lockDir, 0777, true) && !is_dir($lockDir)) {
+            throw new RuntimeException('Folderul identitatii instalarii nu poate fi creat: ' . $lockDir);
+        }
+
+        $lock = fopen($lockPath, 'c+');
+        if ($lock === false || !flock($lock, LOCK_EX)) {
+            throw new RuntimeException('Identitatea instalarii nu poate fi blocata pentru resetare.');
+        }
+
+        try {
+            $state = offline_installation_identity_read_state($statePath);
+            $installationUuid = offline_installation_identity_sanitize((string)(
+                $state['installation_uuid'] ?? $config['installation_uuid'] ?? 'offline-installation'
+            ));
+            $legacyUuid = offline_installation_identity_sanitize((string)(
+                $state['legacy_installation_uuid']
+                ?? $config['installation_uuid_configured']
+                ?? $config['installation_uuid_legacy']
+                ?? $installationUuid
+            ));
+            $newUuid = substr($installationUuid . '-t-' . offline_installation_identity_random_suffix(), 0, 120);
+            $state = array_merge($state, [
+                'version' => 1,
+                'installation_uuid' => $installationUuid,
+                'transaction_uuid' => $newUuid,
+                'legacy_installation_uuid' => $legacyUuid,
+                'client_id' => offline_installation_identity_client_id($config),
+                'cod_locatie' => offline_installation_identity_location($config),
+                'legacy_backfill_completed' => true,
+                'transaction_rotated_at' => date('c'),
+            ]);
+            if (empty($state['created_at'])) {
+                $state['created_at'] = date('c');
+            }
+            offline_installation_identity_write_state($statePath, $state);
+            return $newUuid;
+        } finally {
+            flock($lock, LOCK_UN);
+            fclose($lock);
+        }
     }
 }

@@ -3,11 +3,11 @@
         "version": 1,
         "client_id": 21,
         "hardware_serial": "0000_0000_0000_0000_0026_B778_42D5_DC45.",
-        "installation_uuid": "bestmixt-c21-l1-pos1",
-        "issued_at": "2026-08-24T16:24:32+03:00",
-        "expires_at": "2026-09-23T16:24:32+03:00"
+        "installation_uuid": "bestmixt-c21-l1-pos1-i-0753d70bca0d9702",
+        "issued_at": "2026-08-25T14:22:02+03:00",
+        "expires_at": "2026-09-24T14:22:02+03:00"
     },
-    "signature": "PRRuz2roiCTVmboHGoFE8tX4YEUJbCvaCbHwXW+Cr8HjNnljuWT2mpTX/BDb2HQJtZ9tv27rgyOoeryCiKZZ29Vsrufr+9gEmjiEYU9Rk1RFuHKAMJJUobcRv/xu2Z8c0REjeguoDJosoN2tE106XYziNwI1mjr72aroKclI6F742Bgq/BfZN5tRpgSpb5fHkaBg08hb+3Bd9Q5vY+t6m7NnIA+Oo4ScxXggNHFK+YK62HL3PTuCE9UILbSwqBrunqp9+RGhcsxgo9ps2wYVfjdNIZ3cbNGniW75L6dkuJKIVB+zoLxayNuoXxkvr0FWabhFXepbLJflB273j+jQ4g==",
+    "signature": "DjMCamsAa57pp5hlcYL7PCh/CGjfD23/veUfJFSsarFOdFa/gA4tFJd9PpiY7+OXjv1WHAiaRZoVWefVTTzlz//viRbB89Ueh6SghrFPIqZ1zEdR4vhWPC0rbgIp6nkcefTYfBFCayeVYBAtBB2bANOsLV/eLRcVjD8i5Dc8coai9XSvwi4YhCGjBq8kTWJjI6bpL0VMT1Qki+IV8CbWMHqdQfv8zZju7PB4aHdZxK9WMySnRWI8Y8dHTgqBRr7IE8Z7MzYmzG0yl6YBDmVUkI3tBkJfoqzxP9ZkP8H0Ib2zLpv3fa7bqZchylTTUoSkMmPHiPdmXcEiMqnD7KBtZg==",
     "signature_algorithm": "SHA256withRSA",
-    "saved_at": "2026-08-24T15:24:32+02:00"
+    "saved_at": "2026-08-25T13:22:02+02:00"
 }

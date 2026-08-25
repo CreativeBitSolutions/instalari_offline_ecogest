@@ -11,3 +11,5 @@
 # Identitate generata separat la prima rulare pe fiecare instalare fizica
 **/offline_installation_identity.json
 **/offline_installation_identity.json.lock
+**/backups_transaction_reset/
+/.playwright-cli

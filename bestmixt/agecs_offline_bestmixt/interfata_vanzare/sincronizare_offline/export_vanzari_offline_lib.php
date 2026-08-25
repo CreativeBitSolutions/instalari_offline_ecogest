@@ -116,7 +116,7 @@ function offline_export_build(PDO $pdo, $dataStartRaw, $dataEndRaw, $formatRaw =
     $codLocatie = isset($_SESSION['cod_locatie'])
         ? (int)$_SESSION['cod_locatie']
         : (int)offline_export_app_config_value('cod_locatie_default', 1);
-    $installationUuid = preg_replace('/[^A-Za-z0-9_-]/', '_', (string)offline_export_app_config_value('installation_uuid', 'client' . $clientId . '_loc' . $codLocatie . '_pos1'));
+    $installationUuid = preg_replace('/[^A-Za-z0-9_-]/', '_', (string)offline_export_app_config_value('transaction_uuid', offline_export_app_config_value('installation_uuid', 'client' . $clientId . '_loc' . $codLocatie . '_pos1')));
     $offlinePrefix = $installationUuid;
 
     $export = [];

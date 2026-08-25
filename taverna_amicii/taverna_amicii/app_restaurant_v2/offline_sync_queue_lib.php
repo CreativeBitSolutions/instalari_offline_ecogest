@@ -33,7 +33,7 @@ function restaurant_sync_queue_config(array $restaurantConfig): array
     return [
         'client_id' => (int)($restaurantConfig['client_id'] ?? 0),
         'cod_locatie' => (int)($restaurantConfig['cod_locatie'] ?? 0),
-        'installation_uuid' => trim((string)($restaurantConfig['installation_uuid'] ?? '')),
+        'installation_uuid' => trim((string)($restaurantConfig['transaction_uuid'] ?? $restaurantConfig['installation_uuid'] ?? '')),
         'installation_identity_format' => (string)($restaurantConfig['installation_identity_format'] ?? 'restaurant'),
         'enabled' => filter_var($sync['enabled'] ?? false, FILTER_VALIDATE_BOOL),
         'automatic' => filter_var($sync['automatic'] ?? false, FILTER_VALIDATE_BOOL),

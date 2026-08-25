@@ -15,7 +15,7 @@ function offline_sync_queue_config(): array
     return [
         'client_id' => $clientId,
         'cod_locatie' => $location,
-        'installation_uuid' => preg_replace('/[^A-Za-z0-9_-]/', '_', (string)($config['installation_uuid'] ?? ('client' . $clientId . '_loc' . $location))),
+        'installation_uuid' => preg_replace('/[^A-Za-z0-9_-]/', '_', (string)($config['transaction_uuid'] ?? $config['installation_uuid'] ?? ('client' . $clientId . '_loc' . $location))),
         'profile' => (string)($config['sync_profile'] ?? ($clientId === 2 ? 'dailycoffee' : 'agremprejba')),
         'url' => trim((string)($config['sync_import_url'] ?? '')),
         'api_key' => trim((string)($config['sync_api_key'] ?? '')),

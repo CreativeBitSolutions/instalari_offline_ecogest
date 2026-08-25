@@ -39,6 +39,7 @@ $cust_id = 12; // rămâne neschimbat
     <title>Autentificare utilizator</title>
 
     <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/offline-login.css">
 
     <!-- Stiluri personalizate -->
     <style>
@@ -125,17 +126,22 @@ $cust_id = 12; // rămâne neschimbat
         }
     </style>
 </head>
-<body>
-<div class="container py-4">
-    <!-- logo + info + buton back -->
-    <div class="d-flex flex-column align-items-center text-center text-white mb-4">
-        
-        <h5 class="mb-2">Locație <?php echo $_SESSION['cod_locatie']; ?></h5>
-        <div class="d-flex flex-wrap justify-content-center" style="gap:.5rem;">
+<body class="offline-login-page restaurant-login-page">
+<div class="container py-4 login-shell">
+    <header class="login-topbar">
+        <div class="login-brand">
+            <span>AGECS RESTAURANT OFFLINE</span>
+            <h1>Conectare utilizator</h1>
+        </div>
+        <div class="login-meta">
+            <strong class="location-badge">Locația <?php echo (int)$_SESSION['cod_locatie']; ?></strong>
+            <div class="login-tools">
             <a class="btn btn-outline-light btn-sm" href="offline_products_sync.php?force=1&rewrite_existing=1">Sincronizare Produse</a>
             <a class="btn btn-outline-light btn-sm" href="offline_license_check.php">Verifică licența offline</a>
+            <a class="btn btn-outline-danger btn-sm cleanup-link" href="curatare_date_locale.php">Curățare date locale</a>
+            </div>
         </div>
-    </div>
+    </header>
 
     <!---------------------- ZONA PRINCIPALĂ: GRID + KEYPAD ---------------------->
     <?php if (!$productsLoginBlocked && !$productsNeedsAcknowledgement && !empty($productsSyncGuard['message'])): ?>
@@ -241,6 +247,12 @@ $cust_id = 12; // rămâne neschimbat
         </div>
     </div>
     <?php else: ?>
+    <div class="workspace-heading <?php echo $productsNeedsAcknowledgement ? 'd-none' : ''; ?>" id="loginWorkspaceHeading">
+        <div>
+            <span>Acces restaurant</span>
+            <h2>Alege utilizatorul</h2>
+        </div>
+    </div>
     <div class="row g-4 justify-content-center <?php echo $productsNeedsAcknowledgement ? 'd-none' : ''; ?>" id="loginUsersArea">
         <!-- COL STÂNGA: utilizatorii -->
         <div class="col-12 col-lg-7 users-wrapper">
@@ -353,6 +365,7 @@ $cust_id = 12; // rămâne neschimbat
 
         $('#productsDiffAcknowledge').on('click', function(){
             $('#productsDiffNotice').fadeOut(150, function(){
+                $('#loginWorkspaceHeading').removeClass('d-none');
                 $('#loginUsersArea').removeClass('d-none').hide().fadeIn(150);
             });
         });

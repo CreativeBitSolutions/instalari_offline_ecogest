@@ -296,7 +296,7 @@ html {
 
 .offline-login-page .sync-actions {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: stretch;
   gap: 10px;
   width: 100%;
@@ -312,6 +312,11 @@ html {
   background: #69777e;
 }
 
+.offline-login-page .buttons .cleanup-button {
+  border-color: #7a2019;
+  background: #9f2f25;
+}
+
 .offline-login-page .buttons .button2:hover {
   border-color: #0c466b;
   background: var(--pos-blue-dark);
@@ -323,6 +328,11 @@ html {
 .offline-login-page .buttons .license-button:hover {
   border-color: #4d5a60;
   background: #556269;
+}
+
+.offline-login-page .buttons .cleanup-button:hover {
+  border-color: #641812;
+  background: #85251d;
 }
 
 .offline-login-page .products-sync-btn:active,
