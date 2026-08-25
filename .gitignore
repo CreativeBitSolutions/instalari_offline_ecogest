@@ -3,3 +3,11 @@
 /taverna_amicii/api_offline_taverna_amicii/offline_sync_exports
 /taverna_amicii/taverna_amicii/printer_bold/ScannedNotes
 /taverna_amicii/taverna_amicii/printer_bold_online/ScannedNotes
+
+# Scripturi locale si arhive de instalare pentru clienti
+/arhiveaza_*.bat
+/_pachete_clienti/
+
+# Identitate generata separat la prima rulare pe fiecare instalare fizica
+**/offline_installation_identity.json
+**/offline_installation_identity.json.lock

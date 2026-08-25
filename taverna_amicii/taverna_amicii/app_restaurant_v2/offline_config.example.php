@@ -1,10 +1,11 @@
 <?php
-return [
+$config = [
     'driver' => 'sqlite',
     'live_id' => 12,
     'client_id' => 1008,
     'cod_locatie' => 1,
     'installation_uuid' => 'identificator-unic-instalare',
+    'installation_identity_format' => 'restaurant',
     'app_name' => 'App Restaurant Offline',
     'offline_api_path' => dirname(dirname(__DIR__)) . '/api_offline_taverna_amicii',
     'sqlite_path' => dirname(dirname(__DIR__)) . '/api_offline_taverna_amicii/restaurant.sqlite',
@@ -56,3 +57,6 @@ return [
         'verify_ssl' => true,
     ],
 ];
+
+require_once __DIR__ . '/offline_installation_identity_lib.php';
+return offline_installation_identity_apply_config($config);

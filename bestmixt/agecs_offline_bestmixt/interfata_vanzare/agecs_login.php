@@ -54,30 +54,6 @@ $_SESSION['cod_locatie'] = (int)$_config['cod_locatie_default'];
         <span class="location-badge">Locatia <?php echo (int)$_SESSION['cod_locatie'];?></span>
     </div>
 
-   
-	<div class="buttons">
-        <div class="products-sync-notice">
-            <span>Nomenclator produse</span>
-            <a href="offline_products_check.php" class="products-sync-btn" title="Verifica lista online si actualizeaza local produsele, categoriile si gestiunile">VERIFICA SI ACTUALIZEAZA</a>
-            <div class="products-autosync-status is-loading" id="productsAutosyncStatus" role="status" aria-live="polite">
-                <span class="products-autosync-dot" aria-hidden="true"></span>
-                <span class="products-autosync-copy">
-                    <strong>Autosincronizare produse</strong>
-                    <small id="productsAutosyncMessage">Se citește ultima stare locală...</small>
-                </span>
-            </div>
-        </div>
-        <span class="actions-label">Operatiuni online si export</span>
-        <div class="sync-actions">
-            <button type="button" class="sync-button" id="syncButton" title="Descopera operatiunile finalizate si trimite imediat pachetele din coada">TRIMITE ACUM DIN COADA</button>
-            <a class="button2 export-button" href="export_vanzari_offline.php" title="Deschide exportul manual de vanzari in format XML sau SQL">DESCARCA EXPORT XML / SQL</a>
-            <a class="button2 license-button" href="offline_license_check.php" title="Verifica licenta aplicatiei offline">VERIFICA LICENTA</a>
-        </div>
-        <span id="syncStatus" class="sync-status"></span>
-        
-    </div>
-    <?php include __DIR__ . '/offline_pending_closures_notice.php'; ?>
-
 		<section class="operators-section">
             <div class="section-heading">
                 <span>Acces vanzare</span>
@@ -289,6 +265,27 @@ while ($row = $dstmt->fetch(PDO::FETCH_ASSOC)) {
 
 	</div>
     </section>
+    <div class="buttons">
+        <div class="products-sync-notice">
+            <span>Nomenclator produse</span>
+            <a href="offline_products_check.php" class="products-sync-btn" title="Verifica lista online si actualizeaza local produsele, categoriile si gestiunile">VERIFICA SI ACTUALIZEAZA</a>
+            <div class="products-autosync-status is-loading" id="productsAutosyncStatus" role="status" aria-live="polite">
+                <span class="products-autosync-dot" aria-hidden="true"></span>
+                <span class="products-autosync-copy">
+                    <strong>Autosincronizare produse</strong>
+                    <small id="productsAutosyncMessage">Se citește ultima stare locală...</small>
+                </span>
+            </div>
+        </div>
+        <span class="actions-label">Operatiuni online si export</span>
+        <div class="sync-actions">
+            <button type="button" class="sync-button" id="syncButton" title="Descopera operatiunile finalizate si trimite imediat pachetele din coada">TRIMITE OPERATIUNILE LA ADMINISTRATOR</button>
+            <a class="button2 export-button" href="export_vanzari_offline.php" title="Deschide exportul manual de vanzari in format XML sau SQL">DESCARCA EXPORT XML / SQL</a>
+            <a class="button2 license-button" href="offline_license_check.php" title="Verifica licenta aplicatiei offline">VERIFICA LICENTA</a>
+        </div>
+        <span id="syncStatus" class="sync-status"></span>
+    </div>
+    <?php include __DIR__ . '/offline_pending_closures_notice.php'; ?>
 <form method="POST" action="admin_logincheck.php">
 	<input hidden type="text" value="This is some text" name="oper"  />
 

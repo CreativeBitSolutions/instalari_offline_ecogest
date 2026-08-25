@@ -5,6 +5,7 @@ $config = [
     'client_id' => 1008,
     'cod_locatie' => 1,
     'installation_uuid' => 'taverna-amicii-1008-l1-20260814',
+    'installation_identity_format' => 'restaurant',
     'app_name' => 'App Restaurant Offline Taverna Amicii',
     'company_lookup_url' => 'https://agecs.agecs.in/sincronizare_online_app_vanzare/api_verificare_cui_offline.php',
     'company_lookup_timeout_seconds' => 20,
@@ -62,6 +63,9 @@ $config = [
         'verify_ssl' => true,
     ],
 ];
+
+require_once __DIR__ . '/offline_installation_identity_lib.php';
+$config = offline_installation_identity_apply_config($config);
 
 $caBundlePath = (string)$config['ca_bundle_path'];
 if ($caBundlePath !== '' && is_file($caBundlePath)) {

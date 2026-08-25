@@ -104,7 +104,11 @@ function offline_sync_queue_rows(PDO $pdo, string $table, string $where = '1=1',
     }
     $stmt = $pdo->prepare($sql);
     $stmt->execute($params);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if (function_exists('offline_installation_identity_stabilize_rows')) {
+        $rows = offline_installation_identity_stabilize_rows($pdo, $table, $rows, offline_config_all());
+    }
+    return $rows;
 }
 
 function offline_sync_queue_placeholders(array $values): string

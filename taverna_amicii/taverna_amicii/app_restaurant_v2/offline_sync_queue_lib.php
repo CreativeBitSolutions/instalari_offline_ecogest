@@ -34,6 +34,7 @@ function restaurant_sync_queue_config(array $restaurantConfig): array
         'client_id' => (int)($restaurantConfig['client_id'] ?? 0),
         'cod_locatie' => (int)($restaurantConfig['cod_locatie'] ?? 0),
         'installation_uuid' => trim((string)($restaurantConfig['installation_uuid'] ?? '')),
+        'installation_identity_format' => (string)($restaurantConfig['installation_identity_format'] ?? 'restaurant'),
         'enabled' => filter_var($sync['enabled'] ?? false, FILTER_VALIDATE_BOOL),
         'automatic' => filter_var($sync['automatic'] ?? false, FILTER_VALIDATE_BOOL),
         'allow_login_worker' => filter_var($sync['allow_login_worker'] ?? false, FILTER_VALIDATE_BOOL),
@@ -76,7 +77,7 @@ function restaurant_sync_queue_source_id(string $table, $pk, int $codLocatie, st
     return $table . ':' . $codLocatie . ':' . $installationUuid . ':' . (string)$pk;
 }
 
-function restaurant_sync_queue_meta(string $table, $pk, int $codLocatie, string $installationUuid, string $eventUuid): array
+function restaurant_sync_queue_meta(string $table, $pk, int $codLocatie, string $installationUuid, string $eventUuid, string $syncId = ''): array
 {
     return [
         'export_id' => $eventUuid,
@@ -84,11 +85,11 @@ function restaurant_sync_queue_meta(string $table, $pk, int $codLocatie, string 
         'source_pk' => (string)$pk,
         'cod_locatie' => $codLocatie,
         'installation_uuid' => $installationUuid,
-        'sync_id' => restaurant_sync_queue_source_id($table, $pk, $codLocatie, $installationUuid),
+        'sync_id' => $syncId !== '' ? $syncId : restaurant_sync_queue_source_id($table, $pk, $codLocatie, $installationUuid),
     ];
 }
 
-function restaurant_sync_queue_transform_rows(string $table, array $rows, int $codLocatie, string $installationUuid, string $eventUuid): array
+function restaurant_sync_queue_transform_rows(PDO $pdo, array $config, string $table, array $rows, string $eventUuid): array
 {
     $pkMap = [
         'note' => 'nrbon',
@@ -98,11 +99,17 @@ function restaurant_sync_queue_transform_rows(string $table, array $rows, int $c
         'discounturi_acordate' => 'id_discount',
     ];
     $pkColumn = $pkMap[$table];
+    $codLocatie = (int)$config['cod_locatie'];
+    $installationUuid = (string)$config['installation_uuid'];
+    if (function_exists('offline_installation_identity_stabilize_rows')) {
+        $rows = offline_installation_identity_stabilize_rows($pdo, $table, $rows, $config);
+    }
 
     foreach ($rows as &$row) {
         $pk = $row[$pkColumn] ?? '';
+        $syncId = trim((string)($row['identificator_offline'] ?? ''));
         $row['cod_locatie'] = $codLocatie;
-        $row['_sync'] = restaurant_sync_queue_meta($table, $pk, $codLocatie, $installationUuid, $eventUuid);
+        $row['_sync'] = restaurant_sync_queue_meta($table, $pk, $codLocatie, $installationUuid, $eventUuid, $syncId);
 
         if ($table === 'note') {
             $row['nrbon_original'] = (int)($row['nrbon'] ?? 0);
@@ -121,12 +128,33 @@ function restaurant_sync_queue_transform_rows(string $table, array $rows, int $c
         } elseif ($table === 'discounturi_acordate') {
             $row['id_discount_original'] = (int)($row['id_discount'] ?? 0);
             $row['id_vanz_original'] = (int)($row['id_vanz'] ?? 0);
-            $row['id_vanz_sync_ref'] = restaurant_sync_queue_source_id('det_note', $row['id_vanz'] ?? 0, $codLocatie, $installationUuid);
+            $detail = restaurant_sync_queue_row($pdo, 'SELECT identificator_offline FROM det_note WHERE id_vanz = ? LIMIT 1', [(int)($row['id_vanz'] ?? 0)]);
+            $row['id_vanz_sync_ref'] = trim((string)($detail['identificator_offline'] ?? ''));
+            if ($row['id_vanz_sync_ref'] === '') {
+                $row['id_vanz_sync_ref'] = restaurant_sync_queue_source_id('det_note', $row['id_vanz'] ?? 0, $codLocatie, $installationUuid);
+            }
         }
     }
     unset($row);
 
     return $rows;
+}
+
+function restaurant_sync_queue_hash_tables(array $tables): array
+{
+    foreach ($tables as &$rows) {
+        if (!is_array($rows)) {
+            continue;
+        }
+        foreach ($rows as &$row) {
+            if (is_array($row)) {
+                unset($row['identificator_offline']);
+            }
+        }
+        unset($row);
+    }
+    unset($rows);
+    return $tables;
 }
 
 function restaurant_sync_queue_actor(PDO $pdo, int $actorId): array
@@ -227,7 +255,7 @@ function restaurant_sync_queue_store(PDO $pdo, array $config, string $eventType,
         'aggregate_type' => $aggregateType,
         'aggregate_id' => $aggregateId,
         'cod_locatie' => $config['cod_locatie'],
-        'tables' => $tables,
+        'tables' => restaurant_sync_queue_hash_tables($tables),
     ];
     $contentJson = json_encode($businessData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     if ($contentJson === false) {
@@ -244,10 +272,10 @@ function restaurant_sync_queue_store(PDO $pdo, array $config, string $eventType,
     $payloadTables = [];
     foreach (['note', 'det_note', 'inchideri_r_12', 'rapoarte_z', 'discounturi_acordate'] as $table) {
         $payloadTables[$table] = restaurant_sync_queue_transform_rows(
+            $pdo,
+            $config,
             $table,
             $tables[$table] ?? [],
-            $config['cod_locatie'],
-            $config['installation_uuid'],
             $eventUuid
         );
     }

@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/offline_installation_identity_lib.php';
+
 if (!defined('OFFLINE_EXTERNAL_CONFIG_FILE')) {
     throw new RuntimeException('Fisierul extern de configurare nu a fost definit.');
 }
@@ -63,6 +65,8 @@ if (!function_exists('offline_config_all')) {
                 throw new RuntimeException('Configurarea externa nu contine cheia obligatorie: ' . $key);
             }
         }
+
+        $decoded = offline_installation_identity_apply_config($decoded);
 
         $caBundlePath = trim((string)($decoded['ca_bundle_path'] ?? ''));
         if ($caBundlePath !== '' && is_file($caBundlePath)) {

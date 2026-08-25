@@ -1,0 +1,74 @@
+- generic [ref=e3]:
+  - generic [ref=e5]:
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - generic [ref=e8]: AGECS POS OFFLINE
+        - heading "Conectare operator" [level=1] [ref=e9]
+      - generic [ref=e10]: Locatia 1
+    - generic [ref=e11]:
+      - generic [ref=e12]:
+        - generic [ref=e13]: Acces vanzare
+        - heading "Alege operatorul" [level=2] [ref=e14]
+      - figure "OPERATOR 1" [ref=e16]:
+        - button [ref=e17] [cursor=pointer]
+    - generic [ref=e20]:
+      - generic [ref=e21]:
+        - generic [ref=e22]: Nomenclator produse
+        - link "VERIFICA SI ACTUALIZEAZA" [ref=e23] [cursor=pointer]:
+          - /url: offline_products_check.php
+        - status [ref=e24]:
+          - generic [ref=e26]:
+            - strong [ref=e27]: Autosincronizare produse
+            - generic [ref=e28]: "Ultima rulare: 24.08.2026 17:27:17, produse verificate: 5624, modificări: 177."
+      - generic [ref=e29]: Operatiuni online si export
+      - generic [ref=e30]:
+        - button "TRIMITE ACUM DIN COADA" [ref=e31] [cursor=pointer]
+        - link "DESCARCA EXPORT XML / SQL" [ref=e32] [cursor=pointer]:
+          - /url: export_vanzari_offline.php
+        - link "VERIFICA LICENTA" [ref=e33] [cursor=pointer]:
+          - /url: offline_license_check.php
+    - heading [level=4] [ref=e36]
+  - dialog [ref=e38]:
+    - generic [ref=e39]:
+      - generic [ref=e40]:
+        - generic [ref=e41]:
+          - generic [ref=e42]: Operator selectat
+          - heading "Introdu codul PIN" [level=2] [ref=e43]
+        - button "Inchide tastatura" [ref=e44] [cursor=pointer]: ×
+      - table [ref=e46]:
+        - rowgroup [ref=e47]:
+          - row [ref=e48]:
+            - cell [ref=e49]:
+              - textbox [active] [ref=e50]
+          - row
+          - row [ref=e51]:
+            - cell [ref=e52]:
+              - button "7" [ref=e53] [cursor=pointer]
+            - cell [ref=e54]:
+              - button "8" [ref=e55] [cursor=pointer]
+            - cell [ref=e56]:
+              - button "9" [ref=e57] [cursor=pointer]
+          - row [ref=e58]:
+            - cell [ref=e59]:
+              - button "4" [ref=e60] [cursor=pointer]
+            - cell [ref=e61]:
+              - button "5" [ref=e62] [cursor=pointer]
+            - cell [ref=e63]:
+              - button "6" [ref=e64] [cursor=pointer]
+          - row [ref=e65]:
+            - cell [ref=e66]:
+              - button "1" [ref=e67] [cursor=pointer]
+            - cell [ref=e68]:
+              - button "2" [ref=e69] [cursor=pointer]
+            - cell [ref=e70]:
+              - button "3" [ref=e71] [cursor=pointer]
+          - row [ref=e72]:
+            - cell [ref=e73]:
+              - button "0" [ref=e74] [cursor=pointer]
+            - cell [ref=e75]:
+              - button "←" [ref=e76] [cursor=pointer]
+          - row [ref=e77]:
+            - cell [ref=e78]
+          - row [ref=e79]:
+            - cell [ref=e80]:
+              - button "Continuă ✔" [ref=e81] [cursor=pointer]

@@ -1,0 +1,29 @@
+- generic [ref=e5]:
+  - generic [ref=e6]:
+    - generic [ref=e7]:
+      - generic [ref=e8]: AGECS POS OFFLINE
+      - heading "Conectare operator" [level=1] [ref=e9]
+    - generic [ref=e10]: Locatia 1
+  - generic [ref=e11]:
+    - generic [ref=e12]:
+      - generic [ref=e13]: Acces vanzare
+      - heading "Alege operatorul" [level=2] [ref=e14]
+    - figure "OPERATOR 1" [ref=e16]:
+      - button [ref=e17] [cursor=pointer]
+  - generic [ref=e20]:
+    - generic [ref=e21]:
+      - generic [ref=e22]: Nomenclator produse
+      - link "VERIFICA SI ACTUALIZEAZA" [ref=e23] [cursor=pointer]:
+        - /url: offline_products_check.php
+      - status [ref=e24]:
+        - generic [ref=e26]:
+          - strong [ref=e27]: Autosincronizare produse
+          - generic [ref=e28]: "Ultima rulare: 24.08.2026 17:27:17, produse verificate: 5624, modificări: 177."
+    - generic [ref=e29]: Operatiuni online si export
+    - generic [ref=e30]:
+      - button "TRIMITE ACUM DIN COADA" [ref=e31] [cursor=pointer]
+      - link "DESCARCA EXPORT XML / SQL" [ref=e32] [cursor=pointer]:
+        - /url: export_vanzari_offline.php
+      - link "VERIFICA LICENTA" [ref=e33] [cursor=pointer]:
+        - /url: offline_license_check.php
+  - heading [level=4] [ref=e36]
