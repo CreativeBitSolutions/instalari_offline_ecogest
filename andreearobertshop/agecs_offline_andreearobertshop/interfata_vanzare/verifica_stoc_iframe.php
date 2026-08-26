@@ -38,6 +38,20 @@
       padding-left: 14px;
     }
     .select2-container--default .select2-selection--single .select2-selection__arrow { height: 42px; }
+    .stock-action {
+      width: 100%;
+      min-height: 46px;
+      margin-top: 12px;
+      border: 0;
+      border-radius: 6px;
+      background: #1976d2;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .stock-action:hover:not(:disabled) { background: #125ea9; }
+    .stock-action:disabled { background: #aeb9c3; cursor: not-allowed; }
     .result {
       display: none;
       margin-top: 18px;
@@ -64,11 +78,12 @@
       <span aria-hidden="true">●</span>
       <div>
         <strong>Stoc calculat din baza online</strong>
-        Sunt folosite exclusiv mișcările înregistrate online pentru locația curentă. Verificarea necesită internet și licență activă.
+        Produsul este căutat în nomenclatorul local actualizat automat. Stocul se solicită online numai la apăsarea butonului și folosește exclusiv mișcările din baza online.
       </div>
     </div>
     <label class="field-label" for="verificaStocSelect">Caută produsul</label>
     <select id="verificaStocSelect" style="width: 100%;"></select>
+    <button type="button" id="afiseazaStoc" class="stock-action" disabled>AFIȘEAZĂ STOC</button>
     <div id="stocRezultat" class="result" role="status" aria-live="polite"></div>
   </main>
 
@@ -77,6 +92,8 @@
   <script>
     $(function () {
       var $result = $('#stocRezultat');
+      var $showStock = $('#afiseazaStoc');
+      var selectedProductId = null;
 
       function messageFromXhr(xhr, fallback) {
         if (xhr && xhr.responseJSON && xhr.responseJSON.message) {
@@ -98,9 +115,9 @@
         minimumInputLength: 2,
         language: {
           inputTooShort: function () { return 'Introdu cel puțin 2 caractere.'; },
-          searching: function () { return 'Se caută în baza online...'; },
+          searching: function () { return 'Se caută în nomenclatorul local...'; },
           noResults: function () { return 'Nu au fost găsite produse.'; },
-          errorLoading: function () { return 'Produsele online nu au putut fi încărcate.'; }
+          errorLoading: function () { return 'Nomenclatorul local nu a putut fi citit.'; }
         },
         ajax: {
           url: 'verifica_stoc_cauta_produs.php',
@@ -122,18 +139,32 @@
             };
           },
           error: function (xhr) {
-            showState('error', messageFromXhr(xhr, 'Produsele online nu au putut fi încărcate.'));
+            showState('error', messageFromXhr(xhr, 'Nomenclatorul local nu a putut fi citit.'));
           }
         }
       }).on('select2:select', function (event) {
-        var selectedId = event.params.data.id;
+        selectedProductId = event.params.data.id;
+        $showStock.prop('disabled', false);
+        $result.removeClass('visible loading error').empty();
+      }).on('select2:clear', function () {
+        selectedProductId = null;
+        $showStock.prop('disabled', true);
+        $result.removeClass('visible loading error').empty();
+      });
+
+      $showStock.on('click', function () {
+        if (!selectedProductId) {
+          return;
+        }
+
+        $showStock.prop('disabled', true);
         showState('loading', 'Se calculează stocul din mișcările online...');
 
         $.ajax({
           url: 'verifica_stoc_calcul.php',
           dataType: 'json',
           cache: false,
-          data: { cod_produs: selectedId }
+          data: { cod_produs: selectedProductId }
         }).done(function (response) {
           var value = Number(response.final_stock || 0).toLocaleString('ro-RO', {
             minimumFractionDigits: 0,
@@ -149,6 +180,8 @@
           );
         }).fail(function (xhr) {
           showState('error', messageFromXhr(xhr, 'Stocul online nu a putut fi calculat. Verifică internetul și licența.'));
+        }).always(function () {
+          $showStock.prop('disabled', !selectedProductId);
         });
       });
     });
