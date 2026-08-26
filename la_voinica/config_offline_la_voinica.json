@@ -26,6 +26,7 @@
   "sync_import_url": "https://agecs.agecs.in/sincronizare_online_app_vanzare/api_import_operatiuni_offline.php",
   "sync_state_url": "https://agecs.agecs.in/sincronizare_online_app_vanzare/api_stare_secvente_offline.php",
   "license_check_url": "https://agecs.agecs.in/sincronizare_online_app_vanzare/api_verificare_licenta_offline.php",
+  "stock_check_url": "https://agecs.agecs.in/sincronizare_online_app_vanzare/api_verificare_stoc_online.php",
   "company_lookup_url": "https://agecs.agecs.in/sincronizare_online_app_vanzare/api_verificare_cui_offline.php",
   "company_lookup_timeout_seconds": 20,
   "license_valid_days": 30,

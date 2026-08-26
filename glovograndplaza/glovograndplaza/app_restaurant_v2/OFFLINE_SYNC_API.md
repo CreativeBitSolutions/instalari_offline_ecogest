@@ -53,7 +53,7 @@ Fiecare rând conține `_sync.source_table`, `_sync.source_pk`, `_sync.cod_locat
 Pachetele JSON se salvează în:
 
 ```text
-C:\xampp\htdocs\github\instalari_offline_ecogest\grandplaza\api_offline_grandplaza\offline_sync_exports
+C:\xampp\htdocs\github\instalari_offline_ecogest\glovograndplaza\api_offline_glovograndplaza\offline_sync_exports
 ```
 
 Rezultatul fiecărei încercări este înregistrat în `offline_sync_logs`. Jurnalul include numărul de rânduri, momentul, operatorul, starea, hashul pachetului și mesajul de eroare.

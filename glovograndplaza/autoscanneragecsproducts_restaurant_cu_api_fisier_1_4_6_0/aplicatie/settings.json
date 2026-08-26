@@ -6,8 +6,8 @@
   "LocationId": 1,
   "ScanIntervalMinutes": 10,
   "RequestTimeoutMinutes": 15,
-  "SchedulerEnabled": false,
-  "RunImmediatelyOnLaunch": false,
+  "SchedulerEnabled": true,
+  "RunImmediatelyOnLaunch": true,
   "StartWithWindows": false,
   "StartMinimized": false
 }

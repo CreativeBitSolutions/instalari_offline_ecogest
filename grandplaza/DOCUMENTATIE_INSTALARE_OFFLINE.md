@@ -33,6 +33,7 @@ Copiile din `aplicatii_grandplaza_configurate_pentru_online` rămân configuraț
 ## Pornire
 
 1. Se pornește Apache din XAMPP.
-2. Se pornesc `AGECSScanCM.exe.lnk`, `AGECSScanPR.exe.lnk` și `AGECS.VeriBon.exe.lnk`.
-3. Se pornește `AutoScannerAgecsProducts_restaurant.exe.lnk`.
-4. Se deschide `INTERFATA VANZARE - GRAND PLAZA.url`.
+2. La prima deschidere se trimite solicitarea de licențiere pentru această instalare și se așteaptă aprobarea.
+3. Se pornesc `AGECSScanCM.exe.lnk`, `AGECSScanPR.exe.lnk` și `AGECS.VeriBon.exe.lnk`.
+4. Se pornește `AutoScannerAgecsProducts_restaurant.exe.lnk`.
+5. Se deschide `INTERFATA VANZARE - GRAND PLAZA.url`.

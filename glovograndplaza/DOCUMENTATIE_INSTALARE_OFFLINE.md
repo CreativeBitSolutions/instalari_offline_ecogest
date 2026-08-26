@@ -28,17 +28,20 @@ O notă finalizată cu status `F` intră imediat în coada către online. Închi
 - `glovo_casa_marcat\AGECSScanCM.exe` este configurat pentru clientul 26, locația 1, endpointul local și destinația `C:\fprint\in`.
 - `glovo_printer\AGECSScanPR.exe` este configurat pentru clientul 26 și imprimantele `BUC`, `BAR` și `Salate`.
 - Configurația online furnizată nu include o aplicație VeriBon separată pentru clientul 26. Nu a fost creată o configurație nouă.
-- AutoScannerul are traseele locale și clientul 26 configurate. Programarea lui rămâne oprită până este furnizată și configurată cheia API distinctă a clientului 26.
+- AutoScannerul are traseele locale, clientul 26 și programarea automată configurate.
 
 ## Cheia API necesară
 
-În baza centrală disponibilă, clientul 26 nu are o cheie API. Sincronizarea automată a produselor, vânzărilor și comenzilor de tabletă este păstrată oprită în `offline_config.local.php`. Activarea necesită cheia API aferentă clientului 26 și refacerea fișierului `Resurse` al AutoScannerului. Cheia clientului 25 nu poate fi reutilizată, deoarece API-ul verifică asocierea dintre cheie și client.
+Cheia API distinctă a clientului 26 este configurată în `offline_config.local.php` pentru produse, vânzări și comenzile de tabletă. Aceeași cheie trebuie înscrisă online în câmpul `api_key` al clientului 26. Cheia clientului 25 nu poate fi reutilizată, deoarece API-ul verifică asocierea dintre cheie și client.
+
+Fișierul criptat `Resurse` al AutoScannerului este comun instalărilor verificate și nu conține configurarea specifică a clientului. Clientul, locația și traseele bazei sunt stabilite în `settings.json`.
 
 Importul direct de pe site folosește configurația WordPress comună Grand Plaza și poate funcționa independent de cheia API centrală.
 
 ## Pornire
 
 1. Se pornește Apache din XAMPP.
-2. Se pornesc `AGECSScanCM.exe.lnk` și `AGECSScanPR.exe.lnk`.
-3. Se deschide `INTERFATA VANZARE - GLOVO GRAND PLAZA.url`.
-4. AutoScannerul se pornește după configurarea cheii API pentru clientul 26.
+2. La prima deschidere se trimite solicitarea de licențiere pentru această instalare și se așteaptă aprobarea.
+3. Se pornesc `AGECSScanCM.exe.lnk` și `AGECSScanPR.exe.lnk`.
+4. Se deschide `INTERFATA VANZARE - GLOVO GRAND PLAZA.url`.
+5. Se pornește `AutoScannerAgecsProducts_restaurant.exe.lnk` după înscrierea cheii API în online.
