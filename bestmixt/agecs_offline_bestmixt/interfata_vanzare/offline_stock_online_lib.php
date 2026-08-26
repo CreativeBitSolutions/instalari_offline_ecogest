@@ -27,9 +27,8 @@ function offline_stock_online_request(string $action, array $parameters = array(
     $clientId = (int)($config['sync_client_id'] ?? $config['client_id'] ?? 0);
     $location = (int)($_SESSION['cod_locatie'] ?? $config['cod_locatie_default'] ?? 0);
     $apiKey = trim((string)$licenseConfig['api_key']);
-    $installationUuid = trim((string)$licenseConfig['installation_uuid']);
 
-    if ($url === '' || $clientId <= 0 || $location <= 0 || $apiKey === '' || $installationUuid === '') {
+    if ($url === '' || $clientId <= 0 || $location <= 0 || $apiKey === '') {
         return array(
             'ok' => false,
             'code' => 'configuration_invalid',
@@ -38,23 +37,10 @@ function offline_stock_online_request(string $action, array $parameters = array(
         );
     }
 
-    $licenseStatus = offline_license_status(false);
-    if (empty($licenseStatus['valid'])) {
-        return array(
-            'ok' => false,
-            'code' => 'local_license_invalid',
-            'message' => 'Licenta offline locala nu este valida. Verificati licenta online.',
-            'http_status' => 403,
-        );
-    }
-
-    $identity = offline_license_hardware_identity(false);
     $payload = array_merge($parameters, array(
         'action' => $action,
         'client_id' => $clientId,
         'cod_locatie' => $location,
-        'hardware_serial' => (string)($identity['serial'] ?? ''),
-        'installation_uuid' => $installationUuid,
         'app_name' => (string)$licenseConfig['app_name'],
     ));
     $body = json_encode($payload, offline_license_json_flags());
@@ -67,7 +53,7 @@ function offline_stock_online_request(string $action, array $parameters = array(
         );
     }
 
-    $http = offline_license_http_post($url, $apiKey, $body, 20);
+    $http = offline_license_http_post($url, $apiKey, $body, 8);
     if ($http['body'] === '') {
         return array(
             'ok' => false,
@@ -109,4 +95,3 @@ function offline_stock_online_send(string $action, array $parameters = array()):
     echo json_encode($response, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     exit;
 }
-

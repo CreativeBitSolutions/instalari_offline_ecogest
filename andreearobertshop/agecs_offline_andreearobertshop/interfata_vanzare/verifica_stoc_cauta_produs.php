@@ -12,13 +12,20 @@ if ($queryLength < 2) {
 }
 
 $stmt = $pdo->prepare(
-    'SELECT cod_produs, nume FROM produse_servicii '
+    'SELECT cod_produs, nume, um FROM produse_servicii '
     . 'WHERE nume LIKE :term ORDER BY nume ASC LIMIT 50'
 );
 $stmt->execute(array(':term' => '%' . $query . '%'));
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+foreach ($results as &$result) {
+    if (strtoupper(trim((string)($result['um'] ?? ''))) === 'H87') {
+        $result['um'] = 'BUC';
+    }
+}
+unset($result);
 
 echo json_encode(array(
     'ok' => true,
     'source' => 'local',
-    'results' => $stmt->fetchAll(PDO::FETCH_ASSOC),
+    'results' => $results,
 ), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);

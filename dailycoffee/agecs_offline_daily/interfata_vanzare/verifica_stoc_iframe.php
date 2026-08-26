@@ -94,6 +94,8 @@
       var $result = $('#stocRezultat');
       var $showStock = $('#afiseazaStoc');
       var selectedProductId = null;
+      var selectedProductName = '';
+      var selectedProductUnit = '';
 
       function messageFromXhr(xhr, fallback) {
         if (xhr && xhr.responseJSON && xhr.responseJSON.message) {
@@ -133,7 +135,9 @@
               results: rows.map(function (item) {
                 return {
                   id: item.cod_produs,
-                  text: item.nume + ' (cod ' + item.cod_produs + ')'
+                  text: item.nume + ' (cod ' + item.cod_produs + ')',
+                  productName: item.nume,
+                  unit: item.um || ''
                 };
               })
             };
@@ -144,10 +148,14 @@
         }
       }).on('select2:select', function (event) {
         selectedProductId = event.params.data.id;
+        selectedProductName = event.params.data.productName || event.params.data.text || '';
+        selectedProductUnit = event.params.data.unit || '';
         $showStock.prop('disabled', false);
         $result.removeClass('visible loading error').empty();
       }).on('select2:clear', function () {
         selectedProductId = null;
+        selectedProductName = '';
+        selectedProductUnit = '';
         $showStock.prop('disabled', true);
         $result.removeClass('visible loading error').empty();
       });
@@ -157,6 +165,7 @@
           return;
         }
 
+        var requestStartedAt = Date.now();
         $showStock.prop('disabled', true);
         showState('loading', 'Se calculează stocul din mișcările online...');
 
@@ -164,22 +173,26 @@
           url: 'verifica_stoc_calcul.php',
           dataType: 'json',
           cache: false,
+          timeout: 10000,
           data: { cod_produs: selectedProductId }
         }).done(function (response) {
           var value = Number(response.final_stock || 0).toLocaleString('ro-RO', {
             minimumFractionDigits: 0,
             maximumFractionDigits: 3
           });
-          var unit = response.um ? ' ' + response.um : '';
+          var unit = selectedProductUnit ? ' ' + selectedProductUnit : '';
           var locations = (response.included_locations || [response.cod_locatie]).join(', ');
+          var totalMs = Date.now() - requestStartedAt;
+          var timing = ' · SQL: ' + Number(response.query_ms || 0) + ' ms' +
+            ' · Răspuns total: ' + totalMs + ' ms';
           showState('',
-            '<div class="stock-product">' + $('<div>').text(response.nume || '').html() + '</div>' +
+            '<div class="stock-product">' + $('<div>').text(selectedProductName).html() + '</div>' +
             '<div class="stock-value">' + value + unit + '</div>' +
             '<div class="stock-meta">Sursă: baza online · Locații incluse: ' + locations +
-            ' · Calculat la: ' + $('<div>').text(response.calculated_at || '').html() + '</div>'
+            ' · Calculat la: ' + $('<div>').text(response.calculated_at || '').html() + timing + '</div>'
           );
         }).fail(function (xhr) {
-          showState('error', messageFromXhr(xhr, 'Stocul online nu a putut fi calculat. Verifică internetul și licența.'));
+          showState('error', messageFromXhr(xhr, 'Stocul online nu a putut fi calculat. Verifică accesul la internet.'));
         }).always(function () {
           $showStock.prop('disabled', !selectedProductId);
         });
