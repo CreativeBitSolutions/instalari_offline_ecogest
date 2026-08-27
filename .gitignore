@@ -13,3 +13,4 @@
 **/offline_installation_identity.json.lock
 **/backups_transaction_reset/
 /.playwright-cli
+*.exe

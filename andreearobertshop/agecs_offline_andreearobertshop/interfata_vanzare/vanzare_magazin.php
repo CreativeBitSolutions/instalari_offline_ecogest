@@ -189,6 +189,74 @@ $offlinePendingReceiptCount = array_sum(array_map(static function (array $closur
     .modal {
       overflow-y: auto;
     }
+    <?php if ((int)($_SESSION['client_id'] ?? 0) === 22): ?>
+    .client22-scan-alert {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      z-index: 1090;
+      display: flex;
+      width: min(430px, calc(100vw - 32px));
+      align-items: flex-start;
+      gap: 14px;
+      padding: 18px 48px 18px 18px;
+      border: 1px solid #f1b8b8;
+      border-left: 5px solid #d9363e;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 18px 48px rgba(25, 34, 45, 0.24);
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, -46%);
+      transition: opacity 160ms ease, transform 160ms ease;
+      visibility: hidden;
+    }
+    .client22-scan-alert.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%);
+      visibility: visible;
+    }
+    .client22-scan-alert__icon {
+      color: #d9363e;
+      font-size: 24px;
+      line-height: 1;
+    }
+    .client22-scan-alert__title {
+      margin: 0 0 4px;
+      color: #252b33;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+    .client22-scan-alert__message {
+      margin: 0;
+      color: #555f6b;
+      font-size: 15px;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+    .client22-scan-alert__close {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 34px;
+      height: 34px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: #68727e;
+      font-size: 26px;
+      line-height: 32px;
+      cursor: pointer;
+    }
+    .client22-scan-alert__close:hover,
+    .client22-scan-alert__close:focus {
+      color: #20262d;
+      outline: 2px solid #9ec5fe;
+      outline-offset: 1px;
+    }
+    <?php endif; ?>
     </style>
 <script src="js/offline-persistent-zoom.js?v=20260825-header2"></script>
 </head>
@@ -836,6 +904,17 @@ $loc_curenta = (int)$cod_locatie;
 
 
 
+<?php if ((int)($_SESSION['client_id'] ?? 0) === 22): ?>
+<div id="client22-scan-alert" class="client22-scan-alert" role="alert" aria-live="assertive" aria-hidden="true">
+    <i class="fas fa-exclamation-triangle client22-scan-alert__icon" aria-hidden="true"></i>
+    <div>
+        <p class="client22-scan-alert__title">Scanare nereușită</p>
+        <p id="client22-scan-alert-message" class="client22-scan-alert__message"></p>
+    </div>
+    <button type="button" id="client22-scan-alert-close" class="client22-scan-alert__close" aria-label="Închide">&times;</button>
+</div>
+<?php endif; ?>
+
  <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/offline/popper/popper.min.js"></script>
     <script src="vendor/offline/bootstrap4/bootstrap.min.js"></script>
@@ -848,6 +927,65 @@ const clientId = '<?php echo $_SESSION['client_id']; ?>';
 const offlineApiWebRoot = <?php echo json_encode(rtrim((string)offline_config_value('api_web_root'), '/')); ?>;
 const codMasa = '<?php echo $cod_masa; ?>';
 const sessionId = '<?php echo session_id(); ?>'; // <-- NOU: pentru a diferenția URL-urile în cache-ul browserului
+const isClient22ScanAlertEnabled = String(clientId) === '22';
+let client22ScanAlertTimer = null;
+
+function playClient22ScanAlert() {
+    if (!isClient22ScanAlertEnabled) return;
+
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return;
+
+    try {
+        const audioContext = new AudioContextClass();
+        const startSound = () => {
+            const now = audioContext.currentTime;
+            [0, 0.18].forEach((delay, index) => {
+                const oscillator = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                oscillator.type = 'square';
+                oscillator.frequency.setValueAtTime(index === 0 ? 620 : 470, now + delay);
+                gain.gain.setValueAtTime(0.0001, now + delay);
+                gain.gain.exponentialRampToValueAtTime(0.16, now + delay + 0.015);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + delay + 0.13);
+                oscillator.connect(gain);
+                gain.connect(audioContext.destination);
+                oscillator.start(now + delay);
+                oscillator.stop(now + delay + 0.14);
+            });
+            window.setTimeout(() => audioContext.close().catch(() => {}), 500);
+        };
+
+        if (audioContext.state === 'suspended') {
+            audioContext.resume().then(startSound).catch(() => audioContext.close().catch(() => {}));
+        } else {
+            startSound();
+        }
+    } catch (_) {
+        // Alerta vizuală rămâne disponibilă dacă browserul blochează sunetul.
+    }
+}
+
+function showClient22ScanAlert(message) {
+    if (!isClient22ScanAlertEnabled) return;
+
+    const alertBox = $('#client22-scan-alert');
+    if (!alertBox.length) return;
+
+    window.clearTimeout(client22ScanAlertTimer);
+    $('#client22-scan-alert-message').text(message);
+    alertBox.addClass('is-visible').attr('aria-hidden', 'false');
+    playClient22ScanAlert();
+
+    client22ScanAlertTimer = window.setTimeout(() => {
+        alertBox.removeClass('is-visible').attr('aria-hidden', 'true');
+    }, 5000);
+}
+
+$('#client22-scan-alert-close').on('click', function() {
+    window.clearTimeout(client22ScanAlertTimer);
+    $('#client22-scan-alert').removeClass('is-visible').attr('aria-hidden', 'true');
+});
 
 const loadFile = clientId == 6 ? "load_prod_cu_stoc.php" : "load_prod.php";
 const isClient1005 = ['1005', '8','1006'].includes(String(clientId));
@@ -2298,7 +2436,17 @@ $('#btn_clear_debug_micotex').on('click', function() {
             finalizeAndResetInputs(openedAutoPopup);
         };
 
-        const onFail = () => { alert('Eroare: produs negăsit sau fără stoc.'); barcodeFilterInput.select(); };
+        const onFail = (xhr) => {
+            const responseError = xhr && xhr.responseJSON ? String(xhr.responseJSON.error || '') : '';
+            const productNotFound = xhr && xhr.status === 404 && /produs/i.test(responseError);
+
+            if (isClient22ScanAlertEnabled && productNotFound) {
+                showClient22ScanAlert('Produsul cu codul ' + codBare + ' nu a fost găsit.');
+            } else {
+                alert('Eroare: produs negăsit sau fără stoc.');
+            }
+            barcodeFilterInput.select();
+        };
 
         try {
             // ——— DOAR pentru client 8: verificăm UM; dacă e KG și avem Web Serial, citim cântarul ÎNAINTE de adăugare
@@ -2596,13 +2744,23 @@ $('#btn_clear_debug_micotex').on('click', function() {
     // ======== GESTIONAREA EVENIMENTELOR GENERALE (KEYBOARD SHORTCUTS) ========
     
     $(document).on('keydown', function(e) {
+        const target = $(e.target);
+        const isInteractiveTarget = target.is('input, textarea, select, button, a, [contenteditable="true"]') ||
+            target.closest('[role="button"], [contenteditable="true"]').length > 0;
+
+        if (isClient22ScanAlertEnabled && e.key === 'Enter' && !isInteractiveTarget) {
+            e.preventDefault();
+            showClient22ScanAlert('Pentru scanare, selectați câmpul Caută Cod Bare.');
+            barcodeFilterInput.focus().select();
+            return;
+        }
+
         // Ignorăm shortcut-urile dacă un alt modal (care nu e de cantitate sau plată) este deschis
         const activeModal = $('.modal.show');
         if (activeModal.length > 0 && !activeModal.is('#quantity-keyboard-modal, #numeric-keyboard-modal')) {
             return;
         }
 
-        const target = $(e.target);
         const isInputFocused = target.is('input, textarea');
 
         // Shortcut pentru comutare între câmpurile de căutare
