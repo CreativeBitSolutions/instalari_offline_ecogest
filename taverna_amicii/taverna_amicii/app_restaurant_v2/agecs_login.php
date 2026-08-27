@@ -144,6 +144,16 @@ $cust_id = 12; // rămâne neschimbat
         </div>
     </header>
 
+    <section class="products-sync-statusbar is-loading" id="productsAutosyncStatus" role="status" aria-live="polite">
+        <span class="products-sync-statusbar__signal" aria-hidden="true"></span>
+        <span class="products-sync-statusbar__copy">
+            <span class="products-sync-statusbar__eyebrow">NOMENCLATOR LOCAL</span>
+            <strong>Ultima sincronizare produse</strong>
+            <small id="productsAutosyncMessage">Se citește ultima stare locală...</small>
+        </span>
+        <a href="offline_products_sync.php" class="products-sync-statusbar__history">Vezi jurnalul</a>
+    </section>
+
     <!---------------------- ZONA PRINCIPALĂ: GRID + KEYPAD ---------------------->
     <?php if (!$productsLoginBlocked && !$productsNeedsAcknowledgement && !empty($productsSyncGuard['message'])): ?>
     <?php
@@ -429,6 +439,7 @@ $cust_id = 12; // rămâne neschimbat
 </script>
 
 <script src="offline_sync_heartbeat.js"></script>
+<script src="offline_products_autosync_status.js"></script>
 
 </body>
 </html>
