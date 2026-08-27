@@ -45,6 +45,16 @@ if (!function_exists('wooOfflineEnsureSchema')) {
         foreach ($sql as $statement) {
             $pdo->exec($statement);
         }
+        $columns = [];
+        foreach ($pdo->query('PRAGMA table_info(woo_orders_inbox)')->fetchAll(PDO::FETCH_ASSOC) as $column) {
+            $columns[(string)($column['name'] ?? '')] = true;
+        }
+        if (!isset($columns['import_source'])) {
+            $pdo->exec("ALTER TABLE woo_orders_inbox ADD COLUMN import_source TEXT NOT NULL DEFAULT 'offline'");
+        }
+        if (!isset($columns['online_import_checked_at'])) {
+            $pdo->exec('ALTER TABLE woo_orders_inbox ADD COLUMN online_import_checked_at TEXT DEFAULT NULL');
+        }
     }
 }
 
@@ -132,6 +142,133 @@ if (!function_exists('wooOfflineHttp')) {
             throw new RuntimeException('WooCommerce HTTP '.$http.': '.(string)($body['message']??$raw));
         }
         return ['http_code'=>$http,'body'=>$body];
+    }
+}
+
+if (!function_exists('wooOfflineOnlineRegistryConfig')) {
+    function wooOfflineOnlineRegistryConfig(array $restaurantConfig): array
+    {
+        $config = is_array($restaurantConfig['online_woo_imports_sync'] ?? null)
+            ? $restaurantConfig['online_woo_imports_sync']
+            : [];
+        return [
+            'enabled' => filter_var($config['enabled'] ?? false, FILTER_VALIDATE_BOOL),
+            'api_url' => trim((string)($config['api_url'] ?? '')),
+            'api_key' => trim((string)($config['api_key'] ?? '')),
+            'client_id' => (int)($config['client_id'] ?? $restaurantConfig['client_id'] ?? 0),
+            'cod_locatie' => (int)($config['cod_locatie'] ?? $restaurantConfig['cod_locatie'] ?? 0),
+            'timeout_seconds' => max(5, (int)($config['timeout_seconds'] ?? 20)),
+            'verify_ssl' => filter_var($config['verify_ssl'] ?? true, FILTER_VALIDATE_BOOL),
+            'ca_bundle_path' => trim((string)($restaurantConfig['ca_bundle_path'] ?? '')),
+        ];
+    }
+}
+
+if (!function_exists('wooOfflineReconcileOnlineImports')) {
+    function wooOfflineReconcileOnlineImports(PDO $pdo, array $restaurantConfig, ?array $specificOrderIds = null): array
+    {
+        $config = wooOfflineOnlineRegistryConfig($restaurantConfig);
+        $result = ['checked' => 0, 'imported_online' => 0];
+        if (!$config['enabled'] || $config['api_url'] === '' || $config['api_key'] === '') {
+            return $result;
+        }
+
+        if ($specificOrderIds === null) {
+            $rawIds = $pdo->query("SELECT woo_order_id FROM woo_orders_inbox WHERE import_state<>'imported' ORDER BY COALESCE(date_created,fetched_at) ASC LIMIT 500")->fetchAll(PDO::FETCH_COLUMN) ?: [];
+        } else {
+            $rawIds = $specificOrderIds;
+        }
+        $orderIds = [];
+        foreach ($rawIds as $rawId) {
+            $id = filter_var($rawId, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+            if ($id !== false) {
+                $orderIds[(string)$id] = (int)$id;
+            }
+        }
+        $orderIds = array_values($orderIds);
+        if (!$orderIds) {
+            return $result;
+        }
+        $result['checked'] = count($orderIds);
+
+        $payload = json_encode([
+            'cod_client' => $config['client_id'],
+            'cod_locatie' => $config['cod_locatie'],
+            'order_ids' => $orderIds,
+        ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        if ($payload === false) {
+            throw new RuntimeException('Lista comenzilor Woo nu poate fi serializată pentru verificarea online.');
+        }
+
+        $ch = curl_init($config['api_url']);
+        if ($ch === false) {
+            throw new RuntimeException('Nu se poate inițializa verificarea comenzilor importate online.');
+        }
+        $options = [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => $payload,
+            CURLOPT_CONNECTTIMEOUT => 8,
+            CURLOPT_TIMEOUT => $config['timeout_seconds'],
+            CURLOPT_HTTPHEADER => [
+                'Accept: application/json',
+                'Content-Type: application/json; charset=utf-8',
+                'X-Api-Key: ' . $config['api_key'],
+            ],
+            CURLOPT_SSL_VERIFYPEER => $config['verify_ssl'],
+            CURLOPT_SSL_VERIFYHOST => $config['verify_ssl'] ? 2 : 0,
+        ];
+        if ($config['verify_ssl'] && $config['ca_bundle_path'] !== '' && is_file($config['ca_bundle_path'])) {
+            $options[CURLOPT_CAINFO] = $config['ca_bundle_path'];
+        }
+        curl_setopt_array($ch, $options);
+        $raw = curl_exec($ch);
+        $curlError = curl_error($ch);
+        $httpCode = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        if ($raw === false) {
+            throw new RuntimeException('Verificarea importurilor AGECS online a eșuat: ' . $curlError);
+        }
+        $body = json_decode((string)$raw, true);
+        if (!is_array($body) || $httpCode < 200 || $httpCode >= 300 || (string)($body['status'] ?? '') !== 'success') {
+            throw new RuntimeException('Verificarea importurilor AGECS online a returnat HTTP ' . $httpCode . ': ' . (string)($body['message'] ?? 'răspuns invalid'));
+        }
+        if ((int)($body['client_id'] ?? 0) !== $config['client_id'] || (int)($body['cod_locatie'] ?? 0) !== $config['cod_locatie']) {
+            throw new RuntimeException('Răspunsul verificării Woo aparține altui client sau altei locații.');
+        }
+
+        $imports = is_array($body['imported_orders'] ?? null) ? $body['imported_orders'] : [];
+        if (!$imports) {
+            return $result;
+        }
+        $allowedIds = array_fill_keys(array_map('strval', $orderIds), true);
+        $now = date('Y-m-d H:i:s');
+        $stmt = $pdo->prepare("UPDATE woo_orders_inbox SET import_state='imported', import_source='online', imported_note_nrbon=?, imported_at=?, ack_status='not_ready', mapping_error='', import_error='', online_import_checked_at=?, updated_at=? WHERE woo_order_id=? AND import_state<>'imported'");
+        $pdo->beginTransaction();
+        try {
+            foreach ($imports as $import) {
+                if (!is_array($import)) {
+                    continue;
+                }
+                $orderId = filter_var($import['woo_order_id'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+                if ($orderId === false || !isset($allowedIds[(string)$orderId])) {
+                    continue;
+                }
+                $importedAt = trim((string)($import['imported_at'] ?? '')) ?: $now;
+                $stmt->execute([(int)($import['note_nrbon'] ?? 0), $importedAt, $now, $now, (string)$orderId]);
+                $result['imported_online'] += $stmt->rowCount();
+            }
+            $pdo->commit();
+        } catch (Throwable $e) {
+            if ($pdo->inTransaction()) {
+                $pdo->rollBack();
+            }
+            throw $e;
+        }
+        if ($result['imported_online'] > 0) {
+            wooOfflineLog($pdo, 'online_registry', 'success', ['received' => $result['checked'], 'updated' => $result['imported_online']], $httpCode, 'Comenzi deja importate în AGECS online.');
+        }
+        return $result;
     }
 }
 
@@ -493,7 +630,7 @@ if (!function_exists('wooOfflineInsertLine')) {
 if (!function_exists('wooOfflineImport')) {
     function wooOfflineImport(PDO $pdo,string $wooId,int $operator,int $location,string $mode,int $currentNote,int $table): int
     {
-        $stmt=$pdo->prepare('SELECT import_state FROM woo_orders_inbox WHERE woo_order_id=?');$stmt->execute([$wooId]);if((string)$stmt->fetchColumn()==='imported')throw new RuntimeException('Comanda Woo a fost deja importata local.');
+        $stmt=$pdo->prepare('SELECT import_state,import_source FROM woo_orders_inbox WHERE woo_order_id=?');$stmt->execute([$wooId]);$existingState=$stmt->fetch(PDO::FETCH_ASSOC);if((string)($existingState['import_state']??'')==='imported'){if((string)($existingState['import_source']??'offline')==='online')throw new RuntimeException('Comanda Woo a fost deja importată în AGECS online.');throw new RuntimeException('Comanda Woo a fost deja importată local.');}
         $order=wooOfflineOrder($pdo,$wooId);$missing=wooOfflineMissingMappings($pdo,$order);
         if($missing){$pdo->prepare("UPDATE woo_orders_inbox SET import_state='mapping_error',mapping_error=?,updated_at=? WHERE woo_order_id=?")->execute(['Exista '.count($missing).' mapari lipsa.',date('Y-m-d H:i:s'),$wooId]);throw new RuntimeException('Comanda are produse/transport nemapate.');}
         $pdo->beginTransaction();

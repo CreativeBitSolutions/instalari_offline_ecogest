@@ -25,8 +25,8 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     $action=(string)($_POST['action']??'');
     try{
         if($action==='sync'){
-            $counts=wooOfflineSync($pdo,$cfg);$acks=wooOfflineRetryAcks($pdo,$cfg,$installationId);
-            $message='Sincronizare finalizata: '.$counts['received'].' primite, '.$counts['inserted'].' noi, '.$counts['updated'].' actualizate, '.$acks.' confirmari retrimise.';
+            $counts=wooOfflineSync($pdo,$cfg);$onlineRegistry=wooOfflineReconcileOnlineImports($pdo,$restaurantConfig??[]);$acks=wooOfflineRetryAcks($pdo,$cfg,$installationId);
+            $message='Sincronizare finalizata: '.$counts['received'].' primite, '.$counts['inserted'].' noi, '.$counts['updated'].' actualizate, '.(int)($onlineRegistry['imported_online']??0).' deja importate online, '.$acks.' confirmari retrimise.';
         }elseif($action==='save_mapping'){
             $key=trim((string)($_POST['mapping_key']??''));$cod=(int)($_POST['cod_produs']??0);
             if($key===''||$cod<=0)throw new RuntimeException('Maparea este invalida.');
@@ -38,6 +38,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
             $_SESSION['woo_offline_flash']='Maparea a fost salvata.';header('Location: woo_offline_import.php');exit;
         }elseif($action==='import'){
             $wooId=trim((string)($_POST['woo_order_id']??''));$mode=(string)($_POST['target_mode']??'table');if(!in_array($mode,['table','current_note'],true))$mode='table';$table=(int)($_POST['cod_masa_target']??0);
+            wooOfflineReconcileOnlineImports($pdo,$restaurantConfig??[],[$wooId]);
             $note=wooOfflineImport($pdo,$wooId,$operator,$location,$mode,$currentNote,$table);wooOfflineAck($pdo,$cfg,$wooId,$note,$installationId);header('Location: vanzare_restaurant.php');exit;
         }elseif($action==='retry_ack'){
             if(!wooOfflineAck($pdo,$cfg,trim((string)($_POST['woo_order_id']??'')),(int)($_POST['note_id']??0),$installationId))throw new RuntimeException('Confirmarea Woo nu a reusit. Comanda ramane importata local si va fi retrimisa.');
@@ -47,7 +48,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
 }
 
 if($_SERVER['REQUEST_METHOD']==='GET'&&!isset($_GET['nosync'])){
-    try{$last=$pdo->query('SELECT last_sync_success_at FROM woo_sync_state WHERE id=1')->fetchColumn();$interval=max(15,(int)($cfg['automatic_interval_seconds']??30));if(!$last||strtotime((string)$last)<=time()-$interval){wooOfflineSync($pdo,$cfg);wooOfflineRetryAcks($pdo,$cfg,$installationId);}}
+    try{$last=$pdo->query('SELECT last_sync_success_at FROM woo_sync_state WHERE id=1')->fetchColumn();$interval=max(15,(int)($cfg['automatic_interval_seconds']??30));if(!$last||strtotime((string)$last)<=time()-$interval){wooOfflineSync($pdo,$cfg);wooOfflineRetryAcks($pdo,$cfg,$installationId);}wooOfflineReconcileOnlineImports($pdo,$restaurantConfig??[]);}
     catch(Throwable $e){$error='Comenzile deja salvate local raman disponibile, dar sincronizarea online nu a reusit: '.$e->getMessage();}
 }
 

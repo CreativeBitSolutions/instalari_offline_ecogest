@@ -1,0 +1,13 @@
+{
+    "license": {
+        "version": 1,
+        "client_id": 25,
+        "hardware_serial": "0000_0000_0000_0000_0026_B778_42D5_DC45.",
+        "installation_uuid": "grandplaza-c25-l1-i-b432309c2d5a7be8",
+        "issued_at": "2026-08-27T18:10:29+03:00",
+        "expires_at": "2026-09-26T18:10:29+03:00"
+    },
+    "signature": "BY+f3pUVVLsOvfx7sri4T7bgtIoKvTEf9OiJ8gQlG1SU2U9F/67Gq9bBQMB/T81k2E2wCmfVuuLiINpJ0B3zdqxgISi6pL7wnn9NUVY65XRQZFmdMumJfLoqTr5Y4ckjPpcnipKM1jkoUzqYotBcFw5Yf/BRY+Bh31UsLZ9r1UweARcacRqW3yLCn5lFgOAbAVYMXNZm48f8TXpaTc0JmG7EYVBqieFHWyY8wQxDLaiT0q7VesglvPGx2poA6hDLvhdo1XZKjU1ikOTOsDEHHvluohpg6Wv5CWNP+Ui361ZbWDrs9jz1C3CWMXtLvpvqiA5nBy7K3jS83oDnoAr7Bg==",
+    "signature_algorithm": "SHA256withRSA",
+    "saved_at": "2026-08-27T17:10:29+02:00"
+}

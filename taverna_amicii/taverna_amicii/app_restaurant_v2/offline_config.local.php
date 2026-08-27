@@ -48,6 +48,15 @@ $config = [
         'verify_ssl' => true,
         'debug_db' => false,
     ],
+    'online_woo_imports_sync' => [
+        'enabled' => true,
+        'api_url' => 'https://agecs.agecs.in/api/offline-woo-imported-orders.php',
+        'api_key' => '99c482812c565c2a7fd757492bb662395f0f1462ff383765eba2b4725f3db54f',
+        'client_id' => 1008,
+        'cod_locatie' => 1,
+        'timeout_seconds' => 20,
+        'verify_ssl' => true,
+    ],
     'online_tablet_sync' => [
         'enabled' => true,
         'automatic' => true,

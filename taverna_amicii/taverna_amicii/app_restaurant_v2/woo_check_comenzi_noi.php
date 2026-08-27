@@ -17,6 +17,12 @@ try {
         try { wooOfflineSync($pdo,$cfg); }
         catch(Throwable $syncError) { $out['warning']=$syncError->getMessage(); }
     }
+    try {
+        $onlineRegistry = wooOfflineReconcileOnlineImports($pdo, $restaurantConfig ?? []);
+        $out['imported_online'] = (int)($onlineRegistry['imported_online'] ?? 0);
+    } catch (Throwable $registryError) {
+        $out['online_registry_warning'] = $registryError->getMessage();
+    }
     $rows=$pdo->query("SELECT woo_order_id FROM woo_orders_inbox WHERE import_state<>'imported' ORDER BY COALESCE(date_created,fetched_at) ASC LIMIT 200")->fetchAll(PDO::FETCH_COLUMN)?:[];
     $out['ids']=array_values(array_map('strval',$rows));
     $out['count']=count($out['ids']);
