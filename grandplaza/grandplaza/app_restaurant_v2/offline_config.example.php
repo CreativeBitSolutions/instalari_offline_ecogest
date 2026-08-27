@@ -6,7 +6,7 @@ return [
     'cod_locatie' => 1,
     'installation_uuid' => 'grandplaza-c25-l1',
     'installation_identity_format' => 'restaurant',
-    'app_name' => 'App Restaurant Offline Grand Plaza',
+    'app_name' => 'ECOGEST RESTAURANT OFFLINE Grand Plaza',
     'offline_api_path' => dirname(dirname(__DIR__)) . '/api_offline_grandplaza',
     'ca_bundle_path' => dirname(dirname(__DIR__)) . '/api_offline_grandplaza/certificates/cacert.pem',
     'sqlite_path' => dirname(dirname(__DIR__)) . '/api_offline_grandplaza/restaurant.sqlite',

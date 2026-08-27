@@ -160,16 +160,16 @@ try {
     curl_close($ch);
 
     if ($raw === false) {
-        throw new RuntimeException('Conectarea la AGECS online a esuat: ' . $curlError);
+        throw new RuntimeException('Conectarea la ECOGEST online a esuat: ' . $curlError);
     }
 
     $response = json_decode((string)$raw, true);
     if (!is_array($response)) {
-        throw new RuntimeException('AGECS online a returnat JSON invalid.');
+        throw new RuntimeException('ECOGEST online a returnat JSON invalid.');
     }
     if ($httpCode < 200 || $httpCode >= 300 || (string)($response['status'] ?? '') !== 'success') {
         $message = trim((string)($response['message'] ?? ''));
-        throw new RuntimeException($message !== '' ? $message : ('AGECS online HTTP ' . $httpCode));
+        throw new RuntimeException($message !== '' ? $message : ('ECOGEST online HTTP ' . $httpCode));
     }
 
     $users = is_array($response['users'] ?? null) ? $response['users'] : [];

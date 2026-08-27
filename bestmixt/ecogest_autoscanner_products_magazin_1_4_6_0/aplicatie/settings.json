@@ -1,0 +1,12 @@
+{
+  "OfflineApiPath": "C:\\xampp\\htdocs\\github\\instalari_offline_ecogest\\bestmixt\\api_offline_ecogest_bestmixt",
+  "DatabasePath": "C:\\xampp\\htdocs\\github\\instalari_offline_ecogest\\bestmixt\\api_offline_ecogest_bestmixt\\db_local\\pos.db",
+  "ProductsApiUrl": "https://agecs.agecs.in/sincronizare_online_app_restaurant/sincronizare_date_offline.php",
+  "ClientId": 21,
+  "ScanIntervalMinutes": 10,
+  "RequestTimeoutMinutes": 15,
+  "SchedulerEnabled": true,
+  "RunImmediatelyOnLaunch": true,
+  "StartWithWindows": false,
+  "StartMinimized": false
+}

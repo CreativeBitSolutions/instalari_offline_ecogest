@@ -517,7 +517,7 @@ if (!function_exists('wooOfflineAck')) {
     function wooOfflineAck(PDO $pdo,array $cfg,string $wooId,int $noteId,string $installationId): bool
     {
         try{
-            wooOfflineHttp($cfg,'POST','orders/'.rawurlencode($wooId).'/acknowledge',[],['installation_id'=>$installationId,'imported_at'=>date('Y-m-d H:i:s'),'local_note_id'=>(string)$noteId,'result'=>'success','message'=>'Import WooCommerce finalizat in AGECS offline.']);
+            wooOfflineHttp($cfg,'POST','orders/'.rawurlencode($wooId).'/acknowledge',[],['installation_id'=>$installationId,'imported_at'=>date('Y-m-d H:i:s'),'local_note_id'=>(string)$noteId,'result'=>'success','message'=>'Import WooCommerce finalizat in ECOGEST offline.']);
             $now=date('Y-m-d H:i:s');$pdo->prepare("UPDATE woo_orders_inbox SET ack_status='acknowledged',acknowledged_at=?,ack_error='',updated_at=? WHERE woo_order_id=?")->execute([$now,$now,$wooId]);wooOfflineLog($pdo,'ack','success',['acknowledged'=>1],200,'Woo #'.$wooId);return true;
         }catch(Throwable $e){$pdo->prepare("UPDATE woo_orders_inbox SET ack_status='pending',ack_attempts=ack_attempts+1,ack_error=?,updated_at=? WHERE woo_order_id=?")->execute([substr($e->getMessage(),0,1000),date('Y-m-d H:i:s'),$wooId]);wooOfflineLog($pdo,'ack','error',[],0,$e->getMessage());return false;}
     }

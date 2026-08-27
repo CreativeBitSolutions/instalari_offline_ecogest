@@ -2,7 +2,7 @@
 
 ## Identificare
 
-- Client AGECS: `25`
+- Client ECOGEST: `25`
 - Locație: `1`
 - Aplicație: `C:\xampp\htdocs\github\instalari_offline_ecogest\grandplaza\grandplaza\app_restaurant_v2`
 - API local: `C:\xampp\htdocs\github\instalari_offline_ecogest\grandplaza\api_offline_grandplaza`
@@ -26,7 +26,7 @@ O notă finalizată cu status `F` intră imediat în coada către online. Închi
 - `grandplaza_casa_marcat\AGECSScanCM.exe` citește endpointul local și scrie fișierele INP în `C:\fprint\in`.
 - `grandplaza_printer\AGECSScanPR.exe` citește endpointul local și folosește imprimantele `BUC`, `BAR` și `Salate`.
 - `grandplaza_veribon\AGECS.VeriBon.exe` urmărește răspunsurile din `C:\fprint\in\BonANSWER`, `BonERR` și `BonOK`, apoi le transmite endpointului AGECS online.
-- `autoscanneragecsproducts_restaurant_cu_api_fisier_1_4_6_0` actualizează nomenclatoarele în baza SQLite a clientului 25.
+- `ecogest_autoscanner_products_restaurant_1_4_6_0` actualizează nomenclatoarele în baza SQLite a clientului 25.
 
 Copiile din `aplicatii_grandplaza_configurate_pentru_online` rămân configurațiile originale online. Variantele din rădăcina instalării sunt cele configurate pentru fluxul offline.
 

@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $preview = offline_transaction_reset_preview($pdo);
-$appName = trim((string)($config['app_name'] ?? 'AGECS POS Offline'));
+$appName = trim((string)($config['app_name'] ?? 'ECOGEST RESTAURANT OFFLINE'));
 ?>
 <!DOCTYPE html>
 <html lang="ro">

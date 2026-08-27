@@ -6,7 +6,7 @@ return [
     'cod_locatie' => 1,
     'installation_uuid' => 'glovograndplaza-c26-l1',
     'installation_identity_format' => 'restaurant',
-    'app_name' => 'App Restaurant Offline Glovo Grand Plaza',
+    'app_name' => 'ECOGEST RESTAURANT OFFLINE Glovo Grand Plaza',
     'offline_api_path' => dirname(dirname(__DIR__)) . '/api_offline_glovograndplaza',
     'ca_bundle_path' => dirname(dirname(__DIR__)) . '/api_offline_glovograndplaza/certificates/cacert.pem',
     'sqlite_path' => dirname(dirname(__DIR__)) . '/api_offline_glovograndplaza/restaurant.sqlite',

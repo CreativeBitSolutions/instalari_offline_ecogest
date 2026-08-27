@@ -29,7 +29,7 @@ $facturi = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">AGECS</a>
+  <a class="navbar-brand" href="#">ECOGEST</a>
   <div class="ml-auto">
     <a href="vanzare_restaurant.php" class="btn btn-outline-light btn-sm">Înapoi la vânzare</a>
   </div>

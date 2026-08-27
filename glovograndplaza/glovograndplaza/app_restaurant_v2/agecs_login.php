@@ -131,7 +131,7 @@ $cust_id = 12; // rămâne neschimbat
 <div class="container py-4 login-shell">
     <header class="login-topbar">
         <div class="login-brand">
-            <span>AGECS RESTAURANT OFFLINE</span>
+            <span>ECOGEST RESTAURANT OFFLINE</span>
             <h1>Conectare utilizator</h1>
         </div>
         <div class="login-meta">

@@ -38,7 +38,7 @@ function offline_2fa_sync_tablet_user(PDO $pdo, string $table, array $tabletUser
 {
     $tabletAdminId = (int)($tabletUser['admin_id'] ?? 0);
     if ($tabletAdminId <= 0) {
-        throw new RuntimeException('AGECS online nu a transmis admin_id pentru utilizatorul tableta.');
+        throw new RuntimeException('ECOGEST online nu a transmis admin_id pentru utilizatorul tableta.');
     }
 
     $columns = offline_2fa_table_columns($pdo, $table);
@@ -209,19 +209,19 @@ try {
     curl_close($ch);
 
     if ($raw === false) {
-        throw new RuntimeException('Conectarea la AGECS online a esuat: ' . $curlError);
+        throw new RuntimeException('Conectarea la ECOGEST online a esuat: ' . $curlError);
     }
 
     $response = json_decode((string)$raw, true);
     if (!is_array($response)) {
-        throw new RuntimeException('AGECS online a returnat un raspuns JSON invalid.');
+        throw new RuntimeException('ECOGEST online a returnat un raspuns JSON invalid.');
     }
 
     if ($httpCode < 200 || $httpCode >= 300 || (string)($response['status'] ?? '') !== 'success') {
         $message = trim((string)($response['message'] ?? ''));
         offline_2fa_out([
             'status' => 'error',
-            'message' => $message !== '' ? $message : ('AGECS online HTTP ' . $httpCode),
+            'message' => $message !== '' ? $message : ('ECOGEST online HTTP ' . $httpCode),
         ], $httpCode >= 400 && $httpCode <= 599 ? $httpCode : 502);
     }
 
@@ -246,5 +246,5 @@ try {
     offline_2fa_out($response, 200);
 } catch (Throwable $e) {
     error_log('[offline-vanzare-tableta-2fa] ' . $e->getMessage());
-    offline_2fa_out(['status' => 'error', 'message' => 'Nu s-a putut comunica cu AGECS online pentru codul 2FA.'], 500);
+    offline_2fa_out(['status' => 'error', 'message' => 'Nu s-a putut comunica cu ECOGEST online pentru codul 2FA.'], 500);
 }

@@ -54,7 +54,7 @@ function offline_license_html($value)
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Verificare licență offline</title>
+    <title>Verificare licență ECOGEST offline</title>
     <style>
         * { box-sizing: border-box; }
         body {
@@ -141,7 +141,7 @@ function offline_license_html($value)
 <body>
 <main class="license-panel">
     <header class="license-header">
-        <h1>Licență aplicație offline</h1>
+        <h1>Licență ECOGEST offline</h1>
     </header>
     <div class="license-body">
         <?php if (!empty($status['valid'])): ?>

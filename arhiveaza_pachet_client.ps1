@@ -159,7 +159,7 @@ try {
     }
 
     $instructions = @(
-        'PACHET APLICATIE OFFLINE AGECS',
+        'PACHET APLICATIE OFFLINE ECOGEST',
         '',
         "Client: $ClientName",
         "Generat: $(Get-Date -Format 'dd.MM.yyyy HH:mm:ss')",

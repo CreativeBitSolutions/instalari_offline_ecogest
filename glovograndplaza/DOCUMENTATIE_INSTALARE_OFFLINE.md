@@ -2,7 +2,7 @@
 
 ## Identificare
 
-- Client AGECS: `26`
+- Client ECOGEST: `26`
 - Locație: `1`
 - Aplicație: `C:\xampp\htdocs\github\instalari_offline_ecogest\glovograndplaza\glovograndplaza\app_restaurant_v2`
 - API local: `C:\xampp\htdocs\github\instalari_offline_ecogest\glovograndplaza\api_offline_glovograndplaza`
