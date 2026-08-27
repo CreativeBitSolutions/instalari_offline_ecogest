@@ -317,6 +317,39 @@ function validate_sqlite_database(PDO $sqlite): void
     }
 }
 
+function seed_historical_z_sync_baseline(PDO $sqlite, int $locatie): int
+{
+    $select = $sqlite->prepare('SELECT * FROM rapoarte_z WHERE cod_locatie = ? ORDER BY id');
+    $select->execute([$locatie]);
+    $upsert = $sqlite->prepare("INSERT INTO offline_sync_entity_state(entity_type, entity_id, payload_sha256, updated_at)
+        VALUES ('z_report', ?, ?, ?)
+        ON CONFLICT(entity_type, entity_id) DO UPDATE SET payload_sha256 = excluded.payload_sha256, updated_at = excluded.updated_at");
+    $count = 0;
+    foreach ($select->fetchAll(PDO::FETCH_ASSOC) as $report) {
+        unset($report['identificator_offline']);
+        $businessData = [
+            'event_type' => 'z_closed',
+            'aggregate_type' => 'z_report',
+            'aggregate_id' => (string)$report['id'],
+            'cod_locatie' => $locatie,
+            'tables' => [
+                'note' => [],
+                'det_note' => [],
+                'inchideri_r_12' => [],
+                'rapoarte_z' => [$report],
+                'discounturi_acordate' => [],
+            ],
+        ];
+        $json = json_encode($businessData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        if ($json === false) {
+            throw new RuntimeException('Starea inițială a rapoartelor Z nu poate fi serializată.');
+        }
+        $upsert->execute([(string)$report['id'], hash('sha256', $json), date('Y-m-d H:i:s')]);
+        $count++;
+    }
+    return $count;
+}
+
 $sqlite->beginTransaction();
 try {
     $counts = [];
@@ -340,6 +373,7 @@ try {
 try {
     restaurant_sqlite_apply_schema($sqlite);
     restaurant_sqlite_set_cod_locatie_context($sqlite, $locatie);
+    $historicalZBaselineCount = seed_historical_z_sync_baseline($sqlite, $locatie);
     validate_sqlite_database($sqlite);
 } catch (Throwable $e) {
     fwrite(STDERR, "Validare SQLite esuata: " . $e->getMessage() . "\n");
@@ -348,6 +382,7 @@ try {
 
 echo "SQLite generat: {$outPath}\n";
 echo "client_id={$clientId}, locatie={$locatie}\n";
+echo "rapoarte_z marcate ca stare initiala={$historicalZBaselineCount}\n";
 echo "Nota: filtrul client-id se aplica automat doar tabelelor care contin una dintre coloanele: " . implode(', ', $clientColumns) . "\n";
 
 foreach ($counts as $table => $count) {

@@ -503,6 +503,16 @@ function restaurant_sqlite_schema_statements(): array
             updated_at TEXT DEFAULT CURRENT_TIMESTAMP
         )",
         "INSERT OR IGNORE INTO offline_sync_runtime(id) VALUES(1)",
+        "CREATE TABLE IF NOT EXISTS offline_license_runtime (
+            id INTEGER PRIMARY KEY CHECK (id = 1),
+            last_seen_epoch INTEGER NOT NULL DEFAULT 0,
+            last_server_epoch INTEGER NOT NULL DEFAULT 0,
+            last_attempt_epoch INTEGER NOT NULL DEFAULT 0,
+            last_success_epoch INTEGER NOT NULL DEFAULT 0,
+            last_error TEXT NOT NULL DEFAULT '',
+            updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+        )",
+        "INSERT OR IGNORE INTO offline_license_runtime(id) VALUES(1)",
         "CREATE TABLE IF NOT EXISTS offline_runtime_context (
             id INTEGER PRIMARY KEY CHECK (id = 1),
             cod_locatie INTEGER DEFAULT 0,
@@ -1120,6 +1130,7 @@ function restaurant_sqlite_ensure_columns(PDO $pdo): void
             'serie_casa_marcat' => "TEXT DEFAULT ''",
         ],
         'rapoarte_z' => [
+            'identificator_offline' => 'TEXT DEFAULT NULL',
             'nr_raport_z' => 'INTEGER DEFAULT 0',
             'cod_locatie' => 'INTEGER DEFAULT 0',
             'serie_casa_marcat' => "TEXT DEFAULT ''",
@@ -1135,6 +1146,7 @@ function restaurant_sqlite_ensure_columns(PDO $pdo): void
             'data_raport' => "TEXT DEFAULT ''",
         ],
         'inchideri_r_12' => [
+            'identificator_offline' => 'TEXT DEFAULT NULL',
             'cod_inchidere' => 'INTEGER DEFAULT 0',
             'operator' => 'INTEGER DEFAULT 0',
             'valoare_cu_tva' => 'REAL DEFAULT 0',
@@ -1274,9 +1286,16 @@ function restaurant_sqlite_ensure_columns(PDO $pdo): void
             'adresa' => "TEXT DEFAULT ''",
         ],
         'det_note' => [
+            'identificator_offline' => 'TEXT DEFAULT NULL',
             'nume_produs' => "TEXT DEFAULT ''",
             'importat_din_site' => 'INTEGER DEFAULT NULL',
             'departament_listare' => 'TEXT DEFAULT NULL',
+        ],
+        'note' => [
+            'identificator_offline' => 'TEXT DEFAULT NULL',
+        ],
+        'discounturi_acordate' => [
+            'identificator_offline' => 'TEXT DEFAULT NULL',
         ],
         'com_tableta' => [
             'serie' => "TEXT DEFAULT ''",

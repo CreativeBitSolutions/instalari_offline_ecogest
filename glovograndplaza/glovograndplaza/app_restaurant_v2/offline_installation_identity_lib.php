@@ -204,9 +204,7 @@ if (!function_exists('offline_installation_identity_backfill')) {
 if (!function_exists('offline_installation_identity_initialize_database')) {
     function offline_installation_identity_initialize_database(array $config, string $statePath, array &$state): void
     {
-        if (!empty($state['legacy_backfill_completed'])) {
-            return;
-        }
+        $needsBackfill = empty($state['legacy_backfill_completed']);
         $databasePath = offline_installation_identity_database_path($config);
         if ($databasePath === '' || !is_file($databasePath)) {
             return;
@@ -215,11 +213,16 @@ if (!function_exists('offline_installation_identity_initialize_database')) {
         $pdo = new PDO('sqlite:' . $databasePath, null, null, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
         $pdo->beginTransaction();
         try {
-            offline_installation_identity_backfill(
-                $pdo,
-                $config,
-                (string)($state['legacy_installation_uuid'] ?? $config['installation_uuid_legacy'] ?? $config['installation_uuid'])
-            );
+            foreach (offline_installation_identity_pk_map() as $table => $pk) {
+                offline_installation_identity_ensure_column($pdo, $table);
+            }
+            if ($needsBackfill) {
+                offline_installation_identity_backfill(
+                    $pdo,
+                    $config,
+                    (string)($state['legacy_installation_uuid'] ?? $config['installation_uuid_legacy'] ?? $config['installation_uuid'])
+                );
+            }
             $pdo->commit();
         } catch (Throwable $e) {
             if ($pdo->inTransaction()) {
@@ -228,9 +231,11 @@ if (!function_exists('offline_installation_identity_initialize_database')) {
             throw $e;
         }
 
-        $state['legacy_backfill_completed'] = true;
-        $state['legacy_backfill_completed_at'] = date('c');
-        offline_installation_identity_write_state($statePath, $state);
+        if ($needsBackfill) {
+            $state['legacy_backfill_completed'] = true;
+            $state['legacy_backfill_completed_at'] = date('c');
+            offline_installation_identity_write_state($statePath, $state);
+        }
     }
 }
 

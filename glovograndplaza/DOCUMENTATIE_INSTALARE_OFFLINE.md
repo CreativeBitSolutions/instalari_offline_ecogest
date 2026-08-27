@@ -11,9 +11,13 @@
 
 ## Date inițiale
 
-Baza SQLite a fost generată din `u681731335_glovgrandplaza.sql`. Au fost importate 11 conturi de operator, 241 produse, 40 de mese, 22 de categorii, gestiunile, cotele TVA, datele firmei și setările clientului 26. Notele, detaliile, mișcările, bonurile și comenzile de tabletă nu au fost copiate. Cele 77 de rapoarte Z istorice sunt păstrate pentru continuitatea numerotării.
+Baza SQLite a fost generată din `u681731335_glovgrandplaza.sql`. Au fost importate 11 conturi de operator, 241 produse, 40 de mese, 22 de categorii, gestiunile, cotele TVA, datele firmei și setările clientului 26. Notele, detaliile, mișcările, bonurile și comenzile de tabletă nu au fost copiate. Cele 77 de rapoarte Z istorice sunt păstrate pentru continuitatea numerotării și sunt marcate drept date inițiale. Numai rapoartele Z create după instalare intră în coada către online.
 
 Baza sursă nu conține rețete, mapări WooCommerce sau istoric WooCommerce. Tabelele necesare există în SQLite și sunt completate ulterior de mecanismele aplicației. La fiecare conectare se rulează `ensure schema` pentru cozile de sincronizare, stările entităților, comenzile de tabletă, importul WooCommerce și jurnalele tehnice.
+
+Licența este valabilă 30 de zile. Reînnoirea automată începe cu 7 zile înainte de expirare, iar o solicitare nereușită este reluată după 6 ore. O revenire a ceasului local mai mare de 5 minute blochează interfața de vânzare. Starea licenței este păstrată în SQLite și în fișierul extern `license_runtime.json`.
+
+Lucrătorul de sincronizare pornește din interfața de autentificare și continuă trimiterea evenimentelor chiar dacă licența blochează vânzarea. Evenimentele rămân într-o coadă persistentă, sunt recuperate dacă aplicația se întrerupe în timpul trimiterii și sunt expediate în loturi de cel mult 10 elemente.
 
 ## Personalizări client 26
 
