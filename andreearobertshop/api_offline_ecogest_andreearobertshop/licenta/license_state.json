@@ -1,0 +1,13 @@
+{
+    "license": {
+        "version": 1,
+        "client_id": 22,
+        "hardware_serial": "0000_0000_0000_0000_0026_B778_42D5_DC45.",
+        "installation_uuid": "andreearobertshop-c22-l1-pos1-i-ba9abf6c47136568",
+        "issued_at": "2026-08-27T09:02:59+03:00",
+        "expires_at": "2026-09-26T09:02:59+03:00"
+    },
+    "signature": "gqxhsl/cy2uMm21yzFrAOJFwF5ykX8v76hq7KNcntPFkN8a15O2maVuYrHWIiRcuYAKlEjToFTglPAm6tIvMKbOBpAgOaBSrp38HeCRhMKoa9JvFe8pRnfsWbAQu1Sj060+MCPqdNeSTkxIXqiRjWNCmeUIj1Na1tFhhPJ7yjLsF/N6LyAAAOuASa+qedx2ymKCaOQBPfEgDJ3qXrTKWEilUFrPxeZqGdypgDbe2cTKnphZ+WIiea1hea8cSbqeYfvBgG3Wn84Du34uH52PDSlQqRBBzjK2cOVGEZXcg4GkK1fhYb8p5pHT5mbBrYLbez9Ti5au8WudOZ6cHcmNFXA==",
+    "signature_algorithm": "SHA256withRSA",
+    "saved_at": "2026-08-27T08:03:01+02:00"
+}

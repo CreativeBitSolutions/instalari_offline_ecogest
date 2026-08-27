@@ -14,3 +14,4 @@
 **/backups_transaction_reset/
 /.playwright-cli
 *.exe
+/andreearobertshop/.playwright-cli

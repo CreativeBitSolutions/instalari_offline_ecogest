@@ -1,5 +1,6 @@
 <?php //vanzare_magazin.php
 include('session.php');
+$offlineConfiguredClientId = (int)offline_config_value('client_id', $_SESSION['client_id'] ?? 0);
 ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 ini_set('error_log', 'error_log.log');
@@ -189,12 +190,12 @@ $offlinePendingReceiptCount = array_sum(array_map(static function (array $closur
     .modal {
       overflow-y: auto;
     }
-    <?php if ((int)($_SESSION['client_id'] ?? 0) === 22): ?>
+    <?php if ($offlineConfiguredClientId === 22): ?>
     .client22-scan-alert {
       position: fixed;
       top: 50%;
       left: 50%;
-      z-index: 1090;
+      z-index: 20050;
       display: flex;
       width: min(430px, calc(100vw - 32px));
       align-items: flex-start;
@@ -899,12 +900,13 @@ $loc_curenta = (int)$cod_locatie;
         </div>
     </div>
 </div>
+</div>
 
 
 
 
 
-<?php if ((int)($_SESSION['client_id'] ?? 0) === 22): ?>
+<?php if ($offlineConfiguredClientId === 22): ?>
 <div id="client22-scan-alert" class="client22-scan-alert" role="alert" aria-live="assertive" aria-hidden="true">
     <i class="fas fa-exclamation-triangle client22-scan-alert__icon" aria-hidden="true"></i>
     <div>
@@ -924,10 +926,11 @@ $(document).ready(function() {
    // ======== CONSTANTE ȘI VARIABILE INIȚIALE ========
 const nrBon = '<?php echo $nr_bon; ?>';
 const clientId = '<?php echo $_SESSION['client_id']; ?>';
+const configuredClientId = <?php echo json_encode((string)$offlineConfiguredClientId); ?>;
 const offlineApiWebRoot = <?php echo json_encode(rtrim((string)offline_config_value('api_web_root'), '/')); ?>;
 const codMasa = '<?php echo $cod_masa; ?>';
 const sessionId = '<?php echo session_id(); ?>'; // <-- NOU: pentru a diferenția URL-urile în cache-ul browserului
-const isClient22ScanAlertEnabled = String(clientId) === '22';
+const isClient22ScanAlertEnabled = String(clientId) === '22' || configuredClientId === '22';
 let client22ScanAlertTimer = null;
 
 function playClient22ScanAlert() {
@@ -2437,8 +2440,15 @@ $('#btn_clear_debug_micotex').on('click', function() {
         };
 
         const onFail = (xhr) => {
-            const responseError = xhr && xhr.responseJSON ? String(xhr.responseJSON.error || '') : '';
-            const productNotFound = xhr && xhr.status === 404 && /produs/i.test(responseError);
+            let responseError = xhr && xhr.responseJSON ? String(xhr.responseJSON.error || '') : '';
+            if (!responseError && xhr && xhr.responseText) {
+                try {
+                    const responsePayload = JSON.parse(xhr.responseText);
+                    responseError = String(responsePayload.error || '');
+                } catch (_) {
+                }
+            }
+            const productNotFound = xhr && Number(xhr.status) === 404;
 
             if (isClient22ScanAlertEnabled && productNotFound) {
                 showClient22ScanAlert('Produsul cu codul ' + codBare + ' nu a fost găsit.');

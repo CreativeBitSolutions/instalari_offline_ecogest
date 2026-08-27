@@ -30,7 +30,13 @@
             headers: { 'Accept': 'application/json' },
             cache: 'no-store'
         }).then(function (response) {
-            return response.json().then(function (payload) {
+            return response.text().then(function (text) {
+                var payload = null;
+                try {
+                    payload = JSON.parse(text);
+                } catch (error) {
+                    throw new Error('Endpointul local pentru statusul produselor nu a returnat JSON valid.');
+                }
                 if (!response.ok) {
                     throw payload;
                 }
