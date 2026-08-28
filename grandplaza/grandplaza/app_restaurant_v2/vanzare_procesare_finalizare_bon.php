@@ -46,7 +46,7 @@ $row_disc = $disc_tot_stmt->fetch(PDO::FETCH_ASSOC);
 $total_discount = $row_disc['total_disc'] ?? 0;
 
 if(isset($_POST['finaliz_bon'])){
-    $masa_fin=$_POST['masa_curenta'];
+    $masa_fin = (int)($_POST['masa_curenta'] ?? ($_SESSION['masa_curenta'] ?? 0));
     $sql_tip_masa = "SELECT tip_masa FROM mese WHERE cod_masa = ?";
 $stmt_tip_masa = $pdo->prepare($sql_tip_masa);
 $stmt_tip_masa->execute([$masa_fin]);
@@ -66,8 +66,8 @@ while ($row = $f_tot_stmt->fetch(PDO::FETCH_ASSOC)){
 	$total_tva_col=$row['total_tva_col'];
 }
 	if($_POST['finaliz_bon']=='numerar'){
-	    $cif_client=$_POST['cif_client'];
-	    $_SESSION['cif_client']=$_POST['cif_client'];
+	    $cif_client = trim((string)($_POST['cif_client'] ?? ''));
+	    $_SESSION['cif_client'] = $cif_client;
 $rest = $_POST['rest_numerar'] ?? 0;
 
 $numerar=$total_val_vz_cu_tva;
@@ -75,59 +75,59 @@ $_SESSION['numerarprim']=$total_val_vz_cu_tva;
 $fin_sql = "update $tabel_final_note SET rest='$rest',tva_colectata='$total_tva_col',valoare_vanzare_cu_tva='$valoare_f_vz',data_bon='$data_bon',ora_bon='$ora_bon',status='$new_status',numerar='$numerar',discount='$total_discount',cif_client='$cif_client' WHERE nrbon='$nr_bon';";    
 	}
 		elseif($_POST['finaliz_bon']=='card'){
-		    	    $cif_client=$_POST['cif_client'];
-		    	    	    $_SESSION['cif_client']=$_POST['cif_client'];
+        $cif_client = trim((string)($_POST['cif_client'] ?? ''));
+        $_SESSION['cif_client'] = $cif_client;
 		  $card=$total_val_vz_cu_tva;
 $_SESSION['cardprim']=$total_val_vz_cu_tva;
 $fin_sql = "update $tabel_final_note SET tva_colectata='$total_tva_col',valoare_vanzare_cu_tva='$valoare_f_vz',data_bon='$data_bon',ora_bon='$ora_bon',status='$new_status',card='$card',discount='$total_discount',cif_client='$cif_client' WHERE nrbon='$nr_bon';";    
 		}
 			elseif($_POST['finaliz_bon']=='numerar_si_card'){
-			    	    $cif_client_m=$_POST['cif_client_m'];
-			    	    $_SESSION['cif_client']=$_POST['cif_client_m'];
-$card=$_POST['card'];
-$numerar=$_POST['numerar'];
-$_SESSION['numerarprim']=$_POST['numerar'];
-$_SESSION['cardprim']=$_POST['card'];
+        $cif_client_m = trim((string)($_POST['cif_client_m'] ?? ''));
+        $_SESSION['cif_client'] = $cif_client_m;
+$card = (float)($_POST['card'] ?? 0);
+$numerar = (float)($_POST['numerar'] ?? 0);
+$_SESSION['numerarprim'] = $numerar;
+$_SESSION['cardprim'] = $card;
 $fin_sql = "update $tabel_final_note SET tva_colectata='$total_tva_col',valoare_vanzare_cu_tva='$valoare_f_vz',data_bon='$data_bon',ora_bon='$ora_bon',status='$new_status',numerar='$numerar',card='$card',discount='$total_discount',cif_client='$cif_client_m' WHERE nrbon='$nr_bon';";    
 		}
 				elseif($_POST['finaliz_bon']=='tichete_de_masa'){
-			    	    $cif_client_t=$_POST['cif_client_t'];
-			    	    $_SESSION['cif_client']=$_POST['cif_client_t'];
-$tichete=$_POST['total_tichete'];
-$numerar=$_POST['rest_de_incasat'];
-$rest=$_POST['rest_de_returnat'];
-$_SESSION['rest_tichete']=$_POST['rest_de_incasat'];
-$_SESSION['total_tichete']=$_POST['total_tichete'];
+        $cif_client_t = trim((string)($_POST['cif_client_t'] ?? ''));
+        $_SESSION['cif_client'] = $cif_client_t;
+$tichete = (float)($_POST['total_tichete'] ?? 0);
+$numerar = (float)($_POST['rest_de_incasat'] ?? 0);
+$rest = (float)($_POST['rest_de_returnat'] ?? 0);
+$_SESSION['rest_tichete'] = $numerar;
+$_SESSION['total_tichete'] = $tichete;
 $fin_sql = "update $tabel_final_note SET tva_colectata='$total_tva_col',valoare_vanzare_cu_tva='$valoare_f_vz',data_bon='$data_bon',ora_bon='$ora_bon',status='$new_status',numerar='$numerar',tichete='$tichete',rest='$rest',discount='$total_discount',cif_client='$cif_client_t' WHERE nrbon='$nr_bon';";    
 		}
 		elseif($_POST['finaliz_bon']=='protocol'){
 		    $pe_protocol=1;
-	    $cif_client=$_POST['cif_client'];
-	    $_SESSION['cif_client']=$_POST['cif_client'];
+	    $cif_client = trim((string)($_POST['cif_client'] ?? ''));
+	    $_SESSION['cif_client'] = $cif_client;
 $rest = $_POST['rest_numerar'] ?? 0;
-$numerar=$_POST['numerarprim'];
-$_SESSION['numerarprim']=$_POST['numerarprim'];
+$numerar = (float)($_POST['numerarprim'] ?? $total_val_vz_cu_tva);
+$_SESSION['numerarprim'] = $numerar;
 $fin_sql = "update $tabel_final_note SET rest='$rest',tva_colectata='$total_tva_col',valoare_vanzare_cu_tva='$valoare_f_vz',data_bon='$data_bon',ora_bon='$ora_bon',status='$new_status',protocol='$numerar',discount='$total_discount',cif_client='$cif_client' WHERE nrbon='$nr_bon';";    
 	}
 	 	elseif($_POST['finaliz_bon']=='virament_bancar_separat_fara_casa_marcat'){
 		    $virament_bancar_separat_fara_casa_marcat=1;
         
-	    $cif_client=$_POST['cif_client'];
-	    $_SESSION['cif_client']=$_POST['cif_client'];
+	    $cif_client = trim((string)($_POST['cif_client'] ?? ''));
+	    $_SESSION['cif_client'] = $cif_client;
 $rest = $_POST['rest_numerar'] ?? 0;
-$numerar=$_POST['numerarprim'];
-$_SESSION['numerarprim']=$_POST['numerarprim'];
+$numerar = (float)($_POST['numerarprim'] ?? $total_val_vz_cu_tva);
+$_SESSION['numerarprim'] = $numerar;
 $fin_sql = "update $tabel_final_note SET rest='$rest',tva_colectata='$total_tva_col',valoare_vanzare_cu_tva='$valoare_f_vz',data_bon='$data_bon',ora_bon='$ora_bon',status='$new_status',virament_bancar='$numerar',discount='$total_discount',cif_client='$cif_client' WHERE nrbon='$nr_bon';";    
 	}
 
 	elseif($_POST['finaliz_bon']=='platit_din_sold'){
     $platit_din_sold=1;
     
-  $cif_client=$_POST['cif_client'];
-  $_SESSION['cif_client']=$_POST['cif_client'];
+  $cif_client = trim((string)($_POST['cif_client'] ?? ''));
+  $_SESSION['cif_client'] = $cif_client;
 $rest = $_POST['rest_numerar'] ?? 0;
-$numerar=$_POST['numerarprim'];
-$_SESSION['numerarprim']=$_POST['numerarprim'];
+$numerar = (float)($_POST['numerarprim'] ?? $total_val_vz_cu_tva);
+$_SESSION['numerarprim'] = $numerar;
 
 $sql = "UPDATE mese SET sold = sold - :numerar WHERE cod_masa = :masa_fin";
 $stmt = $pdo->prepare($sql);
@@ -141,11 +141,11 @@ $fin_sql = "update $tabel_final_note SET rest='$rest',tva_colectata='$total_tva_
 }
   
 	 		elseif($_POST['finaliz_bon']=='glovo'){
-	    $cif_client=$_POST['cif_client'];
-	    $_SESSION['cif_client']=$_POST['cif_client'];
+	    $cif_client = trim((string)($_POST['cif_client'] ?? ''));
+	    $_SESSION['cif_client'] = $cif_client;
 $rest = $_POST['rest_numerar'] ?? 0;
-$numerar=$_POST['numerarprim'];
-$_SESSION['glovo']=$_POST['numerarprim'];
+$numerar = (float)($_POST['numerarprim'] ?? $total_val_vz_cu_tva);
+$_SESSION['glovo'] = $numerar;
 $fin_sql = "update $tabel_final_note SET rest='$rest',tva_colectata='$total_tva_col',valoare_vanzare_cu_tva='$valoare_f_vz',data_bon='$data_bon',ora_bon='$ora_bon',status='$new_status',glovo='$numerar',discount='$total_discount',cif_client='$cif_client' WHERE nrbon='$nr_bon';";    
 	}
 	try{

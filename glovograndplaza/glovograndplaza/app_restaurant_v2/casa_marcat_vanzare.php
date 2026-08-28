@@ -83,7 +83,7 @@ if (!isset($_POST['nota_de_relistat'])) {
     
     $f_stmt = $pdo->prepare($f_sql);
     $f_stmt->execute([':nr_bon' => $nr_bon]);
-    $cif_client = $_SESSION['cif_client'];
+    $cif_client = trim((string)($_SESSION['cif_client'] ?? ''));
     
     // (MODIFICAT pentru a omite H când client_id=23)
     if ($cif_client) {

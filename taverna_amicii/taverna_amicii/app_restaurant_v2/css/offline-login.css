@@ -78,16 +78,16 @@ html {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
-    gap: 13px;
-    min-height: 62px;
-    margin: -6px 0 18px;
-    padding: 11px 14px 11px 18px;
+    gap: 11px;
+    min-height: 54px;
+    margin: -6px 0 16px;
+    padding: 8px 10px 8px 17px;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, .13);
-    border-radius: 7px;
-    background: #222a2f;
-    box-shadow: 0 12px 34px rgba(0, 0, 0, .22);
-    color: #f6f8f9;
+    border: 1px solid #cbd5da;
+    border-radius: 6px;
+    background: #f7faf9;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .14);
+    color: #253037;
 }
 
 .products-sync-statusbar::before {
@@ -101,12 +101,12 @@ html {
 }
 
 .products-sync-statusbar__signal {
-    width: 12px;
-    height: 12px;
-    border: 2px solid rgba(255, 255, 255, .7);
+    width: 10px;
+    height: 10px;
+    border: 2px solid #f7faf9;
     border-radius: 50%;
     background: var(--login-amber);
-    box-shadow: 0 0 0 5px rgba(212, 154, 36, .14);
+    box-shadow: 0 0 0 4px rgba(212, 154, 36, .16);
 }
 
 .products-sync-statusbar.is-ok::before,
@@ -115,7 +115,7 @@ html {
 }
 
 .products-sync-statusbar.is-ok .products-sync-statusbar__signal {
-    box-shadow: 0 0 0 5px rgba(34, 168, 121, .15);
+    box-shadow: 0 0 0 4px rgba(34, 168, 121, .16);
 }
 
 .products-sync-statusbar.is-error::before,
@@ -124,7 +124,7 @@ html {
 }
 
 .products-sync-statusbar.is-error .products-sync-statusbar__signal {
-    box-shadow: 0 0 0 5px rgba(227, 82, 69, .16);
+    box-shadow: 0 0 0 4px rgba(227, 82, 69, .16);
 }
 
 .products-sync-statusbar__copy {
@@ -134,22 +134,22 @@ html {
 }
 
 .products-sync-statusbar__eyebrow {
-    color: #9eabb2;
-    font-size: 9px;
+    color: #64737b;
+    font-size: 8px;
     font-weight: 850;
     letter-spacing: .1em;
     line-height: 1.2;
 }
 
 .products-sync-statusbar__copy strong {
-    color: #fff;
-    font-size: 13px;
+    color: #1c272d;
+    font-size: 12px;
     line-height: 1.25;
 }
 
 .products-sync-statusbar__copy small {
-    color: #c6d0d5;
-    font-size: 12px;
+    color: #536169;
+    font-size: 11px;
     line-height: 1.3;
     overflow-wrap: anywhere;
 }
@@ -158,12 +158,12 @@ html {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 34px;
-    padding: 7px 12px;
-    border: 1px solid #52636d;
+    min-height: 30px;
+    padding: 6px 10px;
+    border: 1px solid #aebbc1;
     border-radius: 5px;
-    background: #303b42;
-    color: #fff;
+    background: #fff;
+    color: #315c72;
     font-size: 11px;
     font-weight: 800;
     text-decoration: none;
@@ -172,20 +172,25 @@ html {
 
 .products-sync-statusbar__history:hover,
 .products-sync-statusbar__history:focus {
-    border-color: #7b909b;
-    background: #3b4850;
-    color: #fff;
+    border-color: #63889a;
+    background: #e8f0f3;
+    color: #244c61;
     text-decoration: none;
 }
 
 @media (max-width: 700px) {
     .products-sync-statusbar {
-        grid-template-columns: auto minmax(0, 1fr);
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        gap: 9px;
+        min-height: 58px;
+        padding-right: 9px;
     }
 
     .products-sync-statusbar__history {
-        grid-column: 1 / -1;
-        margin-left: 25px;
+        min-height: 28px;
+        padding-right: 8px;
+        padding-left: 8px;
+        font-size: 10px;
     }
 }
 

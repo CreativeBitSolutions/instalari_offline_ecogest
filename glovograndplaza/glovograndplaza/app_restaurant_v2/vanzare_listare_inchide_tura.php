@@ -26,10 +26,14 @@ init_loading_screen();
 update_loading_status("Generăm datele pentru închiderea de tură...");
 
 // date esențiale din sesiune
-$client_id   = $_SESSION['client_id'];
-$cod_locatie = isset($_SESSION['cod_locatie']) ? intval($_SESSION['cod_locatie']) : 0;
-$ultim_inch  = $_SESSION['ultim_inch'];
-$adm_id=$_SESSION['admin_id'];
+$client_id   = (int)($_SESSION['client_id'] ?? 0);
+$cod_locatie = (int)($_SESSION['cod_locatie'] ?? 0);
+$ultim_inch  = (int)($_SESSION['ultim_inch'] ?? 0);
+$adm_id      = (int)($_SESSION['admin_id'] ?? 0);
+
+if ($ultim_inch <= 0) {
+    throw new RuntimeException('Numărul închiderii de tură lipsește din sesiune. Reporniți închiderea de tură.');
+}
 
 // calea către folderul de output
 $folder_path = RESTAURANT_OFFLINE_API_DIR . "/{$client_id}/{$cod_locatie}";

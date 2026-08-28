@@ -8,6 +8,7 @@ $defaults = [
     'statuses' => ['processing'],
     'timeout' => 20,
     'verify_ssl' => true,
+    'ca_bundle_path' => (string)(getenv('CURL_CA_BUNDLE') ?: ''),
     'use_hmac' => false,
     'initial_lookback_days' => 7,
     'automatic_interval_seconds' => 30,

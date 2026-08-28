@@ -25,6 +25,7 @@ function restaurant_tablet_sync_config(array $restaurantConfig): array
         'limit' => max(1, min(500, (int)($cfg['limit'] ?? 200))),
         'send_api_key_in_query' => filter_var($cfg['send_api_key_in_query'] ?? ($base['send_api_key_in_query'] ?? true), FILTER_VALIDATE_BOOL),
         'verify_ssl' => filter_var($cfg['verify_ssl'] ?? ($base['verify_ssl'] ?? true), FILTER_VALIDATE_BOOL),
+        'ca_bundle_path' => trim((string)($restaurantConfig['ca_bundle_path'] ?? '')),
     ];
 }
 
@@ -104,7 +105,7 @@ function restaurant_tablet_sync_http(array $cfg, string $method, array $query = 
     if ($ch === false) {
         throw new RuntimeException('Clientul HTTP nu a putut fi inițializat.');
     }
-    curl_setopt_array($ch, [
+    $curlOptions = [
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_CONNECTTIMEOUT => min(10, $cfg['timeout_seconds']),
         CURLOPT_TIMEOUT => $cfg['timeout_seconds'],
@@ -112,7 +113,11 @@ function restaurant_tablet_sync_http(array $cfg, string $method, array $query = 
         CURLOPT_SSL_VERIFYHOST => $cfg['verify_ssl'] ? 2 : 0,
         CURLOPT_CUSTOMREQUEST => strtoupper($method),
         CURLOPT_HTTPHEADER => $headers,
-    ]);
+    ];
+    if ($cfg['verify_ssl'] && $cfg['ca_bundle_path'] !== '' && is_file($cfg['ca_bundle_path'])) {
+        $curlOptions[CURLOPT_CAINFO] = $cfg['ca_bundle_path'];
+    }
+    curl_setopt_array($ch, $curlOptions);
     if ($payload !== null) {
         $json = json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         if ($json === false) {

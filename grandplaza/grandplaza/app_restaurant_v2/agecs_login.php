@@ -6,7 +6,6 @@
 
 // --- INITIAL PHP SETUP (nemodificat) ---
 
-date_default_timezone_set('UTC+2');
 date_default_timezone_set("Europe/Bucharest");
 
 session_start();
@@ -39,7 +38,7 @@ $cust_id = 12; // rămâne neschimbat
     <title>Autentificare utilizator</title>
 
     <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/offline-login.css">
+    <link rel="stylesheet" href="css/offline-login.css?v=20260827">
 
     <!-- Stiluri personalizate -->
     <style>

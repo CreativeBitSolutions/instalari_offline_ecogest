@@ -1,7 +1,12 @@
-<?php session_start();     date_default_timezone_set("Europe/Bucharest");
+<?php
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+date_default_timezone_set("Europe/Bucharest");
 
  if(!isset($_SESSION['admin_id'])){
 printf("<script>location.href='agecs_login.php'</script>");	
+exit;
    }
    include('database_connection.php');
    $live_id=12;
@@ -18,6 +23,7 @@ $zstmt->execute([':admin_id' => $user_check]);
          
          
 			printf("<script>location.href='agecs_login.php'</script>");
+            exit;
       }
 	  
   	    $live_id=12;

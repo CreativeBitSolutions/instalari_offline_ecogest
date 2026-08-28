@@ -192,7 +192,7 @@ try {
     if ($ch === false) {
         throw new RuntimeException('Clientul HTTP nu a putut fi initializat.');
     }
-    curl_setopt_array($ch, [
+    $curlOptions = [
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_CONNECTTIMEOUT => min(10, $timeout),
         CURLOPT_TIMEOUT => $timeout,
@@ -201,7 +201,12 @@ try {
         CURLOPT_POST => true,
         CURLOPT_HTTPHEADER => $headers,
         CURLOPT_POSTFIELDS => $json,
-    ]);
+    ];
+    $caBundlePath = trim((string)($restaurantConfig['ca_bundle_path'] ?? ''));
+    if ($verifySsl && $caBundlePath !== '' && is_file($caBundlePath)) {
+        $curlOptions[CURLOPT_CAINFO] = $caBundlePath;
+    }
+    curl_setopt_array($ch, $curlOptions);
 
     $raw = curl_exec($ch);
     $curlError = curl_error($ch);

@@ -9,9 +9,6 @@ if (isset($_SESSION['admin_id'])) {
     $updateStmt->execute(['admin_id' => $_SESSION['admin_id']]);
 }
 
-	$ul=$_SESSION['live'];
-
-    $d=$_SESSION['d'];
 unset($_SESSION['adminloggedin']);
     unset($_SESSION['admin_id']);
 unset($_SESSION['masa_curenta']);

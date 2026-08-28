@@ -227,13 +227,13 @@ $hide_tura_actions_in_modal = in_array((int)($_SESSION['client_id'] ?? 0), [25, 
 
           <!-- ===== DREAPTA (nemodificată) ===== -->
 <div style="flex: 1; min-width: 0; padding:15px; box-sizing:border-box; display:flex; flex-direction:column; height:100%; background:#fff;">            <h5 class="mb-2">
-              Notele operatorului <?php echo htmlspecialchars($_SESSION['admin_firstname'].' '.$_SESSION['admin_lastname']); ?>
+              Notele operatorului <?php echo htmlspecialchars(trim((string)($_SESSION['admin_firstname'] ?? '') . ' ' . (string)($_SESSION['admin_lastname'] ?? '')), ENT_QUOTES, 'UTF-8'); ?>
 </h5>
             <form method="POST" action="vanzare_note_operator_select.php"
                   style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:15px;">
 <?php
-  $adm_id      = $_SESSION['admin_id'];
-  $cod_locatie = $_SESSION['cod_locatie'];
+  $adm_id      = (int)($_SESSION['admin_id'] ?? 0);
+  $cod_locatie = (int)($_SESSION['cod_locatie'] ?? 0);
   $sql = "SELECT n.nrbon, n.cod_masa, m.nume_masa, n.listat_nota_plata
           FROM $tabel_final_note n
           INNER JOIN mese m ON m.cod_masa = n.cod_masa

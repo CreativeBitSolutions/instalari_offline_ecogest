@@ -2,7 +2,7 @@
 ini_set('log_errors', 1); // Activează logarea erorilor
 ini_set('error_log', 'error_log.log'); // Specifică calea către fișierul de log
 include('session.php');
-$nr_bon=$_SESSION['nr_bon'];
+$nr_bon = (int)($_SESSION['nr_bon'] ?? 0);
 
 ?>
 <!-- Modalul "Imparte Nota" -->

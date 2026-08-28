@@ -504,6 +504,7 @@ function ops_config(array $restaurantConfig): array
         'rewrite_existing' => ops_bool($syncConfig['rewrite_existing'] ?? false, false),
         'send_api_key_in_query' => ops_bool($syncConfig['send_api_key_in_query'] ?? true, true),
         'verify_ssl' => ops_bool($syncConfig['verify_ssl'] ?? true, true),
+        'ca_bundle_path' => trim((string)($restaurantConfig['ca_bundle_path'] ?? '')),
         'allow_http_without_session' => ops_bool($syncConfig['allow_http_without_session'] ?? false, false),
     ];
 }
@@ -824,7 +825,7 @@ function ops_fetch_online_products(array $config, string $localHash): array
 
     if (extension_loaded('curl')) {
         $ch = curl_init($url);
-        curl_setopt_array($ch, [
+        $curlOptions = [
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_CONNECTTIMEOUT => $config['timeout_seconds'],
@@ -832,7 +833,11 @@ function ops_fetch_online_products(array $config, string $localHash): array
             CURLOPT_HTTPHEADER => $headers,
             CURLOPT_SSL_VERIFYPEER => $config['verify_ssl'],
             CURLOPT_SSL_VERIFYHOST => $config['verify_ssl'] ? 2 : 0,
-        ]);
+        ];
+        if ($config['verify_ssl'] && $config['ca_bundle_path'] !== '' && is_file($config['ca_bundle_path'])) {
+            $curlOptions[CURLOPT_CAINFO] = $config['ca_bundle_path'];
+        }
+        curl_setopt_array($ch, $curlOptions);
         $raw = curl_exec($ch);
         $error = curl_error($ch);
         $httpCode = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -842,16 +847,20 @@ function ops_fetch_online_products(array $config, string $localHash): array
             throw new RuntimeException('Endpointul online nu a putut fi apelat: ' . $error);
         }
     } else {
+        $sslOptions = [
+            'verify_peer' => $config['verify_ssl'],
+            'verify_peer_name' => $config['verify_ssl'],
+        ];
+        if ($config['verify_ssl'] && $config['ca_bundle_path'] !== '' && is_file($config['ca_bundle_path'])) {
+            $sslOptions['cafile'] = $config['ca_bundle_path'];
+        }
         $context = stream_context_create([
             'http' => [
                 'method' => 'GET',
                 'timeout' => $config['timeout_seconds'],
                 'header' => implode("\r\n", $headers),
             ],
-            'ssl' => [
-                'verify_peer' => $config['verify_ssl'],
-                'verify_peer_name' => $config['verify_ssl'],
-            ],
+            'ssl' => $sslOptions,
         ]);
         $raw = @file_get_contents($url, false, $context);
         $httpCode = 0;

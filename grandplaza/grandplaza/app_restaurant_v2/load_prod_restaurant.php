@@ -1,7 +1,7 @@
 <?php //load_prod_restaurant.php
 session_start();
 include('database_connection.php');
-$nr_bon = $_SESSION['nr_bon'];
+$nr_bon = (int)($_SESSION['nr_bon'] ?? 0);
 if (!isset($_GET['categ'])) exit;
 
 /* all / id_categorie */
@@ -27,7 +27,7 @@ $sql = "SELECT ps.cod_produs,
 
 $stmt = $pdo->prepare($sql);
 $params = [
-    ':loc' => $_SESSION['cod_locatie'],
+    ':loc' => (int)($_SESSION['cod_locatie'] ?? ($restaurantConfig['cod_locatie'] ?? 0)),
     ':activ' => 1
 ];
 if ($where) {

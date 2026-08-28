@@ -208,17 +208,23 @@ function woo_sync_fetch_scanare_order_json(int $wooOrderId): array
         throw new RuntimeException('ID comandă Woo invalid pentru citirea JSON.');
     }
 
+    $cfg = woo_sync_cfg();
     $url = woo_sync_scanare_json_base_url() . '/Nota_' . $wooOrderId . '.json';
 
     $ch = curl_init($url);
-    curl_setopt_array($ch, [
+    $curlOptions = [
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_TIMEOUT => 15,
         CURLOPT_CONNECTTIMEOUT => 8,
-        CURLOPT_SSL_VERIFYPEER => false,
-        CURLOPT_SSL_VERIFYHOST => 0,
+        CURLOPT_SSL_VERIFYPEER => !empty($cfg['verify_ssl']),
+        CURLOPT_SSL_VERIFYHOST => !empty($cfg['verify_ssl']) ? 2 : 0,
         CURLOPT_HTTPHEADER => ['Accept: application/json'],
-    ]);
+    ];
+    $caBundlePath = trim((string)($cfg['ca_bundle_path'] ?? ''));
+    if (!empty($cfg['verify_ssl']) && $caBundlePath !== '' && is_file($caBundlePath)) {
+        $curlOptions[CURLOPT_CAINFO] = $caBundlePath;
+    }
+    curl_setopt_array($ch, $curlOptions);
 
     $raw = curl_exec($ch);
     $errno = curl_errno($ch);

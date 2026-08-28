@@ -47,14 +47,19 @@ if (!function_exists('woo_sync_http_get')) {
         }
 
         $ch = curl_init($url);
-        curl_setopt_array($ch, [
+        $curlOptions = [
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HTTPHEADER => $headers,
             CURLOPT_TIMEOUT => (int)($cfg['timeout'] ?? 20),
             CURLOPT_CONNECTTIMEOUT => 10,
             CURLOPT_SSL_VERIFYPEER => !empty($cfg['verify_ssl']),
             CURLOPT_SSL_VERIFYHOST => !empty($cfg['verify_ssl']) ? 2 : 0,
-        ]);
+        ];
+        $caBundlePath = trim((string)($cfg['ca_bundle_path'] ?? ''));
+        if (!empty($cfg['verify_ssl']) && $caBundlePath !== '' && is_file($caBundlePath)) {
+            $curlOptions[CURLOPT_CAINFO] = $caBundlePath;
+        }
+        curl_setopt_array($ch, $curlOptions);
 
         $raw = curl_exec($ch);
         $errno = curl_errno($ch);
@@ -101,7 +106,7 @@ if (!function_exists('woo_sync_fetch_wp_order_details')) {
         $url = rtrim($baseUrl, '/') . '/' . rawurlencode((string)$wooOrderId);
 
         $ch = curl_init($url);
-        curl_setopt_array($ch, [
+        $curlOptions = [
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HTTPHEADER => [
                 'Accept: application/json',
@@ -111,7 +116,12 @@ if (!function_exists('woo_sync_fetch_wp_order_details')) {
             CURLOPT_CONNECTTIMEOUT => 10,
             CURLOPT_SSL_VERIFYPEER => !empty($cfg['verify_ssl']),
             CURLOPT_SSL_VERIFYHOST => !empty($cfg['verify_ssl']) ? 2 : 0,
-        ]);
+        ];
+        $caBundlePath = trim((string)($cfg['ca_bundle_path'] ?? ''));
+        if (!empty($cfg['verify_ssl']) && $caBundlePath !== '' && is_file($caBundlePath)) {
+            $curlOptions[CURLOPT_CAINFO] = $caBundlePath;
+        }
+        curl_setopt_array($ch, $curlOptions);
 
         $raw = curl_exec($ch);
         $errno = curl_errno($ch);
