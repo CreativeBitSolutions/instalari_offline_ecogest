@@ -206,6 +206,8 @@ function restaurant_sync_queue_sale_data(PDO $pdo, int $nrBon, int $codLocatie):
 
 function restaurant_sync_queue_shift_data(PDO $pdo, int $idInchidere, int $codLocatie): ?array
 {
+    // Regula offline: închiderea turei se face local și se transmite separat după vânzare.
+    // Interfața online doar primește starea. Nu trebuie să solicite din nou închiderea operatorului.
     $closure = restaurant_sync_queue_row($pdo, 'SELECT * FROM inchideri_r_12 WHERE id_inch = ? AND locatie = ? LIMIT 1', [$idInchidere, $codLocatie]);
     if (!$closure) {
         return null;
@@ -229,6 +231,8 @@ function restaurant_sync_queue_shift_data(PDO $pdo, int $idInchidere, int $codLo
 
 function restaurant_sync_queue_z_data(PDO $pdo, int $idRaport, int $codLocatie): ?array
 {
+    // Regula offline: raportul Z se generează local, apoi numărul său actualizează online
+    // notele și închiderile deja sincronizate prin identificator_offline.
     $report = restaurant_sync_queue_row($pdo, 'SELECT * FROM rapoarte_z WHERE id = ? AND cod_locatie = ? LIMIT 1', [$idRaport, $codLocatie]);
     if (!$report) {
         return null;

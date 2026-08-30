@@ -82,6 +82,15 @@ if ($totaluriPlataJson !== null) {
         error_log('Eroare update totaluri_plata_json in vanzare_inchidere_tura.php: ' . $e->getMessage());
     }
 }
+// Închiderea este creată exclusiv în aplicația offline. Online primește ulterior
+// actualizarea din coadă și nu trebuie să ceară o a doua închidere pentru aceleași note.
+if ($idInchidere > 0) {
+    require_once __DIR__ . '/offline_sync_queue_lib.php';
+    $restaurantQueueConfig = restaurant_sync_queue_config($restaurantConfig);
+    restaurant_sync_queue_enqueue_safely(static function () use ($pdo, $restaurantQueueConfig, $idInchidere, $adm_id): bool {
+        return restaurant_sync_queue_enqueue_shift($pdo, $restaurantQueueConfig, $idInchidere, (int)$adm_id);
+    });
+}
 $_SESSION['cod_inchidere']=$cod_inchidere_curenta;
 			printf("<script>location.href='vanzare_listare_inchide_tura.php'</script>");	
           // INCHIDERE ZI

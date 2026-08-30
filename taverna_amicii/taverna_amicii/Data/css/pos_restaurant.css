@@ -1,0 +1,232 @@
+/* POS Restaurant responsive layout for 1024x768 (4:3) and up */
+:root {
+  --ui-bg: #0f172a;           /* slate-900 */
+  --ui-bg-2: #111827;         /* gray-900 */
+  --ui-panel: #1f2937;        /* gray-800 */
+  --ui-panel-2: #374151;      /* gray-700 */
+  --ui-text: #e5e7eb;         /* gray-200 */
+  --ui-text-dim: #cbd5e1;     /* slate-300 */
+  --ui-accent: #0ea5e9;       /* sky-500 */
+  --ui-accent-2: #22c55e;     /* green-500 */
+  --ui-warn: #f59e0b;         /* amber-500 */
+  --ui-danger: #ef4444;       /* red-500 */
+  --ui-border: #334155;       /* slate-700 */
+  --ui-muted: #6b7280;        /* gray-500 */
+  --col-right: 15vw;          /* sidebar width */
+  --pane-gap: 8px;
+  --radius: 10px;
+  --btn-h: 56px;
+  --btn-font: 18px;
+  --font-base: 16px;
+}
+
+html, body { height: 100%; }
+body.pos-body {
+  margin: 0;
+  background: var(--ui-bg);
+  color: var(--ui-text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: var(--font-base);
+  overflow: hidden; /* lock viewport, panes will scroll */
+}
+
+/* Main two-pane surface (left + middle) with reserved right sidebar */
+.pos-main {
+  position: relative;
+  display: block;
+  margin-right: var(--col-right);
+  height: 100vh;
+  padding: var(--pane-gap);
+  box-sizing: border-box;
+}
+
+/* Left and middle panes */
+#one.pos-pane-one,
+#two.pos-pane-two {
+  height: calc(100vh - (var(--pane-gap) * 2));
+  background: var(--ui-panel);
+  border: 1px solid var(--ui-border);
+  border-radius: var(--radius);
+  box-sizing: border-box;
+  overflow: hidden; /* inner content scrolls */
+}
+
+/* Arrange left and middle next to each other */
+.pos-panes {
+  display: grid;
+  grid-template-columns: 45% 40%;
+  grid-template-rows: 1fr;
+  gap: var(--pane-gap);
+  height: 100%;
+}
+
+/* Right sidebar split: top (actions) + bottom (payments) */
+.pos-sidebar-top {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: var(--col-right);
+  height: calc(100vh - 260px);
+  padding: 8px;
+  background: var(--ui-panel-2);
+  border-left: 1px solid var(--ui-border);
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.pos-sidebar-bottom { /* footer replacement */
+  position: fixed !important;
+  right: 0;
+  bottom: 0;
+  width: var(--col-right) !important;
+  height: 260px;
+  margin: 0 !important;
+  padding: 8px 8px 10px 8px;
+  background: var(--ui-panel-2);
+  border-left: 1px solid var(--ui-border);
+  border-top: 1px solid var(--ui-border);
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+/* Generic inputs override (keep existing IDs/classes for JS) */
+.ui-input,
+input[type="text"],
+input[type="number"],
+select, textarea {
+  background: #0b1220;
+  color: var(--ui-text);
+  border: 1px solid var(--ui-border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  height: 42px;
+  outline: none;
+}
+/* Specific override for existing input without new class */
+#cif_client { background: #0b1220; color: var(--ui-text); border: 1px solid var(--ui-border); border-radius: 8px; height: 42px; padding: 8px 10px; }
+.ui-input:focus,
+input:focus, select:focus, textarea:focus {
+  border-color: var(--ui-accent);
+  box-shadow: 0 0 0 3px rgba(14,165,233,.2);
+}
+
+/* Category tabs row */
+.category-wrapper {
+  display: grid;
+  grid-template-columns: 36px 1fr 36px;
+  align-items: center;
+  gap: 6px;
+  padding: 8px;
+  background: var(--ui-bg-2);
+  border-bottom: 1px solid var(--ui-border);
+}
+#category-tabs {
+  display: flex;
+  overflow-x: auto;
+  gap: 6px;
+}
+.category-tab-btn, .ui-tab {
+  flex: 0 0 auto;
+  min-width: 96px;
+  height: 38px;
+  font-size: 14px;
+  color: var(--ui-text);
+  background: #0b1220;
+  border: 1px solid var(--ui-border);
+  border-radius: 999px;
+  padding: 0 12px;
+}
+.category-tab-btn.active { background: var(--ui-accent); border-color: var(--ui-accent); }
+
+.scroll-btn, .scroll-btn-v {
+  width: 36px; height: 36px;
+  display: grid; place-items: center;
+  background: #0b1220; color: var(--ui-text);
+  border: 1px solid var(--ui-border);
+  border-radius: 8px;
+}
+
+/* Product search row */
+.ctrl-row {
+  display: grid;
+  grid-template-columns: 1fr 120px 44px;
+  gap: 8px;
+  padding: 8px;
+  border-bottom: 1px solid var(--ui-border);
+}
+.ctrl-row label { font-size: 12px; color: var(--ui-text-dim); }
+.ctrl-row .form-control { height: 42px; }
+
+/* Product grid */
+.product-grid-wrapper { position: relative; height: calc(100% - 136px); }
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 8px;
+  height: 100%;
+  overflow: auto;
+}
+.product-card, .ui-card {
+  background: #0b1220;
+  border: 1px solid var(--ui-border);
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  min-height: 92px;
+}
+.product-card:hover { outline: 2px solid var(--ui-accent); }
+.product-name { font-weight: 600; text-align: center; }
+.product-price { margin-top: 6px; color: var(--ui-text-dim); font-size: 14px; }
+
+.product-scroll-buttons {
+  position: absolute; right: 8px; top: 8px; display: grid; gap: 6px;
+}
+
+/* Left pane: sales list */
+.lista_prod { height: calc(100vh - 260px); overflow: auto; }
+.detalii_produs { font-size: 1.1rem; font-weight: 600; }
+.btn-prioritate { font-size: 0.9rem; }
+.reset-pret { font-size: 0.85rem; }
+.obs, .muta-nota, .sterge_prod { font-size: 0.9rem; }
+
+.scrol { width: 44px; height: 44px; border-radius: 8px; background: var(--ui-panel-2); color: var(--ui-text); border: 1px solid var(--ui-border); }
+
+/* Payment area */
+#metode_plata { display: grid; gap: 8px; }
+.pay-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
+.pay-btn {
+  display: grid; grid-template-columns: 28px 1fr; align-items: center; gap: 8px;
+  background: #0b1220; color: var(--ui-text);
+  border: 1px solid var(--ui-border);
+  border-radius: 12px;
+  height: var(--btn-h);
+  font-size: var(--btn-font);
+  padding: 0 10px;
+}
+.pay-btn .emoji { font-size: 20px; text-align: center; }
+.pay-btn--primary { background: linear-gradient(180deg, #0284c7, #0369a1); border-color: #0369a1; }
+.pay-btn--success { background: linear-gradient(180deg, #16a34a, #15803d); border-color: #15803d; }
+.pay-btn--warn { background: linear-gradient(180deg, #f59e0b, #d97706); border-color: #d97706; }
+.pay-btn--danger { background: linear-gradient(180deg, #ef4444, #b91c1c); border-color: #b91c1c; }
+.pay-btn.disabled, .pay-btn[disabled] { opacity: .6; cursor: not-allowed; }
+
+/* Utility */
+.hide { display: none !important; }
+.visible-button { visibility: visible; }
+
+/* Tables reset blending with dark UI */
+table, thead, tbody, tr, th, td {
+  border-color: var(--ui-border) !important;
+}
+.table-dark { color: var(--ui-text); background: var(--ui-panel); }
+
+/* Make sure modals keep Bootstrap look */
+.modal-content { color: initial; }
+
+/* 1024x768 tuning */
+@media (max-width: 1100px) {
+  :root { --btn-font: 16px; }
+  .product-grid { grid-template-columns: repeat(2, 1fr); }
+}

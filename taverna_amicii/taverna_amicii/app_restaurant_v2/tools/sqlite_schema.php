@@ -97,6 +97,17 @@ function restaurant_sqlite_schema_statements(): array
             dep_casa INTEGER DEFAULT 0
         )",
         "CREATE UNIQUE INDEX IF NOT EXISTS idx_cote_tva_cota ON cote_tva(cota)",
+        "CREATE TABLE IF NOT EXISTS coduri_casa_tva (
+            id INTEGER PRIMARY KEY,
+            cota_tva INTEGER NOT NULL DEFAULT 0,
+            cod_listare_cota_casa INTEGER NOT NULL DEFAULT 0
+        )",
+        "CREATE TABLE IF NOT EXISTS offline_reference_sync_runtime (
+            id INTEGER PRIMARY KEY CHECK(id = 1),
+            vat_mirrored INTEGER NOT NULL DEFAULT 0,
+            last_sync_at TEXT DEFAULT NULL
+        )",
+        "INSERT OR IGNORE INTO offline_reference_sync_runtime(id, vat_mirrored) VALUES(1, 0)",
         "CREATE TABLE IF NOT EXISTS produse_servicii (
             cod_produs INTEGER PRIMARY KEY,
             cod_bare TEXT DEFAULT '',
@@ -172,6 +183,7 @@ function restaurant_sqlite_schema_statements(): array
         )",
         "CREATE TABLE IF NOT EXISTS note (
             nrbon INTEGER PRIMARY KEY,
+            identificator_offline TEXT DEFAULT NULL,
             serie TEXT DEFAULT '',
             operator INTEGER DEFAULT 0,
             locatie INTEGER DEFAULT 0,
@@ -203,6 +215,7 @@ function restaurant_sqlite_schema_statements(): array
         "CREATE INDEX IF NOT EXISTS idx_note_masa_status ON note(cod_masa, status)",
         "CREATE TABLE IF NOT EXISTS det_note (
             id_vanz INTEGER PRIMARY KEY AUTOINCREMENT,
+            identificator_offline TEXT DEFAULT NULL,
             nr_bon INTEGER DEFAULT 0,
             cod_p INTEGER DEFAULT 0,
             nume_produs TEXT DEFAULT '',
@@ -372,6 +385,7 @@ function restaurant_sqlite_schema_statements(): array
         )",
         "CREATE TABLE IF NOT EXISTS discounturi_acordate (
             id_discount INTEGER PRIMARY KEY AUTOINCREMENT,
+            identificator_offline TEXT DEFAULT NULL,
             id_vanz INTEGER DEFAULT 0,
             id_operator INTEGER DEFAULT 0,
             tip_discount TEXT DEFAULT '',
@@ -385,6 +399,7 @@ function restaurant_sqlite_schema_statements(): array
         "CREATE INDEX IF NOT EXISTS idx_discounturi_id_vanz ON discounturi_acordate(id_vanz)",
         "CREATE TABLE IF NOT EXISTS inchideri_r_12 (
             id_inch INTEGER PRIMARY KEY AUTOINCREMENT,
+            identificator_offline TEXT DEFAULT NULL,
             cod_inchidere INTEGER DEFAULT 0,
             operator INTEGER DEFAULT 0,
             valoare_cu_tva REAL DEFAULT 0,
@@ -514,6 +529,7 @@ function restaurant_sqlite_schema_statements(): array
         )",
         "CREATE TABLE IF NOT EXISTS rapoarte_z (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+            identificator_offline TEXT DEFAULT NULL,
             nr_raport_z INTEGER DEFAULT 0,
             cod_locatie INTEGER DEFAULT 0,
             serie_casa_marcat TEXT DEFAULT '',
@@ -538,17 +554,23 @@ function restaurant_sqlite_schema_statements(): array
             SELECT 1, 1, 0
             WHERE NOT EXISTS (SELECT 1 FROM setari_platforma)",
         "INSERT INTO cote_tva (cota, dep_casa)
-            SELECT 21, 1 WHERE NOT EXISTS (SELECT 1 FROM cote_tva WHERE cota = 21)",
+            SELECT 21, 1 WHERE NOT EXISTS (SELECT 1 FROM cote_tva WHERE cota = 21)
+              AND COALESCE((SELECT vat_mirrored FROM offline_reference_sync_runtime WHERE id = 1), 0) = 0",
         "INSERT INTO cote_tva (cota, dep_casa)
-            SELECT 11, 2 WHERE NOT EXISTS (SELECT 1 FROM cote_tva WHERE cota = 11)",
+            SELECT 11, 2 WHERE NOT EXISTS (SELECT 1 FROM cote_tva WHERE cota = 11)
+              AND COALESCE((SELECT vat_mirrored FROM offline_reference_sync_runtime WHERE id = 1), 0) = 0",
         "INSERT INTO cote_tva (cota, dep_casa)
-            SELECT 19, 1 WHERE NOT EXISTS (SELECT 1 FROM cote_tva WHERE cota = 19)",
+            SELECT 19, 1 WHERE NOT EXISTS (SELECT 1 FROM cote_tva WHERE cota = 19)
+              AND COALESCE((SELECT vat_mirrored FROM offline_reference_sync_runtime WHERE id = 1), 0) = 0",
         "INSERT INTO cote_tva (cota, dep_casa)
-            SELECT 9, 2 WHERE NOT EXISTS (SELECT 1 FROM cote_tva WHERE cota = 9)",
+            SELECT 9, 2 WHERE NOT EXISTS (SELECT 1 FROM cote_tva WHERE cota = 9)
+              AND COALESCE((SELECT vat_mirrored FROM offline_reference_sync_runtime WHERE id = 1), 0) = 0",
         "INSERT INTO cote_tva (cota, dep_casa)
-            SELECT 5, 3 WHERE NOT EXISTS (SELECT 1 FROM cote_tva WHERE cota = 5)",
+            SELECT 5, 3 WHERE NOT EXISTS (SELECT 1 FROM cote_tva WHERE cota = 5)
+              AND COALESCE((SELECT vat_mirrored FROM offline_reference_sync_runtime WHERE id = 1), 0) = 0",
         "INSERT INTO cote_tva (cota, dep_casa)
-            SELECT 0, 4 WHERE NOT EXISTS (SELECT 1 FROM cote_tva WHERE cota = 0)"
+            SELECT 0, 4 WHERE NOT EXISTS (SELECT 1 FROM cote_tva WHERE cota = 0)
+              AND COALESCE((SELECT vat_mirrored FROM offline_reference_sync_runtime WHERE id = 1), 0) = 0"
     ];
 }
 
@@ -1089,6 +1111,7 @@ function restaurant_sqlite_ensure_columns(PDO $pdo): void
             'serie_casa_marcat' => "TEXT DEFAULT ''",
         ],
         'rapoarte_z' => [
+            'identificator_offline' => 'TEXT DEFAULT NULL',
             'nr_raport_z' => 'INTEGER DEFAULT 0',
             'cod_locatie' => 'INTEGER DEFAULT 0',
             'serie_casa_marcat' => "TEXT DEFAULT ''",
@@ -1104,6 +1127,7 @@ function restaurant_sqlite_ensure_columns(PDO $pdo): void
             'data_raport' => "TEXT DEFAULT ''",
         ],
         'inchideri_r_12' => [
+            'identificator_offline' => 'TEXT DEFAULT NULL',
             'cod_inchidere' => 'INTEGER DEFAULT 0',
             'operator' => 'INTEGER DEFAULT 0',
             'valoare_cu_tva' => 'REAL DEFAULT 0',
@@ -1220,9 +1244,16 @@ function restaurant_sqlite_ensure_columns(PDO $pdo): void
             'adresa' => "TEXT DEFAULT ''",
         ],
         'det_note' => [
+            'identificator_offline' => 'TEXT DEFAULT NULL',
             'nume_produs' => "TEXT DEFAULT ''",
             'importat_din_site' => 'INTEGER DEFAULT NULL',
             'departament_listare' => 'TEXT DEFAULT NULL',
+        ],
+        'note' => [
+            'identificator_offline' => 'TEXT DEFAULT NULL',
+        ],
+        'discounturi_acordate' => [
+            'identificator_offline' => 'TEXT DEFAULT NULL',
         ],
         'com_tableta' => [
             'serie' => "TEXT DEFAULT ''",

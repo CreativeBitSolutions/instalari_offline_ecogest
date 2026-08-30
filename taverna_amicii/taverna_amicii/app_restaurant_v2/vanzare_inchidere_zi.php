@@ -13,6 +13,7 @@ $plata_moderna    = isset($_POST['plata_moderna']) ? $_POST['plata_moderna'] : 0
 $avans_in_numerar = isset($_POST['avans_in_numerar']) ? $_POST['avans_in_numerar'] : 0;
 $alte_metode      = isset($_POST['alte_metode']) ? $_POST['alte_metode'] : 0;
 $user_nr_raport_z = isset($_POST['nr_raport_z']) ? $_POST['nr_raport_z'] : 0;
+$idRaportZ = 0;
 
 // Preluare variabile din sesiune
 $cod_locatie = isset($_SESSION['cod_locatie']) ? $_SESSION['cod_locatie'] : 0;
@@ -48,6 +49,7 @@ try {
         'avans_in_numerar' => $avans_in_numerar,
         'alte_metode'      => $alte_metode
     ]);
+    $idRaportZ = (int)$pdo->lastInsertId();
 } catch (PDOException $e) {
     die("Eroare la inserarea raportului Z: " . $e->getMessage());
 }
@@ -182,6 +184,16 @@ try {
     error_log("WARNING - Eroare update miscari (vanzare_inchidere_zi.php): " . $e->getMessage());
 }
 // ============================================================================
+
+// Raportul Z este emis exclusiv offline. Online primește numărul și actualizează
+// închiderile și notele existente prin identificator_offline.
+if ($idRaportZ > 0) {
+    require_once __DIR__ . '/offline_sync_queue_lib.php';
+    $restaurantQueueConfig = restaurant_sync_queue_config($restaurantConfig);
+    restaurant_sync_queue_enqueue_safely(static function () use ($pdo, $restaurantQueueConfig, $idRaportZ, $adm_id): bool {
+        return restaurant_sync_queue_enqueue_z($pdo, $restaurantQueueConfig, $idRaportZ, (int)$adm_id);
+    });
+}
 
 
 // După finalizarea operațiunilor, redirecționează utilizatorul (sau afișează un mesaj de succes)

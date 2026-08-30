@@ -1,0 +1,25 @@
+﻿<b><size="11">RAPORT Z PRODUSE VÂNDUTE</size></b>
+<b><size="11">Nr. raport Z: 1</size></b>
+<b><size="11">2026-08-30 06:53:56</size></b>
+<b><size="11">Interval vânzări note: 2026-08-30 - 2026-08-30</size></b>
+<b><size="11">Interval ore bonuri: 06:49:26 - 06:52:53</size></b>
+<b><size="11">Locația: 1</size></b>
+<b><size="11">---</size></b>
+<b><size="11">3.000 x TEST BAR = 3.00 LEI</size></b>
+<b><size="11">3.000 x TEST BUCATARIE = 3.00 LEI</size></b>
+<b><size="11">---</size></b>
+<b><size="11">TOTAL PRODUSE: 6.00 LEI</size></b>
+<b><size="11">====================</size></b>
+<b><size="11">ÎNCASĂRI PE OSPĂTAR</size></b>
+<b><size="11">---</size></b>
+<b><size="11">1 OSPATAR1 - : 4.00 LEI (Numerar 4.00 | Card 0.00 | Virament bancar 0.00 | Bacșiș 0.00)</size></b>
+<b><size="11">---</size></b>
+<b><size="11">2 OSPATAR2 - : 2.00 LEI (Numerar 0.00 | Card 2.00 | Virament bancar 0.00 | Bacșiș 0.00)</size></b>
+<b><size="11">---</size></b>
+<b><size="11">TOTAL ÎNCASĂRI:      6.00 LEI</size></b>
+<b><size="11">TOTAL NUMERAR:       4.00 LEI</size></b>
+<b><size="11">TOTAL CARD:          2.00 LEI</size></b>
+<b><size="11">TOTAL VIRAMENT BANCAR: 0.00 LEI</size></b>
+<b><size="11">TOTAL BACȘIȘ:        0.00 LEI</size></b>
+<b><size="11">TOTAL ONLINE:        0.00 LEI</size></b>
+<b><size="11">====================</size></b>

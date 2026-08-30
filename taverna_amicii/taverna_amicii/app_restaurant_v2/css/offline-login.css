@@ -251,8 +251,21 @@ html {
 
 .login-tools {
     display: grid;
-    grid-template-columns: repeat(3, minmax(138px, 1fr));
+    grid-template-columns: repeat(4, minmax(120px, 1fr));
     gap: 8px;
+}
+
+.login-tool-form {
+    display: flex;
+    margin: 0;
+}
+
+.login-tool-form .btn {
+    width: 100%;
+}
+
+.users-sync-feedback {
+    margin: 12px 0 0;
 }
 
 .restaurant-login-page .login-tools .btn {

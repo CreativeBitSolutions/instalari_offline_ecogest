@@ -1,5 +1,5 @@
 {
-  "RestaurantPath": "C:\\xampp\\htdocs\\github\\instalari_offline_ecogest\\grandplaza\\grandplaza\\app_restaurant_v2",
+  "RestaurantPath": "C:\\xampp\\htdocs\\github\\instalari_offline_ecogest\\grandplaza\\grandplaza",
   "DatabasePath": "C:\\xampp\\htdocs\\github\\instalari_offline_ecogest\\grandplaza\\api_offline_grandplaza\\restaurant.sqlite",
   "ProductsApiUrl": "https://agecs.agecs.in/sincronizare_online_app_restaurant/sincronizare_date_offline.php",
   "ClientId": 25,

@@ -22,6 +22,22 @@ $productsSyncGuard = opg_check_products_sync($pdo, $restaurantConfig ?? []);
 $productsSyncStatus = (string)($productsSyncGuard['status'] ?? '');
 $productsNeedsAcknowledgement = $productsSyncStatus === 'products_changed';
 $productsLoginBlocked = empty($productsSyncGuard['allow']) && !$productsNeedsAcknowledgement;
+$usersSyncStatus = trim((string)($_GET['users_sync'] ?? ''));
+$usersSyncMessage = '';
+$usersSyncAlert = 'success';
+if ($usersSyncStatus === 'success') {
+    $usersSyncMessage = sprintf(
+        'Sincronizare finalizată. Utilizatori primiți: %d, noi: %d, actualizați: %d. Cote TVA: %d, coduri casă TVA: %d.',
+        max(0, (int)($_GET['received'] ?? 0)),
+        max(0, (int)($_GET['inserted'] ?? 0)),
+        max(0, (int)($_GET['updated'] ?? 0)),
+        max(0, (int)($_GET['cote_tva_count'] ?? 0)),
+        max(0, (int)($_GET['coduri_casa_tva_count'] ?? 0))
+    );
+} elseif ($usersSyncStatus === 'error') {
+    $usersSyncAlert = 'danger';
+    $usersSyncMessage = trim((string)($_GET['message'] ?? 'Sincronizarea utilizatorilor și TVA nu a putut fi efectuată.'));
+}
 
 if (isset($_SESSION['nr_bon'])) {
     unset($_SESSION['nr_bon']);
@@ -38,7 +54,7 @@ $cust_id = 12; // rămâne neschimbat
     <title>Autentificare utilizator</title>
 
     <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/offline-login.css?v=20260827">
+    <link rel="stylesheet" href="css/offline-login.css?v=20260830">
 
     <!-- Stiluri personalizate -->
     <style>
@@ -137,11 +153,20 @@ $cust_id = 12; // rămâne neschimbat
             <strong class="location-badge">Locația <?php echo (int)$_SESSION['cod_locatie']; ?></strong>
             <div class="login-tools">
             <a class="btn btn-outline-light btn-sm" href="offline_products_sync.php?force=1&rewrite_existing=1">Sincronizare Produse</a>
+            <form method="post" action="offline_users_sync.php" class="login-tool-form" onsubmit="return confirm('Preiei acum utilizatorii și nomenclatoarele TVA din ECOGEST online?');">
+                <button type="submit" class="btn btn-outline-light btn-sm">Sincronizare Utilizatori și TVA</button>
+            </form>
             <a class="btn btn-outline-light btn-sm" href="offline_license_check.php">Verifică licența offline</a>
             <a class="btn btn-outline-danger btn-sm cleanup-link" href="curatare_date_locale.php">Curățare date locale</a>
             </div>
         </div>
     </header>
+
+    <?php if ($usersSyncMessage !== ''): ?>
+    <div class="alert alert-<?php echo $usersSyncAlert; ?> text-center users-sync-feedback" role="alert">
+        <?php echo htmlspecialchars($usersSyncMessage, ENT_QUOTES, 'UTF-8'); ?>
+    </div>
+    <?php endif; ?>
 
     <section class="products-sync-statusbar is-loading" id="productsAutosyncStatus" role="status" aria-live="polite">
         <span class="products-sync-statusbar__signal" aria-hidden="true"></span>

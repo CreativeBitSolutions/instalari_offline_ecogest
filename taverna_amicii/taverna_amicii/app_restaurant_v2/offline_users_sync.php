@@ -89,6 +89,32 @@ function ous_sqlite_columns(PDO $pdo, string $table): array
     return $columns;
 }
 
+function ous_mirror_vat_tables(PDO $pdo, array $coteTva, array $coduriCasaTva): array
+{
+    $pdo->exec('DELETE FROM cote_tva');
+    $insertCota = $pdo->prepare('INSERT INTO cote_tva (id, cota, dep_casa) VALUES (?, ?, ?)');
+    foreach ($coteTva as $row) {
+        if (!is_array($row) || !array_key_exists('id', $row) || !array_key_exists('cota', $row) || !array_key_exists('dep_casa', $row)) {
+            throw new RuntimeException('Răspunsul online pentru cote_tva este incomplet.');
+        }
+        $insertCota->execute([(int)$row['id'], (float)$row['cota'], (int)$row['dep_casa']]);
+    }
+
+    $pdo->exec('DELETE FROM coduri_casa_tva');
+    $insertCod = $pdo->prepare('INSERT INTO coduri_casa_tva (id, cota_tva, cod_listare_cota_casa) VALUES (?, ?, ?)');
+    foreach ($coduriCasaTva as $row) {
+        if (!is_array($row) || !array_key_exists('id', $row) || !array_key_exists('cota_tva', $row) || !array_key_exists('cod_listare_cota_casa', $row)) {
+            throw new RuntimeException('Răspunsul online pentru coduri_casa_tva este incomplet.');
+        }
+        $insertCod->execute([(int)$row['id'], (int)$row['cota_tva'], (int)$row['cod_listare_cota_casa']]);
+    }
+
+    $runtime = $pdo->prepare('UPDATE offline_reference_sync_runtime SET vat_mirrored = 1, last_sync_at = ? WHERE id = 1');
+    $runtime->execute([date('Y-m-d H:i:s')]);
+
+    return ['cote_tva' => count($coteTva), 'coduri_casa_tva' => count($coduriCasaTva)];
+}
+
 try {
     if (!function_exists('restaurantIsOfflineSqlite') || !restaurantIsOfflineSqlite()) {
         ous_redirect('error', ['message' => 'Disponibil doar in instalarea offline.']);
@@ -114,7 +140,7 @@ try {
     $installationUuid = trim((string)($tablet['installation_uuid'] ?? ($restaurantConfig['installation_uuid'] ?? '')));
 
     if ($apiUrl === '' || $apiKey === '' || $clientId <= 0 || $codLocatie <= 0) {
-        ous_redirect('error', ['message' => 'Configuratia pentru preluarea utilizatorilor este incompleta.']);
+        ous_redirect('error', ['message' => 'Configurația pentru preluarea utilizatorilor și TVA este incompletă.']);
     }
 
     $query = ['cod_client' => $clientId];
@@ -178,6 +204,12 @@ try {
     }
 
     $users = is_array($response['users'] ?? null) ? $response['users'] : [];
+    if (!array_key_exists('cote_tva', $response) || !is_array($response['cote_tva'])) {
+        throw new RuntimeException('Răspunsul online nu conține cote_tva. Datele locale au fost păstrate.');
+    }
+    if (!array_key_exists('coduri_casa_tva', $response) || !is_array($response['coduri_casa_tva'])) {
+        throw new RuntimeException('Răspunsul online nu conține coduri_casa_tva. Datele locale au fost păstrate.');
+    }
     $columns = ous_sqlite_columns($pdo, 'admins_12');
     if (!isset($columns['admin_id'])) {
         throw new RuntimeException('Tabela locala admins_12 nu este disponibila.');
@@ -277,12 +309,15 @@ try {
             $inserted++;
         }
     }
+    $vatCounts = ous_mirror_vat_tables($pdo, $response['cote_tva'], $response['coduri_casa_tva']);
     $pdo->commit();
 
     ous_redirect('success', [
         'received' => $received,
         'inserted' => $inserted,
         'updated' => $updated,
+        'cote_tva_count' => $vatCounts['cote_tva'],
+        'coduri_casa_tva_count' => $vatCounts['coduri_casa_tva'],
     ]);
 } catch (Throwable $e) {
     if (isset($pdo) && $pdo instanceof PDO && $pdo->inTransaction()) {

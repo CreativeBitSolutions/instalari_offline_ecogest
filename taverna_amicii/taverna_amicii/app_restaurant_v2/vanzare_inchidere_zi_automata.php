@@ -10,6 +10,7 @@ $logFile = 'error.log';
 // Preluare variabile din sesiune
 $cod_locatie = isset($_SESSION['cod_locatie']) ? intval($_SESSION['cod_locatie']) : 0;
 $adm_id      = isset($_SESSION['admin_id'])   ? $_SESSION['admin_id']   : 0;
+$idRaportZ = 0;
 
 // Verific dacă există bonuri cu status 'S' și nr_raport_z = 0
 $sql_s = "SELECT COUNT(*) FROM note
@@ -132,6 +133,7 @@ if ($has_S > 0) {
                 'alte_metode'       => $alte_metode,
                 'data_ora_raport_z' => $data_ora_curenta
             ]);
+            $idRaportZ = (int)$pdo->lastInsertId();
         } catch (PDOException $e) {
             error_log("[".date("Y-m-d H:i:s")."] Eroare insert raport Z: "
                       . $e->getMessage()
@@ -265,6 +267,16 @@ if ($has_S > 0) {
             error_log("[".date("Y-m-d H:i:s")."] WARNING - Eroare update miscari: " . $e->getMessage() . "\n", 3, $logFile);
         }
         // ============================================================================
+
+        // Raportul Z este emis exclusiv offline. Online primește numărul și actualizează
+        // închiderile și notele existente prin identificator_offline.
+        if ($idRaportZ > 0) {
+            require_once __DIR__ . '/offline_sync_queue_lib.php';
+            $restaurantQueueConfig = restaurant_sync_queue_config($restaurantConfig);
+            restaurant_sync_queue_enqueue_safely(static function () use ($pdo, $restaurantQueueConfig, $idRaportZ, $adm_id): bool {
+                return restaurant_sync_queue_enqueue_z($pdo, $restaurantQueueConfig, $idRaportZ, (int)$adm_id);
+            });
+        }
 
         // --------------- RAPORT VANZARI TOTALE IMPRIMANTA TERMICA---------------
 

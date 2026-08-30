@@ -1,0 +1,364 @@
+TIPURI DE INSTALĂRI OFFLINE ECOGEST
+====================================
+
+Data verificării codului: 30.08.2026
+Rădăcina de lucru: C:\xampp\htdocs\github\instalari_offline_ecogest
+
+Acest fișier descrie instalarea activă din fiecare folder, tipul aplicației și personalizările care trebuie păstrate la copiere, compilare sau actualizare. Cheile API, parolele și alte valori sensibile nu sunt reproduse aici.
+
+
+1. REGULI COMUNE INSTALĂRILOR DE MAGAZIN
+=========================================
+
+Foldere vizate: agremprejba, andreearobertshop, bestmixt, dailycoffee și la_voinica.
+
+Structura obișnuită:
+- ecogest_offline_<client>: sursele PHP ale interfeței de vânzare și locul în care se păstrează executabilul compilat cu ExeOutput for PHP.
+- api_offline_ecogest_<client>: API-ul local, baza SQLite externă, certificatele CA, starea licenței și fișierele de lucru.
+- ecogest_autoscanner_products_magazin_1_4_6_0: aplicația care actualizează nomenclatorul local din online.
+- ecogest_casa_marcat_v3_inp: aplicația care preia bonurile pregătite de POS și le transmite către aplicația fiscală.
+- bonuri_backup și bonuri_trimise: directoare operaționale. Conținutul lor nu trebuie reutilizat într-o instalare nouă.
+- config_offline_<client>.json: configurarea externă unică pentru client, locație, baza SQLite, URL-uri, sincronizare și licență.
+- offline_config_loader.php și offline_installation_identity_lib.php: încărcarea configurării și identitatea persistentă a instalării.
+- shortcuturile ECOGEST: pornirea AutoScannerului și a aplicației pentru casa de marcat.
+
+Funcții comune active:
+- baza locală este SQLite și se numește pos.db. Baza este în afara folderului PHP compilat, în api_offline_ecogest_<client>\db_local.
+- aplicația poate finaliza vânzări fără internet.
+- numai notele finalizate, cu status F și cu detalii, sunt descoperite de coadă. Nota aflată în lucru nu este transmisă.
+- coada este persistentă și continuă să lucreze din pagina de login, chiar fără operator conectat. Butonul manual folosește aceeași coadă, nu un flux paralel.
+- retransmiterea folosește identificatorul instalării, identificatori offline, hashul conținutului și starea entității. Același conținut confirmat nu trebuie inserat din nou online.
+- numărul local al bonului nu este folosit singur ca identitate globală. Identitatea offline include instalarea, clientul, locația și entitatea locală, pentru a evita coliziunile cu bonurile deja existente online.
+- sincronizarea urmărește note, detalii de note, discounturi, bonuri pentru casa de marcat, închideri, rapoarte Z, mișcări și reglări ale casei de marcat. Profilul Daily Coffee are reguli suplimentare pentru NIR.
+- starea transmiterii este prezentată pe categorii, inclusiv Note, Detalii note, Bonuri casa, Închideri, Rapoarte Z, Mișcări și Transmiteri.
+- închiderile de tură și rapoartele Z pot completa ulterior notele deja importate. Mai multe închideri pot aparține aceluiași raport Z.
+- aplicația avertizează asupra închiderilor care nu au fost incluse într-un raport Z, fără să oblige operatorul să încheie ziua la ora 00:00.
+- licența este verificată online periodic și este memorată local. Perioada configurată este 30 de zile, reînnoirea începe cu 7 zile înainte, iar o verificare nereușită se reia după 6 ore. Revenirea nejustificată a ceasului local cu mai mult de 5 minute este tratată ca anomalie.
+- sincronizarea manuală a produselor și AutoScannerul folosesc endpointul online, dar produsele locale rămân utilizabile când internetul lipsește.
+- verificarea stocului caută produsul în nomenclatorul local, apoi calculează stocul numai la apăsarea butonului, exclusiv din mișcările existente online. Verificarea stocului nu condiționează și nu modifică trimiterea mișcărilor offline.
+- unitatea H87 este afișată operatorului ca buc.
+- verificarea CUI folosește un modal cu pas de verificare și confirmare. Datele firmei sunt salvate în sesiune numai după confirmarea operatorului.
+- zoomul ales este memorat și sunt disponibile controale de mărire și micșorare. Antetul și subsolul vânzării sunt menținute accesibile pe ecrane mici și la zoom mărit.
+- exportul XML sau SQL există tehnic, dar butonul din login este ascuns în interfața curentă.
+- curățarea datelor locale se face într-o pagină separată, cu preview și confirmare protejată. Operația curăță numai baza locală și nu șterge ce a fost deja confirmat online.
+- brandingul afișat clientului este ECOGEST. Referințele interne istorice AGECS pot rămâne în cod dacă nu sunt vizibile utilizatorului.
+
+Instalările obișnuite de magazin sunt în mod sales-only. În acest mod sunt blocate administrarea locală a produselor, categoriilor, furnizorilor, terților, documentelor de intrare și NIR-urilor. Nomenclatorul vine din online. Daily Coffee este excepția și este descris separat.
+
+
+2. REGULI COMUNE INSTALĂRILOR DE RESTAURANT
+============================================
+
+Foldere vizate: grandplaza, glovograndplaza și taverna_amicii.
+
+Structura obișnuită:
+- <client>\<client>\app_restaurant_v2: sursele de dezvoltare ale interfeței offline. Folderul este folosit numai la compilare și nu se livrează clientului final.
+- <client>\<client>\<aplicație>.exe și <client>\<client>\Data: aplicația compilată și resursele externe care se livrează clientului final.
+- api_offline_<client>: API local, baza restaurant.sqlite, cozi, stări și fișiere operaționale.
+- aplicație de casa de marcat: preia documentele fiscale și produce fișierele pentru fluxul local al casei de marcat.
+- aplicație de imprimare: preia documentele de secție și le trimite la imprimantele configurate.
+- ecogest_autoscanner_products_restaurant_1_4_6_0: actualizarea nomenclatoarelor locale.
+
+Funcții comune active:
+- baza este SQLite, în fișierul restaurant.sqlite, păstrat în API-ul local extern.
+- ensure schema completează tabelele, coloanele, indexurile și stările necesare pentru vânzări, închideri, rapoarte Z, tablete, licență și sincronizare.
+- notele deschise au status S și nu intră în coadă. O notă finalizată are status F și produce evenimentul de vânzare.
+- închiderea de tură și raportul Z sunt evenimente separate. Ele completează legăturile pe documentele importate deja.
+- mișcările pentru vânzări sunt generate online după nomenclatorul și rețetele existente online. Evenimentele de închidere și Z nu regenerează consumurile.
+- coada are event_uuid, hash de conținut, installation_uuid și inbox online. Retrimiterea aceluiași eveniment este idempotentă.
+- workerul rulează și din loginul local, fără o sesiune de operator, și reia coada după revenirea internetului.
+- comenzile de pe tablete sunt preluate periodic, sunt filtrate după ospătar și locație și sunt importate idempotent. Confirmarea online rămâne în retry dacă internetul cade după importul local.
+- det_note.departament_listare păstrează departamentul existent la momentul comenzii. Mutarea, împărțirea, relistarea și restaurarea notei nu schimbă departamentul istoric.
+- verificarea CUI, confirmarea pentru bonurile cu CIF peste 500 lei, licența la 30 de zile, zoomul persistent, statusul transmiterilor și sincronizarea manuală a produselor sunt incluse în aplicația offline.
+- sincronizarea produselor nu se execută automat la simpla autentificare. Actualizarea periodică este făcută de AutoScanner, iar butonul din login pornește verificarea manuală.
+- AutoScannerul nu trebuie să depindă de existența surselor app_restaurant_v2. RestaurantPath indică folderul care conține executabilul compilat și Data, adică C:\xampp\htdocs\github\instalari_offline_ecogest\<client>\<client>.
+- DatabasePath din AutoScanner indică baza externă C:\xampp\htdocs\github\instalari_offline_ecogest\<client>\api_offline_<client>\restaurant.sqlite. Baza nu se compilează în executabil și nu se mută în Data.
+
+
+3. AGREMPREJBA
+===============
+
+Tip: MAGAZIN, POS offline sales-only.
+Client online: 18.
+Locație: 1.
+Aplicație: agremprejba\ecogest_offline_agremprejba.
+API local: agremprejba\api_offline_ecogest_agremprejba.
+Baza: api_offline_ecogest_agremprejba\db_local\pos.db.
+Identitate configurată: agremprejba-c18-l1-pos1.
+
+Personalizări active:
+- butonul de discount global este ascuns. Endpointul de discount global refuză operația și pe server, nu numai vizual.
+- butonul Protocol este ascuns pentru clientul 18.
+- discountul pe o linie, modificarea cantității și celelalte acțiuni obișnuite pe produs rămân disponibile.
+- căutarea începută cu cifre este tratată ca scanare de cod de bare exact. Codurile sunt normalizate pentru spații și separatori, fără căutare generică după fragmente.
+- după adăugare, schimbarea categoriei sau revenirea dintr-un modal, focusul revine pe câmpul codului de bare.
+- pentru produse cântăribile cu unitate care conține KG, la scanare se poate citi automat cantitatea prin Web Serial de pe COM1. Butonul apare numai când browserul expune Web Serial și locația este 1.
+- configurația include API-ul local pentru cântar și directoarele clientului 18, locația 1.
+- interfața păstrează ghidul specific clientului 18.
+- administrarea NIR, produselor, categoriilor și furnizorilor rămâne blocată în offline.
+
+Componente livrate:
+- ecogest_autoscanner_products_magazin_1_4_6_0.
+- ecogest_casa_marcat_v3_inp.
+- shortcut ECOGEST AutoScanner și shortcut ECOGEST Casa de Marcat.
+
+
+4. ANDREEAROBERTSHOP
+====================
+
+Tip: MAGAZIN, POS offline sales-only, flux orientat spre scanner de coduri de bare.
+Client online: 22.
+Locație: 1.
+Aplicație: andreearobertshop\ecogest_offline_andreearobertshop.
+API local: andreearobertshop\api_offline_ecogest_andreearobertshop.
+Baza: api_offline_ecogest_andreearobertshop\db_local\pos.db.
+Identitate configurată: andreearobertshop-c22-l1-pos1.
+
+Personalizări active:
+- butoanele Sume Tură, Sume Zi și Discount global sunt ascunse din antet.
+- pe liniile bonului sunt ascunse discountul pe produs și modificarea numelui sau prețului produsului. Modificarea cantității și ștergerea liniei rămân disponibile.
+- focusul revine constant pe câmpul codului de bare după operațiile uzuale.
+- Enter primit de la scanner în câmpul de cod de bare pornește căutarea și adăugarea produsului.
+- apăsarea Enter în afara unui câmp editabil produce avertizare și readuce focusul pe codul de bare.
+- când un cod nu există, apare un mesaj central cu codul scanat și se redă un semnal sonor. Mesajul poate fi închis cu X și dispare automat după 5 secunde.
+- răspunsul HTTP 404 cu JSON de tip Produs negăsit este tratat explicit, fără deschiderea modală greșită pentru cantitate.
+- unitatea H87 este afișată ca buc.
+- endpointul local pentru starea AutoScannerului există, iar loginul afișează erorile de răspuns într-o formă controlată.
+- administrarea NIR, produselor, categoriilor și furnizorilor rămâne blocată în offline.
+
+Componente livrate:
+- ecogest_autoscanner_products_magazin_1_4_6_0.
+- ecogest_casa_marcat_v3_inp.
+- shortcut ECOGEST AutoScanner și shortcut ECOGEST Casa de Marcat.
+- folderul .playwright-cli din interiorul instalării este un artefact de test și nu intră în pachetul clientului.
+
+
+5. BESTMIXT
+============
+
+Tip: MAGAZIN, POS offline sales-only.
+Client online: 21.
+Locație: 1.
+Aplicație: bestmixt\ecogest_offline_bestmixt.
+API local: bestmixt\api_offline_ecogest_bestmixt.
+Baza: api_offline_ecogest_bestmixt\db_local\pos.db.
+Identitate configurată: bestmixt-c21-l1-pos1.
+
+Personalizări active:
+- butonul Protocol este ascuns pentru clientul 21.
+- după adăugarea unui produs, filtrarea pe categorie sau închiderea unui modal, focusul revine pe câmpul codului de bare.
+- folosește designul modern al loginului, coadă automată fără operator conectat, statusul pe file, verificarea CUI, verificarea stocului online și controalele de zoom.
+- nu există o regulă comercială exclusivă pentru clientul 21 privind discountul, prețul sau cantitatea. Se aplică regulile comune ale magazinului.
+- administrarea NIR, produselor, categoriilor și furnizorilor rămâne blocată în offline.
+
+Componente livrate:
+- ecogest_autoscanner_products_magazin_1_4_6_0.
+- ecogest_casa_marcat_v3_inp.
+- shortcut ECOGEST AutoScanner și shortcut ECOGEST Casa de Marcat.
+- compiler exe project bestmixt.exop este proiectul local ExeOutput. Nu intră în arhiva clientului.
+
+
+6. DAILYCOFFEE
+===============
+
+Tip: MAGAZIN CU GESTIUNE LOCALĂ EXTINSĂ, vânzare plus NIR și operațiuni de intrare.
+Client folosit de interfață locală: 999.
+Client de sincronizare online: 2.
+Locație: 2.
+Aplicație: dailycoffee\ecogest_offline_daily.
+API local: dailycoffee\api_offline_ecogest_dailycoffee.
+Baza: api_offline_ecogest_dailycoffee\db_local\pos.db.
+Profil de sincronizare: dailycoffee.
+Identitate configurată: dailycoffee-c2-l2-pos1.
+
+Personalizări active:
+- este singura instalare de magazin din acest folder care nu este limitată la sales-only.
+- meniul administrativ local permite produse, categorii, furnizori, NIR, recepții, rapoarte NIR și vânzări POS.
+- există pagina Date firma separată, accesibilă din popupul administrativ al vânzării. Câmpurile se completează manual și nu există completare automată după CUI în această pagină.
+- cantitatea inițială din vânzare este lăsată necompletată pentru operatorul local 999.
+- lista NIR și pagina de detalii au două comenzi: LISTEAZA CU SPATII și LISTEAZA FARA SPATII.
+- varianta CU SPATII începe rezumatul pe pagina următoare și afișează titlul TOTALURI GENERALE NIR.
+- varianta FARA SPATII continuă rezumatul imediat după conținut și nu afișează titlul TOTALURI GENERALE NIR.
+- PDF-ul NIR transformă diacriticele în caractere compatibile cu imprimarea folosită de client.
+- observațiile goale sau egale cu o liniuță nu sunt afișate, pentru a nu lăsa un spațiu inutil în raport.
+- NIR-ul finalizat pune în coadă antetul nir, liniile achiziții și numai mișcările cu fel_doc NIR aferente numărului NIR.
+- la vânzările fiscale, mișcările BF locale nu sunt trimise în payload. Online regenerează mișcările din note și det_note pe baza rețetelor actuale.
+- exportul manual poate genera XML sau SQL pe interval. XML-ul poate fi încărcat online într-un folder separat pe client, pentru selectare ulterioară în importatorul online.
+- identificatorii NIR includ instalarea, clientul, numărul NIR și id-ul local, pentru prevenirea coliziunilor.
+- include fluxurile de etichete NIR, NIR simplificat, NIR defalcat, rapoarte agregate și rapoarte standard existente în cod.
+
+Componente livrate:
+- ecogest_autoscanner_products_magazin_1_4_6_0.
+- ecogest_casa_marcat_v3_inp.
+- shortcut ECOGEST AutoScanner și shortcut ECOGEST Casa de Marcat.
+
+
+7. LA_VOINICA
+==============
+
+Tip: MAGAZIN, POS offline sales-only.
+Client online: 1015.
+Locație: 1.
+Aplicație: la_voinica\ecogest_offline_la_voinica.
+API local: la_voinica\api_offline_ecogest_la_voinica.
+Baza: api_offline_ecogest_la_voinica\db_local\pos.db.
+Identitate configurată: la_voinica-c1015-l1-pos1.
+
+Personalizări active:
+- nu există în vânzare o ramură comercială exclusivă pentru clientul 1015 privind discountul, plata, prețul sau cântarul.
+- folosește toate funcțiile comune ale magazinului, inclusiv coadă automată, statusul transmiterii, identificatorii offline compleți, licență, CUI, stoc online, curățarea locală și zoomul persistent.
+- focusul inițial urmează comportamentul general al aplicației și nu este forțat permanent pe codul de bare ca la clienții 18, 21 și 22.
+- administrarea NIR, produselor, categoriilor și furnizorilor rămâne blocată în offline.
+
+Componente livrate:
+- ecogest_autoscanner_products_magazin_1_4_6_0.
+- ecogest_casa_marcat_v3_inp.
+- shortcut ECOGEST AutoScanner și shortcut ECOGEST Casa de Marcat.
+- vechi_propuse_spre_eliminare conține fișiere arhivate. Nu este cod activ și nu intră în pachetul clientului.
+
+
+8. GRANDPLAZA
+===============
+
+Tip: RESTAURANT offline cu integrare WooCommerce.
+Client online: 25.
+Locație: 1.
+Aplicație: grandplaza\grandplaza\app_restaurant_v2.
+API local: grandplaza\api_offline_grandplaza.
+Baza: api_offline_grandplaza\restaurant.sqlite.
+Identitate configurată: grandplaza-c25-l1.
+
+Date inițiale și continuitate:
+- sunt păstrate operatorii, produsele, mesele, categoriile, gestiunile, cotele TVA, firma, mapările WooCommerce și registrul comenzilor site deja importate.
+- tabelele tranzacționale pornesc goale.
+- cele 125 de rapoarte Z istorice sunt seed pentru continuitatea numerotării și nu sunt trimise în coadă. Numai rapoartele Z create după instalare sunt sincronizate.
+
+Personalizări active:
+- import WooCommerce direct de pe restaurantgrandplazasb.ro.
+- verificarea comenzilor noi rulează și în login, la interval de 20 de secunde, și afișează notificare pentru comenzile în așteptare.
+- sunt păstrate mapările pentru meniul zilei, ciorbă, felul doi, meniul complet, salată și transport.
+- regula specială pentru produsul WooCommerce al meniului zilei și variantele soup, complete și second este activă numai pentru clientul 25.
+- discounturile sunt ascunse în interfața notei, la împărțirea notei și în documentele de plată.
+- acțiunile de închidere de tură sunt ascunse din modalul de alegere a mesei pentru acest client.
+- Plata PROTO nu produce foaia suplimentară pentru BAR.
+- listarea folosește departamentele BUC, BAR și Salate.
+- produsele cu mai multe departamente care includ BUCATARIE rămân pe linii distincte. Produsele de bucătărie nu sunt grupate.
+- prețurile și totalurile sunt ascunse pe listările de producție pentru BUCATARIE, IMPRIMANTA3 și SALATE.
+- comenzile WooCommerce sunt păstrate într-un inbox local, iar importul și confirmarea către site sunt idempotente.
+
+Componente livrate:
+- grandplaza_casa_marcat, generează fișierele INP pentru C:\fprint\in.
+- grandplaza_printer, configurat pentru BUC, BAR și Salate.
+- grandplaza_veribon, urmărește răspunsurile BonANSWER, BonERR și BonOK și le transmite online.
+- ecogest_autoscanner_products_restaurant_1_4_6_0.
+- shortcuturi ECOGEST pentru casa de marcat, imprimanta, verificarea bonului și AutoScanner.
+- compiler exe project grandplaza.exop este proiect local de compilare și nu intră în pachet.
+- aplicatii_grandplaza_configurate_pentru_online conține variantele originale pentru fluxul online. Aplicațiile active pentru offline sunt cele din rădăcina instalării.
+
+
+9. GLOVOGRANDPLAZA
+===================
+
+Tip: RESTAURANT offline cu integrare WooCommerce și branding Glovo Grand Plaza.
+Client online: 26.
+Locație: 1.
+Aplicație: glovograndplaza\glovograndplaza\app_restaurant_v2.
+API local: glovograndplaza\api_offline_glovograndplaza.
+Baza: api_offline_glovograndplaza\restaurant.sqlite.
+Identitate configurată: glovograndplaza-c26-l1.
+
+Date inițiale și continuitate:
+- sunt păstrate operatorii, produsele, mesele, categoriile, gestiunile, cotele TVA și datele firmei.
+- baza sursă nu a conținut rețete, mapări WooCommerce sau istoric WooCommerce. Schemele există și pot fi completate prin fluxurile aplicației.
+- tabelele tranzacționale pornesc goale.
+- cele 77 de rapoarte Z istorice sunt seed pentru continuitatea numerotării și nu sunt retransmise.
+
+Personalizări active:
+- antetul vânzării are identificare vizuală galbenă.
+- discounturile sunt ascunse în interfața notei, la împărțirea notei și în documentele de plată.
+- acțiunile de închidere de tură sunt ascunse din modalul de alegere a mesei.
+- Plata PROTO nu produce foaia suplimentară pentru BAR.
+- listarea folosește departamentele BUC, BAR și Salate.
+- produsele cu mai multe departamente care includ BUCATARIE rămân individuale, iar listările de producție ascund prețurile și totalurile pentru BUCATARIE, IMPRIMANTA3 și SALATE.
+- folosește endpointurile WooCommerce ale site-ului restaurantgrandplazasb.ro și afișează popupul GLOVO GRAND PLAZA pentru comenzi noi.
+- regula specială a clientului 25 pentru meniul zilei și varianta numai ciorbă nu se aplică automat clientului 26.
+- comenzile WooCommerce, mapările și confirmările au schema locală idempotentă, chiar dacă baza inițială nu conține mapări.
+
+Componente livrate:
+- glovo_casa_marcat, configurat pentru clientul 26, locația 1 și C:\fprint\in.
+- glovo_printer, configurat pentru BUC, BAR și Salate.
+- ecogest_autoscanner_products_restaurant_1_4_6_0.
+- shortcuturi ECOGEST pentru casa de marcat, imprimanta și AutoScanner.
+- nu există o aplicație VeriBon separată pentru clientul 26 în configurația disponibilă.
+- compiler exe project glovograndplaza.exop este proiect local de compilare și nu intră în pachet.
+
+
+10. TAVERNA_AMICII
+===================
+
+Tip: RESTAURANT offline, ospătari și șefi de sală, cu sincronizare comenzi de pe tablete.
+Client online: 1008.
+Locație: 1.
+Sufix operațional al tabelelor online: 12.
+Aplicație: taverna_amicii\taverna_amicii\app_restaurant_v2.
+API local: taverna_amicii\api_offline_taverna_amicii.
+Baza: api_offline_taverna_amicii\restaurant.sqlite.
+Identitate configurată: taverna-amicii-1008-l1-20260814.
+
+Personalizări active:
+- instalarea conține numai interfața de restaurant. Nu trebuie adăugată o interfață vanzare_magazin.php.
+- rolurile locale includ ospătar și șef de sală.
+- Plata PROTO produce o notă suplimentară de plată pentru imprimanta BAR. Excepția care elimină această listare se aplică numai clienților 25 și 26, nu clientului 1008.
+- există pagina de restaurare a notelor PROTO, cu preview și refacerea detaliilor, apoi eliminarea controlată a sursei restaurate.
+- șeful de sală poate configura boldul, dimensiunea caracterelor și alinierea pentru imprimare. Setările sunt păstrate în printer_format.json.
+- departamentul istoric de listare, numele produsului și observația de pe linia notei se păstrează la mutare, împărțire, relistare și restaurare.
+- comenzile tabletelor sunt verificate la 30 de secunde, filtrate după ospătar și locație, apoi pot fi importate pe o notă deschisă sau pe o masă liberă.
+- importul de pe tabletă și confirmarea către online sunt separate. O confirmare nereușită se retrimite fără dublarea comenzii locale.
+- confirmarea CIF este cerută pentru valori peste 500 lei. Viramentul bancar separat, fără bon fiscal, rămâne exceptat.
+- sincronizarea vânzărilor pornește din login, interfața ospătarului și panoul șefului de sală. Nota F, închiderea turei și raportul Z sunt evenimente distincte.
+- modalul Status trimiteri afișează coadă, notele pregătite, documentele care așteaptă închiderea sau Z-ul și istoricul ultimelor încercări.
+- importul direct WooCommerce pentru pizza-sibiu-amicii.ro este numai planificat în PLAN_IMPORT_WOOCOMMERCE_OFFLINE.md. Nu trebuie prezentat ca funcție activă până la implementarea și configurarea endpointurilor site-ului.
+
+Componente livrate:
+- scan_casa_marcat_v3_inp, preia bonurile locale și pregătește fișierele pentru casa de marcat.
+- printer_bold, varianta activă pentru imprimarea locală pe secții.
+- printer_bold_online, varianta separată păstrată pentru fluxul online sau comparație. Nu trebuie confundată cu imprimanta activă offline.
+- casa_marcat_veribon, urmărește răspunsurile fiscale și le transmite online.
+- ecogest_autoscanner_products_restaurant_1_4_6_0.
+- shortcuturi ECOGEST pentru casa de marcat, imprimanta offline, imprimanta online și AutoScanner.
+- compiler exe project taverna.exop este proiect local de compilare și nu intră în pachet.
+
+
+11. FOLDERE TEHNICE DIN RĂDĂCINĂ
+=================================
+
+_pachete_clienti
+- nu este o instalare.
+- conține arhivele ZIP generate pentru clienți și fișierele SHA256 aferente.
+- este ignorat de Git.
+
+.playwright-cli
+- nu este o instalare.
+- conține artefacte produse de testele de interfață.
+- nu intră în pachetele clienților și este ignorat de Git.
+
+
+12. SCRIPTURI DE ÎMPACHETARE ȘI REGULI DE DISTRIBUȚIE
+======================================================
+
+În rădăcină există câte un script arhiveaza_<client>.bat pentru fiecare dintre cele opt instalări și scriptul comun arhiveaza_pachet_client.ps1.
+
+Scriptul comun:
+- presupune că XAMPP este deja instalat pe calculatorul clientului.
+- cere existența executabilului compilat și a folderului extern Data.
+- include baza SQLite activă, API-ul local, configurarea, utilitarele și shortcuturile.
+- exclude sursele PHP din folderul aplicației compilate.
+- adaptează RestaurantPath din configurarea AutoScannerului către folderul final al executabilului compilat și verifică să nu indice app_restaurant_v2.
+- păstrează DatabasePath către restaurant.sqlite din API-ul local extern. Baza SQLite nu este inclusă în executabilul compilat.
+- exclude proiectele .exop, logurile, backupurile, fișierele .bak, .pdb, vechi_propuse_spre_eliminare și .playwright-cli.
+- golește directoarele operaționale bonuri_backup, bonuri_trimise, offline_sync_exports, backups_transaction_reset, backups_products_sync, licență, ScannedNotes și Logs în copia destinată clientului.
+- exclude identitatea fizică și starea de licență existente. Acestea se generează separat pe calculatorul clientului.
+- generează arhiva în _pachete_clienti și calculează SHA256.
+- păstrează structura finală C:\xampp\htdocs\github\instalari_offline_ecogest\<client>.
+
+Fișierele cu parole locale, cheile API, configurațiile de licență și credențialele serviciilor nu trebuie copiate în documentație, mesaje sau fișiere publice. Ele rămân numai în configurările operaționale dedicate.

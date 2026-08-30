@@ -98,6 +98,17 @@ function restaurant_sqlite_schema_statements(): array
             dep_casa INTEGER DEFAULT 0
         )",
         "CREATE UNIQUE INDEX IF NOT EXISTS idx_cote_tva_cota ON cote_tva(cota)",
+        "CREATE TABLE IF NOT EXISTS coduri_casa_tva (
+            id INTEGER PRIMARY KEY,
+            cota_tva INTEGER NOT NULL DEFAULT 0,
+            cod_listare_cota_casa INTEGER NOT NULL DEFAULT 0
+        )",
+        "CREATE TABLE IF NOT EXISTS offline_reference_sync_runtime (
+            id INTEGER PRIMARY KEY CHECK(id = 1),
+            vat_mirrored INTEGER NOT NULL DEFAULT 0,
+            last_sync_at TEXT DEFAULT NULL
+        )",
+        "INSERT OR IGNORE INTO offline_reference_sync_runtime(id, vat_mirrored) VALUES(1, 0)",
         "CREATE TABLE IF NOT EXISTS produse_servicii (
             cod_produs INTEGER PRIMARY KEY,
             cod_bare TEXT DEFAULT '',
@@ -579,17 +590,23 @@ function restaurant_sqlite_schema_statements(): array
             SELECT 1, 1, 0
             WHERE NOT EXISTS (SELECT 1 FROM setari_platforma)",
         "INSERT INTO cote_tva (cota, dep_casa)
-            SELECT 21, 1 WHERE NOT EXISTS (SELECT 1 FROM cote_tva WHERE cota = 21)",
+            SELECT 21, 1 WHERE NOT EXISTS (SELECT 1 FROM cote_tva WHERE cota = 21)
+              AND COALESCE((SELECT vat_mirrored FROM offline_reference_sync_runtime WHERE id = 1), 0) = 0",
         "INSERT INTO cote_tva (cota, dep_casa)
-            SELECT 11, 2 WHERE NOT EXISTS (SELECT 1 FROM cote_tva WHERE cota = 11)",
+            SELECT 11, 2 WHERE NOT EXISTS (SELECT 1 FROM cote_tva WHERE cota = 11)
+              AND COALESCE((SELECT vat_mirrored FROM offline_reference_sync_runtime WHERE id = 1), 0) = 0",
         "INSERT INTO cote_tva (cota, dep_casa)
-            SELECT 19, 1 WHERE NOT EXISTS (SELECT 1 FROM cote_tva WHERE cota = 19)",
+            SELECT 19, 1 WHERE NOT EXISTS (SELECT 1 FROM cote_tva WHERE cota = 19)
+              AND COALESCE((SELECT vat_mirrored FROM offline_reference_sync_runtime WHERE id = 1), 0) = 0",
         "INSERT INTO cote_tva (cota, dep_casa)
-            SELECT 9, 2 WHERE NOT EXISTS (SELECT 1 FROM cote_tva WHERE cota = 9)",
+            SELECT 9, 2 WHERE NOT EXISTS (SELECT 1 FROM cote_tva WHERE cota = 9)
+              AND COALESCE((SELECT vat_mirrored FROM offline_reference_sync_runtime WHERE id = 1), 0) = 0",
         "INSERT INTO cote_tva (cota, dep_casa)
-            SELECT 5, 3 WHERE NOT EXISTS (SELECT 1 FROM cote_tva WHERE cota = 5)",
+            SELECT 5, 3 WHERE NOT EXISTS (SELECT 1 FROM cote_tva WHERE cota = 5)
+              AND COALESCE((SELECT vat_mirrored FROM offline_reference_sync_runtime WHERE id = 1), 0) = 0",
         "INSERT INTO cote_tva (cota, dep_casa)
-            SELECT 0, 4 WHERE NOT EXISTS (SELECT 1 FROM cote_tva WHERE cota = 0)"
+            SELECT 0, 4 WHERE NOT EXISTS (SELECT 1 FROM cote_tva WHERE cota = 0)
+              AND COALESCE((SELECT vat_mirrored FROM offline_reference_sync_runtime WHERE id = 1), 0) = 0"
     ];
 }
 

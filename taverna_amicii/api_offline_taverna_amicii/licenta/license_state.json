@@ -1,0 +1,13 @@
+{
+    "license": {
+        "version": 1,
+        "client_id": 1008,
+        "hardware_serial": "0000_0000_0000_0000_0026_B778_42D5_DC45.",
+        "installation_uuid": "taverna-amicii-1008-l1-20260814-i-581518bea217e393",
+        "issued_at": "2026-08-30T06:38:19+03:00",
+        "expires_at": "2026-09-29T06:38:19+03:00"
+    },
+    "signature": "UJPy80Chx7BcWZauP4AVly0nAzleDsWRJaulM4OFN0KymtTFCGgVf/w56EzViCfsHhqDw9CccUu1TRUe8gjulLQZhmGoQtNzVlbeqKhV89QPJWzT/GKstErct/X3XFhP8wofPoeQOB4X44JSs1sAh1lAHcMMjokrk4RyEeb5EPK96TZl77/rAg3zx97N2AdKI8GkyJDRNqWlHaXNCCt39mr2ugmPonQOGovLb+Nf6NyUzwK2sFv682ZZdXAggjyjyUUK/3X0HGcfbzKfurBnG+7PZ8hraomNQgljDRT+Sa26GCW0xf+XCxNcqHciD/KNtJ0aqWFwQgOIAa9l0SRaoA==",
+    "signature_algorithm": "SHA256withRSA",
+    "saved_at": "2026-08-30T05:38:19+02:00"
+}
