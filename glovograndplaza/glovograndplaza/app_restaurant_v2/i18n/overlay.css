@@ -1,0 +1,60 @@
+#agecs-restaurant-language-switcher {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  z-index: 1035;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  border: 1px solid rgba(23, 33, 43, .28);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .96);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .2);
+  font: 700 12px/1.2 Arial, sans-serif;
+}
+
+#agecs-restaurant-language-switcher button {
+  min-width: 34px;
+  min-height: 30px;
+  margin: 0;
+  padding: 5px 7px;
+  border: 0;
+  border-radius: 5px;
+  color: #253444;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+}
+
+#agecs-restaurant-language-switcher button:hover,
+#agecs-restaurant-language-switcher button:focus-visible {
+  color: #0b4f91;
+  background: #e8f1fa;
+  outline: 2px solid transparent;
+}
+
+#agecs-restaurant-language-switcher button[aria-pressed="true"] {
+  color: #fff;
+  background: #0d6efd;
+}
+
+@media (max-width: 640px) {
+  #agecs-restaurant-language-switcher {
+    right: 6px;
+    bottom: 6px;
+    opacity: .94;
+  }
+
+  #agecs-restaurant-language-switcher button {
+    min-width: 32px;
+    min-height: 28px;
+    padding: 4px 6px;
+  }
+}
+
+@media print {
+  #agecs-restaurant-language-switcher {
+    display: none !important;
+  }
+}

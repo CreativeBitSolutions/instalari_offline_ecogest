@@ -300,6 +300,7 @@ $runtime = $pdo->query('SELECT * FROM offline_tablet_sync_runtime WHERE id=1')->
         @keyframes orderReveal { from { opacity:0; transform:translateY(9px); } to { opacity:1; transform:translateY(0); } }
         @media (prefers-reduced-motion:reduce) { .order-card { animation:none; } }
     </style>
+    <?php include __DIR__ . '/i18n/i18n_bootstrap.php'; ?>
 </head>
 <body>
 <header class="page-head">

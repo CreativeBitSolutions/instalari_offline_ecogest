@@ -40,6 +40,13 @@ function ops_h($value): string
     return htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');
 }
 
+function ops_i18n_assets(): string
+{
+    ob_start();
+    include __DIR__ . '/i18n/i18n_bootstrap.php';
+    return (string)ob_get_clean();
+}
+
 function ops_recent_logs(PDO $pdo, int $limit = 10, int $offset = 0): array
 {
     try {
@@ -268,7 +275,7 @@ function ops_render_start_page(): void
         table{width:100%;border-collapse:collapse;background:#fff;margin-top:8px}
         th,td{border:1px solid #d1d5db;padding:8px;text-align:left;vertical-align:top}
         th{background:#f9fafb}.ok{color:#166534}.err{color:#991b1b}
-    </style></head><body><main class="wrap"><div class="panel">';
+    </style>' . ops_i18n_assets() . '</head><body><main class="wrap"><div class="panel">';
     echo '<h1>Sincronizare produse</h1>';
     echo '<p class="muted">Actualizează nomenclatorul local de produse din baza online.</p>';
     echo '<form method="post" action="offline_products_sync.php">';
@@ -327,7 +334,7 @@ function ops_render_html_response(array $payload, int $httpCode): void
         table{width:100%;border-collapse:collapse;background:#fff}
         th,td{border:1px solid #d1d5db;padding:8px;text-align:left;vertical-align:top}
         th{background:#f9fafb}
-    </style></head><body><main class="wrap"><div class="panel">';
+    </style>' . ops_i18n_assets() . '</head><body><main class="wrap"><div class="panel">';
     echo '<h1 class="' . ($success ? 'ok' : 'err') . '">' . ops_h($title) . '</h1>';
     echo '<p>' . ops_h($message) . '</p>';
 

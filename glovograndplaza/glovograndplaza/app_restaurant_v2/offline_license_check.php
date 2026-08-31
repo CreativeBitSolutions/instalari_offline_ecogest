@@ -137,6 +137,7 @@ function offline_license_html($value)
             .license-header, .license-body { padding-left: 18px; padding-right: 18px; }
         }
     </style>
+    <?php include __DIR__ . '/i18n/i18n_bootstrap.php'; ?>
 </head>
 <body>
 <main class="license-panel">

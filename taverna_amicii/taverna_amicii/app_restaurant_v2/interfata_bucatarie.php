@@ -149,6 +149,7 @@ $rows = ($cols > 0) ? ceil($numOther / $cols) : 1;
     #toast-container { position: fixed; top: 20px; right: 20px; z-index: 1055; }
     .toast { min-width: 250px; }
   </style>
+    <?php include __DIR__ . '/i18n/i18n_bootstrap.php'; ?>
 </head>
 
 <body>

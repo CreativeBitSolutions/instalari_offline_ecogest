@@ -303,6 +303,7 @@ if ($orders) {
     .cursor-pointer{ cursor:pointer; }
     .order-details{ background:#fff; }
   </style>
+    <?php include __DIR__ . '/i18n/i18n_bootstrap.php'; ?>
 </head>
 <body class="admin-page">
 <header class="page-header">

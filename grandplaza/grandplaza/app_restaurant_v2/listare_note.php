@@ -106,6 +106,7 @@ $notes = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     .modal .form-control { font-size: 1.1rem; padding: 0.75rem; }
     .modal .btn { font-size: 1.1rem; padding: 0.75rem 1.5rem; }
   </style>
+    <?php include __DIR__ . '/i18n/i18n_bootstrap.php'; ?>
 </head>
 <body>
   <div class="container mt-4">

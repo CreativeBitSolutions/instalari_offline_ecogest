@@ -338,6 +338,7 @@ if ($totalRows > 0) {
     .scroll-controls-bottom { border-top: 0; }
     .scroll-controls .btn { min-width: 86px; }
   </style>
+    <?php include __DIR__ . '/i18n/i18n_bootstrap.php'; ?>
 </head>
 <body>
 <header class="page-header">

@@ -26,6 +26,7 @@ $facturi = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .table thead th { background-color: #343a40; color: #fff; }
         .table-hover tbody tr:hover { background-color: #e9ecef; }
     </style>
+    <?php include __DIR__ . '/i18n/i18n_bootstrap.php'; ?>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">

@@ -48,6 +48,7 @@ window.addEventListener('load', function () {
 });
 </script>
 <script src="js/offline-persistent-zoom.js"></script>
+    <?php include __DIR__ . '/i18n/i18n_bootstrap.php'; ?>
 </head>
 <body>
 <div id="loading"></div>

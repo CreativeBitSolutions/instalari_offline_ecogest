@@ -135,6 +135,7 @@ foreach ($notes as $n) {
             to { transform: scale(1); }
         }
     </style>
+    <?php include __DIR__ . '/i18n/i18n_bootstrap.php'; ?>
 </head>
 <body>
 
@@ -166,7 +167,7 @@ foreach ($notes as $n) {
     <div class="text-center mt-4 mb-4">
         <a href="logout.php" class="btn btn-outline-light btn-sm m-1">Deconectare</a>
         <a href="vanzare_retururi.php" class="btn btn-outline-light btn-sm m-1">Retururi</a>
-        <a href="listare_note.php" class="btn btn-outline-light btn-sm m-1">Listare Note</a>
+        <a href="listare_note.php" class="btn btn-outline-light btn-sm m-1">Retrimite note la casa de marcat</a>
         <a href="configurare_listare_imprimanta.php" class="btn btn-outline-warning btn-sm m-1">Configurare imprimantă</a>
         <button type="button" id="btnSyncOnline" class="btn btn-success btn-sm m-1">
             <i class="fas fa-sync-alt"></i> Sync Online

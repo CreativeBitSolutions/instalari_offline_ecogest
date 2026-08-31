@@ -83,6 +83,7 @@ $appName = trim((string)($config['app_name'] ?? 'ECOGEST RESTAURANT OFFLINE'));
         code { overflow-wrap:anywhere; }
         @media (max-width:760px) { .shell{width:min(100% - 20px,1040px);margin:16px auto}.topbar{align-items:flex-start}.summary{grid-template-columns:1fr}.groups{grid-template-columns:1fr}.content{padding:16px}.notice{padding:15px 16px}.topbar h1{font-size:22px} }
     </style>
+    <?php include __DIR__ . '/i18n/i18n_bootstrap.php'; ?>
 </head>
 <body>
 <main class="shell">

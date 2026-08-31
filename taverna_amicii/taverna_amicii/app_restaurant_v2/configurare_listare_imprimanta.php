@@ -195,6 +195,7 @@ $previewAlign = $alignEnabled && $config['align'] === 'justified' ? 'justify' : 
             .settings-card { margin: 14px auto; box-shadow: 6px 6px 0 rgba(0,0,0,.32); }
         }
     </style>
+    <?php include __DIR__ . '/i18n/i18n_bootstrap.php'; ?>
 </head>
 <body>
 <main class="container-fluid px-3">

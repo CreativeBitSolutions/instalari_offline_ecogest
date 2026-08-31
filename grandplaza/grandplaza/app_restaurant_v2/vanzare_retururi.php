@@ -44,6 +44,7 @@ if ($resRetururi) {
   <style>
     .mt-4 { margin-top: 1.5rem!important; }
   </style>
+    <?php include __DIR__ . '/i18n/i18n_bootstrap.php'; ?>
 </head>
 <body>
   <div class="container">

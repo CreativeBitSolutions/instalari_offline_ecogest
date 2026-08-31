@@ -1326,6 +1326,7 @@ $pageLinkFilters = array_filter($pageLinkFilters, static function ($v) {
       .wp-detail-grid { grid-template-columns:1fr; }
     }
   </style>
+    <?php include __DIR__ . '/i18n/i18n_bootstrap.php'; ?>
 </head>
 <body>
 <header class="page-header">
