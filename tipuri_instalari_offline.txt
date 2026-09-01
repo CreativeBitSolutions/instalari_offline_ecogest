@@ -305,8 +305,18 @@ API local: taverna_amicii\api_offline_taverna_amicii.
 Baza: api_offline_taverna_amicii\restaurant.sqlite.
 Identitate configurată: taverna-amicii-1008-l1-20260814.
 
+Stare instalare și actualizări ulterioare:
+- instalarea offline Taverna Amicii este deja pusă în funcțiune la client.
+- baza existentă `api_offline_taverna_amicii\restaurant.sqlite` conține datele operaționale ale clientului și nu se suprascrie, nu se înlocuiește și nu se include ca bază nouă într-un pachet de actualizare.
+- înaintea unei migrări de schemă se păstrează o copie de siguranță a bazei existente. Actualizarea se face idempotent prin `ensure schema`, fără ștergerea tabelelor și fără recrearea bazei.
+- modificările de tabele, coloane, indexuri și triggere se livrează în executabilul PHP recompilat dacă fac parte din `restaurant_sqlite_apply_schema`. La prima conexiune, aplicația aplică automat completările peste baza existentă.
+- dacă migrarea aparține unui endpoint sau unui utilitar extern, se livrează numai scripturile actualizate din folderul corespunzător. Orice script separat de migrare trebuie să folosească `CREATE TABLE IF NOT EXISTS`, verificarea coloanelor și operații repetabile în siguranță.
+- actualizările aplicației pot înlocui executabilul compilat și folderul extern `Data`, precum și utilitarele actualizate. Ele nu trebuie să atingă fișierul SQLite activ, configurările locale și identitatea de licență a clientului.
+
 Personalizări active:
 - instalarea conține numai interfața de restaurant. Nu trebuie adăugată o interfață vanzare_magazin.php.
+- REGULĂ FISCALĂ STRICTĂ: clientul 1008 folosește FiscalWire. Bonul începe direct cu `S`, fără `K` sau `H`. Linia de produs trebuie generată în forma `produs;preț;cantitate;1;1;cod_cotă_TVA;0;0;`. Cantitatea are exact trei zecimale și unitatea de măsură nu se transmite. Plățile folosesc codurile 0 pentru numerar, 1 pentru card, 5 pentru tichete și 6 pentru plata online. Regula se aplică atât bonului normal, cât și retransmiterii unei note, exclusiv pentru clientul 1008.
+- Fișierele `.inp` pentru FiscalWire trebuie scrise în UTF-8 fără BOM. Bufferul PHP este curățat preventiv. Utilitarul local care transformă JSON-ul în `.inp` trebuie să folosească `new UTF8Encoding(false)`, nu `Encoding.UTF8`. Versiunea `AGECSScanCM 1.0.4` folosește `Encoding.UTF8` și introduce BOM. Primii octeți ai fișierului trebuie să fie `53 2C 31`, adică `S,1`, fără prefixul `EF BB BF`.
 - rolurile locale includ ospătar și șef de sală.
 - Plata PROTO produce o notă suplimentară de plată pentru imprimanta BAR. Excepția care elimină această listare se aplică numai clienților 25 și 26, nu clientului 1008.
 - există pagina de restaurare a notelor PROTO, cu preview și refacerea detaliilor, apoi eliminarea controlată a sursei restaurate.
@@ -316,6 +326,7 @@ Personalizări active:
 - importul de pe tabletă și confirmarea către online sunt separate. O confirmare nereușită se retrimite fără dublarea comenzii locale.
 - confirmarea CIF este cerută pentru valori peste 500 lei. Viramentul bancar separat, fără bon fiscal, rămâne exceptat.
 - sincronizarea vânzărilor pornește din login, interfața ospătarului și panoul șefului de sală. Nota F, închiderea turei și raportul Z sunt evenimente distincte.
+- sincronizarea manuală a produselor din interfața web preia și oglindește exact `observatii_predefinite` și `atribuiri_observatii_produse`. Sunt propagate inclusiv modificările și ștergerile online. Lipsa uneia dintre colecții în răspuns oprește operația și păstrează baza locală. Răspunsul extins este cerut prin `include_observations=1`, fără schimbarea formatului folosit de AutoScannerul existent.
 - modalul Status trimiteri afișează coadă, notele pregătite, documentele care așteaptă închiderea sau Z-ul și istoricul ultimelor încercări.
 - importul direct WooCommerce pentru pizza-sibiu-amicii.ro este numai planificat în PLAN_IMPORT_WOOCOMMERCE_OFFLINE.md. Nu trebuie prezentat ca funcție activă până la implementarea și configurarea endpointurilor site-ului.
 

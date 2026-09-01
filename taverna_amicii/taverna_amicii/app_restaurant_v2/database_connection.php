@@ -131,6 +131,7 @@ if ($restaurantDriver === 'sqlite') {
     $_SESSION['d'] = $_SESSION['d'] ?? 0;
     $_SESSION['mod_listare'] = $_SESSION['mod_listare'] ?? 'simplu';
     restaurant_sqlite_set_cod_locatie_context($pdo, $cod_locatie);
+    restaurant_sqlite_ensure_temporary_tables($pdo, $cod_locatie, 20);
 
     if (array_key_exists('no_session_validation', $restaurantConfig)) {
         $_SESSION['no_session_validation'] = (int)$restaurantConfig['no_session_validation'];

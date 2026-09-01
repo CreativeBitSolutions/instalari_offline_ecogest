@@ -94,6 +94,17 @@ function opg_sync_table_columns(string $table): array
             'cota',
             'dep_casa',
         ],
+        'observatii_predefinite' => [
+            'id',
+            'text_observatie',
+            'ordine',
+            'activ',
+            'toate_produsele',
+        ],
+        'atribuiri_observatii_produse' => [
+            'id_observatie',
+            'cod_produs',
+        ],
     ];
 
     return $columns[$table] ?? [];
@@ -120,6 +131,9 @@ function opg_hash_column_type(string $column): string
         'id',
         'cod_locatie',
         'dep_casa',
+        'id_observatie',
+        'ordine',
+        'toate_produsele',
     ];
     static $numericColumns = [
         'pret_cu_tva',
@@ -317,6 +331,8 @@ function opg_online_compatible_hash(array $online, array $products): string
         'categorii_locatii' => opg_filter_rows_for_hash('categorii_locatii', isset($online['categorii_locatii']) && is_array($online['categorii_locatii']) ? $online['categorii_locatii'] : []),
         'gestiuni' => opg_filter_rows_for_hash('gestiuni', isset($online['gestiuni']) && is_array($online['gestiuni']) ? $online['gestiuni'] : []),
         'cote_tva' => opg_filter_cote_tva_for_products($onlineCoteTva, $products),
+        'observatii_predefinite' => opg_filter_rows_for_hash('observatii_predefinite', isset($online['observatii_predefinite']) && is_array($online['observatii_predefinite']) ? $online['observatii_predefinite'] : []),
+        'atribuiri_observatii_produse' => opg_filter_rows_for_hash('atribuiri_observatii_produse', isset($online['atribuiri_observatii_produse']) && is_array($online['atribuiri_observatii_produse']) ? $online['atribuiri_observatii_produse'] : []),
     ]);
 }
 
@@ -381,6 +397,8 @@ function opg_local_compatible_hash(PDO $pdo, array $online, array $products): st
         'categorii_locatii' => opg_local_rows_for_online($pdo, 'categorii_locatii', 'id', $onlineCategoriiLocatii),
         'gestiuni' => opg_local_rows_for_online($pdo, 'gestiuni', 'id_gestiune', $onlineGestiuni),
         'cote_tva' => opg_filter_rows_to_present_columns(opg_local_cote_tva_for_hash($pdo, $products), opg_present_columns($onlineCoteTva)),
+        'observatii_predefinite' => opg_fetch_table($pdo, 'observatii_predefinite', 'id'),
+        'atribuiri_observatii_produse' => opg_fetch_table($pdo, 'atribuiri_observatii_produse', 'id_observatie'),
     ]);
 }
 
@@ -392,6 +410,8 @@ function opg_local_hash(PDO $pdo): string
         'categorii_locatii' => opg_fetch_table($pdo, 'categorii_locatii', 'id'),
         'gestiuni' => opg_fetch_table($pdo, 'gestiuni', 'id_gestiune'),
         'cote_tva' => opg_local_cote_tva_for_hash($pdo),
+        'observatii_predefinite' => opg_fetch_table($pdo, 'observatii_predefinite', 'id'),
+        'atribuiri_observatii_produse' => opg_fetch_table($pdo, 'atribuiri_observatii_produse', 'id_observatie'),
     ]);
 }
 
@@ -416,6 +436,7 @@ function opg_fetch_online_hash(array $config, string $localHash): array
         'hash_only' => 1,
         'local_hash' => $localHash,
         'cod_client' => $config['cod_client'] > 0 ? $config['cod_client'] : null,
+        'include_observations' => 1,
     ];
     if ($config['send_api_key_in_query']) {
         $query['api_key'] = $config['api_key'];
@@ -499,6 +520,7 @@ function opg_fetch_online_products_full(array $config, string $localHash): array
     $query = [
         'local_hash' => $localHash,
         'cod_client' => $config['cod_client'] > 0 ? $config['cod_client'] : null,
+        'include_observations' => 1,
     ];
     if ($config['send_api_key_in_query']) {
         $query['api_key'] = $config['api_key'];
@@ -752,6 +774,91 @@ function opg_compare_rows(PDO $pdo, string $table, string $pkColumn, array $rows
     return $stats;
 }
 
+function opg_compare_exact_rows(PDO $pdo, string $table, array $keyColumns, array $onlineRows): array
+{
+    $stats = [
+        'received' => count($onlineRows),
+        'missing' => 0,
+        'different' => 0,
+        'unchanged' => 0,
+        'skipped' => 0,
+    ];
+
+    $columnMeta = opg_table_exists($pdo, $table) ? opg_column_meta($pdo, $table) : [];
+    $columns = opg_sync_table_columns($table);
+    foreach ($keyColumns as $keyColumn) {
+        if (!in_array($keyColumn, $columns, true)) {
+            throw new RuntimeException("Cheia {$table}.{$keyColumn} nu este configurata pentru verificare.");
+        }
+    }
+
+    $makeKey = static function (array $row) use ($keyColumns, $columnMeta): string {
+        $parts = [];
+        foreach ($keyColumns as $keyColumn) {
+            if (!array_key_exists($keyColumn, $row) || (string)$row[$keyColumn] === '') {
+                return '';
+            }
+            $type = (string)($columnMeta[$keyColumn]['type'] ?? 'INTEGER');
+            $parts[] = opg_lookup_key($row[$keyColumn], $type);
+        }
+
+        return implode(':', $parts);
+    };
+    $normalizeRow = static function (array $row) use ($columns, $columnMeta): array {
+        $normalized = [];
+        foreach ($columns as $column) {
+            $type = (string)($columnMeta[$column]['type'] ?? '');
+            $normalized[$column] = opg_value_for_db($row[$column] ?? null, $type);
+        }
+        ksort($normalized);
+
+        return $normalized;
+    };
+
+    $onlineByKey = [];
+    foreach ($onlineRows as $row) {
+        if (!is_array($row)) {
+            $stats['skipped']++;
+            continue;
+        }
+        $key = $makeKey($row);
+        if ($key === '') {
+            $stats['skipped']++;
+            continue;
+        }
+        $onlineByKey[$key] = $normalizeRow($row);
+    }
+
+    $localByKey = [];
+    foreach (opg_fetch_table($pdo, $table, $keyColumns[0]) as $row) {
+        if (!is_array($row)) {
+            continue;
+        }
+        $key = $makeKey($row);
+        if ($key !== '') {
+            $localByKey[$key] = $normalizeRow($row);
+        }
+    }
+
+    foreach ($onlineByKey as $key => $onlineRow) {
+        if (!isset($localByKey[$key])) {
+            $stats['missing']++;
+            continue;
+        }
+        if ($localByKey[$key] === $onlineRow) {
+            $stats['unchanged']++;
+        } else {
+            $stats['different']++;
+        }
+    }
+
+    foreach (array_diff_key($localByKey, $onlineByKey) as $unusedRow) {
+        $stats['different']++;
+    }
+
+    return $stats;
+}
+
 function opg_difference_stats(PDO $pdo, array $online, array $products): array
 {
     $onlineProducts = opg_filter_rows_for_hash('produse_servicii', $products);
@@ -768,6 +875,18 @@ function opg_difference_stats(PDO $pdo, array $online, array $products): array
         'categorii_locatii' => opg_compare_rows($pdo, 'categorii_locatii', 'id', $onlineCategoriiLocatii),
         'gestiuni' => opg_compare_rows($pdo, 'gestiuni', 'id_gestiune', $onlineGestiuni),
         'cote_tva' => opg_compare_rows($pdo, 'cote_tva', 'cota', $onlineCoteTva),
+        'observatii_predefinite' => opg_compare_exact_rows(
+            $pdo,
+            'observatii_predefinite',
+            ['id'],
+            isset($online['observatii_predefinite']) && is_array($online['observatii_predefinite']) ? $online['observatii_predefinite'] : []
+        ),
+        'atribuiri_observatii_produse' => opg_compare_exact_rows(
+            $pdo,
+            'atribuiri_observatii_produse',
+            ['id_observatie', 'cod_produs'],
+            isset($online['atribuiri_observatii_produse']) && is_array($online['atribuiri_observatii_produse']) ? $online['atribuiri_observatii_produse'] : []
+        ),
     ];
 
     $lookupMissing = 0;

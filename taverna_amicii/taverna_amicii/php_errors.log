@@ -1,5 +1,0 @@
-[31-Aug-2026 16:46:05 Europe/Bucharest] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000]: General error: 1 no such table: observatii_predefinite in C:\xampp\htdocs\github\instalari_offline_ecogest\taverna_amicii\taverna_amicii\Data\ajax_get_garnituri.php:27
-Stack trace:
-#0 C:\xampp\htdocs\github\instalari_offline_ecogest\taverna_amicii\taverna_amicii\Data\ajax_get_garnituri.php(27): PDO->prepare()
-#1 {main}
-  thrown in C:\xampp\htdocs\github\instalari_offline_ecogest\taverna_amicii\taverna_amicii\Data\ajax_get_garnituri.php on line 27

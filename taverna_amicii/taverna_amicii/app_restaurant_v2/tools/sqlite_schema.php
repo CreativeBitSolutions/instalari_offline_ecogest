@@ -87,6 +87,22 @@ function restaurant_sqlite_schema_statements(): array
             cod_locatie INTEGER DEFAULT 0
         )",
         "CREATE UNIQUE INDEX IF NOT EXISTS idx_categorii_locatii ON categorii_locatii(id_categorie, cod_locatie)",
+        "CREATE TABLE IF NOT EXISTS observatii_predefinite (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            text_observatie TEXT NOT NULL DEFAULT '',
+            ordine INTEGER NOT NULL DEFAULT 0,
+            activ INTEGER NOT NULL DEFAULT 1,
+            toate_produsele INTEGER NOT NULL DEFAULT 1
+        )",
+        "CREATE INDEX IF NOT EXISTS idx_observatii_predefinite_active_order
+            ON observatii_predefinite(activ, ordine, id)",
+        "CREATE TABLE IF NOT EXISTS atribuiri_observatii_produse (
+            id_observatie INTEGER NOT NULL,
+            cod_produs INTEGER NOT NULL,
+            PRIMARY KEY (id_observatie, cod_produs)
+        )",
+        "CREATE INDEX IF NOT EXISTS idx_atribuiri_observatii_produs
+            ON atribuiri_observatii_produse(cod_produs)",
         "CREATE TABLE IF NOT EXISTS gestiuni (
             id_gestiune INTEGER PRIMARY KEY,
             denumire_gestiune TEXT DEFAULT ''
@@ -617,6 +633,79 @@ function restaurant_sqlite_table_exists(PDO $pdo, string $table): bool
     return ((int)$stmt->fetchColumn()) > 0;
 }
 
+/**
+ * Păstrează minimum 20 de mese temporare pentru împărțirea notelor.
+ * Funcția este idempotentă și completează doar mesele care lipsesc.
+ */
+function restaurant_sqlite_ensure_temporary_tables(PDO $pdo, int $codLocatie, int $minimum = 20): void
+{
+    if ($codLocatie <= 0 || $minimum <= 0 || !restaurant_sqlite_table_exists($pdo, 'mese')) {
+        return;
+    }
+
+    $countStmt = $pdo->prepare("SELECT COUNT(*) FROM mese WHERE cod_locatie = ? AND categorie_masa = 'TEMPORARA'");
+    $countStmt->execute([$codLocatie]);
+    if ((int)$countStmt->fetchColumn() >= $minimum) {
+        return;
+    }
+
+    $startedTransaction = false;
+    try {
+        if (!$pdo->inTransaction()) {
+            $pdo->exec('BEGIN IMMEDIATE');
+            $startedTransaction = true;
+        }
+
+        $countStmt->execute([$codLocatie]);
+        $currentCount = (int)$countStmt->fetchColumn();
+        if ($currentCount < $minimum) {
+            $namesStmt = $pdo->prepare('SELECT nume_masa FROM mese WHERE cod_locatie = ?');
+            $namesStmt->execute([$codLocatie]);
+            $existingNames = [];
+            foreach ($namesStmt->fetchAll(PDO::FETCH_COLUMN) as $existingName) {
+                $existingNames[strtolower(trim((string)$existingName))] = true;
+            }
+
+            $nextCode = (int)$pdo->query('SELECT COALESCE(MAX(cod_masa), 0) + 1 FROM mese')->fetchColumn();
+            $insertStmt = $pdo->prepare("
+                INSERT INTO mese (
+                    cod_masa, nume_masa, cod_locatie, stare, tip_masa, sold,
+                    cod_bratara, date_posesor, categorie_masa, vandut_intrare,
+                    masa_comenzi_online
+                ) VALUES (?, ?, ?, 0, 'simpla', 0, '', '', 'TEMPORARA', 0, 0)
+            ");
+
+            $suffix = 1;
+            while ($currentCount < $minimum) {
+                $name = 'Masa Temporara ' . $suffix;
+                $normalizedName = strtolower($name);
+                $suffix++;
+                if (isset($existingNames[$normalizedName])) {
+                    continue;
+                }
+
+                $insertStmt->execute([$nextCode, $name, $codLocatie]);
+                $existingNames[$normalizedName] = true;
+                $nextCode++;
+                $currentCount++;
+            }
+        }
+
+        if ($startedTransaction) {
+            $pdo->exec('COMMIT');
+        }
+    } catch (Throwable $e) {
+        if ($startedTransaction) {
+            try {
+                $pdo->exec('ROLLBACK');
+            } catch (Throwable $rollbackError) {
+                // Tranzacția poate fi deja închisă de SQLite după o eroare fatală de scriere.
+            }
+        }
+        throw $e;
+    }
+}
+
 function restaurant_sqlite_miscari_column_definitions(): array
 {
     return [
@@ -1109,6 +1198,17 @@ function restaurant_sqlite_ensure_columns(PDO $pdo): void
             'den_loc' => "TEXT DEFAULT ''",
             'denumire' => "TEXT DEFAULT ''",
             'serie_casa_marcat' => "TEXT DEFAULT ''",
+        ],
+        'observatii_predefinite' => [
+            'id' => 'INTEGER DEFAULT 0',
+            'text_observatie' => "TEXT NOT NULL DEFAULT ''",
+            'ordine' => 'INTEGER NOT NULL DEFAULT 0',
+            'activ' => 'INTEGER NOT NULL DEFAULT 1',
+            'toate_produsele' => 'INTEGER NOT NULL DEFAULT 1',
+        ],
+        'atribuiri_observatii_produse' => [
+            'id_observatie' => 'INTEGER NOT NULL DEFAULT 0',
+            'cod_produs' => 'INTEGER NOT NULL DEFAULT 0',
         ],
         'rapoarte_z' => [
             'identificator_offline' => 'TEXT DEFAULT NULL',

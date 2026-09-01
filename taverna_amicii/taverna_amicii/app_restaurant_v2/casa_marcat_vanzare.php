@@ -20,6 +20,28 @@ if (!function_exists('fmt3max')) {
         return $s === '' ? '0' : $s;
     }
 }
+if (!function_exists('agecs_fiscalwire_department_marker')) {
+    /**
+     * REGULĂ STRICTĂ CLIENT 1008: Taverna Amicii folosește FiscalWire.
+     * Pe linia S, câmpul de după departament trebuie să fie valoarea fixă 1,
+     * urmată de codul cotei TVA. Ceilalți clienți păstrează formatul existent.
+     */
+    function agecs_fiscalwire_department_marker(int $clientId, int $department): int {
+        return $clientId === 1008 ? 1 : $department;
+    }
+}
+if (!function_exists('agecs_fiscalwire_sanitize_buffer')) {
+    /**
+     * REGULĂ STRICTĂ CLIENT 1008: conținutul fiscal pleacă fără UTF-8 BOM.
+     * Bridge-ul care scrie fișierul INP trebuie să folosească UTF8Encoding(false).
+     */
+    function agecs_fiscalwire_sanitize_buffer(string $buffer, int $clientId): string {
+        if ($clientId === 1008 && strncmp($buffer, "\xEF\xBB\xBF", 3) === 0) {
+            return substr($buffer, 3);
+        }
+        return $buffer;
+    }
+}
 if (!isset($_POST['nota_de_relistat'])) {
 
     // === Codul tău existent pentru situația în care nota_de_relistat NU este setată ===
@@ -50,7 +72,9 @@ if (!isset($_POST['nota_de_relistat'])) {
     $T2 = "T,1,______,_,__;";
     $T3 = "T,1,______,_,__;";
     $F = "F,1,______,_,__;";
-    $omitH = (isset($_SESSION['client_id']) && intval($_SESSION['client_id']) === 23); // (ADĂUGAT)
+    $currentClientId = (int)($_SESSION['client_id'] ?? 0);
+    $isFiscalWireClient = $currentClientId === 1008;
+    $omitH = in_array($currentClientId, [23, 1008], true);
 
     $nr_bon = $_SESSION['nr_bon'] ?? '';
     $cu_bacsis = 0;
@@ -86,7 +110,11 @@ if (!isset($_POST['nota_de_relistat'])) {
     $cif_client = trim((string)($_SESSION['cif_client'] ?? ''));
     
     // (MODIFICAT pentru a omite H când client_id=23)
-    if ($cif_client) {
+    // REGULĂ STRICTĂ CLIENT 1008: FiscalWire primește direct liniile S și T, exact ca aplicația FoxPro.
+    // Nu se emit antetele K sau H pentru acest client.
+    if ($isFiscalWireClient) {
+        $myBuffer = '';
+    } elseif ($cif_client) {
         $myBuffer = $K . $cif_client . $cr;
         if (!$omitH) { $myBuffer .= $H . $cr; }
     } else {
@@ -120,8 +148,8 @@ if (!isset($_POST['nota_de_relistat'])) {
             // Calculul original
             $pret_vanzare_fin = round($pret_vanzare,2);
         }
-                        $client_agecs = $_SESSION['client_id']; 
-if ($client_agecs === 8 || $client_agecs === 23) { $um = ''; }
+                        $client_agecs = (int)($_SESSION['client_id'] ?? 0);
+if (in_array($client_agecs, [8, 23, 1008], true)) { $um = ''; }
 // Citim direct departamentul din produse_servicii.dep_casa_marcat
 $dept         = (int)($row['dep_casa_marcat'] ?? 0); // departament pentru casa de marcat
 $cod_cota_tva = (int)($row['dep_casa'] ?? 0);      // cod cota TVA (1=A,2=B,3=C,... din cote_tva)
@@ -130,12 +158,21 @@ if($dept == 0) {
     $dept = 1; // Dacă departamentul este 0, îl setăm implicit la 1
 }
 
+// REGULĂ STRICTĂ CLIENT 1008: formatul FiscalWire folosit de Taverna Amicii
+// are departamentul fiscal fix 1, urmat de marcajul fix 1 și codul cotei TVA.
+if ($client_agecs === 1008) {
+    $dept = 1;
+}
+
 // (MODIFICAT: formatăm prețul la 2 zecimale cu zerouri, cantitatea max 3 zecimale)
 $pret_vanzare_fin_fmt = fmt2($pret_vanzare_fin);
-$cantitate_fmt = fmt3max($cantitate);
+$cantitate_fmt = $client_agecs === 1008
+    ? number_format((float)$cantitate, 3, '.', '')
+    : fmt3max($cantitate);
+$fiscal_department_marker = agecs_fiscalwire_department_marker((int)$client_agecs, $dept);
 
 $myBuffer .= "S,1,______,_,__;"
-          . "$produs;$pret_vanzare_fin_fmt;$cantitate_fmt;$dept;$dept;$cod_cota_tva;0;0;$um"
+          . "$produs;$pret_vanzare_fin_fmt;$cantitate_fmt;$dept;$fiscal_department_marker;$cod_cota_tva;0;0;$um"
           . $cr;
         
         }
@@ -144,7 +181,8 @@ $myBuffer .= "S,1,______,_,__;"
         'numerarprim' => 0,
         'cardprim' => 1,
         'glovo' => 6,
-        'total_tichete' => 3,
+        // FoxPro și FiscalWire folosesc codul 5 pentru tichete la clientul 1008.
+        'total_tichete' => $isFiscalWireClient ? 5 : 3,
     ];
     
     foreach ($paymentTypes as $key => $type) {
@@ -154,6 +192,7 @@ $myBuffer .= "S,1,______,_,__;"
             $myBuffer .= $T . "$type;" . fmt2($amount) . ";;;;" . $cr;
         }
     }
+    $myBuffer = agecs_fiscalwire_sanitize_buffer($myBuffer, (int)($_SESSION['client_id'] ?? 0));
     date_default_timezone_set("Europe/Bucharest");
     
     // --- Inserția în tabela bonuri_casa_marcat și generarea fișierelor JSON (codul existent) ---
@@ -512,7 +551,9 @@ else {
     $T2 = "T,1,______,_,__;";
     $T3 = "T,1,______,_,__;";
     $F = "F,1,______,_,__;";
-    $omitH = (isset($_SESSION['client_id']) && intval($_SESSION['client_id']) === 23); // (ADĂUGAT)
+    $currentClientId = (int)($_SESSION['client_id'] ?? 0);
+    $isFiscalWireClient = $currentClientId === 1008;
+    $omitH = in_array($currentClientId, [23, 1008], true);
 
     // Folosim nota din baza de date, deci $nr_bon va fi $nota_de_relistat
     $nr_bon = $nota_de_relistat;
@@ -548,7 +589,10 @@ else {
     
     // Construim $myBuffer pornind de la CIF-ul clientului (din nota)
     // (MODIFICAT pentru a omite H când client_id=23)
-    if ($cif_client) {
+    // REGULĂ STRICTĂ CLIENT 1008: retransmiterea păstrează același format FiscalWire, numai S și T.
+    if ($isFiscalWireClient) {
+        $myBuffer = '';
+    } elseif ($cif_client) {
         $myBuffer = $K . $cif_client . $cr;
         if (!$omitH) { $myBuffer .= $H . $cr; }
     } else {
@@ -581,8 +625,8 @@ else {
         } else {
             $pret_vanzare_fin = round($pret_vanzare,2);
         }
-      $client_agecs = $_SESSION['client_id']; 
-if ($client_agecs === 8 || $client_agecs === 23) { $um = ''; }
+      $client_agecs = (int)($_SESSION['client_id'] ?? 0);
+if (in_array($client_agecs, [8, 23, 1008], true)) { $um = ''; }
 // Citim direct departamentul din produse_servicii.dep_casa_marcat
 $dept         = (int)($row['dep_casa_marcat'] ?? 0); // departament pentru casa de marcat
 $cod_cota_tva = (int)($row['dep_casa'] ?? 0);      // cod cota TVA (1=A,2=B,3=C,... din cote_tva)
@@ -591,12 +635,19 @@ if($dept == 0) {
     $dept = 1; // Dacă departamentul este 0, îl setăm implicit la 1
 }
 
+if ($client_agecs === 1008) {
+    $dept = 1;
+}
+
 // (MODIFICAT: formatăm prețul la 2 zecimale cu zerouri, cantitatea max 3 zecimale)
 $pret_vanzare_fin_fmt = fmt2($pret_vanzare_fin);
-$cantitate_fmt = fmt3max($cantitate);
+$cantitate_fmt = $client_agecs === 1008
+    ? number_format((float)$cantitate, 3, '.', '')
+    : fmt3max($cantitate);
+$fiscal_department_marker = agecs_fiscalwire_department_marker((int)$client_agecs, $dept);
 
 $myBuffer .= "S,1,______,_,__;"
-          . "$produs;$pret_vanzare_fin_fmt;$cantitate_fmt;$dept;$dept;$cod_cota_tva;0;0;$um"
+          . "$produs;$pret_vanzare_fin_fmt;$cantitate_fmt;$dept;$fiscal_department_marker;$cod_cota_tva;0;0;$um"
           . $cr;
             }
    // Preluăm valorile de plată din nota (asigură-te că coloana "glovo" există în tabel)
@@ -610,7 +661,7 @@ $paymentTypes = [
     'numerar'  => 0,
     'card'     => 1,
     'glovo'    => 6,
-    'tichete'  => 3,
+    'tichete'  => $isFiscalWireClient ? 5 : 3,
 ];
 
 // Parcurgem fiecare tip de plată și, dacă valoarea este diferită de 0,
@@ -621,6 +672,7 @@ foreach ($paymentTypes as $column => $type) {
         $myBuffer .= $T . "$type;" . fmt2((float)$noteRow[$column]) . ";;;;" . $cr;
     }
 }
+    $myBuffer = agecs_fiscalwire_sanitize_buffer($myBuffer, (int)($_SESSION['client_id'] ?? 0));
     
     date_default_timezone_set("Europe/Bucharest");
     
