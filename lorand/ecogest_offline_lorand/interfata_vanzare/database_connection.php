@@ -33,7 +33,13 @@ $restaurantConfig = [
     'ca_bundle_path' => (string)($restaurantAppConfig['ca_bundle_path'] ?? ''),
     'no_session_validation' => (int)($restaurantAppConfig['no_session_validation'] ?? ($_SESSION['no_session_validation'] ?? 0)),
     'online_products_sync' => is_array($restaurantAppConfig['online_products_sync'] ?? null) ? $restaurantAppConfig['online_products_sync'] : [],
+    'offline_sales_sync' => is_array($restaurantAppConfig['offline_sales_sync'] ?? null) ? $restaurantAppConfig['offline_sales_sync'] : [],
+    'online_tablet_sync' => is_array($restaurantAppConfig['online_tablet_sync'] ?? null) ? $restaurantAppConfig['online_tablet_sync'] : [],
 ];
+
+if (!defined('RESTAURANT_OFFLINE_API_DIR')) {
+    define('RESTAURANT_OFFLINE_API_DIR', rtrim((string)$restaurantAppConfig['api_root_absolute'], '/\\'));
+}
 
 $_SESSION['client_id'] = (int)($restaurantConfig['client_id'] ?? 0);
 $_SESSION['cod_locatie'] = (int)($restaurantConfig['cod_locatie'] ?? ($_SESSION['cod_locatie'] ?? 1));

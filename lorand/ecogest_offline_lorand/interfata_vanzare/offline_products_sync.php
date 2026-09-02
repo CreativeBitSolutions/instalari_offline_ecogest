@@ -40,6 +40,13 @@ function ops_h($value): string
     return htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');
 }
 
+function ops_i18n_assets(): string
+{
+    ob_start();
+    include __DIR__ . '/i18n/i18n_bootstrap.php';
+    return (string)ob_get_clean();
+}
+
 function ops_recent_logs(PDO $pdo, int $limit = 10, int $offset = 0): array
 {
     try {
@@ -94,51 +101,11 @@ function ops_sync_start_requested(): bool
         return true;
     }
 
-    return false;
-}
-
-function ops_html_start_requested(): bool
-{
-    if (ops_is_cli() || ops_wants_json()) {
-        return false;
-    }
-
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         return ops_bool($_POST['start_sync'] ?? null, false);
     }
 
     return ops_bool($_GET['start_sync'] ?? null, false);
-}
-
-function ops_async_sync_query(): string
-{
-    $params = [
-        'format' => 'json',
-        'start_sync' => '1',
-    ];
-
-    foreach (['force', 'rewrite_existing', 'dry_run'] as $name) {
-        if (isset($_REQUEST[$name]) && ops_bool($_REQUEST[$name], false)) {
-            $params[$name] = '1';
-        }
-    }
-
-    return http_build_query($params);
-}
-
-function ops_html_sync_query(): string
-{
-    $params = [
-        'start_sync' => '1',
-    ];
-
-    foreach (['force', 'rewrite_existing', 'dry_run'] as $name) {
-        if (isset($_REQUEST[$name]) && ops_bool($_REQUEST[$name], false)) {
-            $params[$name] = '1';
-        }
-    }
-
-    return http_build_query($params);
 }
 
 function ops_preserved_sync_inputs(): string
@@ -199,7 +166,6 @@ function ops_render_sync_summary(array $payload): string
         'Produse online găsite' => $products ? ops_count_value($products, 'received') : 0,
         'Produse adăugate' => $products ? ops_count_value($products, 'inserted') : 0,
         'Produse actualizate' => $products ? ops_count_value($products, 'updated') : 0,
-        'Produse șterse local' => $products ? ops_count_value($products, 'deleted') : 0,
         'Neschimbate' => $products ? ops_count_value($products, 'unchanged') : 0,
         'Date auxiliare' => ops_lookup_total($lookups, 'inserted') + ops_lookup_total($lookups, 'updated'),
     ];
@@ -235,7 +201,7 @@ function ops_render_recent_runs(array $logs, int $page, int $pageSize, int $tota
     }
 
     $totalPages = max(1, (int)ceil($total / max(1, $pageSize)));
-    $html = '<section class="recent"><h2>Ultimele rulări</h2><table><thead><tr><th>Data</th><th>Status</th><th>Produse online găsite</th><th>Produse adăugate</th><th>Produse actualizate</th><th>Produse șterse</th><th>Neschimbate</th><th>Date auxiliare</th></tr></thead><tbody>';
+    $html = '<section class="recent"><h2>Ultimele rulări</h2><table><thead><tr><th>Data</th><th>Status</th><th>Produse online găsite</th><th>Produse adăugate</th><th>Produse actualizate</th><th>Neschimbate</th><th>Date auxiliare</th></tr></thead><tbody>';
     foreach ($logs as $log) {
         $status = (string)($log['status'] ?? '');
         $lookupChanged = (int)($log['lookup_inserted'] ?? 0) + (int)($log['lookup_updated'] ?? 0);
@@ -245,7 +211,6 @@ function ops_render_recent_runs(array $logs, int $page, int $pageSize, int $tota
         $html .= '<td>' . ops_h((int)($log['received_count'] ?? 0)) . '</td>';
         $html .= '<td>' . ops_h((int)($log['inserted_count'] ?? 0)) . '</td>';
         $html .= '<td>' . ops_h((int)($log['updated_count'] ?? 0)) . '</td>';
-        $html .= '<td>' . ops_h((int)($log['deleted_count'] ?? 0)) . '</td>';
         $html .= '<td>' . ops_h((int)($log['unchanged_count'] ?? 0)) . '</td>';
         $html .= '<td>' . ops_h($lookupChanged) . '</td>';
         $html .= '</tr>';
@@ -288,9 +253,6 @@ function ops_render_start_page(): void
     $logsPage = min($logsPage, $logsTotalPages);
     $logsOffset = ($logsPage - 1) * $logsPageSize;
     $logs = (isset($pdo) && $pdo instanceof PDO) ? ops_recent_logs($pdo, $logsPageSize, $logsOffset) : [];
-    $startRequested = ops_html_start_requested();
-    $asyncQuery = ops_async_sync_query();
-    $htmlStartQuery = ops_html_sync_query();
 
     echo '<!doctype html><html lang="ro"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">';
     echo '<title>Sincronizare produse</title>';
@@ -304,16 +266,6 @@ function ops_render_start_page(): void
         .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
         button,.btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:10px 16px;border-radius:6px;text-decoration:none;border:1px solid #2563eb;background:#2563eb;color:#fff;font-weight:600;cursor:pointer}
         .secondary{background:#fff;color:#2563eb}
-        .success{background:#166534;border-color:#166534;color:#fff}
-        .loader{width:62px;height:62px;border:6px solid #d1d5db;border-top-color:#2563eb;border-radius:50%;animation:spin .9s linear infinite;margin:12px 0 18px}
-        @keyframes spin{to{transform:rotate(360deg)}}
-        .progress-box{display:flex;align-items:flex-start;gap:18px;flex-wrap:wrap;margin-top:12px}
-        .progress-text{min-width:260px;flex:1}
-        .summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:18px 0 4px}
-        .metric{border:1px solid #d1d5db;border-radius:6px;padding:12px;background:#f9fafb}
-        .metric span{display:block;font-size:13px;color:#6b7280;margin-bottom:6px}
-        .metric strong{display:block;font-size:22px;color:#111827}
-        .hidden{display:none!important}
         .recent{overflow-x:auto}
         .recent table{min-width:1040px}
         .pagination{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px}
@@ -323,143 +275,8 @@ function ops_render_start_page(): void
         table{width:100%;border-collapse:collapse;background:#fff;margin-top:8px}
         th,td{border:1px solid #d1d5db;padding:8px;text-align:left;vertical-align:top}
         th{background:#f9fafb}.ok{color:#166534}.err{color:#991b1b}
-    </style></head><body><main class="wrap"><div class="panel">';
+    </style>' . ops_i18n_assets() . '</head><body><main class="wrap"><div class="panel">';
     echo '<h1>Sincronizare produse</h1>';
-    if ($startRequested) {
-        $asyncUrl = 'offline_products_sync.php?' . $asyncQuery;
-        $repeatUrl = 'offline_products_sync.php?' . $htmlStartQuery;
-
-        echo '<div id="syncProgress" class="progress-box">';
-        echo '<div class="loader" aria-hidden="true"></div>';
-        echo '<div class="progress-text">';
-        echo '<p class="muted">Sincronizarea a pornit. Va rugam asteptati.</p>';
-        echo '<p>Timp scurs: <strong id="elapsedSeconds">0</strong> secunde</p>';
-        echo '<p class="muted">Se descarca lista online si se actualizeaza baza locala.</p>';
-        echo '</div></div>';
-        echo '<div id="syncResult" class="hidden"></div>';
-        echo ops_render_recent_runs($logs, $logsPage, $logsPageSize, $logsTotal);
-        echo '<script>';
-        echo 'var syncEndpoint=' . json_encode($asyncUrl, ops_json_flags()) . ';';
-        echo 'var repeatSyncUrl=' . json_encode($repeatUrl, ops_json_flags()) . ';';
-        echo <<<'JS'
-(function () {
-    var progress = document.getElementById('syncProgress');
-    var result = document.getElementById('syncResult');
-    var elapsed = document.getElementById('elapsedSeconds');
-    var startedAt = Date.now();
-    var timer = window.setInterval(function () {
-        elapsed.textContent = String(Math.floor((Date.now() - startedAt) / 1000));
-    }, 1000);
-
-    function escapeHtml(value) {
-        return String(value == null ? '' : value)
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;');
-    }
-
-    function countValue(source, key) {
-        if (!source || typeof source !== 'object') {
-            return 0;
-        }
-
-        var value = Number(source[key]);
-        return Number.isFinite(value) ? value : 0;
-    }
-
-    function lookupTotal(lookups, key) {
-        var total = 0;
-        if (!lookups || typeof lookups !== 'object') {
-            return total;
-        }
-
-        Object.keys(lookups).forEach(function (name) {
-            total += countValue(lookups[name], key);
-        });
-        return total;
-    }
-
-    function metric(label, value) {
-        return '<div class="metric"><span>' + escapeHtml(label) + '</span><strong>' + escapeHtml(value) + '</strong></div>';
-    }
-
-    function summaryHtml(data) {
-        var products = data && data.products ? data.products : {};
-        var lookups = data && data.lookups ? data.lookups : {};
-        var found = countValue(products, 'received');
-        if (!found && data && data.products_count) {
-            found = Number(data.products_count) || 0;
-        }
-
-        return '<section class="summary" aria-label="Rezumat sincronizare">'
-            + metric('Produse online gasite', found)
-            + metric('Produse adaugate', countValue(products, 'inserted'))
-            + metric('Produse actualizate', countValue(products, 'updated'))
-            + metric('Produse sterse local', countValue(products, 'deleted'))
-            + metric('Neschimbate', countValue(products, 'unchanged'))
-            + metric('Ignorate', countValue(products, 'skipped'))
-            + metric('Date auxiliare', lookupTotal(lookups, 'inserted') + lookupTotal(lookups, 'updated'))
-            + '</section>';
-    }
-
-    function actionsHtml(showCheck) {
-        var html = '<div class="actions">'
-            + '<a class="btn secondary" href="agecs_login.php">Inapoi la login</a>'
-            + '<a class="btn" href="' + escapeHtml(repeatSyncUrl) + '">Sincronizeaza din nou</a>';
-        if (showCheck) {
-            html += '<a class="btn success" href="offline_products_check.php">Verifica produse</a>';
-        }
-        return html + '</div>';
-    }
-
-    function showResult(data, ok) {
-        window.clearInterval(timer);
-        if (progress) {
-            progress.classList.add('hidden');
-        }
-        result.classList.remove('hidden');
-
-        var title = ok ? 'Sincronizare finalizata' : 'Sincronizare oprita';
-        var message = data && data.message ? data.message : (ok ? 'Proces finalizat.' : 'Procesul nu a putut continua.');
-        var cls = ok ? 'ok' : 'err';
-
-        result.innerHTML = '<h2>' + escapeHtml(title) + '</h2>'
-            + '<p class="' + cls + '">' + escapeHtml(message) + '</p>'
-            + (ok ? summaryHtml(data || {}) : '')
-            + actionsHtml(ok);
-    }
-
-    fetch(syncEndpoint, {
-        method: 'GET',
-        cache: 'no-store',
-        headers: {
-            'Accept': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest'
-        }
-    })
-        .then(function (response) {
-            return response.json()
-                .catch(function () {
-                    return {};
-                })
-                .then(function (data) {
-                    if (!response.ok || !data || data.status !== 'success') {
-                        throw data || {};
-                    }
-                    showResult(data, true);
-                });
-        })
-        .catch(function (error) {
-            showResult(error || {}, false);
-        });
-})();
-JS;
-        echo '</script>';
-        echo '</div></main></body></html>';
-        exit;
-    }
     echo '<p class="muted">Actualizează nomenclatorul local de produse din baza online.</p>';
     echo '<form method="post" action="offline_products_sync.php">';
     echo ops_preserved_sync_inputs();
@@ -517,7 +334,7 @@ function ops_render_html_response(array $payload, int $httpCode): void
         table{width:100%;border-collapse:collapse;background:#fff}
         th,td{border:1px solid #d1d5db;padding:8px;text-align:left;vertical-align:top}
         th{background:#f9fafb}
-    </style></head><body><main class="wrap"><div class="panel">';
+    </style>' . ops_i18n_assets() . '</head><body><main class="wrap"><div class="panel">';
     echo '<h1 class="' . ($success ? 'ok' : 'err') . '">' . ops_h($title) . '</h1>';
     echo '<p>' . ops_h($message) . '</p>';
 
@@ -683,12 +500,6 @@ function ops_config(array $restaurantConfig): array
         }
     }
 
-    $apiRoot = trim((string)($restaurantConfig['api_root_absolute'] ?? $restaurantConfig['offline_api_path'] ?? ''));
-    $caBundlePath = trim((string)($syncConfig['ca_bundle_path'] ?? $restaurantConfig['ca_bundle_path'] ?? ''));
-    if ($caBundlePath === '' && $apiRoot !== '') {
-        $caBundlePath = rtrim($apiRoot, "\\/") . DIRECTORY_SEPARATOR . 'certificates' . DIRECTORY_SEPARATOR . 'cacert.pem';
-    }
-
     return [
         'enabled' => ops_bool($syncConfig['enabled'] ?? false, false),
         'api_url' => trim((string)($syncConfig['api_url'] ?? '')),
@@ -700,7 +511,7 @@ function ops_config(array $restaurantConfig): array
         'rewrite_existing' => ops_bool($syncConfig['rewrite_existing'] ?? false, false),
         'send_api_key_in_query' => ops_bool($syncConfig['send_api_key_in_query'] ?? true, true),
         'verify_ssl' => ops_bool($syncConfig['verify_ssl'] ?? true, true),
-        'ca_bundle_path' => $caBundlePath,
+        'ca_bundle_path' => trim((string)($restaurantConfig['ca_bundle_path'] ?? '')),
         'allow_http_without_session' => ops_bool($syncConfig['allow_http_without_session'] ?? false, false),
     ];
 }
@@ -768,6 +579,17 @@ function ops_sync_table_columns(string $table): array
             'cota',
             'dep_casa',
         ],
+        'observatii_predefinite' => [
+            'id',
+            'text_observatie',
+            'ordine',
+            'activ',
+            'toate_produsele',
+        ],
+        'atribuiri_observatii_produse' => [
+            'id_observatie',
+            'cod_produs',
+        ],
     ];
 
     return $columns[$table] ?? [];
@@ -794,12 +616,16 @@ function ops_hash_column_type(string $column): string
         'id',
         'cod_locatie',
         'dep_casa',
+        'id_observatie',
+        'ordine',
+        'toate_produsele',
     ];
     static $numericColumns = [
         'pret_cu_tva',
         'pret_achizitie',
         'pret_site',
         'cota_tva',
+        'cota',
         'stoc_critic',
         'infopret_kg',
     ];
@@ -965,6 +791,8 @@ function ops_online_compatible_hash(array $online, array $products): string
         'categorii_locatii' => ops_filter_rows_for_hash('categorii_locatii', isset($online['categorii_locatii']) && is_array($online['categorii_locatii']) ? $online['categorii_locatii'] : []),
         'gestiuni' => ops_filter_rows_for_hash('gestiuni', isset($online['gestiuni']) && is_array($online['gestiuni']) ? $online['gestiuni'] : []),
         'cote_tva' => ops_filter_cote_tva_for_products($onlineCoteTva, $products),
+        'observatii_predefinite' => ops_filter_rows_for_hash('observatii_predefinite', isset($online['observatii_predefinite']) && is_array($online['observatii_predefinite']) ? $online['observatii_predefinite'] : []),
+        'atribuiri_observatii_produse' => ops_filter_rows_for_hash('atribuiri_observatii_produse', isset($online['atribuiri_observatii_produse']) && is_array($online['atribuiri_observatii_produse']) ? $online['atribuiri_observatii_produse'] : []),
     ]);
 }
 
@@ -984,6 +812,8 @@ function ops_local_hash(PDO $pdo): string
         'categorii_locatii' => ops_fetch_table($pdo, 'categorii_locatii', 'id', ops_sync_table_columns('categorii_locatii')),
         'gestiuni' => ops_fetch_table($pdo, 'gestiuni', 'id_gestiune', ops_sync_table_columns('gestiuni')),
         'cote_tva' => ops_local_cote_tva_for_hash($pdo),
+        'observatii_predefinite' => ops_fetch_table($pdo, 'observatii_predefinite', 'id', ops_sync_table_columns('observatii_predefinite')),
+        'atribuiri_observatii_produse' => ops_fetch_table($pdo, 'atribuiri_observatii_produse', 'id_observatie', ops_sync_table_columns('atribuiri_observatii_produse')),
     ]);
 }
 
@@ -1007,6 +837,9 @@ function ops_fetch_online_products(array $config, string $localHash): array
     $query = [
         'cod_client' => $config['cod_client'] > 0 ? $config['cod_client'] : null,
         'local_hash' => $config['force'] ? null : $localHash,
+        // Parametrul este folosit numai de sincronizarea web offline.
+        // AutoScannerul vechi păstrează răspunsul v1 dacă nu îl trimite.
+        'include_observations' => 1,
     ];
     if ($config['send_api_key_in_query']) {
         $query['api_key'] = $config['api_key'];
@@ -1298,173 +1131,102 @@ function ops_sync_rows(PDO $pdo, string $table, string $pkColumn, array $rows, i
     return $stats;
 }
 
-function ops_delete_where_product_ids(PDO $pdo, string $table, array $columns, array $productIds): int
+/**
+ * Oglindește exact observațiile online în SQLite.
+ * Ștergerea controlată permite propagarea eliminărilor făcute online și evită
+ * păstrarea unor atribuiri către observații sau produse care nu mai există.
+ * Funcția rulează în aceeași tranzacție cu sincronizarea nomenclatorului.
+ */
+function ops_replace_observation_tables(PDO $pdo, array $observations, array $assignments): array
 {
-    if (!$productIds || !ops_table_exists($pdo, $table)) {
-        return 0;
-    }
-
-    $columnMeta = ops_table_columns($pdo, $table);
-    $columns = array_values(array_filter(
-        $columns,
-        static fn(string $column): bool => isset($columnMeta[$column])
-    ));
-    if (!$columns) {
-        return 0;
-    }
-
-    $deleted = 0;
-    foreach (array_chunk($productIds, 400) as $chunk) {
-        $placeholders = implode(',', array_fill(0, count($chunk), '?'));
-        $conditions = [];
-        $params = [];
-        foreach ($columns as $column) {
-            $conditions[] = ops_quote_identifier($column) . " IN ({$placeholders})";
-            foreach ($chunk as $productId) {
-                $params[] = $productId;
-            }
-        }
-
-        $stmt = $pdo->prepare(
-            'DELETE FROM ' . ops_quote_identifier($table) . ' WHERE ' . implode(' OR ', $conditions)
-        );
-        $stmt->execute($params);
-        $deleted += $stmt->rowCount();
-    }
-
-    return $deleted;
-}
-
-function ops_archive_deleted_products(PDO $pdo, array $productIds, string $reason): int
-{
-    if (!$productIds || !ops_table_exists($pdo, 'produse_servicii_sterse')) {
-        return 0;
-    }
-
-    $sourceMeta = ops_table_columns($pdo, 'produse_servicii');
-    $archiveMeta = ops_table_columns($pdo, 'produse_servicii_sterse');
-    $commonColumns = array_values(array_intersect(array_keys($sourceMeta), array_keys($archiveMeta)));
-    if (!in_array('cod_produs', $commonColumns, true)) {
-        return 0;
-    }
-
-    $insertColumns = $commonColumns;
-    if (isset($archiveMeta['deleted_at'])) {
-        $insertColumns[] = 'deleted_at';
-    }
-    if (isset($archiveMeta['delete_reason'])) {
-        $insertColumns[] = 'delete_reason';
-    }
-
-    $archived = 0;
-    foreach (array_chunk($productIds, 400) as $chunk) {
-        $placeholders = implode(',', array_fill(0, count($chunk), '?'));
-        $selectSql = 'SELECT ' . implode(', ', array_map('ops_quote_identifier', $commonColumns))
-            . ' FROM ' . ops_quote_identifier('produse_servicii')
-            . ' WHERE ' . ops_quote_identifier('cod_produs') . " IN ({$placeholders})";
-        $stmt = $pdo->prepare($selectSql);
-        $stmt->execute($chunk);
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        if (!$rows) {
-            continue;
-        }
-
-        $insertSql = 'INSERT OR REPLACE INTO ' . ops_quote_identifier('produse_servicii_sterse')
-            . ' (' . implode(', ', array_map('ops_quote_identifier', $insertColumns)) . ')'
-            . ' VALUES (' . implode(',', array_fill(0, count($insertColumns), '?')) . ')';
-        $insertStmt = $pdo->prepare($insertSql);
-        foreach ($rows as $row) {
-            $values = [];
-            foreach ($commonColumns as $column) {
-                $values[] = $row[$column] ?? null;
-            }
-            if (isset($archiveMeta['deleted_at'])) {
-                $values[] = date('Y-m-d H:i:s');
-            }
-            if (isset($archiveMeta['delete_reason'])) {
-                $values[] = $reason;
-            }
-            $insertStmt->execute($values);
-            $archived++;
+    foreach (['observatii_predefinite', 'atribuiri_observatii_produse'] as $table) {
+        if (!ops_table_exists($pdo, $table)) {
+            throw new RuntimeException("Tabela locala {$table} lipseste. Actualizeaza aplicatia pentru ensure schema.");
         }
     }
 
-    return $archived;
-}
+    $observationColumns = ops_table_columns($pdo, 'observatii_predefinite');
+    $assignmentColumns = ops_table_columns($pdo, 'atribuiri_observatii_produse');
+    foreach (ops_sync_table_columns('observatii_predefinite') as $column) {
+        if (!isset($observationColumns[$column])) {
+            throw new RuntimeException("Coloana observatii_predefinite.{$column} lipseste din schema locala.");
+        }
+    }
+    foreach (ops_sync_table_columns('atribuiri_observatii_produse') as $column) {
+        if (!isset($assignmentColumns[$column])) {
+            throw new RuntimeException("Coloana atribuiri_observatii_produse.{$column} lipseste din schema locala.");
+        }
+    }
 
-function ops_delete_products_missing_online(PDO $pdo, array $onlineProducts, int $previewLimit = 80): array
-{
-    $stats = [
-        'deleted' => 0,
-        'archived' => 0,
-        'related_deleted' => 0,
-        'preview_changes' => [],
+    $seenObservationIds = [];
+    foreach ($observations as $index => $row) {
+        if (!is_array($row) || !array_key_exists('id', $row) || (int)$row['id'] <= 0) {
+            throw new RuntimeException("Observatia online de la pozitia {$index} nu are un id valid.");
+        }
+        foreach (ops_sync_table_columns('observatii_predefinite') as $column) {
+            if (!array_key_exists($column, $row)) {
+                throw new RuntimeException("Observatia online {$row['id']} nu contine coloana {$column}.");
+            }
+        }
+        $id = (int)$row['id'];
+        if (isset($seenObservationIds[$id])) {
+            throw new RuntimeException("Observatia online {$id} apare de mai multe ori.");
+        }
+        $seenObservationIds[$id] = true;
+    }
+
+    $seenAssignments = [];
+    foreach ($assignments as $index => $row) {
+        if (!is_array($row)
+            || !array_key_exists('id_observatie', $row)
+            || !array_key_exists('cod_produs', $row)
+            || (int)$row['id_observatie'] <= 0
+            || (int)$row['cod_produs'] <= 0) {
+            throw new RuntimeException("Atribuirea online de la pozitia {$index} nu este valida.");
+        }
+        $observationId = (int)$row['id_observatie'];
+        if (!isset($seenObservationIds[$observationId])) {
+            throw new RuntimeException("Atribuirea online foloseste observatia inexistenta {$observationId}.");
+        }
+        $key = $observationId . ':' . (int)$row['cod_produs'];
+        if (isset($seenAssignments[$key])) {
+            throw new RuntimeException("Atribuirea online {$key} apare de mai multe ori.");
+        }
+        $seenAssignments[$key] = true;
+    }
+
+    $pdo->exec('DELETE FROM atribuiri_observatii_produse');
+    $pdo->exec('DELETE FROM observatii_predefinite');
+
+    $observationFields = ops_sync_table_columns('observatii_predefinite');
+    foreach ($observations as $row) {
+        ops_insert_row($pdo, 'observatii_predefinite', $observationFields, $row, $observationColumns);
+    }
+    $assignmentFields = ops_sync_table_columns('atribuiri_observatii_produse');
+    foreach ($assignments as $row) {
+        ops_insert_row($pdo, 'atribuiri_observatii_produse', $assignmentFields, $row, $assignmentColumns);
+    }
+
+    return [
+        'observatii_predefinite' => [
+            'received' => count($observations),
+            'inserted' => count($observations),
+            'updated' => 0,
+            'unchanged' => 0,
+            'skipped' => 0,
+            'ignored_columns' => [],
+            'preview_changes' => [],
+        ],
+        'atribuiri_observatii_produse' => [
+            'received' => count($assignments),
+            'inserted' => count($assignments),
+            'updated' => 0,
+            'unchanged' => 0,
+            'skipped' => 0,
+            'ignored_columns' => [],
+            'preview_changes' => [],
+        ],
     ];
-
-    if (!ops_table_exists($pdo, 'produse_servicii')) {
-        return $stats;
-    }
-
-    $columnMeta = ops_table_columns($pdo, 'produse_servicii');
-    if (!isset($columnMeta['cod_produs'])) {
-        throw new RuntimeException('Tabela produse_servicii nu contine cheia cod_produs.');
-    }
-
-    $pkType = (string)($columnMeta['cod_produs']['type'] ?? '');
-    $onlineKeys = [];
-    foreach ($onlineProducts as $row) {
-        if (!is_array($row) || !array_key_exists('cod_produs', $row) || (string)$row['cod_produs'] === '') {
-            continue;
-        }
-        $key = ops_lookup_key($row['cod_produs'], $pkType);
-        if ($key !== '') {
-            $onlineKeys[$key] = true;
-        }
-    }
-
-    $localRows = $pdo->query(
-        'SELECT ' . ops_quote_identifier('cod_produs') . ', ' . ops_quote_identifier('nume')
-        . ' FROM ' . ops_quote_identifier('produse_servicii')
-        . ' ORDER BY ' . ops_quote_identifier('cod_produs')
-    )->fetchAll(PDO::FETCH_ASSOC);
-
-    $productIds = [];
-    foreach ($localRows as $localRow) {
-        $key = ops_lookup_key($localRow['cod_produs'] ?? null, $pkType);
-        if ($key === '' || isset($onlineKeys[$key])) {
-            continue;
-        }
-
-        $productIds[] = ops_value_for_db($localRow['cod_produs'], $pkType);
-        if (count($stats['preview_changes']) < $previewLimit) {
-            $stats['preview_changes'][] = [
-                'pk' => (string)$localRow['cod_produs'],
-                'action' => 'delete',
-                'nume' => (string)($localRow['nume'] ?? ''),
-                'fields' => [],
-            ];
-        }
-    }
-
-    if (!$productIds) {
-        return $stats;
-    }
-
-    $stats['archived'] = ops_archive_deleted_products(
-        $pdo,
-        $productIds,
-        'Produs absent din nomenclatorul online la sincronizare'
-    );
-
-    $stats['related_deleted'] += ops_delete_where_product_ids($pdo, 'retete', ['cod_p', 'cod_mat'], $productIds);
-    $stats['related_deleted'] += ops_delete_where_product_ids($pdo, 'stoc_produse', ['cod_p'], $productIds);
-    $stats['related_deleted'] += ops_delete_where_product_ids($pdo, 'produse_servicii_sinonime', ['cod_produs'], $productIds);
-    $stats['related_deleted'] += ops_delete_where_product_ids($pdo, 'reguli_vanzare', ['cod_produs'], $productIds);
-    $stats['related_deleted'] += ops_delete_where_product_ids($pdo, 'meniuri_continut', ['cod_meniu', 'cod_produs'], $productIds);
-    $stats['deleted'] = ops_delete_where_product_ids($pdo, 'produse_servicii', ['cod_produs'], $productIds);
-
-    return $stats;
 }
 
 function ops_ensure_log_table(PDO $pdo): void
@@ -1481,7 +1243,6 @@ function ops_ensure_log_table(PDO $pdo): void
             received_count INTEGER DEFAULT 0,
             inserted_count INTEGER DEFAULT 0,
             updated_count INTEGER DEFAULT 0,
-            deleted_count INTEGER DEFAULT 0,
             unchanged_count INTEGER DEFAULT 0,
             skipped_count INTEGER DEFAULT 0,
             lookup_inserted INTEGER DEFAULT 0,
@@ -1494,21 +1255,14 @@ function ops_ensure_log_table(PDO $pdo): void
 
     $columns = $pdo->query("PRAGMA table_info(offline_products_sync_logs)")->fetchAll(PDO::FETCH_ASSOC);
     $hasCodLocatie = false;
-    $hasDeletedCount = false;
     foreach ($columns as $column) {
-        $columnName = (string)$column['name'];
-        if ($columnName === 'cod_locatie') {
+        if ((string)$column['name'] === 'cod_locatie') {
             $hasCodLocatie = true;
-        }
-        if ($columnName === 'deleted_count') {
-            $hasDeletedCount = true;
+            break;
         }
     }
     if (!$hasCodLocatie) {
         $pdo->exec('ALTER TABLE offline_products_sync_logs ADD COLUMN cod_locatie INTEGER DEFAULT 0');
-    }
-    if (!$hasDeletedCount) {
-        $pdo->exec('ALTER TABLE offline_products_sync_logs ADD COLUMN deleted_count INTEGER DEFAULT 0');
     }
 
     if (function_exists('restaurant_sqlite_ensure_cod_locatie_triggers')) {
@@ -1523,11 +1277,11 @@ function ops_insert_log(PDO $pdo, array $log): void
         $stmt = $pdo->prepare("
             INSERT INTO offline_products_sync_logs
                 (sync_id, data_ora, endpoint, cod_client, cod_locatie, products_hash, received_count,
-                 inserted_count, updated_count, deleted_count, unchanged_count, skipped_count,
+                 inserted_count, updated_count, unchanged_count, skipped_count,
                  lookup_inserted, lookup_updated, status, dry_run, erori)
             VALUES
                 (:sync_id, :data_ora, :endpoint, :cod_client, :cod_locatie, :products_hash, :received_count,
-                 :inserted_count, :updated_count, :deleted_count, :unchanged_count, :skipped_count,
+                 :inserted_count, :updated_count, :unchanged_count, :skipped_count,
                  :lookup_inserted, :lookup_updated, :status, :dry_run, :erori)
         ");
         $stmt->execute([
@@ -1540,7 +1294,6 @@ function ops_insert_log(PDO $pdo, array $log): void
             ':received_count' => (int)($log['received_count'] ?? 0),
             ':inserted_count' => (int)($log['inserted_count'] ?? 0),
             ':updated_count' => (int)($log['updated_count'] ?? 0),
-            ':deleted_count' => (int)($log['deleted_count'] ?? 0),
             ':unchanged_count' => (int)($log['unchanged_count'] ?? 0),
             ':skipped_count' => (int)($log['skipped_count'] ?? 0),
             ':lookup_inserted' => (int)($log['lookup_inserted'] ?? 0),
@@ -1573,7 +1326,7 @@ try {
     if (!$config['enabled']) {
         ops_send_json([
             'status' => 'error',
-            'message' => 'Sincronizarea produselor nu este activata in configurarea externa.',
+            'message' => 'Sincronizarea produselor nu este activata in offline_config.local.php.',
         ], 409);
     }
     if ($config['api_url'] === '' || $config['api_key'] === '') {
@@ -1585,10 +1338,6 @@ try {
 
     if (!ops_sync_start_requested()) {
         ops_render_start_page();
-    }
-
-    if (!ops_is_cli() && session_status() === PHP_SESSION_ACTIVE) {
-        session_write_close();
     }
 
     ops_ensure_log_table($pdo);
@@ -1617,38 +1366,37 @@ try {
     }
 
     $products = [];
-    $productsPayloadPresent = false;
     if (isset($online['data']) && is_array($online['data'])) {
         $products = $online['data'];
-        $productsPayloadPresent = true;
     } elseif (isset($online['products']) && is_array($online['products'])) {
         $products = $online['products'];
-        $productsPayloadPresent = true;
     }
 
-    if (!$productsPayloadPresent) {
-        throw new RuntimeException('Endpointul nu a trimis lista completa de produse; stergerea locala a fost oprita pentru siguranta.');
+    if (!$products && (int)($online['products_count'] ?? 0) > 0) {
+        throw new RuntimeException('Endpointul a raportat produse, dar nu a trimis lista de produse.');
     }
-
-    $reportedProductsCount = array_key_exists('products_count', $online)
-        ? (int)$online['products_count']
-        : count($products);
-    if ($reportedProductsCount !== count($products)) {
-        throw new RuntimeException('Lista de produse primita este incompleta; stergerea locala a fost oprita pentru siguranta.');
+    if (!array_key_exists('observatii_predefinite', $online) || !is_array($online['observatii_predefinite'])) {
+        throw new RuntimeException('Endpointul online nu a trimis observatii_predefinite. Datele locale au fost pastrate.');
     }
-
-    $onlineProductKeys = [];
-    foreach ($products as $product) {
-        if (!is_array($product) || !array_key_exists('cod_produs', $product) || (string)$product['cod_produs'] === '') {
-            throw new RuntimeException('Lista online contine un produs fara cod_produs; stergerea locala a fost oprita pentru siguranta.');
+    if (!array_key_exists('atribuiri_observatii_produse', $online) || !is_array($online['atribuiri_observatii_produse'])) {
+        throw new RuntimeException('Endpointul online nu a trimis atribuiri_observatii_produse. Datele locale au fost pastrate.');
+    }
+    $onlineObservationColumns = isset($online['observatii_predefinite_columns']) && is_array($online['observatii_predefinite_columns'])
+        ? $online['observatii_predefinite_columns']
+        : [];
+    $onlineAssignmentColumns = isset($online['atribuiri_observatii_produse_columns']) && is_array($online['atribuiri_observatii_produse_columns'])
+        ? $online['atribuiri_observatii_produse_columns']
+        : [];
+    foreach (ops_sync_table_columns('observatii_predefinite') as $requiredColumn) {
+        if (!in_array($requiredColumn, $onlineObservationColumns, true)) {
+            throw new RuntimeException("Schema online observatii_predefinite nu contine coloana {$requiredColumn}. Datele locale au fost pastrate.");
         }
-        $productKey = ops_lookup_key($product['cod_produs'], 'INTEGER');
-        if ($productKey === '' || isset($onlineProductKeys[$productKey])) {
-            throw new RuntimeException('Lista online contine coduri de produs invalide sau duplicate; stergerea locala a fost oprita pentru siguranta.');
-        }
-        $onlineProductKeys[$productKey] = true;
     }
-
+    foreach (ops_sync_table_columns('atribuiri_observatii_produse') as $requiredColumn) {
+        if (!in_array($requiredColumn, $onlineAssignmentColumns, true)) {
+            throw new RuntimeException("Schema online atribuiri_observatii_produse nu contine coloana {$requiredColumn}. Datele locale au fost pastrate.");
+        }
+    }
     $compatibleHash = ops_online_compatible_hash($online, $products);
 
     $pdo->beginTransaction();
@@ -1660,14 +1408,12 @@ try {
         'cote_tva' => ops_sync_rows($pdo, 'cote_tva', 'cota', isset($online['cote_tva']) && is_array($online['cote_tva']) ? $online['cote_tva'] : [], 10, $rewriteExisting),
     ];
     $productStats = ops_sync_rows($pdo, 'produse_servicii', 'cod_produs', $products, 80, $rewriteExisting);
-    $deleteStats = ops_delete_products_missing_online($pdo, $products, 80);
-    $productStats['deleted'] = (int)($deleteStats['deleted'] ?? 0);
-    $productStats['archived'] = (int)($deleteStats['archived'] ?? 0);
-    $productStats['related_deleted'] = (int)($deleteStats['related_deleted'] ?? 0);
-    $productStats['preview_changes'] = array_slice(array_merge(
-        isset($productStats['preview_changes']) && is_array($productStats['preview_changes']) ? $productStats['preview_changes'] : [],
-        isset($deleteStats['preview_changes']) && is_array($deleteStats['preview_changes']) ? $deleteStats['preview_changes'] : []
-    ), 0, 80);
+    $observationStats = ops_replace_observation_tables(
+        $pdo,
+        $online['observatii_predefinite'],
+        $online['atribuiri_observatii_produse']
+    );
+    $lookupStats = array_merge($lookupStats, $observationStats);
 
     if ($config['dry_run']) {
         $pdo->rollBack();
@@ -1692,7 +1438,6 @@ try {
         'received_count' => $productStats['received'],
         'inserted_count' => $productStats['inserted'],
         'updated_count' => $productStats['updated'],
-        'deleted_count' => $productStats['deleted'],
         'unchanged_count' => $productStats['unchanged'],
         'skipped_count' => $productStats['skipped'],
         'lookup_inserted' => $lookupInserted,
@@ -1707,8 +1452,8 @@ try {
         'dry_run' => $config['dry_run'],
         'rewrite_existing' => $rewriteExisting,
         'message' => $rewriteExisting
-            ? 'Nomenclatorul offline a fost rescris dupa cel online, inclusiv stergerea produselor absente online.'
-            : 'Nomenclatorul offline a fost sincronizat cu cel online, inclusiv stergerea produselor absente online.',
+            ? 'Produsele au fost importate din online și rescrise în baza offline.'
+            : 'Produsele au fost importate din online.',
         'products_hash' => $compatibleHash,
         'remote_products_hash' => (string)($online['products_hash'] ?? ''),
         'products' => $productStats,

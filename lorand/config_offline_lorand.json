@@ -35,6 +35,29 @@
   "license_clock_tolerance_seconds": 300,
   "sync_api_key": "100c482812c565c2a7fd757492bb662395f0f1462ff383765eba2b4725f3db100",
   "sync_profile": "auto",
+  "offline_sales_sync": {
+    "enabled": true,
+    "automatic": true,
+    "allow_login_worker": true,
+    "automatic_interval_seconds": 120,
+    "api_url": "https://agecs.agecs.in/sincronizare_online_app_vanzare/api_import_operatiuni_offline.php",
+    "users_api_url": "https://agecs.agecs.in/api/offline-users.php",
+    "api_key": "100c482812c565c2a7fd757492bb662395f0f1462ff383765eba2b4725f3db100",
+    "client_id": 1019,
+    "cod_locatie": 1,
+    "timeout_seconds": 45,
+    "verify_ssl": true
+  },
+  "online_tablet_sync": {
+    "enabled": false,
+    "api_url": "https://agecs.agecs.in/api/offline-tablet-orders.php",
+    "users_api_url": "https://agecs.agecs.in/api/offline-users.php",
+    "api_key": "100c482812c565c2a7fd757492bb662395f0f1462ff383765eba2b4725f3db100",
+    "client_id": 1019,
+    "cod_locatie": 1,
+    "timeout_seconds": 30,
+    "verify_ssl": true
+  },
   "online_products_sync": {
     "enabled": true,
     "strict": true,
@@ -46,6 +69,7 @@
     "rewrite_existing": false,
     "send_api_key_in_query": true,
     "verify_ssl": true,
-    "allow_http_without_session": true
+    "allow_http_without_session": true,
+    "include_observations": true
   }
 }
