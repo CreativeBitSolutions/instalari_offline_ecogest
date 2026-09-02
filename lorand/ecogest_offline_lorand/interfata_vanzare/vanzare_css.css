@@ -1,0 +1,884 @@
+:root { 
+    --primary-color: #007bff; 
+    --secondary-color: #6c757d; 
+    --background-color: #f0f2f5; 
+    --surface-color: #ffffff; 
+    --text-color: #333; 
+    --danger-color: #dc3545; 
+    --success-color: #28a745; 
+    --border-radius: 8px; 
+    --box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+}
+html, body { 
+    height: 100%; 
+    margin: 0; 
+    padding: 0; 
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
+    background-color: var(--background-color); 
+    color: var(--text-color); 
+    overflow: hidden; 
+}
+.page-container { 
+    display: flex; 
+    flex-direction: column; 
+    height: 100vh; 
+}
+.page-header { 
+    display: flex; 
+    align-items: center; 
+    flex-wrap: wrap; 
+    gap: 10px; 
+    padding: 10px 15px; 
+    background-color: var(--surface-color); 
+    border-bottom: 1px solid #dee2e6; 
+    flex-shrink: 0; 
+}
+.page-header .header-btn { 
+    font-size: 1rem; 
+    padding: 8px 8px; 
+    border-radius: var(--border-radius); 
+    border: 1px solid var(--secondary-color); 
+    background-color: #fff; 
+    color: var(--secondary-color); 
+    cursor: pointer; 
+    transition: all 0.2s ease; 
+}
+.page-header .header-btn:hover { 
+    background-color: var(--secondary-color); 
+    color: #fff; 
+}
+.main-content { 
+    display: flex; 
+    flex: 1; 
+    overflow: hidden; 
+    gap: 10px; 
+    padding: 10px; 
+}
+.left-panel, .right-panel { 
+    display: flex; 
+    flex-direction: column; 
+    background-color: var(--surface-color); 
+    border-radius: var(--border-radius); 
+    box-shadow: var(--box-shadow); 
+    overflow: hidden; 
+}
+.left-panel { 
+    flex-basis: 45%; 
+    min-width: 420px; 
+}
+.right-panel { 
+    flex-basis: 55%; 
+    overflow: hidden; /* Important pentru a controla layout-ul intern */
+}
+#product-controls { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 15px; 
+    padding: 15px; 
+    background-color: #f8f9fa; 
+    border-bottom: 1px solid #e9ecef; 
+    flex-shrink: 0; 
+}
+#product-controls > .form-group { 
+    flex: 1 1 200px; 
+    min-width: 200px; 
+    margin-bottom: 0; 
+}
+
+/* === STILURI PENTRU CATEGORII ȘI BUTOANELE LOR === */
+.category-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    border-bottom: 1px solid #e9ecef;
+    flex-shrink: 0;
+}
+#category-tabs {
+    flex-grow: 1; /* Permite listei de categorii sa ocupe spatiul ramas */
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 5px; /* Spatiu pentru scrollbar, chiar daca e invizibil */
+    /* Ascundem scrollbar-ul nativ */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+#category-tabs::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+.category-tab-btn { 
+    white-space: nowrap; 
+    padding: 8px 15px; 
+    border-radius: 20px; 
+    border: 1px solid #ddd; 
+    background-color: #f8f9fa; 
+    cursor: pointer;
+}
+.category-tab-btn.active { 
+    background-color: var(--primary-color); 
+    color: #fff; 
+    border-color: var(--primary-color); 
+}
+
+/* === STILURI PENTRU PRODUSE ȘI BARA DE SCROLL VERTICALĂ === */
+.product-grid-wrapper {
+    flex-grow: 1;
+    display: flex; /* Aranjează grid-ul și bara de butoane una lângă alta */
+    gap: 10px;
+    padding: 15px;
+    overflow: hidden; /* Previne depasirea containerului */
+}
+.product-grid {
+    flex-grow: 1; /* Grid-ul ocupa tot spatiul disponibil pe orizontala */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 15px;
+    padding-right: 10px; /* Spatiu fata de bara de scroll */
+    overflow-y: auto;
+    /* Ascundem scrollbar-ul nativ */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.product-grid::-webkit-scrollbar {
+    display: none;
+}
+.product-card { 
+    border: 1px solid #e9ecef; 
+    border-radius: var(--border-radius); 
+    padding: 12px; 
+    text-align: center; 
+    cursor: pointer; 
+    transition: all 0.2s ease; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
+    min-height: 120px; 
+    background-color: #fff; 
+}
+.product-card:not(.disabled):hover { 
+    transform: translateY(-3px); 
+    box-shadow: var(--box-shadow); 
+    border-color: var(--primary-color); 
+}
+.product-card .product-name { 
+    font-size: 1rem; 
+    font-weight: 500; 
+    word-wrap: break-word; 
+    flex-grow: 1; 
+    margin: 0; 
+}
+.product-card .product-price { 
+    font-size: 0.9rem; 
+    color: var(--secondary-color); 
+    margin-top: 8px; 
+}
+.product-card.disabled { 
+    background-color: #e9ecef; 
+    color: #6c757d; 
+    cursor: not-allowed; 
+    opacity: 0.7; 
+}
+
+/* === STILURI PENTRU BARA DE BUTOANE DE SCROLL (VERTICALĂ) === */
+.product-scroll-buttons {
+    flex-shrink: 0; /* Previne micsorarea barei */
+    width: 65px; /* Latime generoasa pentru click */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.scroll-btn-v {
+    flex-grow: 1; /* Butoanele se intind pe toata inaltimea disponibila */
+    background-color: var(--success-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 2rem; /* Iconite mai mari */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+.scroll-btn-v:hover {
+    background-color: #218838;
+}
+.scroll-btn-v:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Stil general pentru butoanele de scroll orizontal (categorii) */
+.scroll-btn {
+    background-color: var(--success-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: background-color 0.2s;
+    z-index: 2; /* Asigura ca sunt deasupra */
+}
+.scroll-btn:hover {
+    background-color: #218838;
+}
+.scroll-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* === STILURI PENTRU BON ȘI ALTE ELEMENTE === */
+#loading { 
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.8); z-index: 1060; display: none; justify-content: center; align-items: center; font-size: 2rem; 
+}
+#loading::after { content: 'Se procesează...'; }
+.panel-header { padding: 15px; font-size: 1.2rem; font-weight: 600; border-bottom: 1px solid #e9ecef; flex-shrink: 0; }
+.receipt-items { list-style: none; padding: 0 15px; margin: 0; flex-grow: 1; overflow-y: auto; }
+.receipt-item { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: center; padding: 12px 0; border-bottom: 1px solid #f0f2f5; }
+.receipt-item .product-info .product-name { font-weight: 500;font-size:1.5rem; }
+.receipt-item .product-info .product-details { font-size: 0.85em; color: var(--secondary-color); }
+.receipt-item .item-value { font-weight: bold; text-align: right; font-size: 1.1em; }
+.receipt-item .actions-group { display: flex; gap: 5px; }
+.receipt-item .actions-group .btn { padding: 5px 10px; font-size: 0.85rem; }
+.receipt-totals { padding: 15px; border-top: 1px solid #e9ecef; background-color: #f8f9fa; flex-shrink: 0; }
+.receipt-totals .total-row { display: flex; justify-content: space-between; font-size: 1.1rem; margin-bottom: 10px; }
+.receipt-totals .total-payable { display: flex; justify-content: space-between; font-size: 1.8rem; font-weight: bold; color: var(--primary-color); margin-top: 15px; padding-top: 15px; border-top: 1px solid #ddd; }
+.cif-container { display: flex; gap: 5px; align-items: center; margin-top: 15px; }
+.cif-container input { flex-grow: 1; }
+.cif-container .cif-kbd-btn { padding: 5px 10px; font-size: 1.2rem; flex-shrink: 0; }
+#cif-keyboard-modal .modal-dialog { max-width: 320px; }
+.cif-keyboard { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.cif-keyboard .key { padding: 15px; font-size: 1.5rem; }
+#cif-keyboard-display { text-align: right; font-size: 1.5rem; margin-bottom: 15px; }
+
+/* === STILURI PENTRU FOOTER === */
+.page-footer { display: flex;  background-color: var(--surface-color); border-top: 1px solid #dee2e6; flex-shrink: 0; gap: 20px; min-height: 90px; }
+.grup-stanga { flex-grow: 1; display: flex; }
+.grup-stanga form { display: flex; flex-grow: 1; gap: 10px; }
+.grup-dreapta { display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; flex-shrink: 0; }
+.grup-actiuni { display: flex; gap: 10px; height: 100%; }
+.footer-btn { flex-grow: 1; font-weight: 500; padding: 10px 15px; border-radius: var(--border-radius); border: none; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; height: 100%; white-space: nowrap; font-size:1.5em; }
+.grup-dreapta .footer-btn { flex-grow: 0; }
+.footer-btn.btn-success { background-color: #28a745; }
+.footer-btn.btn-primary { background-color: #007bff; }
+.footer-btn.btn-info { background-color: #17a2b8; }
+.footer-btn.btn-secondary { background-color: #6c757d; }
+.footer-btn.btn-warning { background-color: #ffc107; color: #212529; }
+.footer-btn.btn-danger { background-color: #dc3545; }
+.footer-btn.btn-dark { background-color: #343a40; }
+.user-info { text-align: right; font-size: 0.9em; color: var(--secondary-color); }
+
+/* === STILURI PENTRU NOUA SECȚIUNE DE TOTALURI === */
+
+.totals-grid {
+    display: flex;
+    gap: 20px; /* Spațiu între cele două coloane */
+}
+
+.totals-col-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.totals-col-right {
+    flex-basis: 250px; /* Lățime fixă pentru coloana CIF */
+    display: flex;
+    align-items: flex-start; /* Aliniază conținutul sus */
+}
+
+.totals-col-right .cif-container {
+    width: 100%;
+}
+.totals-col-right .cif-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+#suma-incasata-input {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--success-color);
+    background-color: #e9ecef; /* Fundal gri pentru a indica că nu se editează direct */
+    cursor: pointer;
+}
+
+.rest-display {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--danger-color);
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius);
+}
+
+/* Stiluri pentru tastatura numerică */
+.numeric-keyboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+.numeric-keyboard .key {
+    padding: 15px;
+    font-size: 1.5rem;
+    height: 70px;
+}
+
+    .shortcut-hint {
+        font-weight: normal;
+        color: #007bff;
+        font-size: 0.75rem;
+        margin-left: 5px;
+    }
+    #product-controls .form-group {
+        flex: 1;
+        min-width: 200px;
+    }
+
+    /* === STILURI PERSONALIZATE PENTRU ETICHETE ȘI INPUTURI === */
+
+/* Culoare pentru eticheta Cantitate */
+.label-cantitate {
+    color: #007bff; /* Albastru primar */
+    font-weight: 500;
+}
+
+/* Culoare pentru eticheta Caută Nume */
+.label-nume {
+    color: #28a745; /* Verde succes */
+    font-weight: 500;
+}
+
+/* Culoare pentru eticheta Cod Bare */
+.label-codbare {
+    color: #dc3545; /* Roșu pericol */
+    font-weight: 500;
+}
+
+/* Stil pentru textul din interiorul inputurilor specifice */
+#cantitate_de_adaugat_prod, 
+#prod_filter, 
+#prod_filter_cod_bare {
+    font-size: 1.2rem; /* Mărește textul */
+    font-weight: bold; /* Îngroasă textul */
+    color: #495057;   /* O culoare de text puțin mai închisă */
+}
+/* === MODIFICĂRI DE DESIGN (Layout & Proporții) - 05.08.2025 === */
+
+/* --- AJUSTARE ÎNĂLȚIME PROPORȚIONALĂ (10% / 80% / 10%) --- */
+.page-header {
+    flex: 0 0 10%; /* Nu crește, nu se micșorează, bază de 10% din înălțime */
+    overflow-y: auto; /* Permite scroll dacă butoanele se înfășoară pe ecrane mici */
+}
+
+.main-content {
+    height: 75%; /* Setează înălțimea la 80% din spațiul flexibil al .page-container */
+    flex: 1 1 75%; /* Permite flexibilitate, dar cu baza de 80% */
+}
+
+.page-footer {
+    flex: 0 0 10%; /* Nu crește, nu se micșorează, bază de 10% */
+    align-items: center; /* Centrează vertical conținutul */
+    overflow: hidden; /* Previne depășirea înălțimii de 10% */
+}
+
+.page-footer .grup-stanga,
+.page-footer .grup-dreapta {
+    height: 100%; 
+}
+
+.page-footer .grup-dreapta {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    overflow-y: auto; /* Permite scroll dacă totalurile sunt prea înalte */
+}
+
+/* --- SETARE LĂȚIMI EGALE PENTRU PANOURI (50% / 50%) --- */
+.left-panel {
+    flex-basis: 50%;
+    min-width: 0; /* Anulează min-width-ul fix pentru a permite scalarea */
+}
+.right-panel {
+    flex-basis: 50%;
+}
+
+/* --- RESTRUCTURARE CONTROALE PRODUS (STIVUIRE VERTICALĂ) --- */
+#product-controls {
+    display: block; /* Schimbă din flex în block pentru a stivui elementele */
+}
+#product-controls > .form-group {
+    margin-bottom: 15px; /* Adaugă spațiu vertical între grupurile de controale */
+    flex: none; /* Anulează proprietățile flex moștenite */
+    width: 100%;
+}
+#product-controls > .form-group:last-child {
+    margin-bottom: 0;
+}
+
+/* --- STILURI PENTRU TOTALURILE MUTATE ÎN FOOTER --- */
+.page-footer .receipt-totals {
+    width: 100%;
+    margin-bottom: 5px;
+    border: 1px solid #dee2e6;
+    border-radius: var(--border-radius);
+    padding: 5px 10px;
+    background-color: #fff;
+    border-top: none;
+    box-shadow: none;
+}
+
+/* Ajustări pentru a se încadra mai bine în spațiul limitat al footer-ului */
+.page-footer .receipt-totals .totals-grid {
+    gap: 15px;
+}
+.page-footer .receipt-totals .total-payable,
+.page-footer .receipt-totals .rest-display {
+    font-size: 1.2rem;
+    padding: 2px 0;
+    margin-top: 2px;
+}
+.page-footer .receipt-totals .form-group {
+    margin-bottom: 2px;
+}
+.page-footer #suma-incasata-input {
+    font-size: 1.1rem;
+    height: auto;
+    padding: 5px 10px;
+}
+
+/* Modificare pentru butoanele mutate în header */
+.page-header .grup-actiuni .header-btn {
+    border-color: transparent; /* Scoate bordura dublă */
+}
+.page-header .grup-actiuni .header-btn.btn-warning {
+    background-color: #ffc107; color: #212529;
+}
+.page-header .grup-actiuni .header-btn.btn-danger {
+    background-color: #dc3545; color: #fff;
+}
+.page-footer .grup-actiuni {
+    display: none; /* Ascunde containerul gol din footer */
+}
+
+/* Antet POS organizat pe acțiuni de lucru și instrumente de sistem. */
+.page-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 8px 14px;
+    flex: 0 0 auto;
+    max-height: 52%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    container-type: inline-size;
+    container-name: pos-header;
+}
+
+.header-primary-actions,
+.header-secondary-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 7px;
+    min-width: 0;
+}
+
+.header-secondary-actions {
+    justify-content: flex-end;
+    margin-left: 0;
+}
+
+.page-header .header-btn {
+    min-height: 40px;
+    line-height: 1.15;
+    white-space: nowrap;
+}
+
+.page-header .user-info {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap;
+}
+
+.header-tool-cluster,
+.header-zoom-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.header-tool-cluster {
+    padding: 3px;
+    border: 1px solid #d7dde3;
+    border-radius: 6px;
+    background: #f7f8fa;
+}
+
+.page-header .header-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    min-width: 40px;
+    padding: 7px;
+}
+
+.page-header .header-zoom-level {
+    min-width: 54px;
+    padding: 7px 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #334155;
+    border-color: #c8d0d8;
+}
+
+.page-header .header-btn:disabled {
+    opacity: 0.42;
+    cursor: not-allowed;
+}
+
+@container pos-header (max-width: 1250px) {
+    .header-primary-actions,
+    .header-secondary-actions {
+        grid-column: 1 / -1;
+        width: 100%;
+    }
+
+    .header-secondary-actions {
+        justify-content: flex-start;
+        padding-top: 7px;
+        border-top: 1px solid #e4e8ec;
+    }
+}
+
+@media (max-width: 1250px) {
+    .header-primary-actions,
+    .header-secondary-actions {
+        grid-column: 1 / -1;
+        width: 100%;
+    }
+
+    .header-secondary-actions {
+        justify-content: flex-start;
+        padding-top: 7px;
+        border-top: 1px solid #e4e8ec;
+    }
+}
+@container pos-header (max-width: 850px) {
+    .header-primary-actions {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .header-primary-actions > a,
+    .header-primary-actions > form,
+    .header-primary-actions > .header-btn {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .header-primary-actions > a .header-btn {
+        width: 100%;
+    }
+
+    .header-secondary-actions {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+    }
+
+    .header-secondary-actions > form {
+        justify-self: end;
+    }
+}
+
+@media (max-width: 850px) {
+    .header-primary-actions {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .header-primary-actions > a,
+    .header-primary-actions > form,
+    .header-primary-actions > .header-btn {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .header-primary-actions > a .header-btn {
+        width: 100%;
+    }
+
+    .header-secondary-actions {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+    }
+
+    .header-secondary-actions > form {
+        justify-self: end;
+    }
+}
+
+/* === MODIFICĂRI DE DESIGN (Footer 70/30 & Tab-uri) === */
+
+/* --- AJUSTARE FOOTER PENTRU 70% / 30% --- */
+.page-footer .grup-stanga {
+    flex-basis: 70%;
+}
+.page-footer .grup-dreapta {
+    flex-basis: 30%;
+    /* Resetează stilurile anterioare pentru a se potrivi noului conținut */
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: stretch; /* Face conținutul să ocupe toată înălțimea */
+}
+
+/* --- STILURI PENTRU .receipt-totals și TAB-URI ÎN FOOTER --- */
+.page-footer .receipt-totals {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #dee2e6;
+    border-radius: var(--border-radius);
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    box-shadow: none;
+    border-top: 1px solid #dee2e6; /* Restabilim bordura de sus */
+}
+
+/* Stil pentru butoanele de tab */
+.page-footer .nav-tabs {
+    flex-shrink: 0;
+    font-size: 0.8rem;
+    border-bottom-width: 2px;
+}
+.page-footer .nav-tabs .nav-link {
+    padding: 0.4rem 0.5rem; /* Padding compact */
+    border-radius: 0;
+    border-top: 0;
+}
+
+/* Stil pentru conținutul tab-urilor */
+.page-footer .tab-content {
+    flex-grow: 1;
+    height: 100%;
+    overflow-y: auto;
+}
+.page-footer .tab-pane {
+    padding: 8px;
+    padding-top:0;
+    padding-bottom: 0;
+    height: 100%;
+}
+
+/* Stil pentru conținutul din interiorul primului tab (Totaluri) */
+.page-footer #total-tab-content .total-payable {
+    font-size: 1.1rem;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+}
+.page-footer #total-tab-content #suma-incasata-input {
+    font-size: 1rem;
+}
+.page-footer #total-tab-content .rest-display {
+    font-size: 1.1rem;
+    margin-top: 5px;
+    padding: 5px;
+}
+.page-footer #total-tab-content .form-group label {
+    font-size: 0.8em;
+    margin-bottom: 2px;
+}
+
+/* Stil pentru conținutul din interiorul celui de-al doilea tab (CIF) */
+.page-footer #cif-tab-content .cif-container {
+    margin-top: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrează vertical inputul de CIF */
+}
+.page-footer #cif-tab-content .cif-container label {
+    margin-bottom: 4px;
+}
+
+/* === STILURI PENTRU LAYOUT-UL PE 3 COLOANE ÎN TAB-UL TOTALURI (FOOTER) === */
+.page-footer .totals-inline-grid {
+    display: flex;
+    align-items: center;    /* Aliniază vertical elementele */
+    justify-content: space-between;
+    gap: 8px;              /* Spațiu între coloane */
+    width: 100%;
+    height: 100%;          /* Ocupă toată înălțimea tab-ului */
+}
+
+.page-footer .total-item {
+    flex: 1;               /* Fiecare coloană ocupă spațiu egal */
+    display: flex;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 5px 8px;
+    border: 1px solid #dee2e6;
+    border-radius: var(--border-radius);
+    min-width: 0; /* Permite elementului flex să se micșoreze */
+}
+
+.page-footer .total-item label {
+    font-weight: bold;
+    margin-right: 5px;
+    margin-bottom: 0;
+    font-size: 0.9em;
+    color: var(--secondary-color);
+}
+
+/* Stilizare specifică pentru valorile din fiecare coloană */
+.page-footer .total-item #total_de_incasat_display,
+.page-footer .total-item #rest-de-dat-display {
+    font-weight: bold;
+    font-size: 1.5em; 
+    color: var(--primary-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.page-footer .total-item #rest-de-dat-display {
+    color: var(--danger-color);
+}
+
+.page-footer .total-item #suma-incasata-input {
+    flex-grow: 1; 
+    width: auto;
+    padding: 2px 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    background-color: #e9ecef;
+    cursor: pointer;
+}
+
+/* Resetează stilurile vechi care nu mai sunt necesare în acest context */
+.page-footer #total-tab-content .total-payable,
+.page-footer #total-tab-content .rest-display,
+.page-footer #total-tab-content .form-group {
+    display: contents; /* Face ca vechile containere să nu mai influențeze layout-ul */
+}
+/* === AJUSTARE PENTRU A ELIMINA SCROLLBAR-UL DIN TAB-URILE FOOTER-ULUI === */
+
+.page-footer .tab-content {
+    overflow: hidden; /* Ascunde orice scrollbar, vertical sau orizontal */
+}
+/* --- ÎNLOCUIEȘTE CSS-UL VECHI CU ACESTA --- */
+
+/* Stiluri NOI pentru tastatura virtuală adaptivă */
+
+/* Facem body-ul modalului un container flexibil pe verticală */
+#text-keyboard-modal .modal-body {
+    display: flex;
+    flex-direction: column;
+    /* Setăm o înălțime minimă pentru a garanta că tastatura are loc suficient */
+    min-height: 420px;
+}
+
+.full-keyboard {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    /* Esențial: Tastatura va crește pentru a umple spațiul vertical disponibil */
+    flex-grow: 1;
+}
+
+.keyboard-row {
+    display: flex;
+    gap: 8px;
+    /* Esențial: Fiecare rând va crește pentru a ocupa o parte egală din înălțimea tastaturii */
+    flex-grow: 1;
+}
+
+.full-keyboard .key {
+    flex-grow: 1; /* Butoanele cresc pe orizontală pentru a umple rândul */
+    padding: 0;
+    font-size: 1.4rem; /* Am mărit fontul pentru vizibilitate */
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    /* Am eliminat înălțimea fixă (height), permițând butonului să crească liber */
+}
+
+/* Stilurile pentru tastele speciale rămân similare, ajustând doar fontul */
+.full-keyboard .key.space-key {
+    flex-grow: 6;
+}
+
+.full-keyboard .key.backspace-key,
+.full-keyboard .key.shift-key {
+    flex-grow: 1.5;
+    font-size: 1.2rem;
+}
+
+.full-keyboard .key.active-shift {
+    background-color: #3385ff;
+    color: white;
+    border-color: #005cbf;
+}
+
+/* MENIURI: panoul trebuie să se comporte ca gridul standard */
+#meniu-panel { 
+  display: none;      /* ascuns implicit; JS îl pune pe flex la afișare */
+  flex: 1 1 auto;     /* ocupă zona din stânga, ca #product-list-container */
+}
+#meniu-grid { 
+  flex: 1 1 auto;     /* umple panoul pe lățime */
+  width: 100%;
+}
+
+
+/* === Hover popup pentru total (vizibilitate mare) === */
+.total-hover-popup{
+  position: absolute;
+  padding: 10px 14px;
+  background: rgba(0,0,0,.92);
+  color: #fff;
+  font-size: 3rem;           /* MARE, ușor de citit */
+  font-weight: 800;
+  line-height: 1;
+  border-radius: 12px;
+  white-space: nowrap;
+  pointer-events: none;         /* nu “fură” hover-ul */
+  z-index: 9999;                /* peste toate */
+  box-shadow: 0 8px 24px rgba(0,0,0,.25);
+}
+.total-hover-popup::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -8px;
+  border: 8px solid transparent;
+  border-top-color: rgba(0,0,0,.92);  /* “săgeata” */
+}

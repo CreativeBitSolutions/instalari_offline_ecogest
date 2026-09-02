@@ -1,7 +1,7 @@
 TIPURI DE INSTALĂRI OFFLINE ECOGEST
 ====================================
 
-Data verificării codului: 30.08.2026
+Data verificării codului: 02.09.2026
 Rădăcina de lucru: C:\xampp\htdocs\github\instalari_offline_ecogest
 
 Acest fișier descrie instalarea activă din fiecare folder, tipul aplicației și personalizările care trebuie păstrate la copiere, compilare sau actualizare. Cheile API, parolele și alte valori sensibile nu sunt reproduse aici.
@@ -49,7 +49,7 @@ Instalările obișnuite de magazin sunt în mod sales-only. În acest mod sunt b
 2. REGULI COMUNE INSTALĂRILOR DE RESTAURANT
 ============================================
 
-Foldere vizate: grandplaza, glovograndplaza și taverna_amicii.
+Foldere vizate: grandplaza, glovograndplaza, lorand și taverna_amicii.
 
 Structura obișnuită:
 - <client>\<client>\app_restaurant_v2: sursele de dezvoltare ale interfeței offline. Folderul este folosit numai la compilare și nu se livrează clientului final.
@@ -340,7 +340,47 @@ Componente livrate:
 - compiler exe project taverna.exop este proiect local de compilare și nu intră în pachet.
 
 
-11. FOLDERE TEHNICE DIN RĂDĂCINĂ
+11. LORAND
+===========
+
+Tip: RESTAURANT offline, numai operatori, cu listare fiscală și notă de plată.
+Client online: 1019.
+Locație: 1.
+Aplicație: lorand\lorand\app_restaurant_v2.
+API local: lorand\api_offline_lorand.
+Baza: api_offline_lorand\restaurant.sqlite.
+Identitate configurată: lorand-c1019-l1-pos1.
+
+Date inițiale:
+- nomenclatoarele și setările provin din exportul u681731335_lorand.sql.
+- tabelele tranzacționale pornesc goale. Nu au fost create vânzări de probă.
+- baza locală păstrează numai datele necesare pornirii aplicației și continuității configurării.
+
+Personalizări active:
+- instalarea offline folosește logica de restaurant din app_restaurant_v2 și designul modern derivat din app_vanzare_v2. În aplicația online, clientul 1019 rămâne pe app_vanzare_v2. Personalizările online Lorand sunt condiționate în acest modul. agecsin/app_restaurant_v2 nu este modificat pentru Lorand.
+- instalarea nu conține interfață de magazin și nu folosește cântar.
+- nu există utilizator separat de tip șef de sală. Utilizatorii umani sincronizați local sunt tratați ca operatori cu rol ospătar. Conturile tehnice pentru tablete rămân distincte.
+- la încasarea unei note se generează atât documentul pentru casa de marcat, cât și nota de plată pentru imprimanta restaurantului.
+- pagina rapoarte_operator.php oferă operatorilor note încasate, registrul notelor, retururi, închideri de tură, rapoarte Z, raport X, intervale de produse și raportul detaliat de produse.
+- accesul operatorilor la pagina locală de rapoarte este controlat prin operator_acces_rapoarte. Coloana este adăugată idempotent în schema SQLite și în loginul offline Lorand.
+- în app_vanzare_v2 online, Rapoarte apare numai pentru clientul 1019. Pagina oferă note finalizate, închideri și rapoarte Z. Listarea notei după fiscalizare este controlată separat prin listare_nota_dupa_fiscalizare. Ambele coloane sunt asigurate idempotent din client_login.php prin app_vanzare_v2/setari_lorand_schema.php.
+- notele finalizate nu pot fi șterse și pot fi numai relistate. Liniile unei note deschise pot fi corectate sau șterse chiar dacă au fost deja trimise la imprimanta de producție.
+- relistarea unei închideri folosește data, ora și operatorul documentului selectat. Relistarea nu modifică datele tranzacționale.
+- sincronizarea persistentă trimite numai notele finalizate și continuă din login fără operator conectat.
+- sincronizarea comenzilor de pe tablete, verificarea CUI, licența, zoomul persistent, statusul transmiterilor și sincronizarea nomenclatoarelor urmează regulile comune ale restaurantelor.
+- integrarea WooCommerce directă este dezactivată. Nu sunt configurate endpointuri comerciale externe pentru Lorand.
+
+Componente livrate:
+- scan_casa_marcat_v3_inp, configurat pentru clientul 1019 și locația 1.
+- printer_bold, configurat pentru coada locală Lorand. Imprimanta fizică se selectează pe calculatorul clientului.
+- ecogest_autoscanner_products_restaurant_1_4_6_0.
+- shortcuturi ECOGEST pentru aplicația restaurant, casa de marcat, imprimantă și AutoScanner.
+- Admin Login.url este shortcutul de dezvoltare pentru deschiderea surselor prin localhost, fără compilare. Nu intră în pachetul clientului.
+- compiler exe project lorand.exop, configurat pentru sursele restaurant Lorand. Nu intră în pachetul clientului.
+- arhiveaza_lorand.bat, bazat pe scriptul comun de împachetare.
+
+
+12. FOLDERE TEHNICE DIN RĂDĂCINĂ
 =================================
 
 _pachete_clienti
@@ -354,10 +394,10 @@ _pachete_clienti
 - nu intră în pachetele clienților și este ignorat de Git.
 
 
-12. SCRIPTURI DE ÎMPACHETARE ȘI REGULI DE DISTRIBUȚIE
+13. SCRIPTURI DE ÎMPACHETARE ȘI REGULI DE DISTRIBUȚIE
 ======================================================
 
-În rădăcină există câte un script arhiveaza_<client>.bat pentru fiecare dintre cele opt instalări și scriptul comun arhiveaza_pachet_client.ps1.
+În rădăcină există câte un script arhiveaza_<client>.bat pentru fiecare dintre cele nouă instalări și scriptul comun arhiveaza_pachet_client.ps1.
 
 Scriptul comun:
 - presupune că XAMPP este deja instalat pe calculatorul clientului.

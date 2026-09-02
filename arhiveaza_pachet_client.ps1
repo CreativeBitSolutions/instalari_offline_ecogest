@@ -125,10 +125,13 @@ try {
     $robocopyArguments += @(
         '/XF',
         '*.exop',
+        'Admin Login.url',
         '*.log',
         '*.bak',
         '*.pdb',
         'backup_*.db',
+        'CONFIGURARE_CENTRALA_CLIENT_*.sql',
+        'DOCUMENTATIE_INSTALARE_OFFLINE.md',
         'offline_installation_identity.json',
         'offline_installation_identity.json.lock',
         'Thumbs.db',

@@ -1,0 +1,2 @@
+[12-Aug-2026 04:31:09 Europe/Berlin] PHP Warning:  Undefined array key "live" in C:\xampp\htdocs\instalari_offline\agecs_offline_bestmixt\interfata_vanzare\logout.php on line 11
+[12-Aug-2026 14:42:16 Europe/Berlin] PHP Fatal error:  Cannot redeclare offline_sync_queue_config() (previously declared in C:\xampp\htdocs\instalari_offline\agecs_offline_bestmixt\interfata_vanzare\offline_sync_queue_lib.php:7) in C:\xampp\htdocs\instalari_offline\agecs_offline_bestmixt\interfata_vanzare\offline_sync_queue_lib.php on line 5

@@ -1,0 +1,64 @@
+.post-body pre.prettyprint{ width: auto; overflow: auto; tab-size: 4; padding: 10px; margin: 20px 0;}
+.post-body pre.prettyprint ol.linenums li { list-style-type: decimal !important; margin-left: 0px; list-style-position: outside; word-wrap: initial;}
+.tab-pane > .pre-tab {margin-top: -15px !important; border-top: none; border-top-right-radius: 0px; border-top-left-radius: 0px;}
+.inline-code {font-family: Menlo,Monaco,Consolas,"Courier New",monospace; background-color: rgba(0,0,0,0.04); border-radius: 3px; padding: 3px 6px; font-size: 13px;}
+
+th.text-vertical>div {
+	transform: rotate(270deg);
+	transform-origin: left top 0;
+}
+.table td {text-align: left}
+
+h1, h2, h3, h4, h5, h6 {text-align: left;}
+h2 small a {color: inherit;}
+h2 small a:hover, h2 small a:active, h2 small a:focus {color: black;}
+
+code {background-color: #ddd}
+
+.post-body, .post-header p {text-align: justify; color: #000; line-height: 1.7em;}
+.post-body a {text-decoration: underline;}
+.post-body ul { margin-left: 40px; list-style: disc outside; }
+.post-body ol { margin-left: 40px; list-style: decimal outside; }
+.post-body ul ul, .post-body ol ul { list-style-type: circle; margin-left: 20px; }
+.post-body ol ol, .post-body ul ol { list-style-type: lower-latin; margin-left: 20px; }
+.post-body ul.nav-tabs {margin-left: 0;}
+.thumbnail p.caption-buttons {text-align: center}
+
+.post-banner-top {margin-bottom: 20px;}
+.post-banner-bottom {margin-top: 20px;}
+.post-footer {margin-top: 20px;}
+.sidebar > .sticky-wrapper {margin-top: 30px}
+
+.bs-callout {
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #E0AF62;
+    border-left-width: 5px;
+    border-radius: 3px;
+}
+.bs-callout h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+	text-align: left;
+}
+.bs-callout p:last-child {
+    margin-bottom: 0;
+}
+.bs-callout code {
+    border-radius: 3px;
+}
+.bs-callout+.bs-callout {
+    margin-top: -5px;
+}
+
+/* should be covered by future versions of bootstrap */
+.table-responsive {min-height: .01%; overflow-x: auto;}
+.text-nowrap {white-space: nowrap;}
+
+/* Duplo subsite */
+nav .title {font-size: 24px; color: #7D7D7D; line-height: 140px; position: relative; text-decoration: none;}
+nav .title > a > span {padding: 0 20px;}
+.post-meta .taglinks > a {padding: 0 5px;}
+.lang-menu input {display: none}
+.lang-menu select {border: none; font-weight: normal; width: 120px;}
+#mobile-menu.lang-menu {line-height: 40px;}

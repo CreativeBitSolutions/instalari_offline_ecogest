@@ -3,6 +3,15 @@
 /taverna_amicii/api_offline_taverna_amicii/offline_sync_exports
 /taverna_amicii/taverna_amicii/printer_bold/ScannedNotes
 /taverna_amicii/taverna_amicii/printer_bold_online/ScannedNotes
+/lorand/api_offline_lorand/bonuri_backup/
+/lorand/api_offline_lorand/bonuri_trimise/
+/lorand/api_offline_lorand/offline_sync_exports/
+/lorand/api_offline_lorand/backups_transaction_reset/
+/lorand/api_offline_lorand/backups_products_sync/
+/lorand/api_offline_lorand/licenta/
+/lorand/printer_bold/ScannedNotes/
+/lorand/printer_bold/Logs/
+/lorand/scan_casa_marcat_v3_inp/Logs/
 
 # Scripturi locale si arhive de instalare pentru clienti
 /arhiveaza_*.bat
