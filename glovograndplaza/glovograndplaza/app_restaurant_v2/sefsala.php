@@ -169,6 +169,9 @@ foreach ($notes as $n) {
         <a href="vanzare_retururi.php" class="btn btn-outline-light btn-sm m-1">Retururi</a>
         <a href="listare_note.php" class="btn btn-outline-light btn-sm m-1">Retrimite note la casa de marcat</a>
         <a href="configurare_listare_imprimanta.php" class="btn btn-outline-warning btn-sm m-1">Configurare imprimantă</a>
+        <button type="button" id="btnProductReport" class="btn btn-warning btn-sm m-1">
+            <i class="fas fa-file-alt"></i> Raport produse
+        </button>
         <button type="button" id="btnSyncOnline" class="btn btn-success btn-sm m-1">
             <i class="fas fa-sync-alt"></i> Sync Online
         </button>
@@ -313,6 +316,8 @@ foreach ($notes as $n) {
         </div>
     </div>
 </div>
+
+<?php include __DIR__ . '/modal_raport_produse_imprimanta.php'; ?>
 
 <?php include __DIR__ . '/modal_situatie_sincronizare.php'; ?>
 

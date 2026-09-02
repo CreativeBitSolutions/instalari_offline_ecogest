@@ -2,6 +2,8 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/session.php';
+require_once __DIR__ . '/setari_platforma_schema.php';
+restaurant_v2_ensure_skip_bar_command_print_column($pdo);
 
 $stmtOperator = $pdo->prepare('SELECT rank FROM admins_12 WHERE admin_id = ? LIMIT 1');
 $stmtOperator->execute([(int)($_SESSION['admin_id'] ?? 0)]);
@@ -86,9 +88,13 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         }
 
         if ($message === '') {
+            $omiteListareaBar = isset($_POST['omite_listare_bar_la_trimitere']);
             $json = json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
             if ($json === false || file_put_contents($configPath, $json . PHP_EOL, LOCK_EX) === false) {
                 $message = 'Configurația nu a putut fi salvată.';
+                $messageType = 'danger';
+            } elseif (!restaurant_v2_set_skip_bar_command_print_enabled($pdo, $omiteListareaBar)) {
+                $message = 'Setarea pentru departamentul BAR nu a putut fi salvată.';
                 $messageType = 'danger';
             } else {
                 $message = $action === 'standard'
@@ -100,6 +106,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
 }
 
 $config = $loadConfig();
+$omiteListareaBar = restaurant_v2_is_skip_bar_command_print_enabled($pdo);
 $sizeEnabled = $config['size'] !== '';
 $alignEnabled = $config['align'] !== '';
 $previewWeight = $config['bold'] ? '700' : '400';
@@ -186,13 +193,80 @@ $previewAlign = $alignEnabled && $config['align'] === 'justified' ? 'justify' : 
             font-weight: 700;
             letter-spacing: .08em;
         }
-        .custom-control-label { cursor: pointer; }
+        /* Bootstrap 4.0 beta 2 nu include componenta custom-switch.
+           Comutatorul local păstrează checkboxul accesibil și vizibil în aplicația compilată. */
+        .setting-block .custom-switch {
+            position: relative;
+            display: grid;
+            grid-template-columns: 48px minmax(0, 1fr);
+            column-gap: 14px;
+            align-items: start;
+            min-height: 26px;
+            padding-left: 0;
+        }
+        .setting-block .custom-switch .custom-control-input {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            opacity: 0;
+        }
+        .setting-block .custom-switch .custom-control-label {
+            position: relative;
+            grid-column: 2;
+            display: block;
+            min-width: 0;
+            margin: 0;
+            padding: 1px 0 0;
+            line-height: 1.35;
+            cursor: pointer;
+        }
+        .setting-block .custom-switch .custom-control-label::before {
+            position: absolute;
+            top: 0;
+            left: -62px;
+            width: 48px;
+            height: 26px;
+            content: '';
+            border: 2px solid var(--ink);
+            border-radius: 999px;
+            background: #d8d2c5;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, .16);
+            transition: background-color .16s ease, box-shadow .16s ease;
+        }
+        .setting-block .custom-switch .custom-control-label::after {
+            position: absolute;
+            top: 4px;
+            left: -58px;
+            width: 18px;
+            height: 18px;
+            content: '';
+            border-radius: 50%;
+            background: var(--ink);
+            transition: transform .16s ease;
+        }
+        .setting-block .custom-switch .custom-control-input:checked ~ .custom-control-label::before {
+            background: var(--accent);
+        }
+        .setting-block .custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+            transform: translateX(22px);
+        }
+        .setting-block .custom-switch .custom-control-input:focus ~ .custom-control-label::before {
+            box-shadow: 0 0 0 3px rgba(224, 162, 26, .3), inset 0 1px 2px rgba(0, 0, 0, .16);
+        }
+        .setting-block .custom-switch .form-text {
+            grid-column: 2;
+            display: block;
+            margin-top: 4px;
+            line-height: 1.35;
+        }
         .btn-primary { background: var(--ink); border-color: var(--ink); }
         .btn-primary:hover { background: #383632; border-color: #383632; }
         .btn-outline-secondary { color: var(--ink); border-color: var(--ink); }
         .btn-outline-secondary:hover { background: var(--accent); border-color: var(--ink); color: var(--ink); }
         @media (max-width: 767.98px) {
             .settings-card { margin: 14px auto; box-shadow: 6px 6px 0 rgba(0,0,0,.32); }
+            .setting-block { padding: 15px; }
         }
     </style>
     <?php include __DIR__ . '/i18n/i18n_bootstrap.php'; ?>
@@ -219,6 +293,14 @@ $previewAlign = $alignEnabled && $config['align'] === 'justified' ? 'justify' : 
                         <input type="checkbox" class="custom-control-input" id="bold" name="bold" <?php echo $config['bold'] ? 'checked' : ''; ?>>
                         <label class="custom-control-label font-weight-bold" for="bold">Îngroașă tot textul listat</label>
                         <small class="form-text text-muted">Setarea se aplică fiecărei linii trimise la imprimante.</small>
+                    </div>
+                </div>
+
+                <div class="setting-block mb-4">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="omite_listare_bar_la_trimitere" name="omite_listare_bar_la_trimitere" value="1" <?php echo $omiteListareaBar ? 'checked' : ''; ?>>
+                        <label class="custom-control-label font-weight-bold" for="omite_listare_bar_la_trimitere">Nu lista produsele BAR la „Trimite Comanda”</label>
+                        <small class="form-text text-muted">Produsele rămân pe nota de plată și pe bonul fiscal. Se oprește numai foaia trimisă imprimantei de secție BAR.</small>
                     </div>
                 </div>
 

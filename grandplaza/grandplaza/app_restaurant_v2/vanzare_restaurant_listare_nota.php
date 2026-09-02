@@ -5,6 +5,7 @@ ini_set('log_errors', 1); // Activează logarea erorilor
 ini_set('error_log', 'error_log.log'); // Specifică calea către fișierul de log
 error_reporting(E_ALL); // Raportează toate tipurile de erori
 include('database_connection.php');
+require_once __DIR__ . '/setari_platforma_schema.php';
 require_once __DIR__ . '/det_note_import_schema.php';
 require_once __DIR__ . '/det_note_departament_listare_schema.php';
 
@@ -14,6 +15,7 @@ restaurant_v2_ensure_det_note_site_import_column(
 );
 $detNoteTable = isset($tabel_final_det_note) ? $tabel_final_det_note : 'det_note';
 agecs_ensure_det_note_departament_listare($pdo, $detNoteTable);
+restaurant_v2_ensure_skip_bar_command_print_column($pdo);
 $departamentListareSql = agecs_departament_listare_sql('dn', 'ps');
 $printedProductNameSql = "CASE
         WHEN TRIM(COALESCE(dn.nume_produs, '')) <> '' THEN dn.nume_produs
@@ -103,6 +105,19 @@ $masa_curenta = $_SESSION['masa_curenta'];
 $adm_id       = $_SESSION['admin_id'];
 $client_id    = $_SESSION['client_id'];
 $hide_discount = in_array((int)$client_id, [25, 26], true);
+
+// Setare configurabila din Sef sala: la actiunea "Trimite Comanda" poate fi omisa
+// listarea de sectie BAR. Nota de plata si relistarile raman neschimbate.
+$este_trimitere_comanda_sectii = (
+    isset($_POST['listeaza_tot'])
+    && in_array((string)$_POST['listeaza_tot'], ['da', 'nu'], true)
+    && !(isset($_POST['nota_de_plata_client']) && $_POST['nota_de_plata_client'] === 'da')
+    && !(isset($_POST['relistare_nota_plata']) && $_POST['relistare_nota_plata'] === 'da')
+);
+$omite_listarea_bar_la_trimitere = (
+    $este_trimitere_comanda_sectii
+    && restaurant_v2_is_skip_bar_command_print_enabled($pdo)
+);
 // Filtrul implicit pentru produse noi (care nu au fost trimise la imprimantă)
 $filter_t_list = "dn.t_list = 0";
 
@@ -217,6 +232,12 @@ foreach ($departments_flat as $departament_listare) {
             $products = $products_stmt->fetchAll(PDO::FETCH_ASSOC);
 
             if (empty($products)) {
+                continue;
+            }
+
+            if ($omite_listarea_bar_la_trimitere
+                && strtoupper(trim((string)$departament_listare)) === 'BAR') {
+                // Produsele raman pe nota si pe documentele de plata, dar nu intra in coada imprimantei BAR.
                 continue;
             }
 

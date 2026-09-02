@@ -52,7 +52,8 @@ function restaurant_sqlite_schema_statements(): array
             mod_touch INTEGER DEFAULT 0,
             activare_listener INTEGER DEFAULT 0,
             cu_imprimanta INTEGER DEFAULT 1,
-            autologin_restaurant INTEGER DEFAULT 0
+            autologin_restaurant INTEGER DEFAULT 0,
+            omite_listare_bar_la_trimitere INTEGER DEFAULT 0
         )",
         "CREATE TABLE IF NOT EXISTS loc_mese_12 (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1308,6 +1309,7 @@ function restaurant_sqlite_ensure_columns(PDO $pdo): void
             'activare_listener' => 'INTEGER DEFAULT 0',
             'cu_imprimanta' => 'INTEGER DEFAULT 1',
             'autologin_restaurant' => 'INTEGER DEFAULT 0',
+            'omite_listare_bar_la_trimitere' => 'INTEGER DEFAULT 0',
         ],
         'date_firma' => [
             'den_ent' => "TEXT DEFAULT ''",

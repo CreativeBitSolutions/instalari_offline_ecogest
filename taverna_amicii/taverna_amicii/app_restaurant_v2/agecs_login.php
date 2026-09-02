@@ -10,6 +10,8 @@ date_default_timezone_set("Europe/Bucharest");
 
 session_start();
 include('database_connection.php');
+require_once __DIR__ . '/setari_platforma_schema.php';
+restaurant_v2_ensure_skip_bar_command_print_column($pdo);
 require_once __DIR__ . '/offline_products_guard.php';
 
 if ((!function_exists('restaurantIsOfflineSqlite') || !restaurantIsOfflineSqlite()) && !isset($_SESSION['client_id'])) {

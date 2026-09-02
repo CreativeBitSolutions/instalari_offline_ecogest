@@ -53,7 +53,8 @@ function restaurant_sqlite_schema_statements(): array
             activare_listener INTEGER DEFAULT 0,
             cu_imprimanta INTEGER DEFAULT 1,
             autologin_restaurant INTEGER DEFAULT 0,
-            listare_automata_comenzi_site INTEGER DEFAULT 1
+            listare_automata_comenzi_site INTEGER DEFAULT 1,
+            omite_listare_bar_la_trimitere INTEGER DEFAULT 0
         )",
         "CREATE TABLE IF NOT EXISTS loc_mese_12 (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1345,6 +1346,7 @@ function restaurant_sqlite_ensure_columns(PDO $pdo): void
             'cu_imprimanta' => 'INTEGER DEFAULT 1',
             'autologin_restaurant' => 'INTEGER DEFAULT 0',
             'listare_automata_comenzi_site' => 'INTEGER DEFAULT 1',
+            'omite_listare_bar_la_trimitere' => 'INTEGER DEFAULT 0',
         ],
         'mapare_woo_pos' => [
             'woo_product_id' => 'INTEGER NOT NULL DEFAULT 0',

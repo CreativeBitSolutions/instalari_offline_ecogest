@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_save_obs'])) {
 
       <div class="modal-body">
         <div id="garnituri_container" style="display:none; margin-bottom:15px;">
-          <label class="font-weight-bold mb-2" style="font-size:16px;">Alege garnitura:</label>
+          <label class="font-weight-bold mb-2" style="font-size:16px;">Alege garnitura/observatia:</label>
           <div id="garnituri_buttons" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px;"></div>
           <hr style="margin-top:12px;">
         </div>
