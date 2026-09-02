@@ -1,0 +1,45 @@
+[2026-08-30 06:45:31] Aplicația a pornit.
+[2026-08-30 06:45:31] Pornesc scanarea, sursă: pornire automată.
+[2026-08-30 06:45:31] Deschid baza locală.
+[2026-08-30 06:45:31] Calculez semnătura produselor locale.
+[2026-08-30 06:45:31] Verific nomenclatorul disponibil online.
+[2026-08-30 06:45:32] Import produse început. Online: 365 produse.
+[2026-08-30 06:45:32] Copie de siguranță creată: C:\xampp\htdocs\github\instalari_offline_ecogest\taverna_amicii\api_offline_taverna_amicii\backups_products_sync\restaurant_before_products_sync_20260830_064532.sqlite
+[2026-08-30 06:45:32] Import finalizat: 4 adăugate, 1 actualizate, 0 șterse, 360 neschimbate.
+[2026-08-30 06:48:35] Setările au fost salvate. Interval: 10 minute.
+[2026-08-30 06:48:35] Pornesc scanarea, sursă: comandă manuală.
+[2026-08-30 06:48:35] Deschid baza locală.
+[2026-08-30 06:48:35] Calculez semnătura produselor locale.
+[2026-08-30 06:48:35] Verific nomenclatorul disponibil online.
+[2026-08-30 06:48:35] Import produse început. Online: 366 produse.
+[2026-08-30 06:48:35] Copie de siguranță creată: C:\xampp\htdocs\github\instalari_offline_ecogest\taverna_amicii\api_offline_taverna_amicii\backups_products_sync\restaurant_before_products_sync_20260830_064835.sqlite
+[2026-08-30 06:48:35] Import finalizat: 1 adăugate, 1 actualizate, 0 șterse, 364 neschimbate.
+[2026-08-30 06:52:24] Setările au fost salvate. Interval: 10 minute.
+[2026-08-30 06:52:24] Pornesc scanarea, sursă: comandă manuală.
+[2026-08-30 06:52:24] Deschid baza locală.
+[2026-08-30 06:52:24] Calculez semnătura produselor locale.
+[2026-08-30 06:52:24] Verific nomenclatorul disponibil online.
+[2026-08-30 06:52:24] Import produse început. Online: 366 produse.
+[2026-08-30 06:52:24] Copie de siguranță creată: C:\xampp\htdocs\github\instalari_offline_ecogest\taverna_amicii\api_offline_taverna_amicii\backups_products_sync\restaurant_before_products_sync_20260830_065224.sqlite
+[2026-08-30 06:52:24] Import finalizat: 0 adăugate, 2 actualizate, 0 șterse, 364 neschimbate.
+[2026-08-30 06:55:32] Pornesc scanarea, sursă: programare automată.
+[2026-08-30 06:55:32] Deschid baza locală.
+[2026-08-30 06:55:32] Calculez semnătura produselor locale.
+[2026-08-30 06:55:32] Verific nomenclatorul disponibil online.
+[2026-08-30 06:55:32] Nomenclatorul este deja sincronizat. Produse verificate: 366.
+[2026-08-30 07:05:32] Pornesc scanarea, sursă: programare automată.
+[2026-08-30 07:05:32] Deschid baza locală.
+[2026-08-30 07:05:32] Calculez semnătura produselor locale.
+[2026-08-30 07:05:32] Verific nomenclatorul disponibil online.
+[2026-08-30 07:05:32] Nomenclatorul este deja sincronizat. Produse verificate: 366.
+[2026-08-30 07:10:00] Aplicația a pornit.
+[2026-08-30 07:10:00] Pornesc scanarea, sursă: pornire automată.
+[2026-08-30 07:10:00] Deschid baza locală.
+[2026-08-30 07:10:00] Calculez semnătura produselor locale.
+[2026-08-30 07:10:00] Verific nomenclatorul disponibil online.
+[2026-08-30 07:10:00] Nomenclatorul este deja sincronizat. Produse verificate: 366.
+[2026-08-30 07:20:00] Pornesc scanarea, sursă: programare automată.
+[2026-08-30 07:20:00] Deschid baza locală.
+[2026-08-30 07:20:00] Calculez semnătura produselor locale.
+[2026-08-30 07:20:00] Verific nomenclatorul disponibil online.
+[2026-08-30 07:20:00] Nomenclatorul este deja sincronizat. Produse verificate: 366.

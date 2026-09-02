@@ -1,0 +1,95 @@
+{
+    "schema_version": "offline-sync-v2",
+    "event_uuid": "taverna-amicii-1008-l1-20260814:shift_closed:5:f0a68a37bdf223a89c41bacb",
+    "event_type": "shift_closed",
+    "aggregate_type": "shift",
+    "aggregate_id": "5",
+    "installation_uuid": "taverna-amicii-1008-l1-20260814",
+    "sync_export_id": "taverna-amicii-1008-l1-20260814:shift_closed:5:f0a68a37bdf223a89c41bacb",
+    "cod_locatie": 1,
+    "data_sync": "2026-08-14 14:34:57",
+    "utilizator_sync": {
+        "id": 0,
+        "nume": "Sincronizare automată",
+        "rank": "system"
+    },
+    "counts": {
+        "note": 1,
+        "det_note": 0,
+        "inchideri_r_12": 1,
+        "rapoarte_z": 0,
+        "discounturi_acordate": 0
+    },
+    "note": [
+        {
+            "nrbon": "10",
+            "serie": "",
+            "operator": "1",
+            "locatie": "1",
+            "cod_masa": "1",
+            "data_deschidere": "2026-08-14 11:34:29",
+            "data_bon": "2026-08-14",
+            "ora_bon": "14:34:46",
+            "status": "F",
+            "valoare_vanzare_cu_tva": "17.0",
+            "tva_colectata": "2.95",
+            "discount": "0.0",
+            "numerar": "17.0",
+            "card": "0.0",
+            "tichete": "0.0",
+            "protocol": "0.0",
+            "glovo": "0.0",
+            "virament_bancar": "0.0",
+            "platit_din_sold": "0.0",
+            "rest": "0.0",
+            "cif_client": "",
+            "tableta": "0",
+            "listat_nota_plata": "1",
+            "fiscalizat": "0",
+            "cod_inchidere": "5",
+            "nr_raport_z": 0,
+            "camera_nota": "",
+            "cod_locatie": 1,
+            "_sync": {
+                "export_id": "taverna-amicii-1008-l1-20260814:shift_closed:5:f0a68a37bdf223a89c41bacb",
+                "source_table": "note",
+                "source_pk": "10",
+                "cod_locatie": 1,
+                "installation_uuid": "taverna-amicii-1008-l1-20260814",
+                "sync_id": "note:1:taverna-amicii-1008-l1-20260814:10"
+            },
+            "nrbon_original": 10,
+            "cod_inchidere_original": 5,
+            "nr_raport_z_original": 0
+        }
+    ],
+    "det_note": [],
+    "inchideri_r_12": [
+        {
+            "id_inch": "5",
+            "cod_inchidere": "5",
+            "operator": "1",
+            "valoare_cu_tva": "17.0",
+            "tva_colectata": "2.95",
+            "data_inchiderii": "2026-08-14",
+            "ora_inchiderii": "14:34:56",
+            "locatie": "1",
+            "nr_raport_z": 0,
+            "totaluri_plata_json": "{\"numerar\":17,\"card\":0,\"tichete\":0,\"protocol\":0,\"glovo\":0,\"virament_bancar\":0,\"bacsis_numerar\":0,\"bacsis_card\":0,\"bacsis\":0,\"cod_inchidere\":5,\"nrbon_min\":10,\"nrbon_max\":10,\"interval_note\":\"10-10\",\"operator_id\":1,\"locatie\":1,\"generat_la\":\"2026-08-14 14:34:56\"}",
+            "cod_locatie": 1,
+            "_sync": {
+                "export_id": "taverna-amicii-1008-l1-20260814:shift_closed:5:f0a68a37bdf223a89c41bacb",
+                "source_table": "inchideri_r_12",
+                "source_pk": "5",
+                "cod_locatie": 1,
+                "installation_uuid": "taverna-amicii-1008-l1-20260814",
+                "sync_id": "inchideri_r_12:1:taverna-amicii-1008-l1-20260814:5"
+            },
+            "id_inch_original": 5,
+            "cod_inchidere_original": 5,
+            "nr_raport_z_original": 0
+        }
+    ],
+    "rapoarte_z": [],
+    "discounturi_acordate": []
+}
