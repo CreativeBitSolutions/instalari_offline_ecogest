@@ -6,6 +6,14 @@ Rădăcina de lucru: C:\xampp\htdocs\github\instalari_offline_ecogest
 
 Acest fișier descrie instalarea activă din fiecare folder, tipul aplicației și personalizările care trebuie păstrate la copiere, compilare sau actualizare. Cheile API, parolele și alte valori sensibile nu sunt reproduse aici.
 
+REGULĂ STRICTĂ PENTRU PROIECTELE DE COMPILARE
+==============================================
+
+- la modificările aplicațiilor offline se editează scripturile sursă și numai configurările externe cerute.
+- fișierele de proiect pentru compilare, inclusiv `.exop`, proiectele ExeOutput for PHP și configurările interne ale proiectului de compilare, nu se modifică decât dacă utilizatorul cere explicit acest lucru.
+- nu se pornește compilarea, recompile sau build-ul executabilului. Utilizatorul rulează personal recompile și rebuild după ce primește scripturile actualizate.
+- o cerere de corectare a căilor aplicațiilor sau utilitarelor nu autorizează implicit modificarea proiectului de compilare. Căile se actualizează în fișierele JSON, PHP, URL, shortcuturi și celelalte configurări externe aflate în scop.
+
 
 1. REGULI COMUNE INSTALĂRILOR DE MAGAZIN
 =========================================
@@ -49,7 +57,7 @@ Instalările obișnuite de magazin sunt în mod sales-only. În acest mod sunt b
 2. REGULI COMUNE INSTALĂRILOR DE RESTAURANT
 ============================================
 
-Foldere vizate: grandplaza, glovograndplaza, lorand și taverna_amicii.
+Foldere vizate: grandplaza, glovograndplaza, lorand, taverna_amicii și teste_taverna_amicii.
 
 Structura obișnuită:
 - <client>\<client>\app_restaurant_v2: sursele de dezvoltare ale interfeței offline. Folderul este folosit numai la compilare și nu se livrează clientului final.
@@ -340,7 +348,40 @@ Componente livrate:
 - compiler exe project taverna.exop este proiect local de compilare și nu intră în pachet.
 
 
-11. LORAND
+11. TESTE_TAVERNA_AMICII
+=========================
+
+Tip: RESTAURANT offline de test, derivat din instalarea Taverna Amicii.
+Client online: 1021.
+Locație: 1.
+Aplicație: teste_taverna_amicii\taverna_amicii\app_restaurant_v2.
+API local: teste_taverna_amicii\api_offline_taverna_amicii.
+Baza: api_offline_taverna_amicii\restaurant.sqlite.
+Identitate configurată: teste-taverna-amicii-c1021-l1-pos1.
+
+Reguli de configurare și actualizare:
+- instalarea are configurări proprii pentru clientul 1021 și nu folosește cheia API sau identitatea instalației Taverna Amicii de la clientul 1008.
+- toate URL-urile locale și căile absolute ale utilitarelor indică rădăcina `teste_taverna_amicii`.
+- locația rămâne 1 pentru interfață, sincronizări și toate utilitarele externe.
+- baza `api_offline_taverna_amicii\restaurant.sqlite` rămâne externă executabilului. Actualizarea configurărilor nu suprascrie și nu recreează baza copiată.
+- cheia API se păstrează numai în fișierele operaționale dedicate. Nu se copiază în acest document.
+- identitatea instalației este distinctă pentru a separa cozile și deduplicarea evenimentelor de instalarea activă Taverna Amicii.
+- configurațiile AutoScannerului, casei de marcat, imprimantelor și VeriBon trebuie să indice clientul 1021, locația 1 și directoarele acestei copii de test.
+- proiectul ExeOutput copiat rămâne artefact local de compilare. Nu se modifică și nu se livrează clientului decât la cerere explicită.
+- Taverna Amicii 1008 și Teste Taverna Amicii 1021 folosesc aceleași condiții și reguli funcționale. Testele efective se execută exclusiv în instalarea 1021. În instalarea activă 1008 se fac numai actualizările de script și verificările statice necesare. Nu se apelează pagini, nu se generează documente și nu se folosesc datele clientului 1008 pentru testare.
+- interfața de vânzare pentru clienții 1008 și 1021 conține istoricul notelor finalizate pe PROTOCOL, cu produsele, totalul fiecărei note și totalul perioadei.
+- operatorii clienților 1008 și 1021 au acces din modalul meselor, prin tabul Produse, la aceeași interfață de rapoarte disponibilă șefului de sală. Accesul permite filtrarea pe interval, departament și operator, previzualizarea detaliată și trimiterea confirmată la imprimantă. Pentru ceilalți clienți accesul API rămâne rezervat șefului de sală.
+- la listarea automată a raportului Z pentru clienții 1008 și 1021 se generează două documente distincte. Primul exclude notele și încasările PROTOCOL. Al doilea centralizează produsele PROTOCOL pe departamente și totalul PROTOCOL pe ospătar pentru același număr Z.
+
+Componente livrate:
+- scan_casa_marcat_v3_inp.
+- printer_bold și printer_bold_online.
+- casa_marcat_veribon.
+- ecogest_autoscanner_products_restaurant_1_4_6_0.
+- shortcutul local al interfeței restaurant.
+
+
+12. LORAND
 ===========
 
 Tip: RESTAURANT offline, numai operatori, cu listare fiscală și notă de plată.
@@ -380,7 +421,7 @@ Componente livrate:
 - arhiveaza_lorand.bat, bazat pe scriptul comun de împachetare.
 
 
-12. FOLDERE TEHNICE DIN RĂDĂCINĂ
+13. FOLDERE TEHNICE DIN RĂDĂCINĂ
 =================================
 
 _pachete_clienti
@@ -394,7 +435,7 @@ _pachete_clienti
 - nu intră în pachetele clienților și este ignorat de Git.
 
 
-13. SCRIPTURI DE ÎMPACHETARE ȘI REGULI DE DISTRIBUȚIE
+14. SCRIPTURI DE ÎMPACHETARE ȘI REGULI DE DISTRIBUȚIE
 ======================================================
 
 În rădăcină există câte un script arhiveaza_<client>.bat pentru fiecare dintre cele nouă instalări și scriptul comun arhiveaza_pachet_client.ps1.

@@ -40,7 +40,7 @@ if ($offlineMode) {
 <script>
 // Deschide “Setare Masă” sigur, după ce s-au încărcat toate scripturile
 window.addEventListener('load', function () {
-  var afiseaza_modal = <?php echo json_encode($afiseaza_modal); ?>;
+  var afiseaza_modal = <?php echo json_encode($afiseaza_modal || isset($_GET['deschide_mese'])); ?>;
   if (!afiseaza_modal) return;
   if (window.jQuery && $.fn && $.fn.modal) {
     $('#setare_masa').modal({ backdrop: 'static', keyboard: false }).modal('show');
@@ -412,6 +412,13 @@ $(function(){
            class="quick-action-tile btn btn-outline-secondary fit-grid-text">
             <span>Restaurare Protocol</span>
         </a>
+
+        <?php if (in_array((int)($_SESSION['client_id'] ?? 0), [1008, 1021], true)): ?>
+        <a href="vanzare_istoric_protocol.php"
+           class="quick-action-tile btn btn-outline-secondary fit-grid-text">
+            <span>Istoric Protocol</span>
+        </a>
+        <?php endif; ?>
 
         <button type="button"
                 data-toggle="modal"

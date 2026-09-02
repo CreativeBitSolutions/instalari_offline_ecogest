@@ -310,7 +310,7 @@ try {
                     });
                 }
                 
-                $clienti_redirect = [3, 8, 9, 23, 25, 26, 1008];
+                $clienti_redirect = [3, 8, 9, 23, 25, 26, 1021];
                 if (in_array($client_id, $clienti_redirect, true)) {
                     $trigger_z = true; // Dăm flag interfeței să ceară listarea raportului termic Z
                 }

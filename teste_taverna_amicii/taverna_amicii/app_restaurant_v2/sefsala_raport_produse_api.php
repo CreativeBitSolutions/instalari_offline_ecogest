@@ -97,11 +97,15 @@ function productReportAvailableOperators(PDO $pdo, int $locationId): array
 function productReportValidateManager(PDO $pdo): void
 {
     $operatorId = (int)($_SESSION['admin_id'] ?? 0);
+    $clientId = (int)($_SESSION['client_id'] ?? 0);
     $stmt = $pdo->prepare('SELECT rank FROM admins_12 WHERE admin_id = ? LIMIT 1');
     $stmt->execute([$operatorId]);
     $rank = strtolower(trim((string)$stmt->fetchColumn()));
 
-    if ($rank !== 'sefsala') {
+    // Operatorii Taverna Amicii au acces la aceeași previzualizare și listare
+    // ca șeful de sală. Pentru ceilalți clienți regula de acces rămâne neschimbată.
+    $operatorAccessAllowed = in_array($clientId, [1008, 1021], true);
+    if ($rank !== 'sefsala' && !$operatorAccessAllowed) {
         productReportResponse([
             'status' => 'error',
             'message' => 'Raportul poate fi generat numai de șeful de sală.',

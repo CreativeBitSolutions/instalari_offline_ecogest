@@ -2,7 +2,7 @@
 
 ## Obiectiv
 
-Aplicația offline Taverna Amicii va importa comenzile WooCommerce direct de pe `https://pizza-sibiu-amicii.ro/`. Fluxul va fi construit după mecanismul funcțional Grand Plaza, adaptat pentru clientul 1008, locația 1 și baza locală SQLite.
+Aplicația offline Teste Taverna Amicii va importa comenzile WooCommerce direct de pe `https://pizza-sibiu-amicii.ro/`. Fluxul va fi construit după mecanismul funcțional Grand Plaza, adaptat pentru clientul 1021, locația 1 și baza locală SQLite.
 
 Sincronizarea notelor finalizate, închiderilor de tură, rapoartelor Z, produselor și celorlalte date AGECS nu face parte din această modificare. Mecanismele existente de sincronizare rămân neschimbate.
 
@@ -10,7 +10,7 @@ Sincronizarea notelor finalizate, închiderilor de tură, rapoartelor Z, produse
 
 Implementarea este amânată până la furnizarea codului pluginului instalat pe site-ul online Taverna Amicii. Pluginul este, în cea mai mare parte, același cu cel utilizat la Grand Plaza și va reprezenta baza analizei pentru endpointuri, autentificare, structura comenzilor, statusuri și confirmări.
 
-După primirea codului se vor compara punctual funcțiile existente cu necesarul clientului 1008. Se vor păstra regulile reutilizabile și se vor elimina configurațiile specifice Grand Plaza, inclusiv domeniul, cheile, identificatorii produselor, transportul și condițiile dependente de client. Nu se va începe implementarea endpointurilor prin presupunerea structurii pluginului înainte de această verificare.
+După primirea codului se vor compara punctual funcțiile existente cu necesarul clientului 1021. Se vor păstra regulile reutilizabile și se vor elimina configurațiile specifice Grand Plaza, inclusiv domeniul, cheile, identificatorii produselor, transportul și condițiile dependente de client. Nu se va începe implementarea endpointurilor prin presupunerea structurii pluginului înainte de această verificare.
 
 ## Arhitectură
 
@@ -51,7 +51,7 @@ Identificatorii comenzilor, produselor și variațiilor vor fi transmiși ca și
 
 Pluginul va expune numai datele necesare importului. Aplicația offline nu va primi cheia administrativă WooCommerce și nu va accesa direct `wc/v3/orders`.
 
-Autentificarea se va face printr-o cheie dedicată clientului 1008 și instalației din locația 1. Cheia va fi transmisă într-un antet HTTP. Endpointurile vor folosi HTTPS și vor refuza cererile neautorizate.
+Autentificarea se va face printr-o cheie dedicată clientului 1021 și instalației din locația 1. Cheia va fi transmisă într-un antet HTTP. Endpointurile vor folosi HTTPS și vor refuza cererile neautorizate.
 
 ## Schema SQLite necesară
 
@@ -65,7 +65,7 @@ La implementare se vor adăuga operații `ensure schema`, idempotente, pentru ur
 - starea ultimei verificări
 - jurnalul erorilor de preluare, mapare, import și confirmare
 
-Cheia unică pentru prevenirea duplicatelor va include sursa, identificatorul WooCommerce, clientul 1008 și locația 1.
+Cheia unică pentru prevenirea duplicatelor va include sursa, identificatorul WooCommerce, clientul 1021 și locația 1.
 
 ## Preluarea comenzilor
 
@@ -106,7 +106,7 @@ Dacă o operație eșuează, tranzacția se anulează integral. Comanda rămâne
 
 ## Listare și notificări
 
-Interfața va putea afișa numărul comenzilor noi, starea ultimei verificări și erorile de mapare. Notificarea sonoră și listarea automată la BAR vor urma regulile Grand Plaza, activate separat prin configurator pentru clientul 1008.
+Interfața va putea afișa numărul comenzilor noi, starea ultimei verificări și erorile de mapare. Notificarea sonoră și listarea automată la BAR vor urma regulile Grand Plaza, activate separat prin configurator pentru clientul 1021.
 
 O comandă nu va fi considerată importată doar pentru că a fost listată. Starea de listare și starea de import vor fi păstrate separat.
 

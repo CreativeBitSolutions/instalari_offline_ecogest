@@ -1,13 +1,13 @@
 {
     "license": {
         "version": 1,
-        "client_id": 1008,
+        "client_id": 1021,
         "hardware_serial": "0000_0000_0000_0000_0026_B778_42D5_DC45.",
-        "installation_uuid": "taverna-amicii-1008-l1-20260814-i-581518bea217e393",
-        "issued_at": "2026-08-30T06:38:19+03:00",
-        "expires_at": "2026-09-29T06:38:19+03:00"
+        "installation_uuid": "teste-taverna-amicii-c1021-l1-pos1-i-581518bea217e393",
+        "issued_at": "2026-09-02T16:29:18+03:00",
+        "expires_at": "2026-10-02T16:29:18+03:00"
     },
-    "signature": "UJPy80Chx7BcWZauP4AVly0nAzleDsWRJaulM4OFN0KymtTFCGgVf/w56EzViCfsHhqDw9CccUu1TRUe8gjulLQZhmGoQtNzVlbeqKhV89QPJWzT/GKstErct/X3XFhP8wofPoeQOB4X44JSs1sAh1lAHcMMjokrk4RyEeb5EPK96TZl77/rAg3zx97N2AdKI8GkyJDRNqWlHaXNCCt39mr2ugmPonQOGovLb+Nf6NyUzwK2sFv682ZZdXAggjyjyUUK/3X0HGcfbzKfurBnG+7PZ8hraomNQgljDRT+Sa26GCW0xf+XCxNcqHciD/KNtJ0aqWFwQgOIAa9l0SRaoA==",
+    "signature": "pihOSZWgB1EbOYIeaKHRKfnMvkkXkzmLv4R2HE96rAa2N/2/iPzgZfK69n1RrxGBaR0ZvLM7p7Pp02328CRik3e47O4BawPtz4wyOS1SF6+pIbtcsfVAtx9T6QeDFUoYMKAxlhv68yh7mGJCpYo4oNllqSfNs/IZPKVj6/PmtBEhAhNaBxLIbPcOW4Qd+cZFkkaBf3g4FJYVQCxPLGuwa+xhK8Rdq2GZT37SGvYr/5UjAJrH1cViOF9nSmnV6EVB9qhzYC7KMHKRfty0EgbjNcKWsQOuMZ3IGpTm76TsU67BmUHz0mQehhVsZMUDiXioNbkr/dpyXFKlrWUD/U2EHw==",
     "signature_algorithm": "SHA256withRSA",
-    "saved_at": "2026-08-30T05:38:19+02:00"
+    "saved_at": "2026-09-02T15:29:18+02:00"
 }

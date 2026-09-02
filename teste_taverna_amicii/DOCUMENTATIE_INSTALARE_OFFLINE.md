@@ -1,13 +1,13 @@
-# Taverna Amicii, instalare offline restaurant
+# Teste Taverna Amicii, instalare offline restaurant
 
 ## Identificare
 
-- Client: `1008`
+- Client: `1021`
 - Locație: `1`
 - Sufix operațional: `12`
-- Aplicație: `C:\xampp\htdocs\github\instalari_offline_ecogest\taverna_amicii\taverna_amicii\app_restaurant_v2`
-- API local și stocare: `C:\xampp\htdocs\github\instalari_offline_ecogest\taverna_amicii\api_offline_taverna_amicii`
-- Bază SQLite: `C:\xampp\htdocs\github\instalari_offline_ecogest\taverna_amicii\api_offline_taverna_amicii\restaurant.sqlite`
+- Aplicație: `C:\xampp\htdocs\github\instalari_offline_ecogest\teste_taverna_amicii\taverna_amicii\app_restaurant_v2`
+- API local și stocare: `C:\xampp\htdocs\github\instalari_offline_ecogest\teste_taverna_amicii\api_offline_taverna_amicii`
+- Bază SQLite: `C:\xampp\htdocs\github\instalari_offline_ecogest\teste_taverna_amicii\api_offline_taverna_amicii\restaurant.sqlite`
 - Shortcut: `INTERFATA VANZARE - TAVERNA AMICII.url`
 
 ## Structura instalării
@@ -25,19 +25,19 @@ Folderul `api_offline_taverna_amicii` conține baza SQLite, endpointurile PHP lo
 
 Shortcutul deschide autentificarea locală. Aplicația lucrează cu baza SQLite și rămâne disponibilă când conexiunea la internet lipsește. Notele deschise au statusul `S`. Finalizarea încasării schimbă statusul în `F` și leagă nota de închiderea de tură și de raportul Z.
 
-Documentele destinate casei de marcat sunt scrise în `api_offline_taverna_amicii\1008\1\bon_casa_marcat.json`. Utilitarul `scan_casa_marcat_v3_inp` preia documentul prin endpointul local și generează fișierul în `api_offline_taverna_amicii\bonuri_trimise`. Copiile preluate sunt păstrate în `api_offline_taverna_amicii\bonuri_backup`.
+Documentele destinate casei de marcat sunt scrise în `api_offline_taverna_amicii\1021\1\bon_casa_marcat.json`. Utilitarul `scan_casa_marcat_v3_inp` preia documentul prin endpointul local și generează fișierul în `api_offline_taverna_amicii\bonuri_trimise`. Copiile preluate sunt păstrate în `api_offline_taverna_amicii\bonuri_backup`.
 
-Clientul 1008 folosește FiscalWire. Pentru acest client, bonul începe direct cu prima linie `S`, fără comenzile `K` sau `H`. Fiecare linie fiscală de produs are structura `produs;preț;cantitate;1;1;cod_cotă_TVA;0;0;`. Departamentul fiscal și câmpul următor sunt fixe și egale cu `1`. Cantitatea are exact trei zecimale. Unitatea de măsură nu este transmisă. După produse sunt transmise numai liniile `T` pentru plățile efective. Codurile sunt `0` pentru numerar, `1` pentru card, `5` pentru tichete și `6` pentru plata online. Regula este aplicată la emiterea normală și la retransmiterea unei note. Formatul celorlalți clienți nu este schimbat.
+Clientul 1021 din copia de test păstrează regula FiscalWire a Taverna Amicii. Pentru acest client, bonul începe direct cu prima linie `S`, fără comenzile `K` sau `H`. Fiecare linie fiscală de produs are structura `produs;preț;cantitate;1;1;cod_cotă_TVA;0;0;`. Departamentul fiscal și câmpul următor sunt fixe și egale cu `1`. Cantitatea are exact trei zecimale. Unitatea de măsură nu este transmisă. După produse sunt transmise numai liniile `T` pentru plățile efective. Codurile sunt `0` pentru numerar, `1` pentru card, `5` pentru tichete și `6` pentru plata online. Regula este aplicată la emiterea normală și la retransmiterea unei note. Formatul celorlalți clienți nu este schimbat.
 
 Fișierul `.inp` trebuie scris în UTF-8 fără BOM. Bufferul PHP elimină preventiv prefixul `EF BB BF`, dacă acesta apare înainte de salvarea în coadă. Aplicația `scan_casa_marcat_v3_inp`, care transformă conținutul JSON în fișier fiscal, trebuie să scrie cu `new UTF8Encoding(false)`. Versiunea `AGECSScanCM 1.0.4` folosește `File.WriteAllTextAsync(path, content, Encoding.UTF8, token)` și introduce BOM. Instrucțiunea trebuie înlocuită cu `File.WriteAllTextAsync(path, content, new UTF8Encoding(false), token)`. Primii octeți ai fișierului trebuie să fie `53 2C 31`, adică `S,1`, nu `EF BB BF`.
 
 Endpointul convertește explicit câmpurile `id`, `de_trimis_la_casa_marcat`, `nrbon` și `locatie` în numere întregi pe 32 de biți. Conversia este necesară deoarece PDO SQLite poate returna valorile numerice sub formă de șiruri, iar `AGECSScanCM` solicită tipul `System.Int32` pentru aceste proprietăți.
 
-Documentele pentru imprimante sunt scrise în `api_offline_taverna_amicii\1008\1\de_listat_la_imprimanta.json`. Utilitarul `printer_bold` le preia prin endpointul local și le trimite către imprimantele configurate în `settings.json`.
+Documentele pentru imprimante sunt scrise în `api_offline_taverna_amicii\1021\1\de_listat_la_imprimanta.json`. Utilitarul `printer_bold` le preia prin endpointul local și le trimite către imprimantele configurate în `settings.json`.
 
 Sincronizarea manuală a produselor din interfața web preia și tabelele `observatii_predefinite` și `atribuiri_observatii_produse`. Cele două tabele sunt oglindite integral din online în aceeași tranzacție cu nomenclatorul. Astfel, adăugările, modificările, atribuirile pe produse și ștergerile efectuate online ajung în SQLite la apăsarea butonului de sincronizare. Dacă endpointul nu returnează explicit ambele colecții, operația se oprește și păstrează datele locale. Parametrul `include_observations=1` separă acest răspuns extins de formatul v1 folosit de AutoScannerul existent.
 
-Plata `PROTO` finalizează nota cu valoarea în câmpul `protocol`, apoi generează o notă suplimentară de plată pentru imprimanta `BAR`. Regula este identică aplicației online. Excepția care suprimă această listare există numai pentru clienții 25 și 26. Clientul 1008 nu intră în excepție, deci foaia PROTO se listează.
+Plata `PROTO` finalizează nota cu valoarea în câmpul `protocol`, apoi generează o notă suplimentară de plată pentru imprimanta `BAR`. Regula este identică aplicației online. Excepția care suprimă această listare există numai pentru clienții 25 și 26. Clientul 1021 nu intră în excepție, deci foaia PROTO se listează.
 
 Șeful de sală poate deschide `Configurare imprimantă` din panoul propriu. Sunt disponibile îngroșarea întregului text, mărimea caracterelor și alinierea. Configurația inițială reproduce modelul Grand Plaza, cu bold activ, mărimea 11 și aliniere la stânga. Setările sunt salvate în `api_offline_taverna_amicii\printer_format.json` și sunt aplicate de endpointul local tuturor documentelor preluate de utilitarul de imprimare.
 
@@ -57,7 +57,7 @@ La o încasare cu CIF și total mai mare de 500 lei, interfața solicită confir
 
 ## Sincronizarea produselor
 
-Aplicația nu verifică și nu importă automat produsele la autentificare. Sincronizarea automată din online spre SQLite este realizată de `autoscanneragecsproducts_restaurant_cu_api_fisier_1_4_5_0`. Actualizarea din interfața restaurantului pornește numai la apăsarea butonului `Sincronizare Produse` din pagina de autentificare.
+Aplicația nu verifică și nu importă automat produsele la autentificare. Sincronizarea automată din online spre SQLite este realizată de `ecogest_autoscanner_products_restaurant_1_4_6_0`. Actualizarea din interfața restaurantului pornește numai la apăsarea butonului `Sincronizare Produse` din pagina de autentificare.
 
 Sincronizarea manuală folosește hashuri normalizate. Cotele TVA sunt comparate numeric, astfel încât valori echivalente precum `0` și `0.0` nu produc diferențe false.
 
@@ -85,7 +85,7 @@ Pentru fiecare tentativă sunt păstrate declanșarea manuală sau automată, du
 
 Aplicația instalată pe tablete și autentificarea ei nu au fost modificate. Tabletele continuă să folosească aplicația online din orice rețea cu acces la internet. La trimiterea unei comenzi, sistemul online păstrează antetul în `com_tableta`, detaliile în `det_com_tableta` și starea `TRIMISA`.
 
-Instalația offline verifică la 30 de secunde endpointul `api/offline-tablet-orders.php`, folosind aceeași cheie API atribuită clientului. Endpointul validează cheia în baza centrală, determină automat baza clientului 1008 și returnează numai comenzile locației 1. Fiecare comandă conține identificatorul tabletei, ospătarul proprietar, masa transmisă, totalurile, produsele, observațiile și departamentul istoric de listare.
+Instalația offline verifică la 30 de secunde endpointul `api/offline-tablet-orders.php`, folosind aceeași cheie API atribuită clientului. Endpointul validează cheia în baza centrală, determină automat baza clientului 1021 și returnează numai comenzile locației 1. Fiecare comandă conține identificatorul tabletei, ospătarul proprietar, masa transmisă, totalurile, produsele, observațiile și departamentul istoric de listare.
 
 Comenzile sunt copiate idempotent în tabelele SQLite `com_tableta` și `det_com_tableta`. `nrbon` online rămâne identificatorul sursei. O comandă locală marcată `IMPORTATA` nu este suprascrisă dacă API-ul o returnează din nou. Identificatorii sunt procesați ca întregi pe 64 de biți, astfel încât valorile mari nu sunt trunchiate.
 

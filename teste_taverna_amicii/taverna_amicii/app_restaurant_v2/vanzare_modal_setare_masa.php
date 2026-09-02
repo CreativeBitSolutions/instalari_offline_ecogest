@@ -18,6 +18,13 @@ $categories = $stmtCat->fetchAll(PDO::FETCH_ASSOC);
 <?php
 $hide_tura_actions_in_modal = in_array((int)($_SESSION['client_id'] ?? 0), [25, 26], true);
 ?>
+<?php if (in_array((int)($_SESSION['client_id'] ?? 0), [1008, 1021], true)): ?>
+<style>
+  #leftToolsTabs { display:flex; flex-wrap:nowrap; }
+  #leftToolsTabs .nav-item { min-width:0; flex:1 1 0; }
+  #leftToolsTabs .nav-link { min-height:100%; padding:.5rem .2rem; text-align:center; white-space:normal; font-size:.74rem; line-height:1.15; }
+</style>
+<?php endif; ?>
 <div class="modal fade modal-lock" id="setare_masa" tabindex="-1" role="dialog" aria-labelledby="setareMasaLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -45,6 +52,13 @@ $hide_tura_actions_in_modal = in_array((int)($_SESSION['client_id'] ?? 0), [25, 
 <li class="nav-item">
   <a class="nav-link" id="tab-inchidere" data-toggle="tab" href="#pane-inchidere" role="tab" aria-controls="pane-inchidere" aria-selected="false">
     Închidere Tură
+  </a>
+</li>
+<?php endif; ?>
+<?php if (in_array((int)($_SESSION['client_id'] ?? 0), [1008, 1021], true)): ?>
+<li class="nav-item">
+  <a class="nav-link" id="tab-rapoarte-produse" data-toggle="tab" href="#pane-rapoarte-produse" role="tab" aria-controls="pane-rapoarte-produse" aria-selected="false">
+    Produse
   </a>
 </li>
 <?php endif; ?>
@@ -124,6 +138,16 @@ $hide_tura_actions_in_modal = in_array((int)($_SESSION['client_id'] ?? 0), [25, 
                   <small class="text-muted d-block mt-2">Se va tipări pe imprimantele de departament (BAR/BUCĂTĂRIE)</small>
                 </form>
               </div>
+
+<?php if (in_array((int)($_SESSION['client_id'] ?? 0), [1008, 1021], true)): ?>
+              <div class="tab-pane fade" id="pane-rapoarte-produse" role="tabpanel" aria-labelledby="tab-rapoarte-produse">
+                <h6 class="font-weight-bold">Rapoarte produse</h6>
+                <p class="small text-muted">Previzualizare și listare produse vândute pe departamente sau PROTOCOL.</p>
+                <a class="btn btn-warning btn-block" href="vanzare_rapoarte_produse.php">
+                  Deschide rapoartele
+                </a>
+              </div>
+<?php endif; ?>
 
               <!-- TAB: Închidere / Parolă -->
               <!-- TAB: Închidere / Parolă -->

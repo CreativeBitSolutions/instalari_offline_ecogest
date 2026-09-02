@@ -3,7 +3,7 @@
 ## Preluarea comenzilor
 
 ```http
-GET https://agecs.agecs.in/api/offline-tablet-orders.php?cod_client=1008&cod_locatie=1&limit=200
+GET https://agecs.agecs.in/api/offline-tablet-orders.php?cod_client=1021&cod_locatie=1&limit=200
 X-Api-Key: CHEIA_CLIENTULUI
 ```
 
@@ -14,7 +14,7 @@ Fiecare element din `orders` conține antetul din `com_tableta`, `owner_operator
 ## Confirmarea importului
 
 ```http
-POST https://agecs.agecs.in/api/offline-tablet-orders.php?cod_client=1008
+POST https://agecs.agecs.in/api/offline-tablet-orders.php?cod_client=1021
 Content-Type: application/json
 X-Api-Key: CHEIA_CLIENTULUI
 ```
