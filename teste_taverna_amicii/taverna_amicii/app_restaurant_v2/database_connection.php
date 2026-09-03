@@ -98,7 +98,6 @@ if (!function_exists('restaurantConfigureSqlitePdo')) {
     {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        $pdo->exec('PRAGMA journal_mode = WAL');
         $pdo->exec('PRAGMA foreign_keys = ON');
         $pdo->exec('PRAGMA busy_timeout = 5000');
 
@@ -134,7 +133,11 @@ if ($restaurantDriver === 'sqlite') {
     try {
         $pdo = new PDO('sqlite:' . $sqlitePath);
         restaurantConfigureSqlitePdo($pdo);
-        restaurant_sqlite_apply_schema($pdo);
+
+        restaurant_sqlite_apply_schema_if_needed(
+            $pdo,
+            (int)($restaurantConfig['cod_locatie'] ?? ($_SESSION['cod_locatie'] ?? 1))
+        );
     } catch (PDOException $e) {
         echo '<h1>Eroare la deschiderea bazei SQLite: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8') . '</h1>';
         exit;
@@ -147,8 +150,20 @@ if ($restaurantDriver === 'sqlite') {
     $_SESSION['cod_locatie'] = $cod_locatie;
     $_SESSION['d'] = $_SESSION['d'] ?? 0;
     $_SESSION['mod_listare'] = $_SESSION['mod_listare'] ?? 'simplu';
-    restaurant_sqlite_set_cod_locatie_context($pdo, $cod_locatie);
-    restaurant_sqlite_ensure_temporary_tables($pdo, $cod_locatie, 20);
+
+    $sqliteSessionIdentity = sha1($sqlitePath . '|' . $cod_locatie);
+    $locationContextSessionKey = 'restaurant_location_context_checked_' . $sqliteSessionIdentity;
+    if (empty($_SESSION[$locationContextSessionKey])) {
+        restaurant_sqlite_set_cod_locatie_context($pdo, $cod_locatie);
+        $_SESSION[$locationContextSessionKey] = 1;
+    }
+
+    // Verificarea meselor temporare este necesara o singura data pe sesiune, nu la fiecare request AJAX.
+    $temporaryTablesSessionKey = 'restaurant_temporary_tables_checked_' . $sqliteSessionIdentity;
+    if (empty($_SESSION[$temporaryTablesSessionKey])) {
+        restaurant_sqlite_ensure_temporary_tables($pdo, $cod_locatie, 20);
+        $_SESSION[$temporaryTablesSessionKey] = 1;
+    }
 
     if (array_key_exists('no_session_validation', $restaurantConfig)) {
         $_SESSION['no_session_validation'] = (int)$restaurantConfig['no_session_validation'];

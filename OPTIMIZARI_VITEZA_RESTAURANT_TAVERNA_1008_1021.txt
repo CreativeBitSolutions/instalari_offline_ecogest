@@ -1,0 +1,225 @@
+OPTIMIZĂRI DE VITEZĂ PENTRU RESTAURANT OFFLINE
+CLIENȚII 1008 ȘI 1021
+===============================================
+
+Data documentării: 03.09.2026
+
+Instalări vizate:
+- Taverna Amicii, client_id 1008, locația 1.
+- Teste Taverna Amicii, client_id 1021, locația 1.
+
+Regulă de lucru:
+- cele două instalări folosesc aceeași logică funcțională și aceleași optimizări.
+- testele funcționale se execută numai în instalarea 1021.
+- baza activă restaurant.sqlite a clientului 1008 nu se suprascrie și nu se înlocuiește.
+- actualizarea clientului 1008 se face prin executabilul recompilat. Migrarea bazei este efectuată automat de aplicație.
+
+
+1. SCHEMA SQLITE VERSIONATĂ
+============================
+
+Fișiere:
+- app_restaurant_v2\tools\sqlite_schema.php
+- app_restaurant_v2\database_connection.php
+
+Versiunea schemei este păstrată în `PRAGMA user_version`. Versiunea introdusă pentru acest lot de optimizări este 2.
+
+Înaintea optimizării, fiecare request PHP executa întreaga funcție restaurant_sqlite_apply_schema(). Asta se întâmpla inclusiv pentru afis_prod.php, încărcarea listei de produse și celelalte requesturi AJAX. Se executau zeci de instrucțiuni CREATE TABLE IF NOT EXISTS, verificări de coloane, indexuri, triggere și operații de backfill înaintea interogării cerute de utilizator.
+
+Comportamentul nou:
+- fiecare request citește numai PRAGMA user_version.
+- dacă versiunea bazei este egală cu versiunea aplicației, migrarea este omisă complet.
+- dacă versiunea bazei este mai mică, migrarea rulează o singură dată.
+- migrarea folosește BEGIN IMMEDIATE și reverifică versiunea după obținerea blocării.
+- versiunea este salvată numai după aplicarea cu succes a întregii scheme.
+- la eroare se execută ROLLBACK, iar versiunea nu este avansată.
+- două requesturi pornite simultan nu trebuie să execute aceeași migrare în paralel.
+- o bază cu versiune mai nouă decât aplicația nu este retrogradată. Situația este scrisă în jurnalul PHP.
+
+Backfill-ul pentru cod_locatie este executat o singură dată în timpul migrării. Apelul duplicat existent anterior a fost eliminat.
+
+
+2. CONFIGURAREA CONEXIUNII SQLITE
+==================================
+
+PRAGMA journal_mode = WAL este persistent în SQLite. Comanda nu mai este executată la fiecare deschidere a conexiunii. Ea rulează numai când este necesară o migrare de schemă.
+
+Au rămas pe fiecare conexiune setările necesare:
+- PRAGMA foreign_keys = ON.
+- PRAGMA busy_timeout = 5000.
+
+Contextul locației nu mai produce UPDATE la fiecare request. Verificarea este separată pentru fiecare fișier SQLite și locație. În cadrul aceleiași sesiuni, ea se execută o singură dată. Dacă este necesară verificarea efectivă, rândul din offline_runtime_context este actualizat numai când locația diferă.
+
+Mesele temporare folosite la împărțirea notelor nu mai sunt numărate la fiecare request AJAX. Verificarea pentru minimum 20 de mese TEMPORARA se execută o singură dată pe sesiune, separat pentru fiecare bază SQLite.
+
+
+3. VERIFICĂRILE SECUNDARE DE COLOANE
+=====================================
+
+Fișiere:
+- app_restaurant_v2\det_note_import_schema.php
+- app_restaurant_v2\det_note_departament_listare_schema.php
+
+Coloanele importat_din_site și departament_listare sunt garantate pentru SQLite de schema centrală versionată. Funcțiile locale de ensure fac acum return imediat pentru SQLite și nu mai execută PRAGMA table_info după fiecare încărcare a notei.
+
+Ramurile MySQL au rămas nemodificate. Ensure schema pentru aplicația online nu este afectat.
+
+
+4. OPTIMIZAREA AFIȘĂRII PRODUSELOR DE PE NOTĂ
+==============================================
+
+Fișier:
+- app_restaurant_v2\afis_prod.php
+
+Înainte existau trei interogări pentru afișarea unei note:
+- interogarea liniilor notei.
+- o interogare separată pentru total.
+- o interogare separată pentru existența produselor cu t_list = 0.
+
+Totalul notei și existența produselor nelistate sunt calculate acum în același parcurs PHP al liniilor deja citite. Interogările suplimentare au fost eliminate.
+
+Regulile de afișare, culorile, discounturile, observațiile, prioritățile și starea produselor nu au fost schimbate.
+
+
+5. NOTELE DESCHISE DIN INTERFAȚA DE VÂNZARE
+============================================
+
+Fișier:
+- app_restaurant_v2\vanzare_restaurant.php
+
+Înainte, după citirea notelor deschise, aplicația executa una sau două interogări suplimentare pentru fiecare notă. Verifica separat produsele nelistate și listat_nota_plata.
+
+Interogarea principală aduce acum:
+- numărul notei.
+- masa.
+- denumirea mesei.
+- listat_nota_plata.
+- existența produselor cu t_list = 0, prin EXISTS.
+
+Nu mai există interogări SQL în bucla care construiește butoanele notelor deschise.
+
+
+6. MODALUL CU MESE
+===================
+
+Fișier:
+- app_restaurant_v2\vanzare_modal_setare_masa.php
+
+Înainte, modalul executa o interogare pentru fiecare categorie de mese. Pentru fiecare masă ocupată mai executa interogări separate pentru notă, operator și starea produselor.
+
+Comportamentul nou:
+- toate mesele locației sunt citite o singură dată.
+- mesele sunt grupate pe categorii în PHP.
+- toate notele deschise, operatorii și starea produselor nelistate sunt citite printr-o singură interogare.
+- în PHP se construiește o mapare după codul mesei.
+- lista notelor operatorului folosește rezultatul deja încărcat.
+- nu mai există interogări în bucla categoriilor sau în bucla meselor ocupate.
+
+Aspectul, ordinea funcțională, culorile meselor și regulile de acces pentru operator au fost păstrate.
+
+
+7. INDEXURI NOI
+================
+
+Indexurile sunt create automat la trecerea schemei la versiunea 2:
+- idx_mese_locatie_categorie_stare_cod pe mese(cod_locatie, categorie_masa, stare, cod_masa).
+- idx_produse_activ_nume pe produse_servicii(activ, nume).
+- idx_produse_categorie_activ_nume pe produse_servicii(id_categorie, activ, nume).
+- idx_note_status_locatie_operator_nrbon pe note(status, locatie, operator, nrbon).
+- idx_det_note_nr_bon_t_list pe det_note(nr_bon, t_list).
+
+Indexurile accelerează filtrele folosite de catalog, notele operatorului, grila meselor și verificarea produselor care nu au fost încă listate.
+
+
+8. ÎNCĂRCAREA LISTEI DE PRODUSE
+================================
+
+Fișiere:
+- app_restaurant_v2\load_prod_restaurant.php
+- app_restaurant_v2\vanzare_javascript.php
+
+GROUP BY ps.cod_produs a fost eliminat. Legătura dintre categorie și locație are deja index unic și nu necesită eliminarea duplicatelor la fiecare încărcare.
+
+Fișierul vanzare_css.css nu mai este injectat în răspunsul AJAX după fiecare schimbare a categoriei. CSS-ul este încărcat o singură dată de pagina principală.
+
+La selectarea rapidă a mai multor categorii, requestul vechi pentru produse este anulat. Numai ultimul răspuns poate actualiza lista. Astfel, un răspuns întârziat nu mai poate înlocui categoria aleasă ultima dată.
+
+
+9. REÎNCĂRCAREA NOTEI ȘI A METODELOR DE PLATĂ
+==============================================
+
+Fișier:
+- app_restaurant_v2\vanzare_javascript.php
+
+afis_prod.php și vanzare_metode_plata.php sunt încărcate acum în paralel. Înainte, metodele de plată începeau să se încarce numai după terminarea afis_prod.php.
+
+Reîncărcările cerute într-un interval foarte scurt sunt grupate cu un interval de 60 milisecunde. Requesturile vechi sunt anulate, iar un răspuns depășit nu mai poate suprascrie starea curentă a notei.
+
+Requesturile care modifică nota nu sunt anulate. Optimizarea se aplică numai requesturilor ulterioare de afișare.
+
+
+10. LICENȚĂ ȘI IDENTITATEA DISPOZITIVULUI
+==========================================
+
+Fișiere:
+- app_restaurant_v2\offline_license_lib.php
+- app_restaurant_v2\session_device.php
+
+Citirea stării licenței nu mai execută CREATE TABLE IF NOT EXISTS și INSERT OR IGNORE la fiecare request. În regimul normal se execută numai citirea rândului existent. Crearea tabelei rămâne ca fallback exclusiv pentru o bază complet nouă.
+
+Identificatorul dispozitivului este păstrat în memoria requestului. Cookie-ul este rescris numai când lipsește sau este invalid, nu la fiecare apel al funcției.
+
+Validarea criptografică, perioada licenței și regulile de protecție împotriva modificării ceasului nu au fost schimbate.
+
+
+11. FIȘIERE MODIFICATE
+=======================
+
+- app_restaurant_v2\tools\sqlite_schema.php
+- app_restaurant_v2\database_connection.php
+- app_restaurant_v2\det_note_import_schema.php
+- app_restaurant_v2\det_note_departament_listare_schema.php
+- app_restaurant_v2\afis_prod.php
+- app_restaurant_v2\vanzare_restaurant.php
+- app_restaurant_v2\vanzare_modal_setare_masa.php
+- app_restaurant_v2\load_prod_restaurant.php
+- app_restaurant_v2\vanzare_javascript.php
+- app_restaurant_v2\offline_license_lib.php
+- app_restaurant_v2\session_device.php
+
+Conținutul acestor fișiere este același în instalările 1008 și 1021. Diferențele de configurare ale clienților rămân în fișierele dedicate și nu au fost schimbate.
+
+
+12. ACTUALIZAREA CLIENTULUI 1008
+=================================
+
+Nu au fost adăugate fișiere PHP noi în aplicația compilată. Proiectul compiler exe project taverna.exop nu a fost modificat.
+
+Pașii de livrare:
+1. Se actualizează fișierele existente în ExeOutput for PHP.
+2. Se rulează Recompile și Build.
+3. Se poate folosi arhiveaza_update_taverna_amicii.bat.
+4. La client se înlocuiește executabilul recompilat.
+5. Nu se înlocuiește restaurant.sqlite.
+
+La prima pornire după actualizare, aplicația vede versiunea 1 și aplică schema versiunea 2. Sunt create indexurile lipsă și sunt păstrate toate înregistrările existente. Prima încărcare poate fi mai lentă. După actualizarea versiunii, cererile următoare nu mai rulează schema completă.
+
+
+13. VALIDARE
+==============
+
+Nu au fost executate teste funcționale în cadrul acestei modificări. Testele se fac manual în instalarea 1021.
+
+Fluxuri recomandate pentru verificare în 1021:
+- autentificarea și selectarea operatorului.
+- deschiderea grilei de mese.
+- selectarea unei note existente.
+- schimbarea rapidă între categorii.
+- adăugarea mai multor produse.
+- ștergerea, observația și schimbarea priorității unui produs.
+- împărțirea notei.
+- trimiterea comenzii la imprimantă.
+- finalizarea notei și trimiterea fiscală.
+- închiderea turei și raportul Z.
+
+Sincronizarea online, generarea bonului fiscal, FiscalWire, imprimarea, închiderea turei și raportul Z nu au fost modificate de acest lot de optimizări.

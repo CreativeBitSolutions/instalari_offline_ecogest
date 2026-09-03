@@ -1,6 +1,7 @@
 <?php //vanzare_inchidere_zi_automata.php
 // Include fișierul de sesiune (conține conexiunea la BD și obiectul $pdo)
 include('session.php');
+require_once __DIR__ . '/offline_printer_flow_helper.php';
 
 date_default_timezone_set('Europe/Bucharest');
 
@@ -294,6 +295,46 @@ if (isset($_SESSION['client_id']) && in_array((int)$_SESSION['client_id'], $clie
     }
 }
 
+// Dacă nu se poate genera raportul Z deoarece mai există note deschise,
+// publică doar închiderea de tură păstrată în sesiune. Fluxul nu se blochează.
+$pendingClosurePrint = $_SESSION['restaurant_pending_closure_print'] ?? null;
+$currentClientId = (int)($_SESSION['client_id'] ?? 0);
+$showClosurePrinterStatus = false;
+if (
+    $idRaportZ <= 0
+    && in_array($currentClientId, [1008, 1021], true)
+    && is_array($pendingClosurePrint)
+    && (int)($pendingClosurePrint['client_id'] ?? 0) === $currentClientId
+    && (int)($pendingClosurePrint['location_id'] ?? 0) === $cod_locatie
+    && isset($pendingClosurePrint['jobs'])
+    && is_array($pendingClosurePrint['jobs'])
+) {
+    $showClosurePrinterStatus = true;
+    try {
+        $queueHelper = rtrim((string)RESTAURANT_OFFLINE_API_DIR, '/\\')
+            . DIRECTORY_SEPARATOR . 'printer_queue_atomic_helper.php';
+        if (!is_file($queueHelper)) {
+            throw new RuntimeException('Helperul pentru coada atomică a imprimantei lipsește.');
+        }
+        require_once $queueHelper;
+        $queuePath = rtrim((string)RESTAURANT_OFFLINE_API_DIR, '/\\')
+            . DIRECTORY_SEPARATOR . $currentClientId
+            . DIRECTORY_SEPARATOR . $cod_locatie
+            . DIRECTORY_SEPARATOR . 'de_listat_la_imprimanta.json';
+        agecs_printer_queue_append_documents(
+            $queuePath,
+            $pendingClosurePrint['jobs'],
+            'Închiderea turei a fost adăugată în coada imprimantei.'
+        );
+        unset($_SESSION['restaurant_pending_closure_print']);
+    } catch (Throwable $error) {
+        error_log('Închiderea a fost salvată, dar listarea ei nu a putut fi pusă în coadă: ' . $error->getMessage());
+        $_SESSION['offline_printer_error'] = 'Închiderea este salvată, dar documentul nu a putut fi pus în coada imprimantei. Verificați scannerul și folosiți relistarea.';
+    }
+}
+
 // După orice situație, redirecționăm către logout.php
-echo "<script>location.href='logout.php'</script>";
+echo $showClosurePrinterStatus
+    ? agecs_offline_printer_redirect_script('logout.php', 'inchidere_z')
+    : "<script>location.href='logout.php'</script>";
 ?>

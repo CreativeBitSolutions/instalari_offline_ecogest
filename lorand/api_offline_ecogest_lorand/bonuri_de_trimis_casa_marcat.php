@@ -1,36 +1,40 @@
 <?php
-// Setăm header-ul pentru a returna JSON
-header('Content-Type: application/json');
+declare(strict_types=1);
 
-// Funcție pentru a trimite răspunsuri JSON și a termina execuția scriptului
-function send_response($status, $message, $data = null) {
+header('Content-Type: application/json; charset=utf-8');
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+
+require_once __DIR__ . '/printer_queue_atomic_helper.php';
+
+function send_response(string $status, string $message, $data = null): void
+{
     echo json_encode([
-        'status'  => $status,
+        'status' => $status,
         'message' => $message,
-        'data'    => $data
-    ]);
+        'data' => $data,
+    ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     exit;
 }
 
-function normalize_bon_numeric_fields(array $payload) {
+function normalize_bon_numeric_fields(array $payload): array
+{
     if (!isset($payload['data']) || !is_array($payload['data'])) {
         return $payload;
     }
 
-    $integer_fields = [
+    $integerFields = [
         'id',
         'de_trimis_la_casa_marcat',
         'nrbon',
         'locatie',
-        'id_factura'
+        'id_factura',
     ];
 
     foreach ($payload['data'] as &$bon) {
         if (!is_array($bon)) {
             continue;
         }
-
-        foreach ($integer_fields as $field) {
+        foreach ($integerFields as $field) {
             if (array_key_exists($field, $bon) && $bon[$field] !== null && $bon[$field] !== '') {
                 $bon[$field] = (int)$bon[$field];
             }
@@ -41,50 +45,60 @@ function normalize_bon_numeric_fields(array $payload) {
     return $payload;
 }
 
-// Verificăm dacă parametrul 'client_id' este prezent în $_POST
-if (!isset($_POST['client_id']) || trim($_POST['client_id']) === '') {
+$clientId = trim((string)($_POST['client_id'] ?? ''));
+$locationId = trim((string)($_POST['locatie'] ?? ''));
+if ($clientId === '') {
     send_response('error', 'Parametrul "client_id" lipsește.');
 }
-
-$client_id = trim($_POST['client_id']);
-
-// Verificăm dacă parametrul 'locatie' este prezent în $_POST
-if (!isset($_POST['locatie']) || trim($_POST['locatie']) === '') {
+if ($locationId === '') {
     send_response('error', 'Parametrul "locatie" lipsește.');
 }
 
-$locatie = trim($_POST['locatie']);
-
-// Pentru siguranță, poți valida sau filtra valorile primite
-// De exemplu, dacă te aștepți ca aceste variabile să conțină doar caractere alfanumerice,
-// le poți filtra cu: 
-// $client_id = preg_replace('/[^a-zA-Z0-9_-]/', '', $client_id);
-// $locatie   = preg_replace('/[^a-zA-Z0-9_-]/', '', $locatie);
-
-// Definim calea către fișierul bon_casa_marcat.json, în directorul client_id/locatie
-$file_path = __DIR__ . '/' . $client_id . '/' . $locatie . '/bon_casa_marcat.json';
-
-// Verificăm dacă fișierul există
-if (!file_exists($file_path)) {
-    send_response('success', 'Fișierul bon_casa_marcat.json nu a fost găsit în directorul: ' . $client_id . '/' . $locatie);
+$clientId = (string)preg_replace('/[^a-zA-Z0-9_-]/', '', $clientId);
+$locationId = (string)preg_replace('/[^a-zA-Z0-9_-]/', '', $locationId);
+if ($clientId === '' || $locationId === '') {
+    send_response('error', 'Clientul sau locația nu sunt valide.');
 }
 
-// Citim conținutul fișierului
-$file_content = file_get_contents($file_path);
+$queuePath = __DIR__ . DIRECTORY_SEPARATOR . $clientId . DIRECTORY_SEPARATOR . $locationId
+    . DIRECTORY_SEPARATOR . 'bon_casa_marcat.json';
 
-// Verificăm dacă conținutul este un JSON valid (opțional)
-$json_data = json_decode($file_content, true);
-if (json_last_error() !== JSON_ERROR_NONE) {
-    send_response('error', 'Conținutul fișierului nu este un JSON valid.');
+try {
+    $claim = agecs_printer_queue_claim($queuePath);
+} catch (Throwable $error) {
+    send_response('error', 'Coada casei de marcat nu a putut fi accesată în siguranță.');
 }
 
-// Încercăm să ștergem fișierul după ce am preluat conținutul
-if (!unlink($file_path)) {
-    send_response('error', 'Fișierul a fost citit, dar nu s-a putut șterge.');
+if (($claim['status'] ?? '') === 'empty') {
+    send_response('success', 'Nu există bon în așteptare pentru clientul și locația solicitate.');
+}
+if (($claim['status'] ?? '') !== 'claimed') {
+    send_response('error', 'Bonul există, dar nu a putut fi preluat în siguranță.');
 }
 
-// Returnăm conținutul citit (care are deja structura JSON dorită)
-$json_data = normalize_bon_numeric_fields($json_data);
-echo json_encode($json_data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-exit;
-?>
+$claimedPath = (string)($claim['path'] ?? '');
+$fileContent = $claimedPath !== '' ? @file_get_contents($claimedPath) : false;
+if (!is_string($fileContent)) {
+    agecs_printer_queue_restore_claim($claimedPath, $queuePath);
+    send_response('error', 'Bonul există, dar nu a putut fi citit.');
+}
+
+$payload = json_decode($fileContent, true);
+if (!is_array($payload) || json_last_error() !== JSON_ERROR_NONE) {
+    agecs_printer_queue_restore_claim($claimedPath, $queuePath);
+    send_response('error', 'Conținutul bonului nu este JSON valid.');
+}
+
+$payload = normalize_bon_numeric_fields($payload);
+$scannerContent = json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+if (!is_string($scannerContent)) {
+    agecs_printer_queue_restore_claim($claimedPath, $queuePath);
+    send_response('error', 'Bonul nu a putut fi pregătit pentru scanner.');
+}
+
+if (!@unlink($claimedPath)) {
+    agecs_printer_queue_restore_claim($claimedPath, $queuePath);
+    send_response('error', 'Bonul a fost citit, dar nu a putut fi eliminat în siguranță din coadă.');
+}
+
+echo $scannerContent;

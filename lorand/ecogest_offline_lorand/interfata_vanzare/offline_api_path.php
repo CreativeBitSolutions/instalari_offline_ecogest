@@ -50,3 +50,13 @@ function offline_sync_online_api_web_root()
 {
     return (string)offline_config_value('sync_online_api_web_root', offline_api_web_root() . '/sincronizare_online_api');
 }
+
+// Compatibilitate pentru modulele mai vechi care folosesc încă această constantă.
+// Sursa reală rămâne configurarea externă citită prin offline_api_root_path().
+if (!defined('RESTAURANT_OFFLINE_API_DIR')) {
+    $offlineApiRoot = rtrim(offline_api_root_path(), "\\/");
+    if ($offlineApiRoot !== '') {
+        define('RESTAURANT_OFFLINE_API_DIR', $offlineApiRoot);
+    }
+    unset($offlineApiRoot);
+}

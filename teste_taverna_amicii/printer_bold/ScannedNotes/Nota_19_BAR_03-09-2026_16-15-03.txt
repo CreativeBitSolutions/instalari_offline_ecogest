@@ -1,0 +1,21 @@
+﻿<b><size="11">NOTA DE PLATA</size></b>
+<b><size="11">TAVERNA AMICII</size></b>
+<b><size="11">2026-09-03 16:14:53</size></b>
+<b><size="11">OPERATOR: OSPATAR1 -</size></b>
+<b><size="11">-----</size></b>
+<b><size="11">1 x ALEXANDRION 7* 50ML = 14.00 LEI</size></b>
+<b><size="11">Nr. nota: 19</size></b>
+<b><size="11">Masa: F01</size></b>
+<b><size="11">-----</size></b>
+<b><size="11">TOTAL: 14.00 LEI</size></b>
+
+<b><size="11">Bacsisul nu este inclus / Tips not included</size></b>
+
+<b><size="11">Va oferim urmatoarele sugestii pentru calculul bacsisului / Please consider the following suggestions for tips calculation:</size></b>
+
+<b><size="11">Bacsis	Total nota</size></b>
+<b><size="11">10%	1.40	15.40</size></b>
+<b><size="11">12%	1.68	15.68</size></b>
+<b><size="11">15%	2.10	16.10</size></b>
+
+<b><size="11">Alta valoare: ...</size></b>

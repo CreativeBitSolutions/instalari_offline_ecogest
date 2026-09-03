@@ -1,0 +1,20 @@
+[2026-09-03 10:22:33] Coada nu a putut fi revendicată. {"error":"Configurarea imprimantelor nu este un JSON valid."}
+[2026-09-03 10:22:55] Coada nu a putut fi revendicată. {"error":"Configurarea imprimantelor nu este un JSON valid."}
+[2026-09-03 10:22:59] Coada nu a putut fi revendicată. {"error":"Configurarea imprimantelor nu este un JSON valid."}
+[2026-09-03 10:23:01] Coada nu a putut fi revendicată. {"error":"Configurarea imprimantelor nu este un JSON valid."}
+[2026-09-03 10:23:04] Coada nu a putut fi revendicată. {"error":"Configurarea imprimantelor nu este un JSON valid."}
+[2026-09-03 10:24:26] Document acceptat de Windows Print Spooler. {"index":0,"nrbon":10,"department":"BAR","printer":"BAR"}
+[2026-09-03 10:24:27] Document acceptat de Windows Print Spooler. {"index":1,"nrbon":11,"department":"BUCATARIE","printer":"BAR"}
+[2026-09-03 10:26:03] Document acceptat de Windows Print Spooler. {"index":0,"nrbon":11,"department":"BAR","printer":"BAR"}
+[2026-09-03 10:28:29] Document acceptat de Windows Print Spooler. {"index":0,"nrbon":11,"department":"BAR","printer":"BAR"}
+[2026-09-03 10:28:57] Document acceptat de Windows Print Spooler. {"index":0,"nrbon":12,"department":"BUCATARIE","printer":"BAR"}
+[2026-09-03 10:29:56] Document acceptat de Windows Print Spooler. {"index":0,"nrbon":12,"department":"BAR","printer":"BAR"}
+[2026-09-03 10:30:20] Document acceptat de Windows Print Spooler. {"index":0,"nrbon":0,"department":"BAR","printer":"BAR"}
+[2026-09-03 10:30:21] Document acceptat de Windows Print Spooler. {"index":1,"nrbon":0,"department":"BAR","printer":"BAR"}
+[2026-09-03 10:30:21] Document acceptat de Windows Print Spooler. {"index":2,"nrbon":0,"department":"BAR","printer":"BAR"}
+[2026-09-03 10:40:34] Document acceptat de Windows Print Spooler. {"index":0,"nrbon":13,"department":"BAR","printer":"BAR"}
+[2026-09-03 10:40:45] Document acceptat de Windows Print Spooler. {"index":0,"nrbon":14,"department":"BAR","printer":"BAR"}
+[2026-09-03 11:32:51] Document acceptat de Windows Print Spooler. {"index":0,"nrbon":15,"department":"BAR","printer":"BAR"}
+[2026-09-03 11:32:52] Document acceptat de Windows Print Spooler. {"index":1,"nrbon":16,"department":"BAR","printer":"BAR"}
+[2026-09-03 16:13:39] Document acceptat de Windows Print Spooler. {"index":0,"nrbon":17,"department":"BAR","printer":"BAR"}
+[2026-09-03 16:13:49] Document acceptat de Windows Print Spooler. {"index":0,"nrbon":18,"department":"BAR","printer":"BAR"}

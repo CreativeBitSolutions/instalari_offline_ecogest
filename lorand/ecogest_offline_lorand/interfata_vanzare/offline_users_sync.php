@@ -10,6 +10,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 }
 
 require_once __DIR__ . '/database_connection.php';
+require_once __DIR__ . '/setari_lorand_schema.php';
 
 function ous_redirect(string $status, array $extra = []): void
 {
@@ -35,7 +36,7 @@ function ous_derive_users_api_url(array $restaurantConfig): string
         ? $restaurantConfig['offline_sales_sync']
         : [];
 
-    $explicit = trim((string)($tablet['users_api_url'] ?? ($sales['users_api_url'] ?? '')));
+    $explicit = trim((string)($sales['users_api_url'] ?? ($tablet['users_api_url'] ?? '')));
     if ($explicit !== '') {
         return $explicit;
     }
@@ -122,6 +123,14 @@ try {
     if (strtoupper((string)($_SERVER['REQUEST_METHOD'] ?? '')) !== 'POST') {
         ous_redirect('error', ['message' => 'Sincronizarea utilizatorilor necesita POST.']);
     }
+    $submittedCsrf = (string)($_POST['csrf_token'] ?? '');
+    $sessionCsrf = (string)($_SESSION['offline_login_csrf'] ?? '');
+    if ($sessionCsrf === '' || !hash_equals($sessionCsrf, $submittedCsrf)) {
+        ous_redirect('error', ['message' => 'Cererea de sincronizare nu mai este validă. Reîncarcă pagina de conectare.']);
+    }
+    if (!vanzare_v2_ensure_lorand_offline_schema($pdo)) {
+        throw new RuntimeException('Schema locală pentru sincronizarea utilizatorilor și TVA nu a putut fi pregătită.');
+    }
 
     $tablet = is_array($restaurantConfig['online_tablet_sync'] ?? null)
         ? $restaurantConfig['online_tablet_sync']
@@ -131,19 +140,23 @@ try {
         : [];
 
     $apiUrl = ous_derive_users_api_url($restaurantConfig);
-    $apiKey = trim((string)($tablet['api_key'] ?? ($sales['api_key'] ?? '')));
-    $clientId = (int)($tablet['client_id'] ?? ($restaurantConfig['client_id'] ?? 0));
-    $codLocatie = (int)($_SESSION['cod_locatie'] ?? ($tablet['cod_locatie'] ?? ($restaurantConfig['cod_locatie'] ?? 0)));
-    $timeout = max(5, (int)($tablet['timeout_seconds'] ?? ($sales['timeout_seconds'] ?? 30)));
-    $verifySsl = ous_bool($tablet['verify_ssl'] ?? ($sales['verify_ssl'] ?? true), true);
-    $sendKeyInQuery = ous_bool($tablet['send_api_key_in_query'] ?? ($sales['send_api_key_in_query'] ?? true), true);
-    $installationUuid = trim((string)($tablet['installation_uuid'] ?? ($restaurantConfig['installation_uuid'] ?? '')));
+    $apiKey = trim((string)($sales['api_key'] ?? ($tablet['api_key'] ?? '')));
+    $clientId = (int)($sales['client_id'] ?? ($restaurantConfig['client_id'] ?? 0));
+    $codLocatie = (int)($_SESSION['cod_locatie'] ?? ($sales['cod_locatie'] ?? ($restaurantConfig['cod_locatie'] ?? 0)));
+    $timeout = max(5, (int)($sales['timeout_seconds'] ?? ($tablet['timeout_seconds'] ?? 30)));
+    $verifySsl = ous_bool($sales['verify_ssl'] ?? ($tablet['verify_ssl'] ?? true), true);
+    $sendKeyInQuery = ous_bool($sales['send_api_key_in_query'] ?? ($tablet['send_api_key_in_query'] ?? true), true);
+    $installationUuid = trim((string)($sales['installation_uuid'] ?? ($restaurantConfig['installation_uuid'] ?? '')));
 
     if ($apiUrl === '' || $apiKey === '' || $clientId <= 0 || $codLocatie <= 0) {
         ous_redirect('error', ['message' => 'Configurația pentru preluarea utilizatorilor și TVA este incompletă.']);
     }
 
-    $query = ['cod_client' => $clientId];
+    $query = [
+        'cod_client' => $clientId,
+        'cod_locatie' => $codLocatie,
+        'app_mode' => 'magazin',
+    ];
     if ($sendKeyInQuery) {
         $query['api_key'] = $apiKey;
     }
@@ -154,6 +167,7 @@ try {
         'cod_client' => $clientId,
         'cod_locatie' => $codLocatie,
         'installation_uuid' => $installationUuid,
+        'app_mode' => 'magazin',
     ];
     $json = json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     if ($json === false) {

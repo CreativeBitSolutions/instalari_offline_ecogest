@@ -32,14 +32,58 @@
       });
     }
   // ===== Reîncărcare centralizată panou stâng din afis_prod.php =====
+  var afisProdRequest = null;
+  var metodePlataRequest = null;
+  var afisProdSequence = 0;
+  var afisProdReloadTimer = null;
+
   function loadAfisProd(nrBon, codMasa) {
     try {
       nrBon   = nrBon   || <?php echo json_encode($_SESSION['nr_bon'] ?? 0); ?>;
       codMasa = codMasa || <?php echo json_encode($_SESSION['masa_curenta'] ?? 0); ?>;
-      $("#one").load("afis_prod.php?" + $.param({ bonul: nrBon, cod_masa: codMasa }), function () {
-        // după ce s-a reîncărcat panoul stâng, sincronizează și butoanele de plată
-        $("#metode_plata").load("vanzare_metode_plata.php?" + $.param({ nr_bon: nrBon }));
-      });
+
+      clearTimeout(afisProdReloadTimer);
+      afisProdReloadTimer = setTimeout(function () {
+        var sequence = ++afisProdSequence;
+
+        if (afisProdRequest && afisProdRequest.readyState !== 4) {
+          afisProdRequest.abort();
+        }
+        if (metodePlataRequest && metodePlataRequest.readyState !== 4) {
+          metodePlataRequest.abort();
+        }
+
+        // Cele doua fragmente nu depind unul de altul, deci le incarcam in paralel.
+        afisProdRequest = $.ajax({
+          url: 'afis_prod.php',
+          method: 'GET',
+          dataType: 'html',
+          data: { bonul: nrBon, cod_masa: codMasa }
+        }).done(function (html) {
+          if (sequence === afisProdSequence) {
+            $('#one').html(html);
+          }
+        }).fail(function (xhr, status) {
+          if (status !== 'abort') {
+            console.error('Nu s-a putut reincarca nota.');
+          }
+        });
+
+        metodePlataRequest = $.ajax({
+          url: 'vanzare_metode_plata.php',
+          method: 'GET',
+          dataType: 'html',
+          data: { nr_bon: nrBon }
+        }).done(function (html) {
+          if (sequence === afisProdSequence) {
+            $('#metode_plata').html(html);
+          }
+        }).fail(function (xhr, status) {
+          if (status !== 'abort') {
+            console.error('Nu s-au putut reincarca metodele de plata.');
+          }
+        });
+      }, 60);
     } catch (e) {
       console.error('loadAfisProd error:', e);
     }
@@ -367,13 +411,26 @@ var masa = <?php echo isset($m_n) ? json_encode($m_n) : 'null'; ?>;
     $('#scroll-prod-down').on('click',()=>$('#product-list-container').animate({scrollTop:'+=400'},300,updateScrollButtons));
     $('#category-tabs').on('scroll', updateScrollButtons);
     $('#product-list-container').on('scroll', updateScrollButtons);
+    let productsRequest = null;
+    let productsSequence = 0;
     function loadProducts(cat){
+      const sequence = ++productsSequence;
+      if (productsRequest && productsRequest.readyState !== 4) {
+        productsRequest.abort();
+      }
       $('#product-list-container').html('<div class="text-center p-4"><i class="fas fa-spinner fa-spin fa-3x"></i></div>');
       $('#prod_filter').val('');
-      $.get(loadFile, {categ:cat}, function(res){
-        $('#product-list-container').html(res);
-        updateScrollButtons();
-      });
+      productsRequest = $.get(loadFile, {categ:cat})
+        .done(function(res){
+          if (sequence !== productsSequence) return;
+          $('#product-list-container').html(res);
+          updateScrollButtons();
+        })
+        .fail(function(xhr, status){
+          if (status !== 'abort' && sequence === productsSequence) {
+            $('#product-list-container').html('<div class="alert alert-danger m-3">Produsele nu au putut fi incarcate.</div>');
+          }
+        });
     }
     $(document).on('click','.category-tab-btn', function(){
       $('.category-tab-btn').removeClass('active');

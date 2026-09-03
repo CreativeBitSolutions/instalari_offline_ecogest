@@ -58,8 +58,10 @@
                 if ((float)$r['card'] > 0)      $_SESSION['cardprim']    = $r['card'];
                 if ((float)$r['tichete'] > 0)   $_SESSION['total_tichete'] = $r['tichete'];
 
-                if ($_SESSION['mod_listare'] == 'complex') echo "<script>location.href='dwred_restaurant_cu_listare.php'</script>";
-                else echo "<script>location.href='dwred_vanzare_restaurant.php'</script>";
+                $_SESSION['app_restaurant_v2_generator_casa_marcat'] = ($_SESSION['mod_listare'] == 'complex')
+                    ? 'dwred_restaurant_cu_listare.php'
+                    : 'casa_marcat_vanzare.php';
+                echo "<script>location.href='asteapta_casa_marcat.php'</script>";
                 exit;
               }
             }

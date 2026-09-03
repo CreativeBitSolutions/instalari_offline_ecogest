@@ -4,6 +4,7 @@ declare(strict_types=1);
 header('Content-Type: application/json; charset=UTF-8');
 
 require_once __DIR__ . '/session.php';
+require_once __DIR__ . '/setari_lorand_schema.php';
 
 $departamentSchemaPath = is_file(__DIR__ . '/det_note_departament_listare_schema.php')
     ? __DIR__ . '/det_note_departament_listare_schema.php'
@@ -98,17 +99,11 @@ function productReportValidateManager(PDO $pdo): void
 {
     $operatorId = (int)($_SESSION['admin_id'] ?? 0);
     $clientId = (int)($_SESSION['client_id'] ?? 0);
-    $stmt = $pdo->prepare('SELECT rank FROM admins_12 WHERE admin_id = ? LIMIT 1');
-    $stmt->execute([$operatorId]);
-    $rank = strtolower(trim((string)$stmt->fetchColumn()));
-
-    // Operatorii Taverna Amicii si Lorand au acces la aceeași previzualizare și listare
-    // ca șeful de sală. Pentru ceilalți clienți regula de acces rămâne neschimbată.
-    $operatorAccessAllowed = $clientId === 1019;
-    if ($rank !== 'sefsala' && !$operatorAccessAllowed) {
+    $settings = vanzare_v2_lorand_settings($pdo);
+    if ($clientId !== 1019 || $operatorId <= 0 || empty($settings['operator_acces_rapoarte'])) {
         productReportResponse([
             'status' => 'error',
-            'message' => 'Raportul poate fi generat numai de șeful de sală.',
+            'message' => 'Raportul este disponibil numai operatorilor autentificați din Lorand.',
         ], 403);
     }
 }
@@ -287,12 +282,12 @@ function productReportBuildContent(array $report, int $locationId): string
             'tickets' => 'TICHETE',
             'bank' => 'VIRAMENT',
             'protocol' => 'PROTOCOL',
-            'glovo' => 'GLOVO',
+            'glovo' => 'ONLINE',
         ];
-        $out .= "TOTAL METODE DE PLATĂ PE OSPĂTAR\n";
+        $out .= "TOTAL METODE DE PLATĂ PE OPERATOR\n";
         $out .= $line;
         foreach ($report['payment_totals'] as $operatorTotal) {
-            foreach (productReportWrap('OSPĂTAR: ' . $operatorTotal['operator_label']) as $operatorLine) {
+            foreach (productReportWrap('OPERATOR: ' . $operatorTotal['operator_label']) as $operatorLine) {
                 $out .= $operatorLine . "\n";
             }
             foreach ($paymentLabels as $paymentKey => $paymentLabel) {
@@ -302,7 +297,7 @@ function productReportBuildContent(array $report, int $locationId): string
                 }
                 $out .= $paymentLabel . ': ' . productReportNumber($amount, 2) . " LEI\n";
             }
-            $out .= 'TOTAL OSPĂTAR: ' . productReportNumber((float)$operatorTotal['total'], 2) . " LEI\n";
+            $out .= 'TOTAL OPERATOR: ' . productReportNumber((float)$operatorTotal['total'], 2) . " LEI\n";
             $out .= str_repeat('-', 42) . "\n";
         }
         $out .= $line;
@@ -632,57 +627,11 @@ function productReportStorePreview(array $report, int $clientId, int $locationId
     return $token;
 }
 
-function productReportQueuePath(int $clientId, int $locationId): string
+require_once __DIR__ . '/printer_queue_helper.php';
+
+function productReportWriteQueuedPayload(int $clientId, int $locationId, array $payload): string
 {
-    $baseDirectory = defined('RESTAURANT_OFFLINE_API_DIR')
-        ? RESTAURANT_OFFLINE_API_DIR
-        : dirname(__DIR__) . DIRECTORY_SEPARATOR . 'api';
-    $queueDirectory = rtrim((string)$baseDirectory, '/\\')
-        . DIRECTORY_SEPARATOR . $clientId
-        . DIRECTORY_SEPARATOR . $locationId;
-
-    if (!is_dir($queueDirectory) && !mkdir($queueDirectory, 0777, true) && !is_dir($queueDirectory)) {
-        throw new RuntimeException('Folderul cozii de imprimare nu a putut fi creat.');
-    }
-    return $queueDirectory . DIRECTORY_SEPARATOR . 'de_listat_la_imprimanta.json';
-}
-
-function productReportWriteQueue(string $queuePath, array $payload): bool
-{
-    $json = json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    if ($json === false) {
-        throw new RuntimeException('Raportul nu a putut fi convertit în formatul imprimantei.');
-    }
-
-    $handle = @fopen($queuePath, 'x');
-    if ($handle === false) {
-        return false;
-    }
-
-    $written = false;
-    try {
-        if (!flock($handle, LOCK_EX)) {
-            return false;
-        }
-        $length = strlen($json);
-        $offset = 0;
-        while ($offset < $length) {
-            $chunk = fwrite($handle, substr($json, $offset));
-            if ($chunk === false || $chunk === 0) {
-                return false;
-            }
-            $offset += $chunk;
-        }
-        fflush($handle);
-        $written = true;
-        return true;
-    } finally {
-        flock($handle, LOCK_UN);
-        fclose($handle);
-        if (!$written && is_file($queuePath)) {
-            @unlink($queuePath);
-        }
-    }
+    return agecs_printer_enqueue_payload($clientId, $locationId, $payload, 'raport_produse');
 }
 
 try {
@@ -749,7 +698,6 @@ try {
         }
     }
 
-    $queuePath = productReportQueuePath($clientId, $locationId);
     $payload = [
         'status' => 'success',
         'message' => 'Raport produse pregătit pentru imprimare.',
@@ -765,11 +713,13 @@ try {
         ]],
     ];
 
-    if (!productReportWriteQueue($queuePath, $payload)) {
+    try {
+        productReportWriteQueuedPayload($clientId, $locationId, $payload);
+    } catch (Throwable $queueError) {
         productReportResponse([
             'status' => 'error',
-            'message' => 'Imprimanta are deja un document în așteptare. Reîncearcă după procesarea lui.',
-        ], 409);
+            'message' => 'Raportul nu a putut fi introdus în coada imprimantei: ' . $queueError->getMessage(),
+        ], 500);
     }
 
     unset($_SESSION['product_report_previews'][$token]);

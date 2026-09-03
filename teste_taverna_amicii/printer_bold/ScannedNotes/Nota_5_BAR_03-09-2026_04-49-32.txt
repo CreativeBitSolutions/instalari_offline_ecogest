@@ -1,0 +1,15 @@
+﻿<b><size="11">NOTA PROTOCOL</size></b>
+<b><size="11">TAVERNA AMICII</size></b>
+<b><size="11">2026-09-03 04:49:30</size></b>
+<b><size="11">OPERATOR: OSPATAR1 -</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">ALEXANDRION 5* 50ML</size></b>
+<b><size="11">  1.0 x 12.00 = 12.00 LEI (TVA 21.0%)</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">TOTAL: 12.00 LEI</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">Prot.: 12.00 LEI</size></b>
+<b><size="11">TOTAL 21.0%: 12.00 LEI</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">Nr. nota: 5</size></b>
+<b><size="11">Va multumim!</size></b>

@@ -2,10 +2,12 @@
 declare(strict_types=1);
 
 include __DIR__ . '/session.php';
+require_once __DIR__ . '/setari_lorand_schema.php';
 
 $clientId = (int)($_SESSION['client_id'] ?? 0);
 $locationId = (int)($_SESSION['cod_locatie'] ?? 0);
-if ($clientId !== 1019 || $locationId <= 0) {
+$lorandSettings = vanzare_v2_lorand_settings($pdo);
+if ($clientId !== 1019 || $locationId <= 0 || empty($lorandSettings['operator_acces_rapoarte'])) {
     header('Location: vanzare_magazin.php');
     exit;
 }
@@ -51,7 +53,7 @@ if ($dateTo !== '') {
     $params['date_to'] = $dateTo;
 }
 
-$stmt = $pdo->prepare("\n    SELECT\n        n.nrbon,\n        n.data_bon,\n        n.ora_bon,\n        n.operator,\n        n.cod_masa,\n        n.protocol,\n        n.valoare_vanzare_cu_tva AS total_nota,\n        n.nr_raport_z,\n        a.admin_firstname,\n        a.admin_lastname,\n        dn.id_vanz,\n        COALESCE(NULLIF(TRIM(dn.nume_produs), ''), 'Produs fără denumire') AS produs,\n        COALESCE(dn.cantitate, 0) AS cantitate,\n        COALESCE(dn.valoare_vanzare_cu_tva, 0) AS valoare_produs,\n        COALESCE(dn.observatie_produs, '') AS observatie_produs\n    FROM note n\n    LEFT JOIN admins_12 a ON a.admin_id = n.operator\n    LEFT JOIN det_note dn ON dn.nr_bon = n.nrbon\n    WHERE {$where}\n    ORDER BY n.data_bon DESC, n.ora_bon DESC, n.nrbon DESC, dn.id_vanz ASC\n");
+$stmt = $pdo->prepare("\n    SELECT\n        n.nrbon,\n        n.data_bon,\n        n.ora_bon,\n        n.operator,\n        n.protocol,\n        n.valoare_vanzare_cu_tva AS total_nota,\n        n.nr_raport_z,\n        a.admin_firstname,\n        a.admin_lastname,\n        dn.id_vanz,\n        COALESCE(NULLIF(TRIM(dn.nume_produs), ''), 'Produs fără denumire') AS produs,\n        COALESCE(dn.cantitate, 0) AS cantitate,\n        COALESCE(dn.valoare_vanzare_cu_tva, 0) AS valoare_produs,\n        COALESCE(dn.observatie_produs, '') AS observatie_produs\n    FROM note n\n    LEFT JOIN admins_12 a ON a.admin_id = n.operator\n    LEFT JOIN det_note dn ON dn.nr_bon = n.nrbon\n    WHERE {$where}\n    ORDER BY n.data_bon DESC, n.ora_bon DESC, n.nrbon DESC, dn.id_vanz ASC\n");
 $stmt->execute($params);
 
 $notes = [];
@@ -64,7 +66,6 @@ foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
             'date' => (string)($row['data_bon'] ?? ''),
             'time' => (string)($row['ora_bon'] ?? ''),
             'operator' => $operatorName !== '' ? $operatorName : 'Operator ID ' . (int)$row['operator'],
-            'table' => (int)($row['cod_masa'] ?? 0),
             'protocol' => (float)($row['protocol'] ?? 0),
             'note_total' => (float)($row['total_nota'] ?? 0),
             'z' => (int)($row['nr_raport_z'] ?? 0),
@@ -112,7 +113,13 @@ foreach ($notes as $note) {
         .products{padding:5px 15px 10px}.product{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line)}.product:last-child{border-bottom:0}.product-name{font-weight:800}.product-observation{font-size:12px;color:#8a5a00;margin-top:3px}.product-value{text-align:right;font-weight:900;white-space:nowrap}.product-value small{display:block;color:var(--muted);font-weight:700;margin-bottom:2px}
         @media(max-width:640px){.shell{padding:8px}.topbar{border-radius:8px;padding:11px}.back{padding:0 12px}.summary{grid-template-columns:1fr 1fr}.summary .stat:last-child{grid-column:1/-1}.filters{align-items:stretch}.field{width:calc(50% - 5px);min-width:0}.filter-actions{width:100%}.filter-actions .btn{flex:1;justify-content:center}.note-head{grid-template-columns:1fr}.note-total{text-align:left;display:flex;align-items:baseline;gap:7px}.note-total span{order:-1}}
     </style>
-    <?php include __DIR__ . '/i18n/i18n_bootstrap.php'; ?>
+    <?php
+    $i18nBootstrap = __DIR__ . '/i18n/i18n_bootstrap.php';
+    if (is_file($i18nBootstrap)) {
+        include $i18nBootstrap;
+    }
+    unset($i18nBootstrap);
+    ?>
 </head>
 <body>
 <main class="shell">
@@ -148,7 +155,6 @@ foreach ($notes as $note) {
                     <div class="meta">
                         <span><?= protocolHistoryH($note['date']) ?>, <?= protocolHistoryH($note['time']) ?></span>
                         <span><?= protocolHistoryH($note['operator']) ?></span>
-                        <span>Masa <?= (int)$note['table'] ?></span>
                         <?php if ((int)$note['z'] > 0): ?><span>Raport Z <?= (int)$note['z'] ?></span><?php endif; ?>
                     </div>
                 </div>

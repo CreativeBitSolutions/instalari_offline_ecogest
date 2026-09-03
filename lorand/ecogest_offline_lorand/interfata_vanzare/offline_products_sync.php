@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/database_connection.php';
+require_once __DIR__ . '/setari_lorand_schema.php';
 
 date_default_timezone_set('Europe/Bucharest');
 
@@ -42,8 +43,13 @@ function ops_h($value): string
 
 function ops_i18n_assets(): string
 {
+    $bootstrap = __DIR__ . '/i18n/i18n_bootstrap.php';
+    if (!is_file($bootstrap)) {
+        return '';
+    }
+
     ob_start();
-    include __DIR__ . '/i18n/i18n_bootstrap.php';
+    include $bootstrap;
     return (string)ob_get_clean();
 }
 
@@ -1340,6 +1346,9 @@ try {
         ops_render_start_page();
     }
 
+    if (!vanzare_v2_ensure_lorand_offline_schema($pdo)) {
+        throw new RuntimeException('Schema locală pentru produse și observații nu a putut fi pregătită.');
+    }
     ops_ensure_log_table($pdo);
     $syncId = 'PRODUCTS-' . date('Ymd-His') . '-' . bin2hex(random_bytes(3));
     $localHash = ops_local_hash($pdo);
@@ -1387,6 +1396,15 @@ try {
     $onlineAssignmentColumns = isset($online['atribuiri_observatii_produse_columns']) && is_array($online['atribuiri_observatii_produse_columns'])
         ? $online['atribuiri_observatii_produse_columns']
         : [];
+    if (!in_array('toate_produsele', $onlineObservationColumns, true)) {
+        foreach ($online['observatii_predefinite'] as &$onlineObservation) {
+            if (is_array($onlineObservation) && !array_key_exists('toate_produsele', $onlineObservation)) {
+                $onlineObservation['toate_produsele'] = 0;
+            }
+        }
+        unset($onlineObservation);
+        $onlineObservationColumns[] = 'toate_produsele';
+    }
     foreach (ops_sync_table_columns('observatii_predefinite') as $requiredColumn) {
         if (!in_array($requiredColumn, $onlineObservationColumns, true)) {
             throw new RuntimeException("Schema online observatii_predefinite nu contine coloana {$requiredColumn}. Datele locale au fost pastrate.");

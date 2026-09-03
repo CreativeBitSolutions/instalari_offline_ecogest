@@ -619,7 +619,7 @@ $productReportCsrf = (string)$_SESSION['product_report_csrf'];
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="productReportOperator">Filtru operator sau ospătar</label>
+                            <label for="productReportOperator">Filtru operator</label>
                             <select class="form-control" id="productReportOperator" name="operator">
                                 <option value="all">Toți operatorii</option>
                             </select>
@@ -668,7 +668,7 @@ $productReportCsrf = (string)$_SESSION['product_report_csrf'];
                             <div id="productReportAggregateView" class="report-view">
                                 <div id="productReportGroups" class="report-groups"></div>
                                 <div id="productReportPayments" class="report-payment-box" hidden>
-                                    <h4>Total pe metode de plată, pentru fiecare ospătar</h4>
+                                    <h4>Total pe metode de plată, pentru fiecare operator</h4>
                                     <div id="productReportPaymentRows" class="report-payment-grid"></div>
                                 </div>
                             </div>
@@ -680,7 +680,7 @@ $productReportCsrf = (string)$_SESSION['product_report_csrf'];
                                             <th>Nota</th>
                                             <th>Produs</th>
                                             <th>Departament</th>
-                                            <th>Ospătar</th>
+                                            <th>Operator</th>
                                             <th class="text-right">Cantitate</th>
                                             <th class="text-right">Valoare</th>
                                         </tr>
@@ -862,7 +862,7 @@ $productReportCsrf = (string)$_SESSION['product_report_csrf'];
             tickets: 'Tichete',
             bank: 'Virament',
             protocol: 'Protocol',
-            glovo: 'Glovo'
+            glovo: 'Online'
         };
 
         function renderPaymentRows(payments, includeZero) {
@@ -991,7 +991,7 @@ $productReportCsrf = (string)$_SESSION['product_report_csrf'];
             var paymentRows = (report.payment_totals || []).map(function (operator) {
                 return '<section class="report-payment-operator"><strong>' + escapeHtml(operator.operator_label) + '</strong>'
                     + renderPaymentRows(operator.payments, false)
-                    + '<div class="report-payment-row total"><span>Total ospătar</span><strong>'
+                    + '<div class="report-payment-row total"><span>Total operator</span><strong>'
                     + escapeHtml(formatNumber(operator.total, 2)) + ' LEI</strong></div></section>';
             }).join('');
             var paymentBox = document.getElementById('productReportPayments');

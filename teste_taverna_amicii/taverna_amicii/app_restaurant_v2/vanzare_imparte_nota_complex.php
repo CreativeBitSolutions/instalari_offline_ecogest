@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/det_note_departament_listare_schema.php';
 include('session.php'); // Conexiunea $pdo și session_start()
+require_once __DIR__ . '/offline_printer_flow_helper.php';
 
 // [PĂSTRAT INTEGRAL] - Logica de validare sesiune și procesare formular
 // ========================================================================
@@ -198,35 +199,12 @@ function queuePrinterJobsNoSleep(PDO $pdo, int $clientId, int $codLocatie, array
     if (empty($jobs)) {
         return;
     }
-
-    $folderPath = RESTAURANT_OFFLINE_API_DIR . "/" . $clientId . "/" . $codLocatie;
-    if (!is_dir($folderPath)) {
-        mkdir($folderPath, 0777, true);
+    try {
+        agecs_offline_printer_enqueue($jobs, 'Note de plată generate din împărțirea notei.');
+    } catch (Throwable $printerError) {
+        error_log('Împărțirea este salvată, dar listarea nu a intrat în coadă: ' . $printerError->getMessage());
+        $_SESSION['offline_printer_error'] = 'Împărțirea notei este salvată, dar documentele nu au putut fi puse în coada imprimantei. Folosiți relistarea.';
     }
-    $jsonPath = $folderPath . "/de_listat_la_imprimanta.json";
-
-    $existingJobs = [];
-    if (is_file($jsonPath)) {
-        $raw = @file_get_contents($jsonPath);
-        if (is_string($raw) && $raw !== '') {
-            $decoded = json_decode($raw, true);
-            if (is_array($decoded) && isset($decoded['data']) && is_array($decoded['data'])) {
-                $existingJobs = $decoded['data'];
-            }
-        }
-    }
-
-    $payload = [
-        "status" => "success",
-        "message" => "Note de plata generate din impartire nota.",
-        "data" => array_merge($existingJobs, $jobs),
-    ];
-
-    file_put_contents(
-        $jsonPath,
-        json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
-        LOCK_EX
-    );
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['products_json']) && isset($_POST['masa_select'])) {
@@ -284,7 +262,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['products_json']) && i
 
         $noteToUpdate = [$nr_bon_orig, $new_nr_bon];
         foreach ($noteToUpdate as $bon) {
-            $sqlRecalc = "UPDATE note n SET n.valoare_vanzare_cu_tva = (SELECT COALESCE(SUM(d.valoare_vanzare_cu_tva), 0) FROM det_note d WHERE d.nr_bon = n.nrbon), n.tva_colectata = (SELECT COALESCE(SUM(d.tva_col), 0) FROM det_note d WHERE d.nr_bon = n.nrbon), n.discount = (SELECT COALESCE(SUM(d.discount), 0) FROM det_note d WHERE d.nr_bon = n.nrbon) WHERE n.nrbon = ?";
+            // SQLite nu acceptă forma MySQL `UPDATE note n SET n.coloana = ...`.
+            // Referința la nota recalculată se face direct prin numele tabelei.
+            $sqlRecalc = "UPDATE note SET valoare_vanzare_cu_tva = (SELECT COALESCE(SUM(d.valoare_vanzare_cu_tva), 0) FROM det_note d WHERE d.nr_bon = note.nrbon), tva_colectata = (SELECT COALESCE(SUM(d.tva_col), 0) FROM det_note d WHERE d.nr_bon = note.nrbon), discount = (SELECT COALESCE(SUM(d.discount), 0) FROM det_note d WHERE d.nr_bon = note.nrbon) WHERE nrbon = ?";
             $stmtRecalc = $pdo->prepare($sqlRecalc);
             $stmtRecalc->execute([$bon]);
         }
@@ -297,8 +277,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['products_json']) && i
         $sqlUpdateMasa = "UPDATE mese SET stare = 1 WHERE cod_masa = ?";
         $stmtUpdateMasa = $pdo->prepare($sqlUpdateMasa);
         $stmtUpdateMasa->execute([$masaSelectata]);
-        
+
+        if (!isset($_SESSION['no_session_validation']) || $_SESSION['no_session_validation'] != 1) {
+            $splitConnectionTime = (new DateTime('now', new DateTimeZone('Europe/Bucharest')))->format('Y-m-d H:i:s');
+            restaurantTouchUltimBonConectat($pdo, (int)$cod_locatie, (int)$new_nr_bon, $splitConnectionTime);
+        }
+
         $pdo->commit();
+
+        // După împărțire, nota nouă și masa sa devin selecția activă a ospătarului.
+        $_SESSION['nr_bon'] = (int)$new_nr_bon;
+        $_SESSION['masa_curenta'] = (int)$masaSelectata;
+        $_SESSION['trimis_comanda'] = 0;
 
         $printJobs = [];
         $currentDate = date('Y-m-d');
@@ -332,7 +322,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['products_json']) && i
 
         queuePrinterJobsNoSleep($pdo, $client_id, (int)$cod_locatie, $printJobs);
 
-        header('Location: vanzare_restaurant.php');
+        header('Location: ' . agecs_offline_printer_wait_url('vanzare_restaurant.php', 'impartire'));
         exit;
 
     } catch (Throwable $e) {

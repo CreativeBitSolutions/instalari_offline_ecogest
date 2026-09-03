@@ -18,13 +18,8 @@ if (!function_exists('restaurant_v2_ensure_det_note_site_import_column')) {
         try {
             $driver = strtolower((string)$pdo->getAttribute(PDO::ATTR_DRIVER_NAME));
             if ($driver === 'sqlite') {
-                $columns = $pdo->query('PRAGMA table_info("' . $tableName . '")')->fetchAll(PDO::FETCH_ASSOC);
-                foreach ($columns as $column) {
-                    if (($column['name'] ?? '') === 'importat_din_site') {
-                        return $results[$cacheKey] = true;
-                    }
-                }
-                $pdo->exec('ALTER TABLE "' . $tableName . '" ADD COLUMN "importat_din_site" INTEGER DEFAULT NULL');
+                // Schema SQLite este garantata central, prin PRAGMA user_version, in database_connection.php.
+                return $results[$cacheKey] = true;
             } else {
                 $stmt = $pdo->prepare("SHOW COLUMNS FROM `{$tableName}` LIKE ?");
                 $stmt->execute(['importat_din_site']);

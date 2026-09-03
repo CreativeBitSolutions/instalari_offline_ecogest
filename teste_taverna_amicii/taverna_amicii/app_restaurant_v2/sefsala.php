@@ -372,6 +372,16 @@ $(document).ready(function() {
         return $('<div>').text(value == null ? '' : String(value)).html();
     }
 
+    function continueToPrinterStatus(res) {
+        setTimeout(function() {
+            if (res && res.printer_wait_url) {
+                window.location.href = res.printer_wait_url;
+                return;
+            }
+            $('#genericInfoModal').modal('hide');
+        }, 900);
+    }
+
     // Afișează detaliile bonului la click
     $('.note-list-item').click(function(e) {
         e.preventDefault();
@@ -437,7 +447,7 @@ $(document).ready(function() {
                     $('#modifyModal').modal('hide');
                     $(`.note-list-item[data-nrbon="${currentBon}"]`).click(); 
                     showInfoModal('success', 'Modificat', 'Cantitatea a fost actualizată.');
-                    setTimeout(() => $('#genericInfoModal').modal('hide'), 1500);
+                    continueToPrinterStatus(res);
                 } else {
                     showInfoModal('error', 'Eroare', res.message);
                 }
@@ -472,7 +482,7 @@ $(document).ready(function() {
                         $('#detailsContainer').html('<div class="jumbotron text-center bg-light"><p class="lead">Bonul a fost golit și închis.</p></div>');
                      }
                      showInfoModal('success', 'Șters', 'Produsul a fost șters.');
-                     setTimeout(() => $('#genericInfoModal').modal('hide'), 1500);
+                     continueToPrinterStatus(res);
                 } else {
                     showInfoModal('error', 'Eroare', res.message);
                 }
@@ -512,7 +522,7 @@ $(document).ready(function() {
                     });
                     $('#detailsContainer').html('<div class="jumbotron text-center bg-light"><p class="lead">Bonul a fost anulat complet cu succes.</p></div>');
                     showInfoModal('success', 'Anulat', 'Bonul a fost șters în totalitate.');
-                    setTimeout(() => $('#genericInfoModal').modal('hide'), 1500);
+                    continueToPrinterStatus(res);
                 } else {
                     showInfoModal('error', 'Eroare', res.message);
                 }
@@ -586,7 +596,7 @@ $(document).ready(function() {
                         } else {
                             showInfoModal('success', 'Tură Închisă', res.message);
                             setTimeout(function() {
-                                location.reload(); 
+                                window.location.href = res.printer_wait_url || 'sefsala.php';
                             }, 2000);
                         }
                     } else {

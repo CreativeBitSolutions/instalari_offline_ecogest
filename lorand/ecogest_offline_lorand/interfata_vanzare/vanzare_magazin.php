@@ -15,6 +15,11 @@ $cod_masa = $cod_locatie;  // In modul magazin, cod_masa este identic cu cod_loc
 $_SESSION['cod_locatie'] = $cod_locatie;
 date_default_timezone_set("Europe/Bucharest");
 $adm_id = $_SESSION['admin_id'];
+$lorandSettings = [];
+if ((int)($_SESSION['client_id'] ?? 0) === 1019) {
+    require_once __DIR__ . '/setari_lorand_schema.php';
+    $lorandSettings = vanzare_v2_lorand_settings($pdo);
+}
 
 // Preluare nume operator
 $dsql = "SELECT admin_firstname, admin_lastname FROM $tabel_final_admins where admin_id=:adm_id";
@@ -209,6 +214,10 @@ $offlinePendingReceiptCount = array_sum(array_map(static function (array $closur
             <?php
             $client_agecs = $_SESSION['client_id'] ?? null;
             if ($client_agecs == 2 || $client_agecs == 8) echo "<a href='vanzare_facturi.php'><button class='header-btn'>🧾 Facturi</button></a>";
+            if ((int)$client_agecs === 1019 && !empty($lorandSettings['operator_acces_rapoarte'])) {
+                echo "<a href='rapoarte_produse_lorand.php' class='header-btn' style='text-decoration:none'>📊 Rapoarte + PROTOCOL</a>";
+            }
+            if ((int)$client_agecs === 1019) echo "<a href='configurare_imprimanta_lorand.php' class='header-btn' style='text-decoration:none'>🖨️ Imprimantă</a>";
             ?>
            <?php if ($client_agecs != 22): ?>
     <button data-toggle="modal" data-target="#sume_sertar" class="header-btn">💰 Sume Tura</button>
@@ -332,7 +341,7 @@ $offlinePendingReceiptCount = array_sum(array_map(static function (array $closur
 </div>
 
 
-                 <?php if (($_SESSION['client_id'] ?? null) != 17): ?>
+                 <?php if (!in_array((int)($_SESSION['client_id'] ?? 0), [17, 1019], true)): ?>
 <div class="form-group">
     <label for="prod_filter_cod_bare" class="label-codbare">
         Caută Cod Bare <small class="shortcut-hint">(Ctrl) ( / x2 pentru total)</small>
@@ -448,8 +457,8 @@ $loc_curenta = (int)$cod_locatie;
             <?php endif; ?>
 
           <?php
-    // Adaugam butonul ONLINE (glovo) doar pentru clientii 17 sau 8
-    if (in_array($client_agecs, [17, 8])): ?>
+    // Campul intern ramane glovo, dar pentru Lorand metoda este afisata ca ONLINE.
+    if (in_array((int)$client_agecs, [17, 8, 1019], true)): ?>
         <button class="footer-btn btn-warning" type="submit" name="finaliz_bon" value="glovo">🌐 ONLINE</button>
     <?php endif; 
     ?>
@@ -1612,6 +1621,16 @@ $('#btn_clear_debug_micotex').on('click', function() {
     const nameFilterInput = $('#prod_filter');
     const barcodeFilterInput = $('#prod_filter_cod_bare');
     const quantityInput = $('#cantitate_de_adaugat_prod');
+    const barcodeEnabled = String(clientId) !== '1019' && barcodeFilterInput.length > 0;
+
+    function focusBarcodeInput(selectText = true) {
+        if (!barcodeEnabled) {
+            nameFilterInput.focus();
+            return;
+        }
+        barcodeFilterInput.focus();
+        if (selectText) barcodeFilterInput.select();
+    }
 
 
     // === LOGICA PENTRU MODIFICARE CANTITATE PE RAND ===
@@ -2179,7 +2198,7 @@ $('#btn_clear_debug_micotex').on('click', function() {
         
         // Logica de focus rămâne neschimbată
         if (['18', '21', '22','16'].includes(String(clientId))) {
-            barcodeFilterInput.focus().select();
+            focusBarcodeInput();
         } else {
             nameFilterInput.focus();
         }
@@ -2276,6 +2295,7 @@ $('#btn_clear_debug_micotex').on('click', function() {
     }
     
     async function processBarcode() {
+        if (!barcodeEnabled) return;
         const codBare = barcodeFilterInput.val();
         if (!codBare) return;
 
@@ -2298,7 +2318,7 @@ $('#btn_clear_debug_micotex').on('click', function() {
             finalizeAndResetInputs(openedAutoPopup);
         };
 
-        const onFail = () => { alert('Eroare: produs negăsit sau fără stoc.'); barcodeFilterInput.select(); };
+        const onFail = () => { alert('Eroare: produs negăsit sau fără stoc.'); focusBarcodeInput(); };
 
         try {
             // ——— DOAR pentru client 8: verificăm UM; dacă e KG și avem Web Serial, citim cântarul ÎNAINTE de adăugare
@@ -2364,9 +2384,9 @@ $('#btn_clear_debug_micotex').on('click', function() {
 
     function finalizeAndResetInputs(skipFocus = false) {
         // Aici păstrăm logica ta originală de focus și resetare, dar fără reloadBonPanel
-        barcodeFilterInput.val('');
+        if (barcodeEnabled) barcodeFilterInput.val('');
         if (!skipFocus) {
-            barcodeFilterInput.focus();
+            focusBarcodeInput(false);
         }
         if (clientId === '6') {
             quantityInput.val('');
@@ -2430,7 +2450,7 @@ $('#btn_clear_debug_micotex').on('click', function() {
             }
         }
         $('#quantity-keyboard-modal').modal('hide');
-        barcodeFilterInput.focus().select(); // Focus mereu pe cod bare după salvare
+        focusBarcodeInput(); // Focus mereu pe cod bare după salvare
     });
     
     // ======== END: ÎMBUNĂTĂȚIRI UZABILITATE ========
@@ -2514,7 +2534,7 @@ $('#btn_clear_debug_micotex').on('click', function() {
         
         // Logica de focus rămâne neschimbată
         if (['18', '21', '22','16'].includes(String(clientId))) {
-            barcodeFilterInput.focus().select();
+            focusBarcodeInput();
         } else {
             nameFilterInput.focus();
         }
@@ -2608,8 +2628,8 @@ $('#btn_clear_debug_micotex').on('click', function() {
         // Shortcut pentru comutare între câmpurile de căutare
         if (e.key === 'Control') {
             e.preventDefault();
-            if (nameFilterInput.is(':focus')) {
-                barcodeFilterInput.focus().select();
+            if (barcodeEnabled && nameFilterInput.is(':focus')) {
+                focusBarcodeInput();
             } else {
                 nameFilterInput.focus();
             }
@@ -2650,10 +2670,10 @@ $('#btn_clear_debug_micotex').on('click', function() {
         if (e.key === 'Enter') {
             e.preventDefault(); // Previne orice acțiune implicită (ex: trimitere formular)
             
-            if (clientId === '17') {
-                nameFilterInput.focus(); // Mută focusul pe căutare nume pentru clientul 17
+            if (!barcodeEnabled || clientId === '17') {
+                nameFilterInput.focus();
             } else {
-                barcodeFilterInput.focus().select(); // Mută focusul pe cod de bare pentru ceilalți clienți
+                focusBarcodeInput();
             }
             return; // Oprește executarea restului funcției pentru tasta Enter
         }
@@ -2756,7 +2776,7 @@ $('#btn_clear_debug_micotex').on('click', function() {
                 const openedAutoPopup = maybeOpenHotelierEditFromResponse(response);
                 if (!openedAutoPopup) {
                     if (['18', '21', '22','16'].includes(String(clientId))) {
-                        barcodeFilterInput.focus().select();
+                        focusBarcodeInput();
                     } else {
                         nameFilterInput.focus();
                     }
@@ -2786,7 +2806,7 @@ $('#btn_clear_debug_micotex').on('click', function() {
                 if (window.__MENIU_WIDGET__) window.__MENIU_WIDGET__.show();
                 // focus, la fel ca la produse
                 if (['18','21','22'].includes(String(clientId))) {
-                  barcodeFilterInput.focus().select();
+                  focusBarcodeInput();
                 } else {
                   nameFilterInput.focus();
                 }
@@ -2798,7 +2818,7 @@ $('#btn_clear_debug_micotex').on('click', function() {
             loadProducts(currentCategory, 1);
 
             if (['18','21','22'].includes(String(clientId))) {
-              barcodeFilterInput.focus().select();
+              focusBarcodeInput();
             } else {
               nameFilterInput.focus();
             }
@@ -2842,21 +2862,21 @@ $('#btn_clear_debug_micotex').on('click', function() {
         }, 350);
     });
 
-    // dacă se apasă slash în câmpul de cod bare, dăm blur (pierdem focusul)
-    barcodeFilterInput.on('keydown', function(e) {
-        if (e.key === '/') {
-            e.preventDefault();
-            $(this).blur();
-        }
-    });
+    // Pentru Lorand 1019 secțiunea de cod bare nu există și listener-ele nu sunt inițializate.
+    if (barcodeEnabled) {
+        barcodeFilterInput.on('keydown', function(e) {
+            if (e.key === '/') {
+                e.preventDefault();
+                $(this).blur();
+            }
+        });
 
-    // Păstrat handler-ul original de cod bare
-    // Căutarea se declanșează doar la apăsarea tastei Enter
-    barcodeFilterInput.on("keyup", function(event) {
-        if (event.key === 'Enter' || event.keyCode === 13) {
-            processBarcode();
-        }
-    });
+        barcodeFilterInput.on("keyup", function(event) {
+            if (event.key === 'Enter' || event.keyCode === 13) {
+                processBarcode();
+            }
+        });
+    }
 
     // Adăugat handler-ul pentru scroll infinit
     productListContainer.on('scroll', function() {
@@ -3013,7 +3033,7 @@ $('#btn_clear_debug_micotex').on('click', function() {
         $('#suma-incasata-input').val($('#numeric-keyboard-display').val());
         $('#numeric-keyboard-modal').modal('hide');
         calculateRest();
-        barcodeFilterInput.focus().select(); // Revenire focus pe cod bare
+        focusBarcodeInput(); // Revenire focus pe cod bare
     });
     // ======== SFÂRȘIT BLOC PLATĂ ========
     
@@ -3102,7 +3122,7 @@ $('#btn_clear_debug_micotex').on('click', function() {
     
     // Focus inițial
     if (['18', '21', '22','16'].includes(String(clientId))) {
-        barcodeFilterInput.focus().select();
+        focusBarcodeInput();
     } else {
         nameFilterInput.focus();
     }

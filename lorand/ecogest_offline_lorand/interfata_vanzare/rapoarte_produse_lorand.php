@@ -2,9 +2,11 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/session.php';
+require_once __DIR__ . '/setari_lorand_schema.php';
 
 $clientId = (int)($_SESSION['client_id'] ?? 0);
-if ($clientId !== 1019) {
+$lorandSettings = vanzare_v2_lorand_settings($pdo);
+if ($clientId !== 1019 || empty($lorandSettings['operator_acces_rapoarte'])) {
     http_response_code(403);
     echo 'Pagina este disponibilă numai operatorilor autorizați.';
     exit;
@@ -15,7 +17,7 @@ if ($clientId !== 1019) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rapoarte produse restaurant</title>
+    <title>Rapoarte produse Lorand</title>
     <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
     <style>
         body { background:#172026; color:#fff; }

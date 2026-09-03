@@ -1,0 +1,11 @@
+﻿<b><size="11">COMANDA:</size></b>
+<b><size="11">Nr. nota: 9</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">TAVERNA AMICII</size></b>
+<b><size="11">2026-09-03 05:22:54</size></b>
+<b><size="11">OPERATOR: OSPATAR1 -</size></b>
+<b><size="11">Masa: F02</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">------ FEL 0 -------</size></b>
+<b><size="11">1 x KETCHUP-DULCE/PICANT 50G</size></b>
+<b><size="11">--------------------</size></b>

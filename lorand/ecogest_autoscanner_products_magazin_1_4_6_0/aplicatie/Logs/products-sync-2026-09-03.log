@@ -1,0 +1,14 @@
+[2026-09-03 10:11:33] Aplicația a pornit.
+[2026-09-03 10:11:33] Pornesc scanarea, sursă: pornire automată.
+[2026-09-03 10:11:33] Deschid baza locală.
+[2026-09-03 10:11:33] Calculez semnătura produselor locale.
+[2026-09-03 10:11:33] Verific nomenclatorul disponibil online.
+[2026-09-03 10:11:33] Import produse început. Online: 1117 produse.
+[2026-09-03 10:11:33] Copie de siguranță creată: C:\xampp\htdocs\github\instalari_offline_ecogest\lorand\api_offline_ecogest_lorand\db_local\backups_products_sync\pos_before_products_sync_20260903_101133.db
+[2026-09-03 10:11:34] Nomenclatorul este deja sincronizat. Produse verificate: 1117.
+[2026-09-03 10:11:36] Setările au fost salvate. Interval: 10 minute.
+[2026-09-03 10:21:36] Pornesc scanarea, sursă: programare automată.
+[2026-09-03 10:21:36] Deschid baza locală.
+[2026-09-03 10:21:36] Calculez semnătura produselor locale.
+[2026-09-03 10:21:36] Verific nomenclatorul disponibil online.
+[2026-09-03 10:21:36] Nomenclatorul este deja sincronizat. Produse verificate: 1117.

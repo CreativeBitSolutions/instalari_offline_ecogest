@@ -9,22 +9,21 @@
             <div class="modal-body">
                 <table class='table table-bordered'>
                     <?php
-                        // --- START MODIFICARE ---
-                        // Interogare pentru a prelua sumele turei, înlocuind protocol cu glovo (ONLINE)
+                        // Metodele de plată sunt afișate separat și intră în totalul turei.
                         $sume_sertar_sql = "
                             SELECT 
                                 COALESCE(SUM(COALESCE(numerar, 0) - COALESCE(rest, 0)), 0) as total_numerar, 
                                 COALESCE(sum(card), 0) as total_card, 
                                 COALESCE(sum(tichete), 0) as total_tichete, 
+                                COALESCE(sum(protocol), 0) as total_protocol,
                                 COALESCE(sum(glovo), 0) as total_online 
                             FROM $tabel_final_note 
                             WHERE cod_inchidere=0 AND status='F' AND operator=:adm_id AND locatie=:locatie";
                         $sume_sertar_stmt = $pdo->prepare($sume_sertar_sql);
                         $sume_sertar_stmt->execute(['adm_id' => $adm_id, 'locatie' => $cod_locatie]);
                         $sume = $sume_sertar_stmt->fetch(PDO::FETCH_ASSOC);
-                        // Calculam totalul încasărilor inclusiv online ca asa e corect
-                        $total_incasari = $sume['total_numerar'] + $sume['total_card'] + $sume['total_tichete']+$sume['total_online'];
-                        // --- END MODIFICARE ---
+                        $total_incasari = $sume['total_numerar'] + $sume['total_card']
+                            + $sume['total_tichete'] + $sume['total_protocol'] + $sume['total_online'];
                     ?>
                     <tr>
                         <td>Numerar</td>
@@ -37,6 +36,10 @@
                     <tr>
                         <td>Tichete</td>
                         <td><?php echo number_format($sume['total_tichete'], 2, '.', ''); ?> RON</td>
+                    </tr>
+                    <tr>
+                        <td>PROTOCOL</td>
+                        <td><?php echo number_format($sume['total_protocol'], 2, '.', ''); ?> RON</td>
                     </tr>
                     <tr>
                         <td>ONLINE</td>

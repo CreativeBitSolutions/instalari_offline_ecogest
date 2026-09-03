@@ -1,6 +1,7 @@
 <?php
 include('database_connection.php');
 session_start();
+require_once __DIR__ . '/offline_printer_flow_helper.php';
 
 try {
     // Obținem parametrii din POST și din sesiune
@@ -190,19 +191,16 @@ try {
         'continut'                => $continut
     ];
 
-    $json_array_imprimanta = [
-        "status"  => "success",
-        "message" => "Date pentru imprimantă generate cu succes.",
-        "data"    => $printData
-    ];
-
-    $json_data_imprimanta = json_encode($json_array_imprimanta, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-    $json_file_path_imprimanta = $folder_path . "/de_listat_la_imprimanta.json";
-    file_put_contents($json_file_path_imprimanta, $json_data_imprimanta);
+    try {
+        agecs_offline_printer_enqueue($printData, 'Nota încasată a fost adăugată în coada imprimantei.');
+    } catch (Throwable $printerError) {
+        error_log('Nota este salvată, dar listarea ei nu a intrat în coadă: ' . $printerError->getMessage());
+        $_SESSION['offline_printer_error'] = 'Nota este salvată, dar documentul nu a putut fi pus în coada imprimantei. Folosiți relistarea.';
+    }
 
     // Resetăm eventualele variabile de sesiune și redirecționăm către pagina de vânzare
     unset($_SESSION['nr_bon'], $_SESSION['numerarprim'], $_SESSION['cardprim'],$_SESSION['glovo'],  $_SESSION['cif_client'], $_SESSION['rest_tichete'], $_SESSION['total_tichete'], $_SESSION['masa_curenta']);
-    printf("<script>location.href='vanzare_restaurant.php'</script>");
+    echo agecs_offline_printer_redirect_script('vanzare_restaurant.php', 'nota_plata');
     
 } catch (PDOException $e) {
     error_log("Eroare la generarea datelor pentru nota încasată: " . $e->getMessage());

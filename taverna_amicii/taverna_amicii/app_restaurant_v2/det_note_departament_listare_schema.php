@@ -18,13 +18,8 @@ if (!function_exists('agecs_ensure_det_note_departament_listare')) {
         try {
             $driver = strtolower((string)$pdo->getAttribute(PDO::ATTR_DRIVER_NAME));
             if ($driver === 'sqlite') {
-                $columns = $pdo->query('PRAGMA table_info("' . $tableName . '")')->fetchAll(PDO::FETCH_ASSOC);
-                foreach ($columns as $column) {
-                    if (($column['name'] ?? '') === 'departament_listare') {
-                        return $results[$cacheKey] = true;
-                    }
-                }
-                $pdo->exec('ALTER TABLE "' . $tableName . '" ADD COLUMN "departament_listare" TEXT DEFAULT NULL');
+                // Schema SQLite este garantata central, prin PRAGMA user_version, in database_connection.php.
+                return $results[$cacheKey] = true;
             } else {
                 $stmt = $pdo->prepare("SHOW COLUMNS FROM `{$tableName}` LIKE ?");
                 $stmt->execute(['departament_listare']);

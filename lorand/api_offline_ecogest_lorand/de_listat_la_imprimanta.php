@@ -1,65 +1,78 @@
 <?php
-// api/de_listat_la_imprimanta.php
+header('Content-Type: application/json; charset=utf-8');
 
-header('Content-Type: application/json');
-
-/**
- * Trimite un răspuns JSON și termină execuția scriptului.
- *
- * @param string $status  'success' sau 'error'
- * @param string $message Mesajul de răspuns
- * @param mixed  $data    Datele suplimentare (opțional)
- */
 function send_response($status, $message, $data = null) {
     echo json_encode([
-        'status'  => $status,
+        'status' => $status,
         'message' => $message,
-        'data'    => $data
-    ]);
+        'data' => $data,
+    ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     exit;
 }
 
-// Verificăm dacă parametrul 'client_id' este prezent în $_POST
-if (!isset($_POST['client_id']) || trim($_POST['client_id']) === '') {
+function printer_claim_file(string $path): ?string {
+    if (!is_file($path)) {
+        return null;
+    }
+    $claimed = $path . '.processing.' . getmypid() . '.' . str_replace('.', '', uniqid('', true));
+    if (@rename($path, $claimed)) {
+        return $claimed;
+    }
+    return null;
+}
+
+$client_id = isset($_POST['client_id']) ? trim((string)$_POST['client_id']) : '';
+$locatie = isset($_POST['locatie']) ? trim((string)$_POST['locatie']) : '';
+if ($client_id === '') {
     send_response('error', 'Parametrul "client_id" lipsește.');
 }
-$client_id = trim($_POST['client_id']);
-
-// Verificăm dacă parametrul 'locatie' este prezent în $_POST
-if (!isset($_POST['locatie']) || trim($_POST['locatie']) === '') {
+if ($locatie === '') {
     send_response('error', 'Parametrul "locatie" lipsește.');
 }
-$locatie = trim($_POST['locatie']);
 
-// (Opțional) Filtrare/sanitizare pentru a permite doar caractere alfanumerice, underscore sau cratime
 $client_id = preg_replace('/[^a-zA-Z0-9_-]/', '', $client_id);
-$locatie   = preg_replace('/[^a-zA-Z0-9_-]/', '', $locatie);
-
-// Definim calea către fișierul de la imprimantă
-// Presupunând că structura folderelor este: 
-// api/{client_id}/{locatie}/de_listat_la_imprimanta.json
-$file_path = __DIR__ . '/' . $client_id . '/' . $locatie . '/de_listat_la_imprimanta.json';
-
-// Verificăm dacă fișierul există
-if (!file_exists($file_path)) {
-    send_response('success', 'Fișierul de_listat_la_imprimanta.json nu a fost găsit în directorul: ' . $client_id . '/' . $locatie);
+$locatie = preg_replace('/[^a-zA-Z0-9_-]/', '', $locatie);
+if ($client_id === '' || $locatie === '') {
+    send_response('error', 'Clientul sau locația nu sunt valide.');
 }
 
-// Citim conținutul fișierului
-$file_content = file_get_contents($file_path);
+$base = __DIR__ . DIRECTORY_SEPARATOR . $client_id . DIRECTORY_SEPARATOR . $locatie;
+$legacy = $base . DIRECTORY_SEPARATOR . 'de_listat_la_imprimanta.json';
+$claimed = printer_claim_file($legacy);
 
-// Verificăm dacă conținutul este un JSON valid
+if ($claimed === null) {
+    $queueDir = $base . DIRECTORY_SEPARATOR . 'print_queue';
+    if (is_dir($queueDir)) {
+        $candidates = glob($queueDir . DIRECTORY_SEPARATOR . '*.json') ?: [];
+        sort($candidates, SORT_STRING);
+        foreach ($candidates as $candidate) {
+            $claimed = printer_claim_file($candidate);
+            if ($claimed !== null) {
+                break;
+            }
+        }
+    }
+}
+
+if ($claimed === null) {
+    send_response('success', 'Nu există documente în așteptare pentru imprimare.');
+}
+
+$file_content = @file_get_contents($claimed);
+if ($file_content === false) {
+    @unlink($claimed);
+    send_response('error', 'Documentul de imprimare nu a putut fi citit.');
+}
+
 $json_data = json_decode($file_content, true);
-if (json_last_error() !== JSON_ERROR_NONE) {
-    send_response('error', 'Conținutul fișierului nu este un JSON valid.');
+if (!is_array($json_data) || json_last_error() !== JSON_ERROR_NONE) {
+    @unlink($claimed);
+    send_response('error', 'Documentul din coada imprimantei nu conține JSON valid.');
 }
 
-// Ștergem fișierul după ce am preluat conținutul
-if (!unlink($file_path)) {
-    send_response('error', 'Fișierul a fost citit, dar nu s-a putut șterge.');
+if (!@unlink($claimed)) {
+    send_response('error', 'Documentul a fost citit, dar nu s-a putut elimina din coada imprimantei.');
 }
 
-// Returnăm conținutul citit (care deja are structura JSON dorită)
 echo $file_content;
 exit;
-?>

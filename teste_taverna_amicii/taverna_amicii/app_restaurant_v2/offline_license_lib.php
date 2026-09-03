@@ -148,16 +148,6 @@ function offline_license_runtime_read()
         try {
             $pdo = new PDO('sqlite:' . $config['db_path']);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $pdo->exec("CREATE TABLE IF NOT EXISTS offline_license_runtime (
-                id INTEGER PRIMARY KEY CHECK (id = 1),
-                last_seen_epoch INTEGER NOT NULL DEFAULT 0,
-                last_server_epoch INTEGER NOT NULL DEFAULT 0,
-                last_attempt_epoch INTEGER NOT NULL DEFAULT 0,
-                last_success_epoch INTEGER NOT NULL DEFAULT 0,
-                last_error TEXT NOT NULL DEFAULT '',
-                updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
-            )");
-            $pdo->exec('INSERT OR IGNORE INTO offline_license_runtime (id) VALUES (1)');
             $row = $pdo->query('SELECT * FROM offline_license_runtime WHERE id = 1')->fetch(PDO::FETCH_ASSOC);
             if (is_array($row)) {
                 foreach (array('last_seen_epoch', 'last_server_epoch', 'last_attempt_epoch', 'last_success_epoch') as $field) {
@@ -194,25 +184,34 @@ function offline_license_runtime_write(array $changes)
         try {
             $pdo = new PDO('sqlite:' . $config['db_path']);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $pdo->exec("CREATE TABLE IF NOT EXISTS offline_license_runtime (
-                id INTEGER PRIMARY KEY CHECK (id = 1),
-                last_seen_epoch INTEGER NOT NULL DEFAULT 0,
-                last_server_epoch INTEGER NOT NULL DEFAULT 0,
-                last_attempt_epoch INTEGER NOT NULL DEFAULT 0,
-                last_success_epoch INTEGER NOT NULL DEFAULT 0,
-                last_error TEXT NOT NULL DEFAULT '',
-                updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
-            )");
-            $stmt = $pdo->prepare("INSERT OR REPLACE INTO offline_license_runtime
-                (id, last_seen_epoch, last_server_epoch, last_attempt_epoch, last_success_epoch, last_error, updated_at)
-                VALUES (1, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)");
-            $stmt->execute(array(
-                $runtime['last_seen_epoch'],
-                $runtime['last_server_epoch'],
-                $runtime['last_attempt_epoch'],
-                $runtime['last_success_epoch'],
-                $runtime['last_error'],
-            ));
+            $writeRuntime = static function (PDO $connection) use ($runtime) {
+                $stmt = $connection->prepare("INSERT OR REPLACE INTO offline_license_runtime
+                    (id, last_seen_epoch, last_server_epoch, last_attempt_epoch, last_success_epoch, last_error, updated_at)
+                    VALUES (1, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)");
+                $stmt->execute(array(
+                    $runtime['last_seen_epoch'],
+                    $runtime['last_server_epoch'],
+                    $runtime['last_attempt_epoch'],
+                    $runtime['last_success_epoch'],
+                    $runtime['last_error'],
+                ));
+            };
+
+            try {
+                $writeRuntime($pdo);
+            } catch (Throwable $missingRuntimeTable) {
+                // Doar o baza complet noua ajunge aici. Dupa prima scriere, schema versionata o gestioneaza central.
+                $pdo->exec("CREATE TABLE IF NOT EXISTS offline_license_runtime (
+                    id INTEGER PRIMARY KEY CHECK (id = 1),
+                    last_seen_epoch INTEGER NOT NULL DEFAULT 0,
+                    last_server_epoch INTEGER NOT NULL DEFAULT 0,
+                    last_attempt_epoch INTEGER NOT NULL DEFAULT 0,
+                    last_success_epoch INTEGER NOT NULL DEFAULT 0,
+                    last_error TEXT NOT NULL DEFAULT '',
+                    updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+                )");
+                $writeRuntime($pdo);
+            }
         } catch (Throwable $e) {
         }
     }

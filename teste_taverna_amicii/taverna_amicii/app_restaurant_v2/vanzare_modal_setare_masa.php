@@ -2,18 +2,68 @@
 /* =========================
  *  MODAL: SETARE MASĂ — identic logicii tale (rămâne inline aici)
  * ========================= */
-$meses_sql = "SELECT cod_masa, nume_masa, tip_masa, stare
+$meses_sql = "SELECT cod_masa, nume_masa, tip_masa, stare, cod_bratara, categorie_masa
               FROM $tabel_final_mese
               WHERE cod_locatie = :cod_locatie
-              ORDER BY stare ASC, nume_masa ASC";
+              ORDER BY categorie_masa ASC, stare ASC, cod_masa ASC";
 $stmt = $pdo->prepare($meses_sql);
 $stmt->execute([':cod_locatie' => $cod_locatie]);
 $meses = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$categories_sql = "SELECT DISTINCT categorie_masa FROM $tabel_final_mese WHERE cod_locatie = :cod_locatie";
-$stmtCat = $pdo->prepare($categories_sql);
-$stmtCat->execute([':cod_locatie' => $cod_locatie]);
-$categories = $stmtCat->fetchAll(PDO::FETCH_ASSOC);
+$categories = [];
+$mesesByCategory = [];
+foreach ($meses as $masaDisponibila) {
+    $categoryName = trim((string)($masaDisponibila['categorie_masa'] ?? ''));
+    if ($categoryName === '') {
+        $categoryName = 'FARA CATEGORIE';
+    }
+    if (!isset($mesesByCategory[$categoryName])) {
+        $categories[] = ['categorie_masa' => $categoryName];
+        $mesesByCategory[$categoryName] = [];
+    }
+    $mesesByCategory[$categoryName][] = $masaDisponibila;
+}
+
+// Citim toate notele deschise intr-un singur query. Evitam cautari separate pentru fiecare masa.
+$modalAdminId = (int)($_SESSION['admin_id'] ?? 0);
+$openNotesStmt = $pdo->prepare("
+    SELECT n.nrbon,
+           n.cod_masa,
+           n.operator,
+           n.listat_nota_plata,
+           m.nume_masa,
+           COALESCE(a.admin_firstname, '') AS admin_firstname,
+           COALESCE(a.admin_lastname, '') AS admin_lastname,
+           EXISTS (
+               SELECT 1
+               FROM $tabel_final_det_note dn
+               WHERE dn.nr_bon = n.nrbon
+                 AND dn.t_list = 0
+           ) AS are_produse_nelistate
+    FROM $tabel_final_note n
+    LEFT JOIN $tabel_final_mese m ON m.cod_masa = n.cod_masa
+    LEFT JOIN $tabel_final_admins a ON a.admin_id = n.operator
+    WHERE n.status = 'S'
+      AND n.locatie = :locatie
+    ORDER BY n.nrbon DESC
+");
+$openNotesStmt->execute([':locatie' => $cod_locatie]);
+$openNotes = $openNotesStmt->fetchAll(PDO::FETCH_ASSOC);
+
+$latestOpenNoteByTable = [];
+$currentOperatorOpenNotes = [];
+foreach ($openNotes as $openNote) {
+    $tableCode = (int)($openNote['cod_masa'] ?? 0);
+    if ($tableCode > 0 && !isset($latestOpenNoteByTable[$tableCode])) {
+        $latestOpenNoteByTable[$tableCode] = $openNote;
+    }
+    if ((int)($openNote['operator'] ?? 0) === $modalAdminId) {
+        $currentOperatorOpenNotes[] = $openNote;
+    }
+}
+usort($currentOperatorOpenNotes, static function (array $left, array $right): int {
+    return (int)($left['nrbon'] ?? 0) <=> (int)($right['nrbon'] ?? 0);
+});
 ?>
 <?php
 $hide_tura_actions_in_modal = in_array((int)($_SESSION['client_id'] ?? 0), [25, 26], true);
@@ -258,27 +308,13 @@ $hide_tura_actions_in_modal = in_array((int)($_SESSION['client_id'] ?? 0), [25, 
 <?php
   $adm_id      = (int)($_SESSION['admin_id'] ?? 0);
   $cod_locatie = (int)($_SESSION['cod_locatie'] ?? 0);
-  $sql = "SELECT n.nrbon, n.cod_masa, m.nume_masa, n.listat_nota_plata
-          FROM $tabel_final_note n
-          INNER JOIN mese m ON m.cod_masa = n.cod_masa
-          WHERE n.status='S' AND n.operator=:op AND n.locatie=:loc
-          ORDER BY n.nrbon ASC";
-  $stmt = $pdo->prepare($sql);
-  $stmt->execute([':op'=>$adm_id, ':loc'=>$cod_locatie]);
-
-  while ($r = $stmt->fetch(PDO::FETCH_ASSOC)) {
+  foreach ($currentOperatorOpenNotes as $r) {
     $nr_bon = $r['nrbon'];
     $cod_masa = $r['cod_masa'];
     $nume_masa = $r['nume_masa'];
 
     $styleBtn = "background:#fff;color:#000;";
-    $det_sql = "SELECT COUNT(*) AS total, SUM(CASE WHEN t_list=0 THEN 1 ELSE 0 END) AS not_listed
-                FROM $tabel_final_det_note WHERE nr_bon=:nb";
-    $detStmt = $pdo->prepare($det_sql);
-    $detStmt->execute([':nb'=>$nr_bon]);
-    $det = $detStmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($det && intval($det['not_listed']) > 0) {
+    if ((int)($r['are_produse_nelistate'] ?? 0) > 0) {
       $styleBtn = "background:#f8d7da;color:#721c24;";
     } else {
       $styleBtn = ($r['listat_nota_plata']==1)
@@ -325,13 +361,7 @@ $hide_tura_actions_in_modal = in_array((int)($_SESSION['client_id'] ?? 0), [25, 
               </div>
 <?php foreach($categories as $index=>$category):
       $cat = $category['categorie_masa'];
-      $mesas_sql = "SELECT cod_masa, nume_masa, tip_masa, stare, cod_bratara
-                    FROM $tabel_final_mese
-                    WHERE cod_locatie = :cod_locatie AND categorie_masa = :categorie
-                    ORDER BY stare ASC, cod_masa ASC";
-      $stmtCatMesas = $pdo->prepare($mesas_sql);
-      $stmtCatMesas->execute([':cod_locatie'=>$cod_locatie, ':categorie'=>$cat]);
-      $mesas_cat = $stmtCatMesas->fetchAll(PDO::FETCH_ASSOC);
+      $mesas_cat = $mesesByCategory[$cat] ?? [];
 ?>
               <div id="<?php echo htmlspecialchars($cat); ?>" class="tabcontent" style="display:<?php echo $index==0?'block':'none'; ?>;">
                 <div class="tablesGrid">
@@ -346,15 +376,10 @@ $hide_tura_actions_in_modal = in_array((int)($_SESSION['client_id'] ?? 0), [25, 
       $buttonStyle = "background-color:#fff;color:#000;";
       $operator_info = "";
       $operator_actual_id = "";
+      $nrbon_mesa = 0;
 
       if ($stare === 1) {
-        $note_sql = "SELECT operator, nrbon, listat_nota_plata
-                     FROM $tabel_final_note
-                     WHERE cod_masa = :cod_masa AND status='S'
-                     ORDER BY nrbon DESC LIMIT 1";
-        $stmtNote = $pdo->prepare($note_sql);
-        $stmtNote->execute([':cod_masa'=>$cod_masa]);
-        $note = $stmtNote->fetch(PDO::FETCH_ASSOC);
+        $note = $latestOpenNoteByTable[(int)$cod_masa] ?? null;
         if ($note) {
           $operator_id = $note['operator'];
           $nrbon_mesa  = $note['nrbon'];
@@ -362,22 +387,12 @@ $hide_tura_actions_in_modal = in_array((int)($_SESSION['client_id'] ?? 0), [25, 
 
           if ($operator_id) {
             $operator_actual_id = $operator_id;
-            $admin_sql = "SELECT admin_firstname, admin_lastname FROM $tabel_final_admins WHERE admin_id = :admin_id";
-            $stmtAdmin = $pdo->prepare($admin_sql);
-            $stmtAdmin->execute([':admin_id'=>$operator_id]);
-            $admin = $stmtAdmin->fetch(PDO::FETCH_ASSOC);
-            if ($admin) {
-              $operator_info = $admin['admin_firstname'].' '.$admin['admin_lastname'];
-            }
+            $operator_info = trim(
+                (string)($note['admin_firstname'] ?? '') . ' ' . (string)($note['admin_lastname'] ?? '')
+            );
           }
 
-          $det_note_sql = "SELECT COUNT(*) AS total, SUM(CASE WHEN t_list=0 THEN 1 ELSE 0 END) AS not_listed
-                           FROM $tabel_final_det_note WHERE nr_bon = :nrbon";
-          $stmtDet = $pdo->prepare($det_note_sql);
-          $stmtDet->execute([':nrbon'=>$nrbon_mesa]);
-          $det_result = $stmtDet->fetch(PDO::FETCH_ASSOC);
-
-          if ($det_result && intval($det_result['not_listed']) > 0) {
+          if ((int)($note['are_produse_nelistate'] ?? 0) > 0) {
             $buttonStyle = "background-color:#f8d7da;color:#721c24;";
           } else {
             $buttonStyle = ($listat_nota_plata_m == 1)

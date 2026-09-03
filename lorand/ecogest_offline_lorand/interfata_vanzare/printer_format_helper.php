@@ -8,14 +8,22 @@ if (!function_exists('agecs_printer_client_format_config')) {
             'bold' => true,
             'size' => '11',
             'align' => 'left',
+            'width_chars' => 42,
+            'copies' => 2,
+            'destination' => 'BAR',
         ];
 
-        if (!defined('RESTAURANT_OFFLINE_API_DIR')) {
+        $apiRoot = '';
+        if (function_exists('offline_api_root_path')) {
+            $apiRoot = rtrim((string)offline_api_root_path(), '/\\');
+        } elseif (defined('RESTAURANT_OFFLINE_API_DIR')) {
+            $apiRoot = rtrim((string)constant('RESTAURANT_OFFLINE_API_DIR'), '/\\');
+        }
+        if ($apiRoot === '') {
             return $defaults;
         }
 
-        $configPath = rtrim((string)RESTAURANT_OFFLINE_API_DIR, '/\\')
-            . DIRECTORY_SEPARATOR . 'printer_format.json';
+        $configPath = $apiRoot . DIRECTORY_SEPARATOR . 'printer_format.json';
         if (!is_file($configPath)) {
             return $defaults;
         }
@@ -34,10 +42,22 @@ if (!function_exists('agecs_printer_client_format_config')) {
             $align = $defaults['align'];
         }
 
+        $width = (int)($decoded['width_chars'] ?? $defaults['width_chars']);
+        if ($width < 24 || $width > 80) {
+            $width = $defaults['width_chars'];
+        }
+        $copies = (int)($decoded['copies'] ?? $defaults['copies']);
+        if ($copies < 1 || $copies > 5) {
+            $copies = $defaults['copies'];
+        }
+
         return [
             'bold' => filter_var($decoded['bold'] ?? $defaults['bold'], FILTER_VALIDATE_BOOL),
             'size' => $size,
             'align' => $align,
+            'width_chars' => $width,
+            'copies' => $copies,
+            'destination' => 'BAR',
         ];
     }
 }

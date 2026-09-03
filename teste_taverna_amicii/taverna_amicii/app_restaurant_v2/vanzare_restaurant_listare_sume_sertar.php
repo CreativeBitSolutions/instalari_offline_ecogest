@@ -1,5 +1,6 @@
 <?php
 include('session.php'); // sesiune + conexiune DB
+require_once __DIR__ . '/offline_printer_flow_helper.php';
 
 // date esențiale din sesiune
 $client_id    = $_SESSION['client_id'];
@@ -85,28 +86,10 @@ try {
         'continut'                => $continut
     ]];
 
-    $json_file_path = "{$folder_path}/de_listat_la_imprimanta.json";
-
-    // 7) Așteptăm eventual și scriem fișierul
-    $wait = 0;
-    while (file_exists($json_file_path) && $wait < 60) {
-        sleep(10);
-        $wait += 10;
-    }
-    if (file_exists($json_file_path)) {
-        echo "<script>alert('Fișierul nu s-a putut genera deoarece există deja unul activ.');location.href='vanzare_restaurant.php';</script>";
-        exit();
-    }
-
-    $json_array = [
-        "status"  => "success",
-        "message" => "Raport note deschise generat cu succes.",
-        "data"    => $printData
-    ];
-    file_put_contents($json_file_path, json_encode($json_array, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-
-    // redirect (sau poți trimite alt mesaj/JSON)
-    echo "<script>location.href='vanzare_restaurant.php'</script>";
-} catch (PDOException $e) {
+    agecs_offline_printer_enqueue($printData, 'Raportul informativ a fost adăugat în coada imprimantei.');
+    echo agecs_offline_printer_redirect_script('vanzare_restaurant.php', 'raport');
+} catch (Throwable $e) {
     error_log("Eroare la generarea raportului de note deschise: " . $e->getMessage());
+    $_SESSION['offline_printer_error'] = 'Raportul a fost calculat, dar nu a putut fi pus în coada imprimantei.';
+    echo agecs_offline_printer_redirect_script('vanzare_restaurant.php', 'raport');
 }

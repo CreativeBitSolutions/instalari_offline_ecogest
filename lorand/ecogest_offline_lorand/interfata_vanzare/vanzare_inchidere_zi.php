@@ -1,6 +1,8 @@
 <?php
 
 include 'session.php';
+require_once __DIR__ . '/lorand_z_printer.php';
+require_once __DIR__ . '/offline_printer_flow_helper.php';
 
 $payments = [
     'numerar' => (float)($_POST['numerar'] ?? 0),
@@ -25,7 +27,13 @@ try {
     }
     offline_close_z_report($pdo, $location, $reportNumber, $closureCodes, $payments, $now->format('Y-m-d H:i:s'));
     $_SESSION['offline_z_closed'] = $reportNumber;
-    header('Location: vanzare_magazin.php?raport_z_inchis=' . rawurlencode((string)$reportNumber));
+    try {
+        lorand_z_enqueue_documents($pdo, (int)($_SESSION['client_id'] ?? 0), $location, $reportNumber);
+    } catch (Throwable $printerError) {
+        error_log('Listarea închiderii Lorand: ' . $printerError->getMessage());
+        $_SESSION['offline_printer_error'] = $printerError->getMessage();
+    }
+    header('Location: ' . lorand_printer_wait_url('logout.php', 'inchidere_z'));
     exit;
 } catch (Throwable $e) {
     $_SESSION['offline_z_error'] = $e->getMessage();

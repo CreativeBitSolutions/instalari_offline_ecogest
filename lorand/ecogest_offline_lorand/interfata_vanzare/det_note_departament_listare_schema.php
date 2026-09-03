@@ -16,15 +16,29 @@ if (!function_exists('agecs_ensure_det_note_departament_listare')) {
         }
 
         try {
-            $stmt = $pdo->prepare("SHOW COLUMNS FROM `{$tableName}` LIKE ?");
-            $stmt->execute(['departament_listare']);
-
-            if (!$stmt->fetch(PDO::FETCH_ASSOC)) {
-                $pdo->exec("
-                    ALTER TABLE `{$tableName}`
-                    ADD COLUMN `departament_listare` VARCHAR(50) NULL DEFAULT NULL
-                    COMMENT 'Departamentul produsului la momentul adaugarii pe document'
-                ");
+            $driver = strtolower((string)$pdo->getAttribute(PDO::ATTR_DRIVER_NAME));
+            if ($driver === 'sqlite') {
+                $stmt = $pdo->query('PRAGMA table_info("' . $tableName . '")');
+                $columnExists = false;
+                foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $column) {
+                    if (strcasecmp((string)($column['name'] ?? ''), 'departament_listare') === 0) {
+                        $columnExists = true;
+                        break;
+                    }
+                }
+                if (!$columnExists) {
+                    $pdo->exec('ALTER TABLE "' . $tableName . '" ADD COLUMN "departament_listare" TEXT NULL DEFAULT NULL');
+                }
+            } else {
+                $stmt = $pdo->prepare("SHOW COLUMNS FROM `{$tableName}` LIKE ?");
+                $stmt->execute(['departament_listare']);
+                if (!$stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $pdo->exec("
+                        ALTER TABLE `{$tableName}`
+                        ADD COLUMN `departament_listare` VARCHAR(50) NULL DEFAULT NULL
+                        COMMENT 'Departamentul produsului la momentul adaugarii pe document'
+                    ");
+                }
             }
 
             $results[$cacheKey] = true;
@@ -61,13 +75,34 @@ if (!function_exists('agecs_snapshot_det_note_departamente')) {
 
         try {
             // Completeaza doar liniile fara instantaneu. Valorile deja salvate raman istorice.
-            $stmt = $pdo->prepare("
-                UPDATE `{$detNoteTable}` dn
-                INNER JOIN `{$produseTable}` ps ON ps.cod_produs = dn.cod_p
-                SET dn.departament_listare = NULLIF(TRIM(ps.departament), '')
-                WHERE dn.nr_bon = :nr_bon
-                  AND (dn.departament_listare IS NULL OR TRIM(dn.departament_listare) = '')
-            ");
+            $driver = strtolower((string)$pdo->getAttribute(PDO::ATTR_DRIVER_NAME));
+            if ($driver === 'sqlite') {
+                $stmt = $pdo->prepare("
+                    UPDATE \"{$detNoteTable}\"
+                    SET departament_listare = (
+                        SELECT NULLIF(TRIM(ps.departament), '')
+                        FROM \"{$produseTable}\" ps
+                        WHERE ps.cod_produs = \"{$detNoteTable}\".cod_p
+                        LIMIT 1
+                    )
+                    WHERE nr_bon = :nr_bon
+                      AND (departament_listare IS NULL OR TRIM(departament_listare) = '')
+                      AND EXISTS (
+                          SELECT 1
+                          FROM \"{$produseTable}\" ps
+                          WHERE ps.cod_produs = \"{$detNoteTable}\".cod_p
+                            AND NULLIF(TRIM(ps.departament), '') IS NOT NULL
+                      )
+                ");
+            } else {
+                $stmt = $pdo->prepare("
+                    UPDATE `{$detNoteTable}` dn
+                    INNER JOIN `{$produseTable}` ps ON ps.cod_produs = dn.cod_p
+                    SET dn.departament_listare = NULLIF(TRIM(ps.departament), '')
+                    WHERE dn.nr_bon = :nr_bon
+                      AND (dn.departament_listare IS NULL OR TRIM(dn.departament_listare) = '')
+                ");
+            }
             $stmt->execute([':nr_bon' => $nrBon]);
             return true;
         } catch (Throwable $e) {

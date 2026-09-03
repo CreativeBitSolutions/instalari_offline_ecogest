@@ -22,7 +22,6 @@ $sql = "SELECT ps.cod_produs,
         AND cl.cod_locatie = :loc
         AND ps.activ = :activ
         $where
-        GROUP BY ps.cod_produs
         ORDER BY ps.nume ASC";
 
 $stmt = $pdo->prepare($sql);
@@ -56,5 +55,4 @@ while ($r = $stmt->fetch(PDO::FETCH_ASSOC)) {
         <div class='product-price'>$pret&nbsp;RON</div>
     </div>";
 }
-echo '<link rel="stylesheet" href="vanzare_css.css">';
 ?>

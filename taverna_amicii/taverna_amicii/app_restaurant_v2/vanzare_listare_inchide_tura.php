@@ -3,7 +3,11 @@ include('session.php'); // sesiune + conexiune DB
 
 // --- FUNCȚII PENTRU ECRANUL DE AȘTEPTARE ---
 function init_loading_screen() {
-    while (ob_get_level()) { ob_end_clean(); }
+    while (ob_get_level() > 0) {
+        if (!@ob_end_clean()) {
+            break;
+        }
+    }
     echo '<!DOCTYPE html><html><head><meta charset="utf-8">';
     echo '<style>body{background:#f4f7f6;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;font-family:sans-serif}.card{background:#fff;padding:30px 40px;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.1);text-align:center}.spinner{margin-bottom:20px;color:#007bff;font-size:40px;display:inline-block;animation:spin 1.5s linear infinite;} @keyframes spin { 100% { transform: rotate(360deg); } } .text-muted{color:#6c757d;font-size:16px;margin-top:15px;}</style>';
     echo '</head><body>';
@@ -33,12 +37,6 @@ $adm_id      = (int)($_SESSION['admin_id'] ?? 0);
 
 if ($ultim_inch <= 0) {
     throw new RuntimeException('Numărul închiderii de tură lipsește din sesiune. Reporniți închiderea de tură.');
-}
-
-// calea către folderul de output
-$folder_path = RESTAURANT_OFFLINE_API_DIR . "/{$client_id}/{$cod_locatie}";
-if (!is_dir($folder_path)) {
-    mkdir($folder_path, 0777, true);
 }
 
 try {
@@ -135,31 +133,19 @@ if ($total_bacsis > 0) {
         'continut'               => $continut
     ]];
 
-    $json_file_path = "{$folder_path}/de_listat_la_imprimanta.json";
-
-    // 7) Așteaptă eventual și scrie fișierul
-    update_loading_status("Așteptăm preluarea datelor de către imprimanta BAR (Închidere Tură)...");
-    $wait = 0;
-    while (file_exists($json_file_path) && $wait < 60) {
-        sleep(10);
-        $wait += 10;
-    }
-    if (file_exists($json_file_path)) {
-        echo "<script>alert('Fișierul nu s-a putut genera deoarece există deja unul activ.');location.href='vanzare_restaurant.php';</script>";
-        exit();
-    }
-
-    $json_array = [
-        "status"  => "success",
-        "message" => "Date pentru închiderea turei generate cu succes.",
-        "data"    => $printData
+    // Documentul nu este publicat încă. Este combinat după salvarea raportului Z
+    // cu raportul de produse și raportul PROTOCOL, într-un singur JSON.
+    $_SESSION['restaurant_pending_closure_print'] = [
+        'client_id' => $client_id,
+        'location_id' => $cod_locatie,
+        'closure_number' => $ultim_inch,
+        'created_at' => time(),
+        'jobs' => $printData,
     ];
-    file_put_contents($json_file_path, json_encode($json_array, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-
-    update_loading_status("Gata! Redirecționăm...");
-    
-    // redirect
-    echo "<script>location.href='vanzare_inchidere_zi_automata.php'</script>";
-} catch (PDOException $e) {
+    update_loading_status("Închiderea a fost salvată. Continuăm cu raportul Z...");
+} catch (Throwable $e) {
     error_log("Eroare la generarea datelor pentru închiderea turei: " . $e->getMessage());
 }
+
+// Generarea raportului Z continuă indiferent dacă documentul a ajuns la imprimantă.
+echo "<script>location.href='vanzare_inchidere_zi_automata.php'</script>";

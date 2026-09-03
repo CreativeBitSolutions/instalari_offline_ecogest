@@ -1,5 +1,97 @@
 <?php // afis_prod.php
+$isTableSummaryRequest = isset($_GET['sumar_masa']);
+if ($isTableSummaryRequest) {
+    ob_start();
+}
 include('session.php');
+
+if ($isTableSummaryRequest) {
+    $sendTableSummaryResponse = static function (array $payload, int $statusCode = 200): void {
+        if (ob_get_level() > 0) {
+            ob_clean();
+        }
+        http_response_code($statusCode);
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_PRESERVE_ZERO_FRACTION);
+        exit;
+    };
+
+    if (!in_array((int)($_SESSION['client_id'] ?? 0), [1008, 1021], true)) {
+        $sendTableSummaryResponse(['ok' => false, 'message' => 'Funcția nu este disponibilă.'], 403);
+    }
+
+    $summaryNoteId = (int)($_SESSION['nr_bon'] ?? 0);
+    $summaryLocationId = (int)($_SESSION['cod_locatie'] ?? 0);
+    if ($summaryNoteId <= 0 || $summaryLocationId <= 0) {
+        $sendTableSummaryResponse(['ok' => false, 'message' => 'Nu este selectată nicio masă.'], 400);
+    }
+
+    try {
+        $summaryNoteStmt = $pdo->prepare(
+            "SELECT n.nrbon, n.cod_masa, m.nume_masa
+               FROM $tabel_final_note n
+               LEFT JOIN $tabel_final_mese m ON m.cod_masa = n.cod_masa
+              WHERE n.nrbon = :nrbon
+                AND n.locatie = :locatie
+                AND n.status = 'S'
+              LIMIT 1"
+        );
+        $summaryNoteStmt->execute([
+            ':nrbon' => $summaryNoteId,
+            ':locatie' => $summaryLocationId,
+        ]);
+        $summaryNote = $summaryNoteStmt->fetch(PDO::FETCH_ASSOC);
+        if (!$summaryNote) {
+            $sendTableSummaryResponse(['ok' => false, 'message' => 'Nota selectată nu mai este deschisă.'], 404);
+        }
+
+        $summaryProductsStmt = $pdo->prepare(
+            "SELECT cod_p,
+                    COALESCE(NULLIF(TRIM(nume_produs), ''), 'Produs') AS nume_produs,
+                    SUM(COALESCE(cantitate, 0)) AS cantitate_totala,
+                    SUM(COALESCE(valoare_vanzare_cu_tva, 0)) AS valoare_totala
+               FROM $tabel_final_det_note
+              WHERE nr_bon = :nrbon
+                AND COALESCE(cantitate, 0) > 0
+              GROUP BY cod_p, COALESCE(NULLIF(TRIM(nume_produs), ''), 'Produs')
+              ORDER BY nume_produs COLLATE NOCASE ASC"
+        );
+        $summaryProductsStmt->execute([':nrbon' => $summaryNoteId]);
+
+        $summaryProducts = [];
+        $summaryQuantity = 0.0;
+        $summaryValue = 0.0;
+        foreach ($summaryProductsStmt->fetchAll(PDO::FETCH_ASSOC) as $summaryProduct) {
+            $quantity = (float)($summaryProduct['cantitate_totala'] ?? 0);
+            $value = (float)($summaryProduct['valoare_totala'] ?? 0);
+            $summaryQuantity += $quantity;
+            $summaryValue += $value;
+            $summaryProducts[] = [
+                'name' => (string)($summaryProduct['nume_produs'] ?? 'Produs'),
+                'quantity' => $quantity,
+                'value' => $value,
+            ];
+        }
+
+        $tableName = trim((string)($summaryNote['nume_masa'] ?? ''));
+        if ($tableName === '') {
+            $tableName = 'Masa ' . (int)$summaryNote['cod_masa'];
+        }
+
+        $sendTableSummaryResponse([
+            'ok' => true,
+            'note_id' => (int)$summaryNote['nrbon'],
+            'table_name' => $tableName,
+            'products' => $summaryProducts,
+            'quantity_total' => $summaryQuantity,
+            'value_total' => $summaryValue,
+        ]);
+    } catch (Throwable $summaryError) {
+        error_log('Sumarul mesei nu a putut fi încărcat: ' . $summaryError->getMessage());
+        $sendTableSummaryResponse(['ok' => false, 'message' => 'Sumarul mesei nu a putut fi încărcat.'], 500);
+    }
+}
+
 require_once __DIR__ . '/det_note_import_schema.php';
 restaurant_v2_ensure_det_note_site_import_column(
     $pdo,
@@ -35,6 +127,16 @@ $f_sql = "
 $f_stmt = $pdo->prepare($f_sql);
 $f_stmt->execute([':nr_bon' => $nr_bon]);
 $rows = $f_stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Totalul si starea de listare sunt deja in rezultatul principal. Evitam doua query-uri suplimentare.
+$total_val_vz_cu_tva = 0.0;
+$are_produse_nelistate = false;
+foreach ($rows as $summaryRow) {
+    $total_val_vz_cu_tva += (float)($summaryRow['valoare_vanzare_cu_tva'] ?? 0);
+    if ((int)($summaryRow['t_list'] ?? 0) === 0) {
+        $are_produse_nelistate = true;
+    }
+}
 ?>
 
 <!-- WRAPPER cu scroll buttons mici (sticky) -->
@@ -151,12 +253,6 @@ $rows = $f_stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <!-- FOOTER TOTAL -->
 <div class="receipt-footer">
-  <?php
-    $total_sql = "SELECT SUM(valoare_vanzare_cu_tva) AS total FROM $tabel_final_det_note WHERE nr_bon = :nr_bon";
-    $total_stmt = $pdo->prepare($total_sql);
-    $total_stmt->execute([':nr_bon' => $nr_bon]);
-    $total_val_vz_cu_tva = $total_stmt->fetchColumn() ?: 0;
-  ?>
   <form id='plata' method='POST' onsubmit="document.getElementById('loading').style.display='flex'">
     <div class="total-container">
       <div>
@@ -177,12 +273,8 @@ $rows = $f_stmt->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
 <?php
-// semnal pentru „produse nelistate”
-$check_sql = "SELECT COUNT(*) AS cnt FROM det_note WHERE nr_bon = :nr_bon AND t_list = 0";
-$check_stmt = $pdo->prepare($check_sql);
-$check_stmt->execute([':nr_bon' => $nr_bon]);
-$row = $check_stmt->fetch(PDO::FETCH_ASSOC);
-if ($row['cnt'] > 0) {
+// semnal pentru „produse nelistate”, calculat din acelasi rezultat cu produsele notei
+if ($are_produse_nelistate) {
   echo "<script>$(function(){ $('#butontrimitecomanda').css('background-color','green'); });</script>";
 }
 ?>

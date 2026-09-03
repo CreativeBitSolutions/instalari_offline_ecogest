@@ -2,6 +2,7 @@
 
 $offlineConfigName = 'config_offline_lorand.json';
 $offlineRootCandidates = array_unique([
+    dirname(__DIR__),
     dirname(__DIR__, 2),
     dirname(__DIR__, 3),
 ]);

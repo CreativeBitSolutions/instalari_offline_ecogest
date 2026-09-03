@@ -19,8 +19,14 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 
 function restaurantDeviceUid(): string
 {
+    static $cachedUid = null;
+    if (is_string($cachedUid) && strlen($cachedUid) === 32) {
+        return $cachedUid;
+    }
+
     $cookieName = 'agecs_device_uid';
     $uid = isset($_COOKIE[$cookieName]) ? preg_replace('/[^a-f0-9]/', '', strtolower((string)$_COOKIE[$cookieName])) : '';
+    $mustSetCookie = false;
 
     if (strlen($uid) !== 32) {
         try {
@@ -29,21 +35,25 @@ function restaurantDeviceUid(): string
             $uid = md5(uniqid('', true) . '|' . ($_SERVER['HTTP_USER_AGENT'] ?? '') . '|' . microtime(true));
         }
         $_COOKIE[$cookieName] = $uid;
+        $mustSetCookie = true;
     }
 
     if (session_status() === PHP_SESSION_ACTIVE) {
         $_SESSION['device_uid'] = $uid;
     }
 
-    setcookie($cookieName, $uid, [
-        'expires' => time() + AGECS_SESSION_LIFETIME,
-        'path' => '/',
-        'secure' => (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'),
-        'httponly' => true,
-        'samesite' => 'Lax',
-    ]);
+    if ($mustSetCookie) {
+        setcookie($cookieName, $uid, [
+            'expires' => time() + AGECS_SESSION_LIFETIME,
+            'path' => '/',
+            'secure' => (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'),
+            'httponly' => true,
+            'samesite' => 'Lax',
+        ]);
+    }
 
-    return $uid;
+    $cachedUid = $uid;
+    return $cachedUid;
 }
 
 function restaurantDeviceIp(): string

@@ -1,1 +1,13 @@
-{}
+{
+    "license": {
+        "version": 1,
+        "client_id": 1019,
+        "hardware_serial": "0000_0000_0000_0000_0026_B778_42D5_DC45.",
+        "installation_uuid": "lorand-c1019-l1-pos1-i-7d8f84b848063631",
+        "issued_at": "2026-09-03T05:31:27+03:00",
+        "expires_at": "2026-10-03T05:31:27+03:00"
+    },
+    "signature": "ZZhau0msDw3JuXI7s8zqbTQZoauWaNmeisZm9SRXWtmZk8xLaX860HLvCjDl0sBnImgNUb+xgtUon9PhcjqHr+DtOSNkTyrZYLoADKS2XYjS410XWGyJJTnYwzLipI1J41e0HgEvPmGilvXJdoEZBIRxSpVixSJbfLxTT6hS52pioBFlB+0ewN63JtxovU6X++XRCDbYedUKWKg39GAzBEw7DaUYwJjz/u+KbInm1pRfB/7DBJ6cJbW7uWl+v0Uma4F9heXtDIhNldq1BTlFIT2EXdgzEHaXmaNpg8dJEypHFpIn7CdmjRFlwBZED9v+Qd8qbFfHYo6v8d+QQ4bLrA==",
+    "signature_algorithm": "SHA256withRSA",
+    "saved_at": "2026-09-03T04:31:28+02:00"
+}

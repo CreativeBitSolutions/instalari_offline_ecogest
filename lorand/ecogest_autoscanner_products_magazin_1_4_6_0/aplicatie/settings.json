@@ -8,5 +8,5 @@
   "SchedulerEnabled": true,
   "RunImmediatelyOnLaunch": true,
   "StartWithWindows": false,
-  "StartMinimized": false
+  "StartMinimized": true
 }

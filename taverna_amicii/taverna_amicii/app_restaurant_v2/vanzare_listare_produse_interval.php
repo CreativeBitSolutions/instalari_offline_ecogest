@@ -1,5 +1,6 @@
 <?php //vanzare_listare_produse_interval.php
 include('session.php');
+require_once __DIR__ . '/offline_printer_flow_helper.php';
 require_once __DIR__ . '/det_note_departament_listare_schema.php';
 agecs_ensure_det_note_departament_listare($pdo, $tabel_final_det_note);
 $departamentListareSql = agecs_departament_listare_sql('dn', 'ps');
@@ -55,14 +56,6 @@ try {
     $folder_path    = RESTAURANT_OFFLINE_API_DIR . "/" . $client_id . "/" . $cod_locatie;
     if (!is_dir($folder_path)) { mkdir($folder_path, 0777, true); }
     $json_file_path = $folder_path . "/de_listat_la_imprimanta.json";
-
-    function wait_until_absent($path, $timeout = 60, $step = 5) {
-        $waited = 0;
-        while (file_exists($path) && $waited < $timeout) {
-            sleep($step);
-            $waited += $step;
-        }
-    }
 
     // ========= QUERY DATA BRUTĂ =========
     $sql = "
@@ -192,60 +185,45 @@ try {
     $nowDate = date('Y-m-d');
     $nowTime = date('H:i:s');
 
-    // ========= SCRIERE SECVENȚIALĂ DINAMICĂ =========
-    
+    // Un singur lot poate conține documente pentru toate departamentele.
+    $printJobs = [];
     if (!empty($finalData)) {
         foreach ($finalData as $dept => $items) {
             if (empty($items)) continue;
 
-            update_loading_status("Se așteaptă și se trimite raportul pentru departamentul: <strong>" . htmlspecialchars($dept) . "</strong>...");
-            wait_until_absent($json_file_path, 60, 5);
-
             $content = $makeContent($dept, $items);
-            $payload = [
-                'status'  => 'success',
-                'message' => "Raport ($dept) generat.",
-                'data'    => [[
-                    'id'                      => 0,
-                    'data'                    => $nowDate,
-                    'ora'                     => $nowTime,
-                    'de_trimis_la_imprimanta' => 1,
-                    'nrbon'                   => 0,
-                    'locatie'                 => (int)$cod_locatie,
-                    'departament_listare'     => $dept,
-                    'continut'                => $content
-                ]]
-            ];
-            file_put_contents($json_file_path, json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-
-            wait_until_absent($json_file_path, 60, 5);
-            usleep(200 * 1000); 
-        }
-    } else {
-        update_loading_status("Nicio vânzare în interval. Se listează confirmarea...");
-        wait_until_absent($json_file_path, 60, 5);
-        $content = "RAPORT PRODUSE VÂNDUTE\n{$nowDate} {$nowTime}\nLocația: {$cod_locatie}\nOperator: {$admin_id}\nInterval: {$intervalHuman}\n---\nNu există vânzări în interval.\n====================\n";
-        $payload = [
-            'status'  => 'success',
-            'message' => 'Nu există vânzări.',
-            'data'    => [[
+            $printJobs[] = [
                 'id'                      => 0,
                 'data'                    => $nowDate,
                 'ora'                     => $nowTime,
                 'de_trimis_la_imprimanta' => 1,
                 'nrbon'                   => 0,
                 'locatie'                 => (int)$cod_locatie,
-                'departament_listare'     => 'BAR',
+                'departament_listare'     => $dept,
                 'continut'                => $content
-            ]]
+            ];
+        }
+    } else {
+        update_loading_status("Nicio vânzare în interval. Se listează confirmarea...");
+        $content = "RAPORT PRODUSE VÂNDUTE\n{$nowDate} {$nowTime}\nLocația: {$cod_locatie}\nOperator: {$admin_id}\nInterval: {$intervalHuman}\n---\nNu există vânzări în interval.\n====================\n";
+        $printJobs[] = [
+            'id'                      => 0,
+            'data'                    => $nowDate,
+            'ora'                     => $nowTime,
+            'de_trimis_la_imprimanta' => 1,
+            'nrbon'                   => 0,
+            'locatie'                 => (int)$cod_locatie,
+            'departament_listare'     => 'BAR',
+            'continut'                => $content
         ];
-        file_put_contents($json_file_path, json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
     }
+    agecs_offline_printer_enqueue($printJobs, 'Raportul de produse a fost adăugat în coada imprimantei.');
 
-} catch (Exception $ex) {
+} catch (Throwable $ex) {
     error_log("[".date("Y-m-d H:i:s")."] Eroare raport: ".$ex->getMessage()." in ".__FILE__.":".__LINE__."\n");
+    $_SESSION['offline_printer_error'] = 'Raportul nu a putut fi pus în coada imprimantei. Verificați scannerul și încercați relistarea.';
 }
 
-update_loading_status("Listare finalizată! Redirecționăm...");
-echo "<script>location.href='vanzare_restaurant.php'</script>";
+update_loading_status("Raportul este pregătit. Verificăm preluarea de către imprimantă...");
+echo agecs_offline_printer_redirect_script('vanzare_restaurant.php', 'raport');
 ?>

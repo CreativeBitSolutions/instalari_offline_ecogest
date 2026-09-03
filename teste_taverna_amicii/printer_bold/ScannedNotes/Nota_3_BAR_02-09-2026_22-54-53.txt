@@ -1,0 +1,21 @@
+﻿<b><size="11">NOTA DE PLATA</size></b>
+<b><size="11">TAVERNA AMICII</size></b>
+<b><size="11">2026-09-02 22:54:34</size></b>
+<b><size="11">OPERATOR: OSPATAR1 -</size></b>
+<b><size="11">-----</size></b>
+<b><size="11">1 x ALEXANDER LEMON 50ML = 5.00 LEI</size></b>
+<b><size="11">Nr. nota: 3</size></b>
+<b><size="11">Masa: F05</size></b>
+<b><size="11">-----</size></b>
+<b><size="11">TOTAL: 5.00 LEI</size></b>
+
+<b><size="11">Bacsisul nu este inclus / Tips not included</size></b>
+
+<b><size="11">Va oferim urmatoarele sugestii pentru calculul bacsisului / Please consider the following suggestions for tips calculation:</size></b>
+
+<b><size="11">Bacsis	Total nota</size></b>
+<b><size="11">10%	0.50	5.50</size></b>
+<b><size="11">12%	0.60	5.60</size></b>
+<b><size="11">15%	0.75	5.75</size></b>
+
+<b><size="11">Alta valoare: ...</size></b>

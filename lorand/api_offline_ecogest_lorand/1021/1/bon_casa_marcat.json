@@ -1,0 +1,18 @@
+{
+    "status": "success",
+    "message": "Bonuri preluate cu succes.",
+    "data": [
+        {
+            "id": "6",
+            "data": "2026-09-03",
+            "ora": "10:56:00",
+            "continut_bon": "H,1,______,_,__;\r\nS,1,______,_,__;A COPIL FEL PRINCIPAL;27;1.0;1;1;2;0;0;BUC\r\nT,1,______,_,__;0;27.0;;;;\r\n",
+            "de_trimis_la_casa_marcat": "1",
+            "locatie": "1",
+            "nrbon": "9",
+            "id_factura": null,
+            "identificator_offline": null,
+            "cod_locatie": "0"
+        }
+    ]
+}

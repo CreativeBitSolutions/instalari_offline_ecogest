@@ -6,6 +6,8 @@ include('vanzare_init.php');
 $offlineMode = function_exists('restaurantIsOfflineSqlite') && restaurantIsOfflineSqlite();
 $wooNotifAudioSrc = $offlineMode ? '' : 'woo_comanda_noua.mpeg';
 $tabletPendingCount = 0;
+
+
 if ($offlineMode) {
   try {
     $tabletCountStmt = $pdo->prepare("SELECT COUNT(*) FROM com_tableta WHERE stare='TRIMISA' AND owner_operator_id=? AND locatie=?");
@@ -180,13 +182,22 @@ $(function(){
       <form method="POST" class="d-inline">
       <?php
       // Mese operator curent (note deschise)
-      $mese_desch_sql = "SELECT $tabel_final_note.nrbon, $tabel_final_note.cod_masa, mese.nume_masa
-                         FROM $tabel_final_note
-                         INNER JOIN mese ON mese.cod_masa = $tabel_final_note.cod_masa
-                         WHERE $tabel_final_note.status='S'
-                           AND $tabel_final_note.operator=:op
-                           AND $tabel_final_note.locatie=:loc
-                         ORDER BY $tabel_final_note.nrbon ASC";
+      $mese_desch_sql = "SELECT n.nrbon,
+                                n.cod_masa,
+                                n.listat_nota_plata,
+                                m.nume_masa,
+                                EXISTS (
+                                    SELECT 1
+                                    FROM $tabel_final_det_note dn
+                                    WHERE dn.nr_bon = n.nrbon
+                                      AND dn.t_list = 0
+                                ) AS are_produse_nelistate
+                         FROM $tabel_final_note n
+                         INNER JOIN mese m ON m.cod_masa = n.cod_masa
+                         WHERE n.status='S'
+                           AND n.operator=:op
+                           AND n.locatie=:loc
+                         ORDER BY n.nrbon ASC";
       $mese_desch_stmt = $pdo->prepare($mese_desch_sql);
       $mese_desch_stmt->execute([':op'=>$adm_id, ':loc'=>$cod_locatie]);
       while ($rrow = $mese_desch_stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -195,22 +206,11 @@ $(function(){
           $nume_masa = $rrow['nume_masa'];
           $bon_amanat = $rrow['nrbon'];
           $bon_am = strval($rrow['nrbon']) . 'BAM';
-          // Culoare în funcție de t_list și listat_nota_plata
-          $det_note_sql = "SELECT COUNT(*) AS total,
-                                  SUM(CASE WHEN t_list = 0 THEN 1 ELSE 0 END) AS not_listed
-                           FROM $tabel_final_det_note
-                           WHERE nr_bon = :nrbon";
-          $stmtDet = $pdo->prepare($det_note_sql);
-          $stmtDet->execute([':nrbon' => $bon_amanat]);
-          $det_result = $stmtDet->fetch(PDO::FETCH_ASSOC);
-          if ($det_result && intval($det_result['not_listed']) > 0) {
+          // Culoarea se decide din acelasi rezultat, fara query-uri suplimentare in bucla.
+          if ((int)($rrow['are_produse_nelistate'] ?? 0) > 0) {
             $colorStyle = "background-color:#f8d7da;color:#721c24;";
           } else {
-            $note_status_sql = "SELECT listat_nota_plata FROM $tabel_final_note WHERE nrbon = :nrbon LIMIT 1";
-            $stmt_note_status = $pdo->prepare($note_status_sql);
-            $stmt_note_status->execute([':nrbon' => $bon_amanat]);
-            $note_status = $stmt_note_status->fetch(PDO::FETCH_ASSOC);
-            $listat_nota_plata = $note_status ? intval($note_status['listat_nota_plata']) : 0;
+            $listat_nota_plata = (int)($rrow['listat_nota_plata'] ?? 0);
             $colorStyle = ($listat_nota_plata === 1)
               ? "background-color:#d4edda;color:#155724;"
               : "background-color:#fff3cd;color:#856404;";
@@ -414,6 +414,14 @@ $(function(){
         </a>
 
         <?php if (in_array((int)($_SESSION['client_id'] ?? 0), [1008, 1021], true)): ?>
+        <?php if (!empty($_SESSION['nr_bon']) && !empty($_SESSION['masa_curenta'])): ?>
+        <button type="button"
+                id="openTableSummary"
+                class="quick-action-tile btn btn-outline-secondary fit-grid-text">
+            <span><i class="fas fa-list-ul mr-1"></i> Total produse pe masă</span>
+        </button>
+        <?php endif; ?>
+
         <a href="vanzare_istoric_protocol.php"
            class="quick-action-tile btn btn-outline-secondary fit-grid-text">
             <span>Istoric Protocol</span>
@@ -500,6 +508,45 @@ $(function(){
 <?php if (!$offlineMode) include('vanzare_modal_bonuri_fisco.php'); ?>
 <?php if (!$offlineMode) include('vanzare_modal_bonanswer_erori.php'); ?>
 
+<?php if (in_array((int)($_SESSION['client_id'] ?? 0), [1008, 1021], true)): ?>
+<div class="modal fade" id="tableSummaryModal" tabindex="-1" role="dialog" aria-labelledby="tableSummaryModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content" style="border-radius:12px;overflow:hidden;">
+      <div class="modal-header" style="background:#17232b;color:#fff;border-bottom:4px solid #f0b43c;">
+        <div>
+          <div class="small text-uppercase" style="color:#f0c766;letter-spacing:.08em;">Verificare comandă</div>
+          <h5 class="modal-title mb-0" id="tableSummaryModalTitle">Total produse pe masă</h5>
+          <div id="tableSummarySubtitle" class="small" style="color:#d8e0e5;"></div>
+        </div>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Închide">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body p-0">
+        <div id="tableSummaryLoading" class="text-center py-5">
+          <i class="fas fa-spinner fa-spin fa-2x"></i>
+          <div class="mt-2">Se calculează produsele...</div>
+        </div>
+        <div id="tableSummaryError" class="alert alert-danger m-3 d-none"></div>
+        <div id="tableSummaryContent" class="d-none">
+          <div id="tableSummaryProducts" style="max-height:58vh;overflow-y:auto;"></div>
+          <div class="d-flex justify-content-between align-items-center px-3 py-3" style="background:#eef3f1;border-top:1px solid #ccd8d3;">
+            <strong>Total masă</strong>
+            <div class="text-right">
+              <div id="tableSummaryQuantity" class="font-weight-bold"></div>
+              <div id="tableSummaryValue" class="text-muted"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer py-2">
+        <button type="button" class="btn btn-dark btn-block" data-dismiss="modal">Înapoi la vânzare</button>
+      </div>
+    </div>
+  </div>
+</div>
+<?php endif; ?>
+
   <?php if (!empty($wooNotifAudioSrc)): ?>
     <audio id="wooNewOrderAudio" preload="auto">
       <source src="<?= htmlspecialchars($wooNotifAudioSrc, ENT_QUOTES, 'UTF-8'); ?>" type="audio/mpeg">
@@ -563,6 +610,77 @@ include 'tasta_mixt_card_modal.php';
   document.addEventListener('shown.bs.modal', fitQuickActionText);
 })();
 </script>
+<?php if (in_array((int)($_SESSION['client_id'] ?? 0), [1008, 1021], true)): ?>
+<script>
+(function ($) {
+  function escapeTableSummaryText(value) {
+    return $('<div>').text(value == null ? '' : String(value)).html();
+  }
+
+  function formatTableSummaryQuantity(value) {
+    var number = Number(value) || 0;
+    return number.toLocaleString('ro-RO', {
+      minimumFractionDigits: Number.isInteger(number) ? 0 : 3,
+      maximumFractionDigits: 3
+    });
+  }
+
+  function formatTableSummaryMoney(value) {
+    return (Number(value) || 0).toLocaleString('ro-RO', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }) + ' LEI';
+  }
+
+  $(document).on('click', '#openTableSummary', function () {
+    var $modal = $('#tableSummaryModal');
+    $('#tableSummaryLoading').removeClass('d-none');
+    $('#tableSummaryError').addClass('d-none').text('');
+    $('#tableSummaryContent').addClass('d-none');
+    $('#tableSummaryProducts').empty();
+    $modal.modal('show');
+
+    $.getJSON('afis_prod.php', { sumar_masa: 1, _: Date.now() })
+      .done(function (response) {
+        if (!response || response.ok !== true) {
+          $('#tableSummaryError').removeClass('d-none').text(response && response.message ? response.message : 'Sumarul nu este disponibil.');
+          return;
+        }
+
+        $('#tableSummarySubtitle').text(response.table_name + ' | Nota ' + response.note_id);
+        var products = Array.isArray(response.products) ? response.products : [];
+        if (products.length === 0) {
+          $('#tableSummaryProducts').html('<div class="text-center text-muted py-5">Masa nu are produse adăugate.</div>');
+        } else {
+          products.forEach(function (product, index) {
+            $('#tableSummaryProducts').append(
+              '<div class="d-flex justify-content-between align-items-center px-3 py-3" style="border-bottom:1px solid #e2e7e5;' + (index % 2 ? 'background:#fafbfb;' : '') + '">' +
+                '<div class="pr-3"><strong>' + escapeTableSummaryText(product.name) + '</strong></div>' +
+                '<div class="text-right" style="min-width:145px;">' +
+                  '<div class="font-weight-bold" style="font-size:1.12rem;">' + formatTableSummaryQuantity(product.quantity) + ' x</div>' +
+                  '<div class="small text-muted">' + formatTableSummaryMoney(product.value) + '</div>' +
+                '</div>' +
+              '</div>'
+            );
+          });
+        }
+        $('#tableSummaryQuantity').text(formatTableSummaryQuantity(response.quantity_total) + ' produse');
+        $('#tableSummaryValue').text(formatTableSummaryMoney(response.value_total));
+        $('#tableSummaryContent').removeClass('d-none');
+      })
+      .fail(function (xhr) {
+        var responseMessage = xhr && xhr.responseJSON && xhr.responseJSON.message
+          ? xhr.responseJSON.message
+          : 'Sumarul mesei nu a putut fi încărcat.';
+        $('#tableSummaryError').removeClass('d-none').text(responseMessage);
+      })
+      .always(function () {
+        $('#tableSummaryLoading').addClass('d-none');
+      });
+  });
+})(jQuery);
+</script>
+<?php endif; ?>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   var qtyInput = document.getElementById('cantitate_de_adaugat_prod');

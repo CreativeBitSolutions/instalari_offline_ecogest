@@ -4,6 +4,7 @@ declare(strict_types=1);
 header('Content-Type: application/json; charset=UTF-8');
 
 require_once __DIR__ . '/session.php';
+require_once __DIR__ . '/offline_printer_flow_helper.php';
 
 $departamentSchemaPath = is_file(__DIR__ . '/det_note_departament_listare_schema.php')
     ? __DIR__ . '/det_note_departament_listare_schema.php'
@@ -649,40 +650,11 @@ function productReportQueuePath(int $clientId, int $locationId): string
 
 function productReportWriteQueue(string $queuePath, array $payload): bool
 {
-    $json = json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    if ($json === false) {
-        throw new RuntimeException('Raportul nu a putut fi convertit în formatul imprimantei.');
-    }
-
-    $handle = @fopen($queuePath, 'x');
-    if ($handle === false) {
-        return false;
-    }
-
-    $written = false;
-    try {
-        if (!flock($handle, LOCK_EX)) {
-            return false;
-        }
-        $length = strlen($json);
-        $offset = 0;
-        while ($offset < $length) {
-            $chunk = fwrite($handle, substr($json, $offset));
-            if ($chunk === false || $chunk === 0) {
-                return false;
-            }
-            $offset += $chunk;
-        }
-        fflush($handle);
-        $written = true;
-        return true;
-    } finally {
-        flock($handle, LOCK_UN);
-        fclose($handle);
-        if (!$written && is_file($queuePath)) {
-            @unlink($queuePath);
-        }
-    }
+    $documents = isset($payload['data']) && is_array($payload['data']) ? $payload['data'] : [];
+    return agecs_offline_printer_enqueue(
+        $documents,
+        (string)($payload['message'] ?? 'Raport trimis la imprimantă.')
+    );
 }
 
 try {
@@ -765,17 +737,16 @@ try {
         ]],
     ];
 
-    if (!productReportWriteQueue($queuePath, $payload)) {
-        productReportResponse([
-            'status' => 'error',
-            'message' => 'Imprimanta are deja un document în așteptare. Reîncearcă după procesarea lui.',
-        ], 409);
-    }
+    productReportWriteQueue($queuePath, $payload);
 
     unset($_SESSION['product_report_previews'][$token]);
     productReportResponse([
         'status' => 'success',
         'message' => 'Raportul a fost trimis către imprimanta ' . (string)$stored['destination'] . '.',
+        'printer_wait_url' => agecs_offline_printer_wait_url(
+            basename((string)(parse_url((string)($_SERVER['HTTP_REFERER'] ?? ''), PHP_URL_PATH) ?: 'sefsala.php')),
+            'raport'
+        ),
     ]);
 } catch (Throwable $error) {
     error_log('sefsala_raport_produse_api: ' . $error->getMessage());

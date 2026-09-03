@@ -1,2 +1,25 @@
 [12-Aug-2026 04:31:09 Europe/Berlin] PHP Warning:  Undefined array key "live" in C:\xampp\htdocs\instalari_offline\agecs_offline_bestmixt\interfata_vanzare\logout.php on line 11
 [12-Aug-2026 14:42:16 Europe/Berlin] PHP Fatal error:  Cannot redeclare offline_sync_queue_config() (previously declared in C:\xampp\htdocs\instalari_offline\agecs_offline_bestmixt\interfata_vanzare\offline_sync_queue_lib.php:7) in C:\xampp\htdocs\instalari_offline\agecs_offline_bestmixt\interfata_vanzare\offline_sync_queue_lib.php on line 5
+[03-Sep-2026 05:31:51 Europe/Bucharest] PHP Warning:  include(C:\xampp\htdocs\github\instalari_offline_ecogest\lorand\interfata_vanzare/i18n/i18n_bootstrap.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\github\instalari_offline_ecogest\lorand\interfata_vanzare\offline_products_sync.php on line 47
+[03-Sep-2026 05:31:51 Europe/Bucharest] PHP Warning:  include(): Failed opening 'C:\xampp\htdocs\github\instalari_offline_ecogest\lorand\interfata_vanzare/i18n/i18n_bootstrap.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\github\instalari_offline_ecogest\lorand\interfata_vanzare\offline_products_sync.php on line 47
+[03-Sep-2026 05:32:20 Europe/Bucharest] [offline-users-sync] Eroare interna la preluarea utilizatorilor online.
+[03-Sep-2026 05:49:21 Europe/Bucharest] [offline-users-sync] Eroare interna la preluarea utilizatorilor online.
+[03-Sep-2026 05:50:54 Europe/Bucharest] [offline-users-sync] Eroare interna la preluarea utilizatorilor online.
+[03-Sep-2026 05:50:56 Europe/Bucharest] [offline-users-sync] Eroare interna la preluarea utilizatorilor online.
+[03-Sep-2026 05:50:57 Europe/Bucharest] [offline-users-sync] Eroare internă la preluarea utilizatorilor online.
+[03-Sep-2026 05:50:58 Europe/Bucharest] [offline-users-sync] Eroare internă la preluarea utilizatorilor online.
+[03-Sep-2026 05:51:19 Europe/Bucharest] [offline-users-sync] Eroare internă la preluarea utilizatorilor online.
+[03-Sep-2026 05:55:39 Europe/Bucharest] [offline-users-sync] Eroare internă la preluarea utilizatorilor online.
+[03-Sep-2026 05:56:01 Europe/Bucharest] [offline-users-sync] Eroare internă la preluarea utilizatorilor online. Cod etapă: client_database.
+[03-Sep-2026 05:56:05 Europe/Bucharest] [offline-users-sync] Eroare internă la preluarea utilizatorilor online. Cod etapă: client_database.
+[03-Sep-2026 05:56:32 Europe/Bucharest] [offline-users-sync] Eroare internă la preluarea utilizatorilor online. Cod etapă: client_database.
+[03-Sep-2026 05:58:32 Europe/Bucharest] PHP Fatal error:  Uncaught Error: Undefined constant "RESTAURANT_OFFLINE_API_DIR" in C:\xampp\htdocs\github\instalari_offline_ecogest\lorand\interfata_vanzare\offline_printer_flow_helper.php:54
+Stack trace:
+#0 C:\xampp\htdocs\github\instalari_offline_ecogest\lorand\interfata_vanzare\casa_marcat_vanzare.php(14): lorand_fiscal_queue_path(1019, 1)
+#1 {main}
+  thrown in C:\xampp\htdocs\github\instalari_offline_ecogest\lorand\interfata_vanzare\offline_printer_flow_helper.php on line 54
+[03-Sep-2026 05:59:43 Europe/Bucharest] PHP Fatal error:  Uncaught Error: Undefined constant "RESTAURANT_OFFLINE_API_DIR" in C:\xampp\htdocs\github\instalari_offline_ecogest\lorand\interfata_vanzare\offline_printer_flow_helper.php:54
+Stack trace:
+#0 C:\xampp\htdocs\github\instalari_offline_ecogest\lorand\interfata_vanzare\casa_marcat_vanzare.php(14): lorand_fiscal_queue_path(1019, 1)
+#1 {main}
+  thrown in C:\xampp\htdocs\github\instalari_offline_ecogest\lorand\interfata_vanzare\offline_printer_flow_helper.php on line 54

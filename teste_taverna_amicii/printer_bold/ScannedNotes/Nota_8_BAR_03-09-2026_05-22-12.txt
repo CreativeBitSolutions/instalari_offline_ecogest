@@ -1,0 +1,23 @@
+﻿<b><size="11">NOTĂ DE PLATĂ</size></b>
+<b><size="11">Nr. nota: 8</size></b>
+<b><size="11">-----</size></b>
+<b><size="11">TAVERNA AMICII</size></b>
+<b><size="11">2026-09-03 05:22:09</size></b>
+<b><size="11">OPERATOR: OSPATAR1 -</size></b>
+<b><size="11">Masa: F01</size></b>
+<b><size="11">-----</size></b>
+<b><size="11">1 x ABSOLUT 50ML = 17.00 LEI</size></b>
+<b><size="11">1 x AMSTEL 500 = 12.00 LEI</size></b>
+<b><size="11">-----</size></b>
+<b><size="11">TOTAL: 29.00 LEI</size></b>
+
+<b><size="11">Bacșișul nu este inclus / Tips not included</size></b>
+
+<b><size="11">Sugestii bacșiș / Suggested tips:</size></b>
+
+<b><size="11">Bacșiș	Total notă</size></b>
+<b><size="11">10%	2.90	31.90</size></b>
+<b><size="11">12%	3.48	32.48</size></b>
+<b><size="11">15%	4.35	33.35</size></b>
+
+<b><size="11">Altă valoare: ...</size></b>

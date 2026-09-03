@@ -3,6 +3,7 @@ ini_set('display_errors', 0); // Nu afișează erorile utilizatorului
 ini_set('log_errors', 1); // Activează logarea erorilor
 ini_set('error_log', 'error_log.log'); // Specifică calea către fișierul de log
 include('session.php');
+require_once __DIR__ . '/offline_printer_flow_helper.php';
 error_reporting(E_ALL); // Raportează toate tipurile de erori
 // Presupunem că variabila nota_de_relistat vine din sesiune sau este definită undeva
 
@@ -246,29 +247,15 @@ $myBuffer .= "S,1,______,_,__;"
             $json_file_path = $folder_path . "/bon_casa_marcat.json";
 
 
-            // --- START: LOGICA DE AȘTEPTARE PENTRU FIȘIERUL CASEI DE MARCAT ---
-
-// Așteptăm în pași de 10 secunde, până la maximum 60 secunde, dacă fișierul există
-$totalWait = 0;
-while (file_exists($json_file_path) && $totalWait < 60) {
-    sleep(10); // Așteaptă 10 secunde
-    clearstatcache(true, $json_file_path);
-    $totalWait = $totalWait + 10;
-}
-
-
-// --- END: LOGICA DE AȘTEPTARE ---
-            if (file_exists($json_file_path)) {
+            if (!agecs_offline_fiscal_publish_json($json_file_path, $json_data)) {
                 if (!empty($id_bon_casa_marcat)) {
                     $delete_stmt = $pdo->prepare("DELETE FROM bonuri_casa_marcat WHERE id = :id");
                     $delete_stmt->execute([':id' => $id_bon_casa_marcat]);
                 }
-                error_log("Fisierul bon_casa_marcat.json exista deja si nu a fost procesat in 60 secunde: " . $json_file_path);
-                echo "<script>alert('Casa de marcat inca proceseaza bonul anterior. Incasarea nu a fost retrimisa. Reincercati dupa cateva secunde.');location.href='vanzare_restaurant.php';</script>";
+                $_SESSION['app_restaurant_v2_generator_casa_marcat'] = 'casa_marcat_vanzare.php';
+                echo "<script>location.href='asteapta_casa_marcat.php'</script>";
                 exit;
             }
-
-            file_put_contents($json_file_path, $json_data); // scriere protejata de verificarea de mai sus
     
             $update_sql = "UPDATE bonuri_casa_marcat 
                            SET de_trimis_la_casa_marcat = 0 
@@ -727,30 +714,16 @@ foreach ($paymentTypes as $column => $type) {
             }
     
             $json_file_path = $folder_path . "/bon_casa_marcat.json";
-            // --- START: LOGICA DE AȘTEPTARE PENTRU FIȘIERUL CASEI DE MARCAT ---
-
-// Așteptăm în pași de 10 secunde, până la maximum 60 secunde, dacă fișierul există
-$totalWait = 0;
-while (file_exists($json_file_path) && $totalWait < 60) {
-    sleep(10); // Așteaptă 10 secunde
-    clearstatcache(true, $json_file_path);
-    $totalWait = $totalWait + 10;
-}
-
-
-
-// --- END: LOGICA DE AȘTEPTARE ---
-            if (file_exists($json_file_path)) {
+            if (!agecs_offline_fiscal_publish_json($json_file_path, $json_data)) {
                 if (!empty($id_bon_casa_marcat)) {
                     $delete_stmt = $pdo->prepare("DELETE FROM bonuri_casa_marcat WHERE id = :id");
                     $delete_stmt->execute([':id' => $id_bon_casa_marcat]);
                 }
-                error_log("Fisierul bon_casa_marcat.json exista deja si nu a fost procesat in 60 secunde: " . $json_file_path);
-                echo "<script>alert('Casa de marcat inca proceseaza bonul anterior. Incasarea nu a fost retrimisa. Reincercati dupa cateva secunde.');location.href='sefsala.php';</script>";
+                $_SESSION['app_restaurant_v2_generator_casa_marcat'] = 'casa_marcat_vanzare.php';
+                $_SESSION['casa_marcat_relistare_in_asteptare'] = (int)$nota_de_relistat;
+                echo "<script>location.href='asteapta_casa_marcat.php'</script>";
                 exit;
             }
-
-            file_put_contents($json_file_path, $json_data); // scriere protejata de verificarea de mai sus
     
             $update_sql = "UPDATE bonuri_casa_marcat 
                            SET de_trimis_la_casa_marcat = 0 
@@ -912,15 +885,13 @@ while (file_exists($json_file_path) && $totalWait < 60) {
             'continut'            => $continut
         ];
     
-        $json_array_imprimanta = [
-            "status"  => "success",
-            "message" => "Date pentru imprimantă generate cu succes.",
-            "data"    => $printData
-        ];
-        $json_data_imprimanta = json_encode($json_array_imprimanta, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-    
-        $json_file_path_imprimanta = $folder_path . "/de_listat_la_imprimanta.json";
-        file_put_contents($json_file_path_imprimanta, $json_data_imprimanta);
+        try {
+            agecs_offline_printer_enqueue($printData, 'Nota relistată a fost trimisă la imprimanta BAR.');
+        } catch (Throwable $printException) {
+            // Relistarea fiscală rămâne înregistrată chiar dacă imprimanta de protocol nu răspunde.
+            $_SESSION['offline_printer_error'] = $printException->getMessage();
+            error_log('Eroare la punerea notei relistate în coada imprimantei: ' . $printException->getMessage());
+        }
     
         // Resetare variabile (dacă este necesar)
         unset($_SESSION['nr_bon']);
@@ -933,7 +904,7 @@ while (file_exists($json_file_path) && $totalWait < 60) {
         unset($_SESSION['total_tichete']);
         unset($_SESSION['masa_curenta']);
     
-        printf("<script>location.href='sefsala.php'</script>");
+        printf("<script>location.href=%s</script>", json_encode(agecs_offline_printer_wait_url('sefsala.php')));
     
     } catch (PDOException $e) {
         error_log("Eroare la generarea datelor pentru imprimantă (nota relistata): " . $e->getMessage());

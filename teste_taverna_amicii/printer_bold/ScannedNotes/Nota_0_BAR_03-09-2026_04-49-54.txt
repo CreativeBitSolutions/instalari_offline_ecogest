@@ -1,0 +1,26 @@
+﻿<b><size="11">==========================================</size></b>
+<b><size="11">RAPORT PRODUSE PROTOCOL</size></b>
+<b><size="11">==========================================</size></b>
+<b><size="11">Nr. raport Z: 2</size></b>
+<b><size="11">Generat: 03.09.2026 04:49:53</size></b>
+<b><size="11">Locația: 1</size></b>
+<b><size="11">De la: 2026-09-03 04:48:50</size></b>
+<b><size="11">Până la: 2026-09-03 04:49:30</size></b>
+<b><size="11">Note PROTOCOL: 1</size></b>
+<b><size="11">==========================================</size></b>
+<b><size="11">1. BAR</size></b>
+<b><size="11">------------------------------------------</size></b>
+<b><size="11">1,000 X ALEXANDRION 5* 50ML - 12,00</size></b>
+<b><size="11">LEI</size></b>
+<b><size="11">TOTAL BAR: 1,000 | 12,00 LEI</size></b>
+<b><size="11">==========================================</size></b>
+<b><size="11">TOTAL PRODUSE PROTOCOL: 1,000 | 12,00 LEI</size></b>
+<b><size="11">==========================================</size></b>
+<b><size="11">PROTOCOL PE OSPĂTAR</size></b>
+<b><size="11">==========================================</size></b>
+<b><size="11">OSPĂTAR: OSPATAR1 - (ID 1)</size></b>
+<b><size="11">NOTE: 1</size></b>
+<b><size="11">PROTOCOL: 12,00 LEI</size></b>
+<b><size="11">------------------------------------------</size></b>
+<b><size="11">TOTAL PROTOCOL: 12,00 LEI</size></b>
+<b><size="11">==========================================</size></b>

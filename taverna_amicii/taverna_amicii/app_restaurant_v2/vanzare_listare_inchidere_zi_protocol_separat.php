@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/det_note_departament_listare_schema.php';
 require_once __DIR__ . '/raport_z_imprimanta_helper.php';
+require_once __DIR__ . '/offline_printer_flow_helper.php';
 $printerFormatHelper = __DIR__ . '/printer_bold_helper.php';
 if (is_file($printerFormatHelper)) {
     require_once $printerFormatHelper;
@@ -63,15 +64,20 @@ try {
     }
     $queuePath = $queueDirectory . DIRECTORY_SEPARATOR . 'de_listat_la_imprimanta.json';
 
-    agecs_special_z_update_loading_status('Se așteaptă eliberarea imprimantei...');
-    $waited = 0;
-    while (is_file($queuePath) && $waited < 60) {
-        sleep(5);
-        $waited += 5;
-    }
-
     agecs_ensure_det_note_departament_listare($pdo, 'det_note');
     $documents = agecs_z_print_documents($pdo, $clientId, $locationId, $reportNumber);
+
+    $pending = $_SESSION['restaurant_pending_closure_print'] ?? null;
+    if (
+        is_array($pending)
+        && (int)($pending['client_id'] ?? 0) === $clientId
+        && (int)($pending['location_id'] ?? 0) === $locationId
+        && isset($pending['jobs'])
+        && is_array($pending['jobs'])
+    ) {
+        $documents = array_values(array_merge($pending['jobs'], $documents));
+    }
+
     if (function_exists('agecs_printer_bold_content')) {
         foreach ($documents as &$document) {
             $document['continut'] = agecs_printer_bold_content((string)$document['continut'], $clientId);
@@ -79,24 +85,26 @@ try {
         unset($document);
     }
 
-    $payload = [
-        'status' => 'success',
-        'message' => count($documents) > 1
-            ? 'Raportul Z și raportul PROTOCOL au fost generate separat.'
-            : 'Raportul Z pentru imprimantă a fost generat.',
-        'data' => $documents,
-    ];
-    $json = json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    if ($json === false || file_put_contents($queuePath, $json, LOCK_EX) === false) {
-        throw new RuntimeException('Coada de imprimare nu a putut fi scrisă.');
+    $queueHelper = rtrim((string)$baseDirectory, '/\\')
+        . DIRECTORY_SEPARATOR . 'printer_queue_atomic_helper.php';
+    if (!is_file($queueHelper)) {
+        throw new RuntimeException('Helperul pentru coada atomică a imprimantei lipsește.');
     }
-    agecs_special_z_update_loading_status(count($documents) > 1
-        ? 'Raportul Z și foaia PROTOCOL au fost trimise la imprimantă.'
-        : 'Raportul Z a fost trimis la imprimantă.');
+    require_once $queueHelper;
+    if (!agecs_printer_queue_append_documents(
+        $queuePath,
+        $documents,
+        'Închiderea turei, raportul Z și raportul PROTOCOL au fost grupate pentru imprimare.'
+    )) {
+        throw new RuntimeException('Coada combinată de imprimare nu a putut fi scrisă.');
+    }
+    unset($_SESSION['restaurant_pending_closure_print']);
+    agecs_special_z_update_loading_status('Închiderea, raportul Z și foaia PROTOCOL au fost trimise împreună la imprimantă.');
 } catch (Throwable $error) {
     error_log('vanzare_listare_inchidere_zi: ' . $error->getMessage());
+    $_SESSION['offline_printer_error'] = 'Închiderea și raportul Z sunt salvate, dar documentele nu au putut fi puse în coada imprimantei. Folosiți relistarea după verificarea scannerului.';
     agecs_special_z_update_loading_status('Raportul nu a putut fi generat. Verifică jurnalul aplicației.');
 }
 
-echo '<script>setTimeout(function(){location.href="logout.php";},700);</script>';
+echo agecs_offline_printer_redirect_script('logout.php', 'inchidere_z', 300);
 ?>

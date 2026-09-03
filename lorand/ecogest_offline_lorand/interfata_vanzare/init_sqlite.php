@@ -4,7 +4,7 @@
 // Rulezi din browser: http://localhost/.../init_sqlite.php
 // Dump structura MySQL: data/u806910449_elgringov2.sql
 // Dump date JSON:       data/u806910449_elgringov2.json
-// Baza SQLite:          C:\xampp\htdocs\instalari_offline\api_offline_ecogest_bestmixt\db_local\pos.db
+// Baza SQLite:          C:\xampp\htdocs\github\instalari_offline_ecogest\lorand\api_offline_ecogest_lorand\db_local\pos.db
 
 require __DIR__ . '/db.php';
 

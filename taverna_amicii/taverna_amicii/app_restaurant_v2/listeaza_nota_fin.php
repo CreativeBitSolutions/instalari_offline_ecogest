@@ -1,5 +1,6 @@
 <?php //listeaza_nota_fin.php
 require_once 'session.php';      // conține $pdo și denumirile de tabele
+require_once __DIR__ . '/offline_printer_flow_helper.php';
 date_default_timezone_set('Europe/Bucharest');
 
 // --- FUNCȚII PENTRU ECRANUL DE AȘTEPTARE ---
@@ -195,27 +196,12 @@ if (empty($_SESSION['nr_bon'])) {
             'continut'               => $continut
         ]];
 
-        $jsonArray = [
-            'status'  => 'success',
-            'message' => 'Nota de plată generată cu succes.',
-            'data'    => $printData
-        ];
-
-        // Se asteapta imprimanta (dacă există un alt fișier în curs de procesare)
-        update_loading_status("Așteptăm preluarea datelor de către imprimanta BAR (Notă plată)...");
-        
-        $jsonPath  = $folder.'/de_listat_la_imprimanta.json';
-        $totalWait = 0;
-        while (file_exists($jsonPath) && $totalWait < 60) {
-            sleep(5); // Verificăm la fiecare 5 secunde, pentru un răspuns mai rapid
-            $totalWait += 5;
+        update_loading_status("Adăugăm nota de plată în coada imprimantei...");
+        try {
+            agecs_offline_printer_enqueue($printData, 'Nota de plată a fost adăugată în coada imprimantei.');
+        } catch (Throwable $printerError) {
+            error_log('Nota este salvată, dar listarea nu a putut fi pusă în coadă: ' . $printerError->getMessage());
         }
-
-        // Prima și SINGURA scriere
-        file_put_contents(
-            $jsonPath,
-            json_encode($jsonArray, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
-        );
 
     } elseif (!$nota) {
         error_log("listeaza_nota_fin.php: Nota {$nr_bon} nu a fost găsită.");
@@ -272,8 +258,6 @@ else{
 
 }
 
-update_loading_status("Listare completă! Vă redirecționăm...");
-
-// Redirecționăm utilizatorul către pagina "vanzare_restaurant.php"
-printf("<script>location.href='vanzare_restaurant.php'</script>");
+update_loading_status("Nota este salvată. Verificăm preluarea de către imprimantă...");
+echo agecs_offline_printer_redirect_script('vanzare_restaurant.php', 'nota_plata');
 ?>

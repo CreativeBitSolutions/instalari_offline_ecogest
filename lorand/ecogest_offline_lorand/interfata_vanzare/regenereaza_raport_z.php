@@ -244,7 +244,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="col-md-6">
               <ul class="list-unstyled mb-0">
                 <li>Tichete masÄƒ: <strong><?php echo e($result['tichete_masa']); ?></strong></li>
-                <li>PlatÄƒ modernÄƒ (online): <strong><?php echo e($result['plata_moderna']); ?></strong></li>
+                <li>Online: <strong><?php echo e($result['plata_moderna']); ?></strong></li>
               </ul>
             </div>
           </div>

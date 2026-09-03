@@ -12,7 +12,7 @@
   "db_local_root_absolute": "C:\\xampp\\htdocs\\github\\instalari_offline_ecogest\\lorand\\api_offline_ecogest_lorand\\db_local",
   "db_admin_password": "dailycoffee2",
   "db_admin_name": "POS local Lorand",
-  "apache_app_path": "interfata_vanzare",
+  "apache_app_path": "ecogest_offline_lorand/interfata_vanzare",
   "api_root_relative": "/github/instalari_offline_ecogest/lorand/api_offline_ecogest_lorand",
   "api_root_absolute": "C:\\xampp\\htdocs\\github\\instalari_offline_ecogest\\lorand\\api_offline_ecogest_lorand",
   "ca_bundle_path": "C:\\xampp\\htdocs\\github\\instalari_offline_ecogest\\lorand\\api_offline_ecogest_lorand\\certificates\\cacert.pem",

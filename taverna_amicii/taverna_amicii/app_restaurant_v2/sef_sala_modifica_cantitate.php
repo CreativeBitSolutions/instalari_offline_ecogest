@@ -1,5 +1,6 @@
 <?php
 include('session.php');
+require_once __DIR__ . '/offline_printer_flow_helper.php';
 
 function normalizeazaDepartamenteListare($departamentRaw, $fallback = 'BAR') {
     $departamente = [];
@@ -34,32 +35,12 @@ function scrieFisierImprimantaSefSala($client_id, $cod_locatie, $printData, $mes
         return;
     }
 
-    $folder_path = RESTAURANT_OFFLINE_API_DIR . "/" . $client_id . "/" . $cod_locatie;
-    if (!is_dir($folder_path)) {
-        mkdir($folder_path, 0777, true);
+    try {
+        agecs_offline_printer_enqueue(array_values($printData), (string)$message);
+    } catch (Throwable $printerError) {
+        error_log('Modificarea este salvată, dar foaia nu a intrat în coada imprimantei: ' . $printerError->getMessage());
+        $_SESSION['offline_printer_error'] = 'Modificarea este salvată, dar foaia de corecție nu a putut fi pusă în coada imprimantei.';
     }
-
-    $json_file_path = $folder_path . "/de_listat_la_imprimanta.json";
-    $totalWait = 0;
-
-    // Păstrăm aceeași logică de protecție ca la listarea notei:
-    // dacă există deja un fișier neprocesat, așteptăm înainte să scriem unul nou.
-    while (file_exists($json_file_path) && $totalWait < 60) {
-        sleep(5);
-        $totalWait += 5;
-    }
-
-    if (file_exists($json_file_path)) {
-        error_log("Atenție: de_listat_la_imprimanta.json nu a fost procesat în 60s. Se suprascrie pentru operațiunea șef sală.");
-    }
-
-    $json_array = [
-        "status" => "success",
-        "message" => $message,
-        "data" => array_values($printData)
-    ];
-
-    file_put_contents($json_file_path, json_encode($json_array, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 }
 
 function genereazaFoaieEliberare($pdo, $infoNota) {
@@ -331,7 +312,7 @@ try {
             $logStmt = $pdo->prepare("INSERT INTO eliberari_mese (nrbon, motiv, sters_de, detalii_eliberare) VALUES (?, ?, ?, ?)");
             $logStmt->execute([$row['nr_bon'], $motiv, $admin_id, $detalii_modificare]);
             genereazaFoaieEliberare($pdo, ['tip_operatie' => 'modificare', 'nrbon' => $row['nr_bon'], 'admin_id' => $admin_id, 'cod_produs' => $row['cod_p'], 'produs' => $row['nume_produs'], 'cant_veche' => $cantitate_veche, 'cant_noua' => $new_quantity, 'motiv' => $motiv]);
-            echo json_encode(['status' => 'success']);
+            echo json_encode(['status' => 'success', 'printer_wait_url' => agecs_offline_printer_wait_url('sefsala.php', 'corectie')]);
             break;
 
         case 'delete_item':
@@ -367,7 +348,7 @@ try {
             $countStmt->execute([$nr_bon]);
             $items_left = $countStmt->fetchColumn();
             genereazaFoaieEliberare($pdo, ['tip_operatie' => 'stergere', 'nrbon' => $row['nr_bon'], 'admin_id' => $admin_id, 'cod_produs' => $row['cod_p'], 'produs' => $row['nume_produs'], 'cant_stearsa' => $row['cantitate'], 'motiv' => $motiv]);
-            echo json_encode(['status' => 'success', 'items_left' => $items_left]);
+            echo json_encode(['status' => 'success', 'items_left' => $items_left, 'printer_wait_url' => agecs_offline_printer_wait_url('sefsala.php', 'corectie')]);
             break;
 
         case 'delete_all_items':
@@ -412,7 +393,7 @@ try {
 
             genereazaFoaieEliberareMulti($pdo, $nrbon, $motiv, $admin_id, $produse_de_sters);
 
-            echo json_encode(['status' => 'success']);
+            echo json_encode(['status' => 'success', 'printer_wait_url' => agecs_offline_printer_wait_url('sefsala.php', 'corectie')]);
             break;
 
         case 'close_table':

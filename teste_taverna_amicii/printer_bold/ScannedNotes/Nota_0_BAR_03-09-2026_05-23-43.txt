@@ -1,0 +1,26 @@
+﻿<b><size="11">==========================================</size></b>
+<b><size="11">RAPORT PRODUSE PROTOCOL</size></b>
+<b><size="11">==========================================</size></b>
+<b><size="11">Nr. raport Z: 4</size></b>
+<b><size="11">Generat: 03.09.2026 05:23:42</size></b>
+<b><size="11">Locația: 1</size></b>
+<b><size="11">De la: 2026-09-03 05:22:27</size></b>
+<b><size="11">Până la: 2026-09-03 05:23:18</size></b>
+<b><size="11">Note PROTOCOL: 1</size></b>
+<b><size="11">==========================================</size></b>
+<b><size="11">1. BAR</size></b>
+<b><size="11">------------------------------------------</size></b>
+<b><size="11">1,000 X ABSOLUT 50ML - 17,00 LEI</size></b>
+<b><size="11">1,000 X AMSTEL 500 - 12,00 LEI</size></b>
+<b><size="11">TOTAL BAR: 2,000 | 29,00 LEI</size></b>
+<b><size="11">==========================================</size></b>
+<b><size="11">TOTAL PRODUSE PROTOCOL: 2,000 | 29,00 LEI</size></b>
+<b><size="11">==========================================</size></b>
+<b><size="11">PROTOCOL PE OSPĂTAR</size></b>
+<b><size="11">==========================================</size></b>
+<b><size="11">OSPĂTAR: OSPATAR1 - (ID 1)</size></b>
+<b><size="11">NOTE: 1</size></b>
+<b><size="11">PROTOCOL: 29,00 LEI</size></b>
+<b><size="11">------------------------------------------</size></b>
+<b><size="11">TOTAL PROTOCOL: 29,00 LEI</size></b>
+<b><size="11">==========================================</size></b>

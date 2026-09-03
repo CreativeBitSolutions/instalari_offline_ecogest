@@ -135,7 +135,7 @@ function offline_closure_ui_money($value): string
                                 <input type="number" step="0.01" min="0" class="form-control" value="0.00" name="credit" required>
                             </div>
                             <div class="form-group col-md-4">
-                                <label>Plată modernă, online</label>
+                                <label>Online</label>
                                 <input type="number" step="0.01" min="0" class="form-control offline-z-payment" id="offlineZOnline" name="plata_moderna" required>
                             </div>
                             <div class="form-group col-md-4">

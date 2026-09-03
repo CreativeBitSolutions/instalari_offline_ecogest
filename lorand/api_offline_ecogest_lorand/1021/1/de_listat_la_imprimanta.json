@@ -1,0 +1,15 @@
+{
+    "status": "success",
+    "message": "Date pentru imprimantă generate cu succes.",
+    "data": [
+        {
+            "data": "2026-09-03",
+            "ora": "10:56:00",
+            "de_trimis_la_imprimanta": 1,
+            "nrbon": 9,
+            "locatie": 1,
+            "departament_listare": "BUCATARIE",
+            "continut": "\n\nC.I.F.: \nC.I.F. CLIENT: \n2026-09-03 10:56:00\nLEI\nOPERATOR:  \n\nProdus: A COPIL FEL PRINCIPA\nCantitate: 1.0 H87 X 27.00 LEI\nValoare Vânzare: 27.00 LEI\n\nTOTAL LEI: 27.00 LEI\nRest: 0.00 LEI\n\nFARA TVA: 2.680 LEI\nTOTAL TVA: 2.680 LEI\n\nNr. nota: 9\n"
+        }
+    ]
+}

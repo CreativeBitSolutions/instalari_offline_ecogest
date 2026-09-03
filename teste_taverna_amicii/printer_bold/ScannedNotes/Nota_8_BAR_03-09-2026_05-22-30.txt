@@ -1,0 +1,17 @@
+﻿<b><size="11">NOTA PROTOCOL</size></b>
+<b><size="11">TAVERNA AMICII</size></b>
+<b><size="11">2026-09-03 05:22:27</size></b>
+<b><size="11">OPERATOR: OSPATAR1 -</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">ABSOLUT 50ML</size></b>
+<b><size="11">  1.0 x 17.00 = 17.00 LEI (TVA 21.0%)</size></b>
+<b><size="11">AMSTEL 500</size></b>
+<b><size="11">  1.0 x 12.00 = 12.00 LEI (TVA 21.0%)</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">TOTAL: 29.00 LEI</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">Prot.: 29.00 LEI</size></b>
+<b><size="11">TOTAL 21.0%: 29.00 LEI</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">Nr. nota: 8</size></b>
+<b><size="11">Va multumim!</size></b>

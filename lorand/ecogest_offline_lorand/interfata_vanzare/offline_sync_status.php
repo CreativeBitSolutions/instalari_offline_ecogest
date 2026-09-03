@@ -184,7 +184,7 @@ function offline_sync_status_extract_rows(array $events): array
     return $items;
 }
 
-if (empty($_SESSION['admin_id'])) {
+if (empty($_SESSION['admin_id']) && empty($restaurantConfig['offline_sales_sync']['allow_login_worker'])) {
     offline_sync_status_response(401, [
         'status' => 'error',
         'message' => 'Sesiunea operatorului nu mai este activa.'

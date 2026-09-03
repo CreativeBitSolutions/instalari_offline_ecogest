@@ -9,22 +9,21 @@
             <div class="modal-body">
                 <table class='table table-bordered'>
                     <?php
-                        // --- START MODIFICARE ---
-                        // Interogare pentru a prelua sumele totale, înlocuind protocol cu glovo (ONLINE)
+                        // Metodele de plată sunt afișate separat și intră în totalul zilei.
                         $sume_zi_sql = "
                             SELECT 
                                 COALESCE(SUM(COALESCE(numerar, 0) - COALESCE(rest, 0)), 0) as total_numerar_zi, 
                                 COALESCE(SUM(card), 0) as total_card_zi, 
                                 COALESCE(SUM(tichete), 0) as total_tichete_zi, 
+                                COALESCE(SUM(protocol), 0) as total_protocol_zi,
                                 COALESCE(SUM(glovo), 0) as total_online_zi 
                             FROM $tabel_final_note 
                             WHERE status = 'F' AND COALESCE(nr_raport_z, 0) = 0 AND locatie = :locatie";
                         $sume_zi_stmt = $pdo->prepare($sume_zi_sql);
                         $sume_zi_stmt->execute(['locatie' => $cod_locatie]);
                         $sume_zi = $sume_zi_stmt->fetch(PDO::FETCH_ASSOC);
-                        // Calculam totalul încasărilor inclusiv online ca asa e corect
-                        $total_zi_incasari = $sume_zi['total_numerar_zi'] + $sume_zi['total_card_zi'] + $sume_zi['total_tichete_zi']+$sume_zi['total_online_zi'];
-                        // --- END MODIFICARE ---
+                        $total_zi_incasari = $sume_zi['total_numerar_zi'] + $sume_zi['total_card_zi']
+                            + $sume_zi['total_tichete_zi'] + $sume_zi['total_protocol_zi'] + $sume_zi['total_online_zi'];
                     ?>
                     <tr>
                         <td>Numerar</td>
@@ -37,6 +36,10 @@
                     <tr>
                         <td>Tichete</td>
                         <td><?php echo number_format($sume_zi['total_tichete_zi'], 2, '.', ''); ?> RON</td>
+                    </tr>
+                    <tr>
+                        <td>PROTOCOL</td>
+                        <td><?php echo number_format($sume_zi['total_protocol_zi'], 2, '.', ''); ?> RON</td>
                     </tr>
                     <tr>
                         <td>ONLINE</td>

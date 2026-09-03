@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-
+const RESTAURANT_SQLITE_SCHEMA_VERSION = 2;
 function restaurant_sqlite_schema_statements(): array
 {
     return [
@@ -77,6 +77,7 @@ function restaurant_sqlite_schema_statements(): array
             sold REAL DEFAULT 0
         )",
         "CREATE INDEX IF NOT EXISTS idx_mese_locatie ON mese(cod_locatie)",
+        "CREATE INDEX IF NOT EXISTS idx_mese_locatie_categorie_stare_cod ON mese(cod_locatie, categorie_masa, stare, cod_masa)",
         "CREATE TABLE IF NOT EXISTS categorii (
             id_categorie INTEGER PRIMARY KEY,
             den_categ TEXT DEFAULT '',
@@ -163,6 +164,8 @@ function restaurant_sqlite_schema_statements(): array
             sgr_sticla INTEGER DEFAULT 0
         )",
         "CREATE INDEX IF NOT EXISTS idx_produse_categorie ON produse_servicii(id_categorie)",
+        "CREATE INDEX IF NOT EXISTS idx_produse_activ_nume ON produse_servicii(activ, nume)",
+        "CREATE INDEX IF NOT EXISTS idx_produse_categorie_activ_nume ON produse_servicii(id_categorie, activ, nume)",
         "CREATE TABLE IF NOT EXISTS date_firma (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             den_ent TEXT DEFAULT '',
@@ -230,6 +233,7 @@ function restaurant_sqlite_schema_statements(): array
         )",
         "CREATE INDEX IF NOT EXISTS idx_note_status_locatie ON note(status, locatie)",
         "CREATE INDEX IF NOT EXISTS idx_note_masa_status ON note(cod_masa, status)",
+        "CREATE INDEX IF NOT EXISTS idx_note_status_locatie_operator_nrbon ON note(status, locatie, operator, nrbon)",
         "CREATE TABLE IF NOT EXISTS det_note (
             id_vanz INTEGER PRIMARY KEY AUTOINCREMENT,
             identificator_offline TEXT DEFAULT NULL,
@@ -259,6 +263,7 @@ function restaurant_sqlite_schema_statements(): array
             ora TEXT DEFAULT (time('now','localtime'))
         )",
         "CREATE INDEX IF NOT EXISTS idx_det_note_nr_bon ON det_note(nr_bon)",
+        "CREATE INDEX IF NOT EXISTS idx_det_note_nr_bon_t_list ON det_note(nr_bon, t_list)",
         "CREATE TABLE IF NOT EXISTS com_tableta (
             nrbon INTEGER PRIMARY KEY,
             serie TEXT DEFAULT '',
@@ -591,7 +596,7 @@ function restaurant_sqlite_schema_statements(): array
     ];
 }
 
-function restaurant_sqlite_apply_schema(PDO $pdo): void
+function restaurant_sqlite_apply_schema(PDO $pdo, int $codLocatie = 0): void
 {
     foreach (restaurant_sqlite_schema_statements() as $sql) {
         $pdo->exec($sql);
@@ -603,10 +608,56 @@ function restaurant_sqlite_apply_schema(PDO $pdo): void
     $pdo->exec('CREATE INDEX IF NOT EXISTS idx_com_tableta_ack ON com_tableta(online_ack_status, stare)');
     $pdo->exec('CREATE UNIQUE INDEX IF NOT EXISTS idx_det_com_tableta_online_row ON det_com_tableta(nr_bon, online_id_vanz) WHERE online_id_vanz > 0');
     restaurant_sqlite_ensure_cod_locatie_columns($pdo);
-    restaurant_sqlite_backfill_cod_locatie_values($pdo);
+    restaurant_sqlite_backfill_cod_locatie_values($pdo, $codLocatie);
     restaurant_sqlite_ensure_cod_locatie_triggers($pdo);
 }
 
+function restaurant_sqlite_apply_schema_if_needed(PDO $pdo, int $codLocatie = 0): bool
+{
+    $currentVersion = (int)$pdo->query('PRAGMA user_version')->fetchColumn();
+
+    if ($currentVersion >= RESTAURANT_SQLITE_SCHEMA_VERSION) {
+        if ($currentVersion > RESTAURANT_SQLITE_SCHEMA_VERSION) {
+            error_log(
+                'Schema SQLite este mai noua decat aplicatia: baza=' . $currentVersion
+                . ', aplicatie=' . RESTAURANT_SQLITE_SCHEMA_VERSION
+            );
+        }
+        return false;
+    }
+
+    // journal_mode este persistent. Il setam numai la upgrade, nu la fiecare request AJAX.
+    $pdo->exec('PRAGMA journal_mode = WAL');
+
+    $startedTransaction = false;
+    try {
+        $pdo->exec('BEGIN IMMEDIATE');
+        $startedTransaction = true;
+
+        // Un alt request poate sa fi terminat migrarea cat timp acesta astepta lock-ul.
+        $currentVersion = (int)$pdo->query('PRAGMA user_version')->fetchColumn();
+        if ($currentVersion >= RESTAURANT_SQLITE_SCHEMA_VERSION) {
+            $pdo->exec('COMMIT');
+            return false;
+        }
+
+        restaurant_sqlite_apply_schema($pdo, $codLocatie);
+        $pdo->exec('PRAGMA user_version = ' . RESTAURANT_SQLITE_SCHEMA_VERSION);
+        $pdo->exec('COMMIT');
+        $startedTransaction = false;
+
+        return true;
+    } catch (Throwable $error) {
+        if ($startedTransaction) {
+            try {
+                $pdo->exec('ROLLBACK');
+            } catch (Throwable $rollbackError) {
+                // Pastram eroarea initiala de migrare.
+            }
+        }
+        throw $error;
+    }
+}
 function restaurant_sqlite_quote_identifier(string $identifier): string
 {
     return '"' . str_replace('"', '""', $identifier) . '"';
@@ -1172,23 +1223,28 @@ function restaurant_sqlite_set_cod_locatie_context(PDO $pdo, int $codLocatie): v
         return;
     }
 
-    $update = $pdo->prepare("
-        UPDATE offline_runtime_context
-        SET cod_locatie = :cod_locatie,
-            updated_at = CURRENT_TIMESTAMP
-        WHERE id = 1
-    ");
-    $update->execute([':cod_locatie' => $codLocatie]);
+    // Citirea este ieftina si evita deschiderea unei tranzactii de scriere cand locatia nu s-a schimbat.
+    $currentStmt = $pdo->query('SELECT cod_locatie FROM offline_runtime_context WHERE id = 1 LIMIT 1');
+    $currentLocation = $currentStmt->fetchColumn();
 
-    if ($update->rowCount() === 0) {
+    if ($currentLocation === false) {
         $insert = $pdo->prepare("
             INSERT INTO offline_runtime_context (id, cod_locatie, updated_at)
             VALUES (1, :cod_locatie, CURRENT_TIMESTAMP)
         ");
         $insert->execute([':cod_locatie' => $codLocatie]);
+        return;
     }
 
-    restaurant_sqlite_backfill_cod_locatie_values($pdo, $codLocatie);
+    if ((int)$currentLocation !== $codLocatie) {
+        $update = $pdo->prepare("
+            UPDATE offline_runtime_context
+            SET cod_locatie = :cod_locatie,
+                updated_at = CURRENT_TIMESTAMP
+            WHERE id = 1
+        ");
+        $update->execute([':cod_locatie' => $codLocatie]);
+    }
 }
 
 function restaurant_sqlite_ensure_columns(PDO $pdo): void

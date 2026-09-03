@@ -4,6 +4,21 @@ ini_set('log_errors', 1); // Activează logarea erorilor
 ini_set('error_log', 'error_log.log'); // Specifică calea către fișierul de log
 include('session.php');
 require_once __DIR__ . '/offline_api_path.php';
+require_once __DIR__ . '/lorand_payment_note_printer.php';
+require_once __DIR__ . '/offline_printer_flow_helper.php';
+
+$lorandClientId = (int)($_SESSION['client_id'] ?? 0);
+$lorandLocationId = (int)($_SESSION['cod_locatie'] ?? 0);
+$lorandPrinterQueued = false;
+$lorandRequestedRelist = (int)($_POST['nota_de_relistat'] ?? $_GET['nota_de_relistat'] ?? 0);
+if ($lorandClientId === 1019 && is_file(lorand_fiscal_queue_path($lorandClientId, $lorandLocationId))) {
+    $_SESSION['lorand_fiscal_after_url'] = $lorandRequestedRelist > 0
+        ? 'casa_marcat_vanzare.php?nota_de_relistat=' . rawurlencode((string)$lorandRequestedRelist)
+        : 'casa_marcat_vanzare.php';
+    unset($_SESSION['bon_procesat']);
+    header('Location: asteapta_casa_marcat.php');
+    exit;
+}
 
 // --- START BLOC NOU: Prevenire Execuție Dublă ---
 // Verificăm dacă acest bon a fost deja procesat în această sesiune
@@ -21,7 +36,7 @@ if (isset($_SESSION['nr_bon'])) {
 
 error_reporting(E_ALL); // Raportează toate tipurile de erori
 // Presupunem că variabila nota_de_relistat vine din sesiune sau este definită undeva
-$nota_de_relistat = $_POST['nota_de_relistat'] ?? 0;
+$nota_de_relistat = $lorandRequestedRelist;
 
 if ($nota_de_relistat == 0) {
 
@@ -211,6 +226,8 @@ if ($nota_de_relistat == 0) {
     date_default_timezone_set("Europe/Bucharest");
     
     // --- Inserția în tabela bonuri_casa_marcat și generarea fișierelor JSON (codul existent) ---
+    $bon_fiscal_json_scris = false;
+    $bon_fiscal_insert_id = 0;
     try {
         $insert_sql = "INSERT INTO bonuri_casa_marcat (data, ora, continut_bon, de_trimis_la_casa_marcat, nrbon, locatie)
                           VALUES (:data, :ora, :continut_bon, :de_trimis, :nrbon, :locatie)";
@@ -227,6 +244,7 @@ if ($nota_de_relistat == 0) {
             ':nrbon' => $nr_bon,
             ':locatie' => $cod_locatie
         ]);
+        $bon_fiscal_insert_id = (int)$pdo->lastInsertId();
     
         if (isset($_SESSION['client_id'])) {
             $client_id = $_SESSION['client_id'];
@@ -254,12 +272,26 @@ if ($nota_de_relistat == 0) {
             $folder_path = offline_api_path($client_id, $locatie_val);
     
             if (!offline_api_ensure_dir($folder_path)) {
-                error_log("Nu s-a putut crea directorul API offline: " . $folder_path);
+                throw new RuntimeException("Nu s-a putut crea directorul API offline: " . $folder_path);
+            }
+            if ($json_data === false) {
+                throw new RuntimeException('Bonul fiscal nu a putut fi convertit în JSON.');
             }
     
             $json_file_path = $folder_path . "/bon_casa_marcat.json";
-            file_put_contents($json_file_path, $json_data);
+            if (!lorand_fiscal_publish_json($json_file_path, $json_data)) {
+                if ($bon_fiscal_insert_id > 0) {
+                    $cleanup_stmt = $pdo->prepare("DELETE FROM bonuri_casa_marcat WHERE id = :id AND de_trimis_la_casa_marcat = 1");
+                    $cleanup_stmt->execute([':id' => $bon_fiscal_insert_id]);
+                }
+                $_SESSION['lorand_fiscal_after_url'] = 'casa_marcat_vanzare.php';
+                unset($_SESSION['bon_procesat']);
+                header('Location: asteapta_casa_marcat.php');
+                exit;
+            }
+            $bon_fiscal_json_scris = true;
     
+            // Marcarea ca preluat se face numai după scrierea cu succes a fișierului fiscal.
             $update_sql = "UPDATE bonuri_casa_marcat 
                            SET de_trimis_la_casa_marcat = 0 
                            WHERE nrbon = :nrbon AND de_trimis_la_casa_marcat = 1";
@@ -270,12 +302,37 @@ if ($nota_de_relistat == 0) {
             error_log("Client_id nu este setat în sesiune.");
         }
     
-    } catch (PDOException $e) {
-        error_log("Eroare la inserția bonului: " . $e->getMessage());
+    } catch (Throwable $e) {
+        error_log("Eroare la inserția/generarea bonului fiscal: " . $e->getMessage());
+        if ((int)$client_agecs === 1019 && !$bon_fiscal_json_scris && $bon_fiscal_insert_id > 0) {
+            try {
+                $cleanup_stmt = $pdo->prepare("DELETE FROM bonuri_casa_marcat WHERE id = :id AND de_trimis_la_casa_marcat = 1");
+                $cleanup_stmt->execute([':id' => $bon_fiscal_insert_id]);
+            } catch (Throwable $cleanupError) {
+                error_log('Curățare bon fiscal Lorand nepregătit: ' . $cleanupError->getMessage());
+            }
+        }
     }
     
-    // --- Generarea datelor pentru imprimantă (codul existent) ---
+    // --- Generarea datelor pentru imprimantă ---
     try {
+        if ((int)$client_agecs === 1019) {
+            $lorandSettings = vanzare_v2_lorand_settings($pdo);
+            if ($bon_fiscal_json_scris && !empty($lorandSettings['listare_nota_dupa_fiscalizare'])) {
+                lorand_payment_note_enqueue(
+                    $pdo,
+                    $tabel_final_det_note,
+                    $tabel_final_nomenclator,
+                    $tabel_final_admins,
+                    (int)$nr_bon,
+                    1019,
+                    (int)$cod_locatie
+                );
+                $lorandPrinterQueued = true;
+            } elseif (!$bon_fiscal_json_scris) {
+                error_log('Nota de plată Lorand nu a fost trimisă la BAR deoarece bon_casa_marcat.json nu a fost generat cu succes.');
+            }
+        } else {
         $departments_sql = "
             SELECT DISTINCT ps.departament
             FROM $tabel_final_det_note dn
@@ -457,6 +514,7 @@ if ($nota_de_relistat == 0) {
     
         $json_file_path_imprimanta = $folder_path . "/de_listat_la_imprimanta.json";
         file_put_contents($json_file_path_imprimanta, $json_data_imprimanta);
+        }
     
         unset($_SESSION['nr_bon']);
         unset($_SESSION['bon_procesat']); // <-- CURĂȚARE LOCK
@@ -500,10 +558,24 @@ if ($nota_de_relistat == 0) {
 
         }
     }
+        if ((int)$client_agecs === 1019 && $bon_fiscal_json_scris) {
+            $_SESSION['lorand_fiscal_after_url'] = $lorandPrinterQueued
+                ? lorand_printer_wait_url('vanzare_magazin.php', 'nota_plata')
+                : 'vanzare_magazin.php';
+            header('Location: asteapta_casa_marcat.php');
+            exit;
+        }
         printf("<script>location.href='vanzare_magazin.php'</script>");
     
-    } catch (PDOException $e) {
+    } catch (Throwable $e) {
         error_log("Eroare la generarea datelor pentru imprimantă: " . $e->getMessage());
+        if ((int)$client_agecs === 1019 && $bon_fiscal_json_scris) {
+            $_SESSION['offline_printer_error'] = 'Nota de plată nu a putut fi pusă în coada imprimantei BAR: ' . $e->getMessage();
+            $_SESSION['lorand_fiscal_after_url'] = lorand_printer_wait_url('vanzare_magazin.php', 'nota_plata');
+            unset($_SESSION['nr_bon'], $_SESSION['bon_procesat'], $_SESSION['numerarprim'], $_SESSION['cardprim'], $_SESSION['cif_client'], $_SESSION['rest_tichete'], $_SESSION['total_tichete'], $_SESSION['masa_curenta']);
+            header('Location: asteapta_casa_marcat.php');
+            exit;
+        }
     }
 }
 else {
@@ -709,6 +781,8 @@ else {
     date_default_timezone_set("Europe/Bucharest");
     
     // --- Inserția în tabela bonuri_casa_marcat și generarea fișierelor JSON (la fel ca mai sus) ---
+    $bon_fiscal_relistat_scris = false;
+    $bon_fiscal_relistat_insert_id = 0;
     try {
         $insert_sql = "INSERT INTO bonuri_casa_marcat (data, ora, continut_bon, de_trimis_la_casa_marcat, nrbon, locatie)
                           VALUES (:data, :ora, :continut_bon, :de_trimis, :nrbon, :locatie)";
@@ -727,6 +801,7 @@ else {
             ':nrbon' => $nr_bon,
             ':locatie' => $cod_locatie
         ]);
+        $bon_fiscal_relistat_insert_id = (int)$pdo->lastInsertId();
     
         if (isset($_SESSION['client_id'])) {
             $client_id = $_SESSION['client_id'];
@@ -754,11 +829,23 @@ else {
             $folder_path = offline_api_path($client_id, $locatie_val);
     
             if (!offline_api_ensure_dir($folder_path)) {
-                error_log("Nu s-a putut crea directorul API offline: " . $folder_path);
+                throw new RuntimeException("Nu s-a putut crea directorul API offline: " . $folder_path);
+            }
+            if ($json_data === false) {
+                throw new RuntimeException('Bonul fiscal relistat nu a putut fi convertit în JSON.');
             }
     
             $json_file_path = $folder_path . "/bon_casa_marcat.json";
-            file_put_contents($json_file_path, $json_data);
+            if (!lorand_fiscal_publish_json($json_file_path, $json_data)) {
+                if ($bon_fiscal_relistat_insert_id > 0) {
+                    $cleanup_stmt = $pdo->prepare("DELETE FROM bonuri_casa_marcat WHERE id = :id AND de_trimis_la_casa_marcat = 1");
+                    $cleanup_stmt->execute([':id' => $bon_fiscal_relistat_insert_id]);
+                }
+                $_SESSION['lorand_fiscal_after_url'] = 'casa_marcat_vanzare.php?nota_de_relistat=' . rawurlencode((string)$nr_bon);
+                header('Location: asteapta_casa_marcat.php');
+                exit;
+            }
+            $bon_fiscal_relistat_scris = true;
     
             $update_sql = "UPDATE bonuri_casa_marcat 
                            SET de_trimis_la_casa_marcat = 0 
@@ -770,12 +857,31 @@ else {
             error_log("Client_id nu este setat în sesiune.");
         }
     
-    } catch (PDOException $e) {
-        error_log("Eroare la inserția bonului (nota relistata): " . $e->getMessage());
+    } catch (Throwable $e) {
+        error_log("Eroare la inserția/generarea bonului relistat: " . $e->getMessage());
+        if ((int)$client_agecs === 1019 && !$bon_fiscal_relistat_scris && $bon_fiscal_relistat_insert_id > 0) {
+            try {
+                $cleanup_stmt = $pdo->prepare("DELETE FROM bonuri_casa_marcat WHERE id = :id AND de_trimis_la_casa_marcat = 1");
+                $cleanup_stmt->execute([':id' => $bon_fiscal_relistat_insert_id]);
+            } catch (Throwable $cleanupError) {
+                error_log('Curățare bon fiscal Lorand relistat nepregătit: ' . $cleanupError->getMessage());
+            }
+        }
     }
     
-    // --- Generarea datelor pentru imprimantă (la fel ca mai sus) ---
+    // --- Generarea datelor pentru imprimantă la relistare ---
     try {
+        if ((int)$client_agecs === 1019) {
+            // Relistarea fiscală retrimite doar bonul la casa de marcat. Nu generează o nouă notă BAR.
+            unset($_SESSION['nr_bon'], $_SESSION['bon_procesat'], $_SESSION['numerarprim'], $_SESSION['cardprim'], $_SESSION['cif_client'], $_SESSION['rest_tichete'], $_SESSION['total_tichete'], $_SESSION['masa_curenta']);
+            if ($bon_fiscal_relistat_scris) {
+                $_SESSION['lorand_fiscal_after_url'] = 'vanzare_magazin.php';
+                header('Location: asteapta_casa_marcat.php');
+            } else {
+                header('Location: vanzare_magazin.php');
+            }
+            exit;
+        }
         $departments_sql = "
             SELECT DISTINCT ps.departament
             FROM $tabel_final_det_note dn

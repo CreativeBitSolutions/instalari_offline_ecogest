@@ -286,7 +286,7 @@ function offline_export_build(PDO $pdo, $dataStartRaw, $dataEndRaw, $formatRaw =
     $output = '';
 
     if ($format === 'sql') {
-        $output .= "-- Export offline vanzari Bestmixt\n";
+        $output .= "-- Export offline vanzari Lorand\n";
         $output .= "-- Client: {$clientId}\n";
         $output .= "-- Locatie: {$codLocatie}\n";
         $output .= "-- Perioada: {$data_start} - {$data_end}\n";

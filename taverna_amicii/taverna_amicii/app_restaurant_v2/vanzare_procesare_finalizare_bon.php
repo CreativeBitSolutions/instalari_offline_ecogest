@@ -583,10 +583,10 @@ if (isset($virament_bancar_separat_fara_casa_marcat) && $virament_bancar_separat
   if (isset($platit_din_sold) && $platit_din_sold == 1) {
     printf("<script>location.href='listeaza_nota_fin.php'</script>");
     }
-    if($_SESSION['mod_listare']=='complex'){
-printf("<script>location.href='dwred_restaurant_cu_listare.php'</script>");
-}
-else{
-    printf("<script>location.href='casa_marcat_vanzare.php'</script>");
-}
+    // Vânzarea este deja salvată. Înainte de generarea bonului verificăm coada
+    // pentru a nu suprascrie un bon pe care scannerul nu l-a preluat încă.
+    $_SESSION['app_restaurant_v2_generator_casa_marcat'] = ($_SESSION['mod_listare'] == 'complex')
+        ? 'dwred_restaurant_cu_listare.php'
+        : 'casa_marcat_vanzare.php';
+    printf("<script>location.href='asteapta_casa_marcat.php'</script>");
 }?>

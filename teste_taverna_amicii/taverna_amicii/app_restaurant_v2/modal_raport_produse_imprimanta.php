@@ -1095,6 +1095,11 @@ $productReportCsrf = (string)$_SESSION['product_report_csrf'];
                 var payload = await readJson(response);
                 previewToken = '';
                 showAlert('success', payload.message);
+                if (payload.printer_wait_url) {
+                    window.setTimeout(function () {
+                        window.location.href = payload.printer_wait_url;
+                    }, 350);
+                }
             } catch (error) {
                 printButton.disabled = false;
                 showAlert('danger', error.message);

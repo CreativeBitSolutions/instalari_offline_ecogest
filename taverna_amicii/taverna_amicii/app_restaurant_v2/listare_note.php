@@ -208,7 +208,7 @@ $notes = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
           <h5 class="modal-title" id="relistareboncasaLabel">Retrimite bon la casa de marcat (ATENTIE! SE VA INREGISTRA VANZAREA LA CASA DE MARCAT)</h5>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-        <form method="POST" action="casa_marcat_vanzare.php">
+        <form method="POST" action="asteapta_casa_marcat.php">
           <div class="modal-body">
             <div class="form-group">
               <label for="notaSelect">Selectează nota</label>

@@ -2,6 +2,7 @@
 declare(strict_types=1);
 include('session.php');
 require_once __DIR__ . '/totaluri_plata_helper.php';
+require_once __DIR__ . '/offline_printer_flow_helper.php';
 header('Content-Type: application/json; charset=utf-8');
 
 date_default_timezone_set('Europe/Bucharest');
@@ -238,14 +239,14 @@ try {
         $continut .= "OPERATOR TURĂ: {$targetName}\n";
         $continut .= "ÎNCHIS DE ȘEF SALĂ: {$actorName}\n";
 
-        $folder_path = RESTAURANT_OFFLINE_API_DIR . "/{$client_id}/{$actorLocation}";
-        if (!is_dir($folder_path)) mkdir($folder_path, 0777, true);
-        $json_file_path = "{$folder_path}/de_listat_la_imprimanta.json";
-        
-        $wait = 0; while (file_exists($json_file_path) && $wait < 2) { sleep(1); $wait++; }
-        if (!file_exists($json_file_path)) {
-            $json_array = ["status" => "success", "data" => [['id' => 0, 'data' => $current_date, 'ora' => $current_time, 'de_trimis_la_imprimanta' => 1, 'nrbon' => 0, 'locatie' => (int)$actorLocation, 'departament_listare' => "BAR", 'continut' => $continut]]];
-            file_put_contents($json_file_path, json_encode($json_array, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        try {
+            agecs_offline_printer_enqueue(
+                [['id' => 0, 'data' => $current_date, 'ora' => $current_time, 'de_trimis_la_imprimanta' => 1, 'nrbon' => 0, 'locatie' => (int)$actorLocation, 'departament_listare' => "BAR", 'continut' => $continut]],
+                'Închiderea turei operatorului a fost adăugată în coada imprimantei.'
+            );
+        } catch (Throwable $printerError) {
+            error_log('Tura este închisă, dar listarea nu a intrat în coadă: ' . $printerError->getMessage());
+            $_SESSION['offline_printer_error'] = 'Tura este închisă, dar documentul nu a putut fi pus în coada imprimantei. Folosiți relistarea.';
         }
     }
 
@@ -310,7 +311,7 @@ try {
                     });
                 }
                 
-                $clienti_redirect = [3, 8, 9, 23, 25, 26, 1021];
+                $clienti_redirect = [3, 8, 9, 23, 25, 26, 1008, 1021];
                 if (in_array($client_id, $clienti_redirect, true)) {
                     $trigger_z = true; // Dăm flag interfeței să ceară listarea raportului termic Z
                 }
@@ -324,7 +325,8 @@ try {
         'status'        => 'success',
         'message'       => "Tura pentru $targetName a fost închisă cu succes. (Cod Închidere: $codInchidereNou)",
         'trigger_z'     => $trigger_z,
-        'nr_raport_z'   => $nr_raport_z_nou
+        'nr_raport_z'   => $nr_raport_z_nou,
+        'printer_wait_url' => agecs_offline_printer_wait_url('sefsala.php', 'inchidere_z')
     ]);
 
 } catch (Exception $e) {

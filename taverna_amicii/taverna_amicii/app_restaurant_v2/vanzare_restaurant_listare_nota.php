@@ -8,6 +8,7 @@ include('database_connection.php');
 require_once __DIR__ . '/setari_platforma_schema.php';
 require_once __DIR__ . '/det_note_import_schema.php';
 require_once __DIR__ . '/det_note_departament_listare_schema.php';
+require_once __DIR__ . '/offline_printer_flow_helper.php';
 
 restaurant_v2_ensure_det_note_site_import_column(
     $pdo,
@@ -48,32 +49,11 @@ function redirect_to_vanzare_restaurant($delayMs = 0) {
 }
 
 function publish_printer_queue_file($queueFile, array $queuePayload) {
-    $jsonData = json_encode($queuePayload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-
-    if ($jsonData === false) {
-        throw new RuntimeException('Nu se poate genera JSON-ul pentru imprimanta.');
-    }
-
-    $tmpFile = $queueFile . '.tmp.' . getmypid() . '.' . uniqid('', true);
-
-    if (file_put_contents($tmpFile, $jsonData, LOCK_EX) === false) {
-        throw new RuntimeException('Nu se poate scrie fisierul temporar pentru imprimanta: ' . $tmpFile);
-    }
-
-    clearstatcache(true, $queueFile);
-    if (is_file($queueFile)) {
-        $archiveFile = $queueFile . '.vechi.' . date('YmdHis') . '.' . getmypid() . '.' . uniqid('', true);
-
-        if (!@rename($queueFile, $archiveFile) && !@unlink($queueFile)) {
-            @unlink($tmpFile);
-            throw new RuntimeException('Fisierul cozii de imprimare este blocat: ' . $queueFile);
-        }
-    }
-
-    if (!@rename($tmpFile, $queueFile)) {
-        @unlink($tmpFile);
-        throw new RuntimeException('Nu se poate publica fisierul pentru imprimanta: ' . $queueFile);
-    }
+    $documents = isset($queuePayload['data']) && is_array($queuePayload['data'])
+        ? $queuePayload['data']
+        : [];
+    $message = (string)($queuePayload['message'] ?? 'Documente trimise la imprimantă.');
+    return agecs_offline_printer_enqueue($documents, $message);
 }
 function bold_content_for_client_8($content, $client_id) {
     if ((int)$client_id !== 8) {
@@ -616,22 +596,7 @@ if (!in_array($client_id, [23])) {
     if (!empty($printData)) {
         $json_file_path_imprimanta = $folder_path . "/de_listat_la_imprimanta.json";
     
-        update_loading_status("Se verifică imprimanta (generare combinată)...");
-        $totalWait = 0;
-        
-        // Asteptare scurta pentru fisierul preluat de serviciul de imprimare.
-        while (is_file($json_file_path_imprimanta) && $totalWait < 10) {
-            sleep(1);
-            $totalWait += 1;
-            clearstatcache(true, $json_file_path_imprimanta);
-        }
-    
-        if (is_file($json_file_path_imprimanta)) {
-            error_log("Fisier vechi gasit in coada imprimantei dupa " . $totalWait . " secunde: " . $json_file_path_imprimanta);
-            update_loading_status("Se publică noua listare...");
-        } else {
-            update_loading_status("Se trimit listările cumulate...");
-        }
+        update_loading_status("Se adaugă documentele în coada imprimantei...");
 
         $mesaj_succes = (count($printData) > 1) 
             ? "Date pentru imprimantă generate pentru departamente multiple." 
@@ -655,16 +620,17 @@ if (!in_array($client_id, [23])) {
     // Facem să se afișeze grila mese mereu după listare ca să apuce imprimanta să listeze
     $_SESSION['trimis_comanda'] = 1;
 
-    update_loading_status("Comanda finalizată! Redirecționăm...");
-
-    redirect_to_vanzare_restaurant();
+    update_loading_status("Comanda este salvată. Verificăm preluarea de către imprimantă...");
+    echo agecs_offline_printer_redirect_script('vanzare_restaurant.php', 'comanda');
+    flush();
 } catch (PDOException $e) {
     error_log("Eroare la generarea datelor pentru imprimantă: " . $e->getMessage());
     update_loading_status("A apărut o eroare la generarea listării. Revenim la vânzare...");
     redirect_to_vanzare_restaurant(1500);
 } catch (Exception $e) {
     error_log("Eroare la publicarea datelor pentru imprimantă: " . $e->getMessage());
-    update_loading_status("A apărut o eroare la trimiterea către imprimantă. Revenim la vânzare...");
-    redirect_to_vanzare_restaurant(1500);
+    $_SESSION['offline_printer_error'] = 'Comanda este salvată, dar documentele nu au putut fi puse în coada imprimantei. Verificați scannerul și folosiți relistarea.';
+    update_loading_status("Comanda este salvată. Listarea necesită verificare...");
+    echo agecs_offline_printer_redirect_script('vanzare_restaurant.php', 'comanda', 400);
 }
 ?>

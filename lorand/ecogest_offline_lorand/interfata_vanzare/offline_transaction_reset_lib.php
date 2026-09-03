@@ -12,6 +12,7 @@ function offline_transaction_reset_groups(): array
         'Vanzari si miscari' => [
             'discounturi_acordate', 'det_note', 'bonuri_casa_marcat', 'miscari', 'note',
             'de_listat_la_imprimanta', 'log_bonuri', 'fiscalizare_raspunsuri',
+            'lorand_printer_queue_history',
         ],
         'Inchideri si rapoarte Z' => [
             'inchideri_r_12', 'rapoarte_z', 'log_reglari_casa_marcat',
