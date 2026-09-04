@@ -10,14 +10,19 @@ $cod_masa = $_GET['cod_masa']; // Asigură-te că transmiți și cod_masa în AJ
 $client_agecs = $_SESSION['client_id'] ?? null;
 $ascunde_actiuni = ($client_agecs == 22) ? " style='display:none'" : "";
 
-// Preluare setari firma (logica originală)
-$date_firma = "SELECT mod_listare, vanzare_sub_stoc, ajustare_adaos from $tabel_final_date_firma";
-$date_firma_stmt = $pdo->prepare($date_firma);
-$date_firma_stmt->execute();
-if ($row = $date_firma_stmt->fetch(PDO::FETCH_ASSOC)){
-    $_SESSION['vanzare_sub_stoc'] = $row['vanzare_sub_stoc'];
-    $_SESSION['mod_listare'] = $row['mod_listare'];
-    $_SESSION['ajustare_adaos'] = $row['ajustare_adaos'];
+// Pagina principală încarcă deja aceste setări. Interogarea rămâne fallback pentru acces direct.
+if (!isset($_SESSION['vanzare_sub_stoc'], $_SESSION['mod_listare'], $_SESSION['ajustare_adaos'])) {
+    $date_firma = "SELECT mod_listare, vanzare_sub_stoc, ajustare_adaos FROM $tabel_final_date_firma LIMIT 1";
+    $date_firma_stmt = $pdo->query($date_firma);
+    if ($row = $date_firma_stmt->fetch(PDO::FETCH_ASSOC)) {
+        $_SESSION['vanzare_sub_stoc'] = $row['vanzare_sub_stoc'];
+        $_SESSION['mod_listare'] = $row['mod_listare'];
+        $_SESSION['ajustare_adaos'] = $row['ajustare_adaos'];
+    }
+}
+$cif_curent = htmlspecialchars($_SESSION['cif_client'] ?? '', ENT_QUOTES);
+if (session_status() === PHP_SESSION_ACTIVE) {
+    session_write_close();
 }
 ?>
 
@@ -33,6 +38,7 @@ $f_sql = "SELECT n.pret_cu_tva as pret_initial, dn.preparat, dn.pachet, dn.disco
           ORDER BY dn.id_vanz";
 $f_stmt = $pdo->prepare($f_sql);
 $f_stmt->execute(['nr_bon' => $nr_bon]);
+$total_val_vz_cu_tva = 0.0;
 
 while ($row = $f_stmt->fetch(PDO::FETCH_ASSOC)) {
     // Preluare variabile (logica originală)
@@ -41,6 +47,7 @@ while ($row = $f_stmt->fetch(PDO::FETCH_ASSOC)) {
     $pret_vanzare = $row['pret_vanzare'];
     $pret_initial = round($row['pret_initial'], 2);
     $valoare_vanzare_c_tva = round($row['valoare_vanzare_cu_tva'], 2);
+    $total_val_vz_cu_tva += (float)$row['valoare_vanzare_cu_tva'];
     $id_vanz = $row['id_vanz'];
     $codul_produsului = $row['cod_p'];
     $cota = $row['cota_tva'];
@@ -93,12 +100,7 @@ $unitate_masura = ($row['um'] == 'H87' || empty($row['um'])) ? 'buc' : htmlspeci
 
 <div class="receipt-totals">
     <?php
-    $total_sql = "SELECT sum(valoare_vanzare_cu_tva) as total FROM $tabel_final_det_note WHERE nr_bon=:nr_bon";
-    $total_stmt = $pdo->prepare($total_sql);
-    $total_stmt->execute(['nr_bon' => $nr_bon]);
-    $total_row = $total_stmt->fetch(PDO::FETCH_ASSOC);
-    $total_val_vz_cu_tva = $total_row['total'] ? round($total_row['total'], 2) : 0.00;
-    $cif_curent = htmlspecialchars($_SESSION['cif_client'] ?? '', ENT_QUOTES);
+    $total_val_vz_cu_tva = round($total_val_vz_cu_tva, 2);
     ?>
     <ul class="nav nav-tabs nav-fill" id="footer-tab" role="tablist">
         <li class="nav-item">

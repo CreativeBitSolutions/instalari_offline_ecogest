@@ -32,6 +32,9 @@ if ($categ !== 'all') {
 
 $searchTerm = trim($searchTerm ?? '');
 $clientIdSession = (int)($_SESSION['client_id'] ?? 0);
+if (session_status() === PHP_SESSION_ACTIVE) {
+    session_write_close();
+}
 
 if ($searchTerm !== '') {
     if ($clientIdSession === 18 && preg_match('/^\d/', $searchTerm)) {
@@ -80,7 +83,6 @@ $ppcksql = "SELECT
             JOIN $tabel_final_categorii c ON n.id_categorie = c.id_categorie 
             JOIN gestiuni g ON n.id_gestiune = g.id_gestiune 
             {$where_clause}
-            GROUP BY n.cod_produs 
             ORDER BY n.nume ASC
             LIMIT :limit OFFSET :offset";
             

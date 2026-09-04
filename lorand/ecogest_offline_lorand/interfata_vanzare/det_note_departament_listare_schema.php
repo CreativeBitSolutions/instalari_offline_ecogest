@@ -18,17 +18,8 @@ if (!function_exists('agecs_ensure_det_note_departament_listare')) {
         try {
             $driver = strtolower((string)$pdo->getAttribute(PDO::ATTR_DRIVER_NAME));
             if ($driver === 'sqlite') {
-                $stmt = $pdo->query('PRAGMA table_info("' . $tableName . '")');
-                $columnExists = false;
-                foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $column) {
-                    if (strcasecmp((string)($column['name'] ?? ''), 'departament_listare') === 0) {
-                        $columnExists = true;
-                        break;
-                    }
-                }
-                if (!$columnExists) {
-                    $pdo->exec('ALTER TABLE "' . $tableName . '" ADD COLUMN "departament_listare" TEXT NULL DEFAULT NULL');
-                }
+                require_once __DIR__ . '/tools/sqlite_schema.php';
+                lorand_sqlite_apply_schema_if_needed($pdo);
             } else {
                 $stmt = $pdo->prepare("SHOW COLUMNS FROM `{$tableName}` LIKE ?");
                 $stmt->execute(['departament_listare']);

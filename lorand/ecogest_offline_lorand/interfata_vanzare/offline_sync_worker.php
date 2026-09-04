@@ -50,6 +50,7 @@ function offline_sync_worker_retry_delay(int $attempts): int
 
 try {
     offline_sync_queue_ensure_schema($pdo);
+    offline_sync_queue_recover_stale($pdo);
     offline_sync_queue_discover($pdo);
     $token = offline_sync_worker_acquire($pdo);
     if ($token === '') {

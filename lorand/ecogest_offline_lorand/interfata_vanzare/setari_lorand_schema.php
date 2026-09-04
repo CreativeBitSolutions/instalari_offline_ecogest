@@ -12,32 +12,27 @@ if (!function_exists('vanzare_v2_ensure_lorand_settings')) {
 
         try {
             $driver = strtolower((string)$pdo->getAttribute(PDO::ATTR_DRIVER_NAME));
+            if ($driver === 'sqlite') {
+                require_once __DIR__ . '/tools/sqlite_schema.php';
+                lorand_sqlite_apply_schema_if_needed($pdo);
+                $results[$connectionKey] = true;
+                return true;
+            }
             $columns = [];
 
-            if ($driver === 'sqlite') {
-                $stmt = $pdo->query("PRAGMA table_info('setari_platforma')");
-                foreach ($stmt ? $stmt->fetchAll(PDO::FETCH_ASSOC) : [] as $column) {
-                    $columns[strtolower((string)($column['name'] ?? ''))] = true;
-                }
-            } else {
-                $stmt = $pdo->query('SHOW COLUMNS FROM `setari_platforma`');
-                foreach ($stmt ? $stmt->fetchAll(PDO::FETCH_ASSOC) : [] as $column) {
-                    $columns[strtolower((string)($column['Field'] ?? ''))] = true;
-                }
+            $stmt = $pdo->query('SHOW COLUMNS FROM `setari_platforma`');
+            foreach ($stmt ? $stmt->fetchAll(PDO::FETCH_ASSOC) : [] as $column) {
+                $columns[strtolower((string)($column['Field'] ?? ''))] = true;
             }
 
             $addedColumn = false;
             if (!isset($columns['operator_acces_rapoarte'])) {
-                $pdo->exec($driver === 'sqlite'
-                    ? 'ALTER TABLE setari_platforma ADD COLUMN operator_acces_rapoarte INTEGER NOT NULL DEFAULT 1'
-                    : 'ALTER TABLE `setari_platforma` ADD COLUMN `operator_acces_rapoarte` TINYINT(1) NOT NULL DEFAULT 1');
+                $pdo->exec('ALTER TABLE `setari_platforma` ADD COLUMN `operator_acces_rapoarte` TINYINT(1) NOT NULL DEFAULT 1');
                 $addedColumn = true;
             }
 
             if (!isset($columns['listare_nota_dupa_fiscalizare'])) {
-                $pdo->exec($driver === 'sqlite'
-                    ? 'ALTER TABLE setari_platforma ADD COLUMN listare_nota_dupa_fiscalizare INTEGER NOT NULL DEFAULT 1'
-                    : 'ALTER TABLE `setari_platforma` ADD COLUMN `listare_nota_dupa_fiscalizare` TINYINT(1) NOT NULL DEFAULT 1');
+                $pdo->exec('ALTER TABLE `setari_platforma` ADD COLUMN `listare_nota_dupa_fiscalizare` TINYINT(1) NOT NULL DEFAULT 1');
                 $addedColumn = true;
             }
 
@@ -73,51 +68,8 @@ if (!function_exists('vanzare_v2_ensure_lorand_offline_schema')) {
                 return true;
             }
 
-            $pdo->exec(
-                'CREATE TABLE IF NOT EXISTS observatii_predefinite (
-                    id INTEGER PRIMARY KEY,
-                    text_observatie TEXT NOT NULL DEFAULT \'\',
-                    ordine INTEGER NOT NULL DEFAULT 0,
-                    activ INTEGER NOT NULL DEFAULT 1,
-                    toate_produsele INTEGER NOT NULL DEFAULT 1
-                )'
-            );
-            $observationColumns = [];
-            $observationColumnsStmt = $pdo->query("PRAGMA table_info('observatii_predefinite')");
-            foreach ($observationColumnsStmt ? $observationColumnsStmt->fetchAll(PDO::FETCH_ASSOC) : [] as $column) {
-                $observationColumns[strtolower((string)($column['name'] ?? ''))] = true;
-            }
-            if (!isset($observationColumns['toate_produsele'])) {
-                $pdo->exec('ALTER TABLE observatii_predefinite ADD COLUMN toate_produsele INTEGER NOT NULL DEFAULT 1');
-            }
-            $pdo->exec(
-                'CREATE TABLE IF NOT EXISTS atribuiri_observatii_produse (
-                    id_observatie INTEGER NOT NULL,
-                    cod_produs INTEGER NOT NULL,
-                    PRIMARY KEY (id_observatie, cod_produs)
-                )'
-            );
-            $pdo->exec('CREATE INDEX IF NOT EXISTS idx_atribuiri_observatii_produs ON atribuiri_observatii_produse(cod_produs)');
-            $pdo->exec(
-                'CREATE TABLE IF NOT EXISTS offline_reference_sync_runtime (
-                    id INTEGER PRIMARY KEY CHECK(id = 1),
-                    vat_mirrored INTEGER NOT NULL DEFAULT 0,
-                    last_sync_at TEXT DEFAULT NULL
-                )'
-            );
-            $pdo->exec('INSERT OR IGNORE INTO offline_reference_sync_runtime(id, vat_mirrored) VALUES(1, 0)');
-            $pdo->exec(
-                'CREATE TABLE IF NOT EXISTS lorand_printer_queue_history (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    document_key TEXT NOT NULL UNIQUE,
-                    nrbon INTEGER NOT NULL,
-                    locatie INTEGER NOT NULL,
-                    status TEXT NOT NULL DEFAULT \'preparing\',
-                    queue_file TEXT DEFAULT NULL,
-                    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                    updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
-                )'
-            );
+            require_once __DIR__ . '/tools/sqlite_schema.php';
+            lorand_sqlite_apply_schema_if_needed($pdo);
 
             $results[$connectionKey] = true;
         } catch (Throwable $e) {

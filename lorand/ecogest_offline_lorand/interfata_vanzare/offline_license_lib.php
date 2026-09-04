@@ -14,6 +14,11 @@ PEM;
 
 function offline_license_config()
 {
+    static $cachedConfig = null;
+    if (is_array($cachedConfig)) {
+        return $cachedConfig;
+    }
+
     if (function_exists('offline_config_all')) {
         $config = offline_config_all();
     } else {
@@ -48,7 +53,7 @@ function offline_license_config()
     if ($caBundlePath === '' && $apiRoot !== '') {
         $caBundlePath = rtrim((string)$apiRoot, "\\/") . DIRECTORY_SEPARATOR . 'certificates' . DIRECTORY_SEPARATOR . 'cacert.pem';
     }
-    return array(
+    $cachedConfig = array(
         'enabled' => true,
         'url' => trim((string)(isset($licenseConfig['api_url']) ? $licenseConfig['api_url'] : (isset($config['license_check_url']) ? $config['license_check_url'] : ''))),
         'valid_days' => max(1, (int)(isset($licenseConfig['valid_days']) ? $licenseConfig['valid_days'] : (isset($config['license_valid_days']) ? $config['license_valid_days'] : 30))),
@@ -63,6 +68,7 @@ function offline_license_config()
         'retry_seconds' => max(900, (int)(isset($licenseConfig['retry_seconds']) ? $licenseConfig['retry_seconds'] : (isset($config['license_retry_seconds']) ? $config['license_retry_seconds'] : 21600))),
         'clock_tolerance_seconds' => max(60, (int)(isset($licenseConfig['clock_tolerance_seconds']) ? $licenseConfig['clock_tolerance_seconds'] : (isset($config['license_clock_tolerance_seconds']) ? $config['license_clock_tolerance_seconds'] : 300))),
     );
+    return $cachedConfig;
 }
 
 function offline_license_storage_dir()
@@ -148,16 +154,6 @@ function offline_license_runtime_read()
         try {
             $pdo = new PDO('sqlite:' . $config['db_path']);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $pdo->exec("CREATE TABLE IF NOT EXISTS offline_license_runtime (
-                id INTEGER PRIMARY KEY CHECK (id = 1),
-                last_seen_epoch INTEGER NOT NULL DEFAULT 0,
-                last_server_epoch INTEGER NOT NULL DEFAULT 0,
-                last_attempt_epoch INTEGER NOT NULL DEFAULT 0,
-                last_success_epoch INTEGER NOT NULL DEFAULT 0,
-                last_error TEXT NOT NULL DEFAULT '',
-                updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
-            )");
-            $pdo->exec('INSERT OR IGNORE INTO offline_license_runtime (id) VALUES (1)');
             $row = $pdo->query('SELECT * FROM offline_license_runtime WHERE id = 1')->fetch(PDO::FETCH_ASSOC);
             if (is_array($row)) {
                 foreach (array('last_seen_epoch', 'last_server_epoch', 'last_attempt_epoch', 'last_success_epoch') as $field) {
@@ -194,25 +190,33 @@ function offline_license_runtime_write(array $changes)
         try {
             $pdo = new PDO('sqlite:' . $config['db_path']);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $pdo->exec("CREATE TABLE IF NOT EXISTS offline_license_runtime (
-                id INTEGER PRIMARY KEY CHECK (id = 1),
-                last_seen_epoch INTEGER NOT NULL DEFAULT 0,
-                last_server_epoch INTEGER NOT NULL DEFAULT 0,
-                last_attempt_epoch INTEGER NOT NULL DEFAULT 0,
-                last_success_epoch INTEGER NOT NULL DEFAULT 0,
-                last_error TEXT NOT NULL DEFAULT '',
-                updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
-            )");
-            $stmt = $pdo->prepare("INSERT OR REPLACE INTO offline_license_runtime
-                (id, last_seen_epoch, last_server_epoch, last_attempt_epoch, last_success_epoch, last_error, updated_at)
-                VALUES (1, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)");
-            $stmt->execute(array(
-                $runtime['last_seen_epoch'],
-                $runtime['last_server_epoch'],
-                $runtime['last_attempt_epoch'],
-                $runtime['last_success_epoch'],
-                $runtime['last_error'],
-            ));
+            $writeRuntime = static function (PDO $connection) use ($runtime) {
+                $stmt = $connection->prepare("INSERT OR REPLACE INTO offline_license_runtime
+                    (id, last_seen_epoch, last_server_epoch, last_attempt_epoch, last_success_epoch, last_error, updated_at)
+                    VALUES (1, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)");
+                $stmt->execute(array(
+                    $runtime['last_seen_epoch'],
+                    $runtime['last_server_epoch'],
+                    $runtime['last_attempt_epoch'],
+                    $runtime['last_success_epoch'],
+                    $runtime['last_error'],
+                ));
+            };
+
+            try {
+                $writeRuntime($pdo);
+            } catch (Throwable $missingRuntimeTable) {
+                $pdo->exec("CREATE TABLE IF NOT EXISTS offline_license_runtime (
+                    id INTEGER PRIMARY KEY CHECK (id = 1),
+                    last_seen_epoch INTEGER NOT NULL DEFAULT 0,
+                    last_server_epoch INTEGER NOT NULL DEFAULT 0,
+                    last_attempt_epoch INTEGER NOT NULL DEFAULT 0,
+                    last_success_epoch INTEGER NOT NULL DEFAULT 0,
+                    last_error TEXT NOT NULL DEFAULT '',
+                    updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+                )");
+                $writeRuntime($pdo);
+            }
         } catch (Throwable $e) {
         }
     }
@@ -293,22 +297,29 @@ function offline_license_detect_identity_uncached()
 
 function offline_license_hardware_identity($forceRefresh = false)
 {
+    static $requestIdentity = null;
+    if (!$forceRefresh && is_array($requestIdentity)) {
+        return $requestIdentity;
+    }
+
     $path = offline_license_storage_path('hardware_identity.json');
     if (!$forceRefresh) {
         $cached = offline_license_read_json($path);
         $detectedAt = isset($cached['detected_at']) ? strtotime((string)$cached['detected_at']) : false;
         if (!empty($cached['serial']) && $detectedAt !== false && $detectedAt >= time() - 86400) {
-            return array(
+            $requestIdentity = array(
                 'serial' => offline_license_normalize_serial($cached['serial']),
                 'source' => isset($cached['source']) ? (string)$cached['source'] : 'HDD fizic',
                 'detected_at' => (string)$cached['detected_at'],
             );
+            return $requestIdentity;
         }
     }
 
     $identity = offline_license_detect_identity_uncached();
     $identity['detected_at'] = date(DATE_ATOM);
     offline_license_write_json($path, $identity);
+    $requestIdentity = $identity;
     return $identity;
 }
 

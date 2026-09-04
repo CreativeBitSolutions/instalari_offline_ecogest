@@ -9,10 +9,6 @@ if (!isset($_SESSION['admin_id'])) {
 }
 
 include('db.php');
-require_once __DIR__ . '/offline_import_schema.php';
-offline_import_schema_ensure($pdo);
-require_once __DIR__ . '/offline_audit_log_schema.php';
-offline_audit_log_ensure_schema($pdo);
 $live_id = 12;
 
 function offline_sales_only_enabled(): bool

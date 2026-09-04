@@ -228,6 +228,7 @@ Se optimizează numai inițializarea schemei de care depind:
 - offline_sync_queue_ensure_schema() nu mai execută DDL după ce user_version este curent.
 - offline_sequence_ensure_schema() nu mai verifică toate tabelele la fiecare request.
 - istoricul cozii imprimantei este creat de migrarea centrală.
+- recuperarea operațiilor rămase în starea sending rulează numai în workerul de sincronizare, nu la fiecare înscriere sau citire a cozii.
 
 Rămân intacte:
 - identificatorii offline ai bonurilor, închiderilor și rapoartelor Z.
@@ -280,6 +281,7 @@ Fișiere modificate probabil:
 - interfata_vanzare\offline_import_schema.php
 - interfata_vanzare\offline_audit_log_schema.php
 - interfata_vanzare\offline_sync_queue_lib.php
+- interfata_vanzare\offline_sync_worker.php
 - interfata_vanzare\setari_lorand_schema.php
 - interfata_vanzare\det_note_departament_listare_schema.php
 - interfata_vanzare\offline_license_lib.php

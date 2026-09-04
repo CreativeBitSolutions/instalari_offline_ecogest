@@ -422,9 +422,14 @@ Personalizări active:
 - configuratorul local stabilește dimensiunea, alinierea, lățimea, stilul bold și numărul de exemplare. Valoarea inițială Lorand este de două exemplare, iar destinația rămâne BAR.
 - listarea automată este idempotentă după locație și număr de bon. Reîncărcarea cererii nu creează alte exemplare pentru aceeași notă.
 - fișierul bon_casa_marcat.json nu este suprascris dacă bonul anterior nu a fost preluat. Pagina asteapta_casa_marcat.php urmărește eliberarea cozii și continuă automat fluxul curent.
+- după 5 secunde, asteapta_casa_marcat.php oferă trimiterea fiscală alternativă. Endpointul local revendică atomic bonul și scrie fișierul INP direct în folderul configurat în scan_casa_marcat_v3_inp. Fișierul este validat și scris fără UTF-8 BOM pentru compatibilitatea FiscalWire. La eroare, bonul este restaurat în coada normală fără să suprascrie un bon nou.
+- pagina de așteptare fiscală verifică timp de maximum 300 de secunde și oferă separat comanda „Continuă fără a mai trimite la casa de marcat”. Aceasta se folosește numai când bonul a fost deja fiscalizat. Fișierul nepreluat este revendicat atomic și arhivat în bonuri_neprocesate, iar vânzarea deja înregistrată nu este repetată.
 - după publicarea unei note de plată sau a documentelor de închidere se deschide asteapta_imprimanta.php. Pagina urmărește toate fișierele distincte din print_queue și permite continuarea fără repetarea operației deja salvate.
+- după 5 secunde, asteapta_imprimanta.php afișează metoda alternativă de listare directă. Imprimanta Windows este citită din printer_bold\settings.json, inclusiv când fișierul JSON are UTF-8 BOM. Lotul este revendicat atomic, textul este curățat de HTML și diacritice, apoi este trimis RAW, fără bold, cu șase rânduri pentru avansul hârtiei și comanda de tăiere completă. La eșec, lotul este restaurat fără să suprascrie documentele apărute între timp.
 - la închiderea zilei se publică trei fișiere independente în coada imprimantei BAR, în ordinea nota de închidere, lista produselor fără PROTOCOL și lista produselor PROTOCOL. Fiecare fișier conține un singur document și este listat pe o foaie separată. O închidere deja procesată nu poate dubla documentele.
 - pagina rapoarte_produse_lorand.php oferă rapoarte de produse, filtre și istoricul notelor PROTOCOL. Documentele manuale folosesc aceeași coadă locală de imprimare.
+- modalurile Sume tură și Sume zi afișează separat valorile PROTOCOL și ONLINE. Metoda păstrată intern în câmpul glovo este prezentată utilizatorului ca ONLINE și este inclusă în totaluri și rapoarte.
+- istoricul PROTOCOL este disponibil în istoric_protocol_lorand.php, cu filtrare pe perioadă, total PROTOCOL, operator, produse și observațiile fiecărei note finalizate.
 - accesul operatorilor la pagina locală de rapoarte este controlat prin operator_acces_rapoarte. Coloana este adăugată idempotent în schema SQLite și în loginul offline Lorand.
 - în app_vanzare_v2 online, Rapoarte apare numai pentru clientul 1019. Pagina oferă note finalizate, închideri și rapoarte Z. Listarea notei după fiscalizare este controlată separat prin listare_nota_dupa_fiscalizare. Ambele coloane sunt asigurate idempotent din client_login.php prin app_vanzare_v2/setari_lorand_schema.php.
 - notele finalizate nu pot fi șterse din pagina de rapoarte. Relistarea fiscală nu retrimite automat încă o notă de plată la BAR.
@@ -432,6 +437,18 @@ Personalizări active:
 - Istoric sincronizare din login deschide pagina vizuală istoric_sincronizare.php. Endpointul JSON offline_sync_status.php rămâne intern și poate furniza starea cozii și fără operator conectat atunci când workerul din login este activat.
 - verificarea CUI, licența, zoomul persistent, statusul transmiterilor și sincronizarea nomenclatoarelor urmează regulile comune ale magazinelor.
 - integrarea WooCommerce directă este dezactivată. Nu sunt configurate endpointuri comerciale externe pentru Lorand.
+
+Optimizări active:
+- implementarea este documentată separat în `PLAN_OPTIMIZARI_VITEZA_LORAND_1019.txt` și se aplică numai instalării Lorand 1019.
+- schema SQLite este versionată prin PRAGMA user_version. Versiunea Lorand este 1, iar migratorul central este interfata_vanzare\tools\sqlite_schema.php. Migrarea rulează o singură dată, în tranzacție BEGIN IMMEDIATE, și păstrează datele existente.
+- PRAGMA journal_mode = WAL rulează numai la migrare. Conexiunile obișnuite păstrează foreign_keys activ și busy_timeout de 5000 ms.
+- funcțiile ensure pentru secvențe, import, audit, setările Lorand, sincronizare și departamentul de listare nu mai execută repetat DDL și verificări complete de coloane la fiecare request.
+- migrarea asigură tabelele și coloanele necesare, triggerul de audit, identificatorii offline și indexurile pentru produse, categorii, note, det_note și discounturi.
+- afișarea bonului calculează totalul în timpul citirii liniilor și evită interogarea SUM separată. Încărcarea produselor nu mai folosește GROUP BY n.cod_produs.
+- cererile AJAX vechi pentru produse și bon sunt anulate și versionate. Reîncărcările bonului apropiate sunt grupate la 60 ms, prefetchul nu se dublează, iar cache-ul HTML este limitat la 120 de intrări.
+- endpointurile de citire pentru produse și bon eliberează sesiunea după preluarea contextului necesar. Configurația licenței și identitatea hardware sunt memorate pe durata requestului.
+- recuperarea operațiilor de sincronizare rămase în starea sending rulează numai în offline_sync_worker.php. Payloadurile, identificatorii offline și trimiterea mișcărilor în online nu au fost schimbate.
+- proiectul compiler exe project lorand.exop include noul fișier tools\sqlite_schema.php. Fișierele existente se actualizează în proiect înainte de Recompile și Build, iar baza pos.db a clientului nu se înlocuiește.
 
 Componente livrate:
 - ecogest_casa_marcat_v3_inp, configurat pentru clientul 1019 și locația 1.
