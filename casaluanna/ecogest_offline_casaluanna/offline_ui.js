@@ -1,0 +1,14 @@
+(function(){
+ 'use strict';
+ const token=document.querySelector('meta[name="casa-csrf"]')?.content||'';
+ function forms(){document.querySelectorAll('form').forEach(function(form){if((form.method||'').toLowerCase()==='post'&&!form.querySelector('[name="casa_csrf"]')){const input=document.createElement('input');input.type='hidden';input.name='casa_csrf';input.value=token;form.appendChild(input);}});}
+ document.addEventListener('DOMContentLoaded',forms);document.addEventListener('submit',forms,true);
+ const xhrOpen=XMLHttpRequest.prototype.open,xhrSend=XMLHttpRequest.prototype.send;
+ XMLHttpRequest.prototype.open=function(method,url){this.casaSameOrigin=new URL(url,location.href).origin===location.origin;return xhrOpen.apply(this,arguments);};
+ XMLHttpRequest.prototype.send=function(){if(this.casaSameOrigin)this.setRequestHeader('X-Casa-CSRF',token);return xhrSend.apply(this,arguments);};
+ const originalFetch=window.fetch;
+ window.fetch=function(resource,options){options=options||{};const url=new URL(typeof resource==='string'?resource:resource.url,location.href);if(url.origin===location.origin){options.headers=new Headers(options.headers||{});options.headers.set('X-Casa-CSRF',token);}return originalFetch.call(this,resource,options);};
+ let busy=false;
+ async function tick(){if(busy)return;busy=true;try{const response=await fetch('sync_tick.php',{method:'POST',headers:{'X-Casa-CSRF':token}});const data=await response.json();const node=document.getElementById('casa-sync');if(node)node.textContent=data.message||'Sincronizare în așteptare';}catch(e){const node=document.getElementById('casa-sync');if(node)node.textContent='Conexiune indisponibilă. Documentele rămân în coadă.';}finally{busy=false;}}
+ document.addEventListener('DOMContentLoaded',tick);setInterval(tick,15000);
+})();

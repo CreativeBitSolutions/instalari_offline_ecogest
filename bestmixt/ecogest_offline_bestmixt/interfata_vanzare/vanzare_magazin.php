@@ -208,6 +208,9 @@ $offlinePendingReceiptCount = array_sum(array_map(static function (array $closur
             <div class="header-primary-actions">
             <?php
             $client_agecs = $_SESSION['client_id'] ?? null;
+            if ((int)$client_agecs === 21 && (int)$pdo->query('SELECT operator_acces_rapoarte FROM setari_platforma LIMIT 1')->fetchColumn() === 1) {
+                echo "<a href='rapoarte_produse_bestmixt.php' class='header-btn' style='text-decoration:none'>📊 Rapoarte produse</a>";
+            }
             if ($client_agecs == 2 || $client_agecs == 8) echo "<a href='vanzare_facturi.php'><button class='header-btn'>🧾 Facturi</button></a>";
             ?>
            <?php if ($client_agecs != 22): ?>
@@ -864,7 +867,8 @@ let isReadingScale = false;
 let productCache = {};
 
 // Cache pentru listele de produse (categorie + search + pagină)
-const MAX_CACHE_ENTRIES = 500;
+const MAX_CACHE_ENTRIES = 120;
+const categoryPrefetchRequests = new Map();
 const categoryPageCache = new Map(); // key: string, value: HTML
 
 function makeCategoryKey(categoryId, searchTerm, page) {
@@ -893,6 +897,11 @@ let isLoading = false;
 let noMoreProducts = false;
 let currentCategory = 'all';
 let searchTimeout = null;
+let activeProductRequest = null;
+let productRequestVersion = 0;
+let activeBonPanelRequest = null;
+let bonPanelRequestVersion = 0;
+let bonPanelReloadTimer = null;
 
 // ======== sfârșit bloc variabile ========
 
@@ -2165,17 +2174,54 @@ $('#btn_clear_debug_micotex').on('click', function() {
     // ======== FUNCȚII PRINCIPALE ALE APLICAȚIEI (Originale + Modernizate) ========
     function showLoading(show = true) { $('#loading').css('display', show ? 'flex' : 'none'); }
 
+    function applyBonPanelResponse(html, requestVersion) {
+        if (requestVersion !== bonPanelRequestVersion) return;
+
+        const panel = $('#bon-curent-panel');
+        panel.html(html);
+        const totalsElement = panel.find('.receipt-totals');
+        if (totalsElement.length) {
+            $('.grup-dreapta').html(totalsElement);
+        }
+
+        const total = parseFloat($('#total_de_incasat_display').text().replace(',', '.')) || 0;
+        $('#totalmixt').val(total.toFixed(2));
+        $('#numerar').val(total.toFixed(2));
+        $('#card').val('0.00');
+        recalculateTotals();
+    }
+
+    function requestBonPanelLoad() {
+        if (activeBonPanelRequest && activeBonPanelRequest.readyState !== 4) {
+            activeBonPanelRequest.abort();
+        }
+
+        const requestVersion = ++bonPanelRequestVersion;
+        activeBonPanelRequest = $.ajax({
+            url: bonPanelEndpoint,
+            type: 'GET',
+            data: {
+                nr_bon: nrBon,
+                cod_masa: codMasa,
+                v: Date.now()
+            },
+            cache: false
+        }).done((html) => {
+            applyBonPanelResponse(html, requestVersion);
+        }).fail((xhr, status) => {
+            if (status !== 'abort' && requestVersion === bonPanelRequestVersion) {
+                $('#bon-curent-panel').html('<p class="text-danger p-3">Bonul nu a putut fi actualizat.</p>');
+            }
+        }).always(() => {
+            if (requestVersion === bonPanelRequestVersion) {
+                activeBonPanelRequest = null;
+            }
+        });
+    }
+
     //Funcția se apelează DOAR la încărcarea paginii
     function initialLoadBonPanel() {
-        const cacheBuster = new Date().getTime();
-        $("#bon-curent-panel").load(`${bonPanelEndpoint}?nr_bon=${nrBon}&cod_masa=${codMasa}&v=${cacheBuster}`, function() {
-            const totalsElement = $(this).find('.receipt-totals');
-            if (totalsElement.length) {
-                $('.grup-dreapta').html(totalsElement);
-            }
-            // Sincronizăm totalul calculat de PHP cu funcția noastră de calcul
-            recalculateTotals(); 
-        });
+        requestBonPanelLoad();
         
         // Logica de focus rămâne neschimbată
         if (['18', '21', '22','16'].includes(String(clientId))) {
@@ -2193,12 +2239,16 @@ $('#btn_clear_debug_micotex').on('click', function() {
     // MODERNIZAT: Funcția de încărcare a produselor a fost înlocuită pentru a suporta paginare și căutare pe server
     function prefetchNextPage(categoryId, page, searchTerm = '') {
         const key = makeCategoryKey(categoryId, searchTerm, page);
-        if (categoryCacheGet(key)) return; // deja în cache
-        $.ajax({
+        if (categoryCacheGet(key) || categoryPrefetchRequests.has(key)) return;
+
+        const request = $.ajax({
             url: loadFile, type: 'GET',
             data: { categ: categoryId, page: page, limit: 40, search: searchTerm },
             success: (response) => { categoryCacheSet(key, response); }
+        }).always(() => {
+            categoryPrefetchRequests.delete(key);
         });
+        categoryPrefetchRequests.set(key, request);
     }
 
     function renderFromCacheIfAny(categoryId, page, searchTerm) {
@@ -2214,14 +2264,21 @@ $('#btn_clear_debug_micotex').on('click', function() {
     }
 
     function loadProducts(categoryId, page, searchTerm = '', append = false) {
-        // Dacă avem deja pagina în cache și nu facem append, randăm instant și ieșim
+        if (append && (isLoading || noMoreProducts)) return;
+        if (!append && activeProductRequest && activeProductRequest.readyState !== 4) {
+            activeProductRequest.abort();
+        }
+
+        const requestVersion = ++productRequestVersion;
+
+        // Invalidăm întâi orice răspuns vechi, apoi putem afișa în siguranță cache-ul.
         if (!append && renderFromCacheIfAny(categoryId, page, searchTerm)) {
-            // Prefetch next page pentru UX mai bun
+            isLoading = false;
+            activeProductRequest = null;
             if (page === 1) prefetchNextPage(categoryId, 2, searchTerm);
             return;
         }
 
-        if (isLoading || (append && noMoreProducts)) return;
         isLoading = true;
 
         if (!append) {
@@ -2231,12 +2288,16 @@ $('#btn_clear_debug_micotex').on('click', function() {
             }
         }
 
-        $.ajax({
+        activeProductRequest = $.ajax({
             url: loadFile, type: 'GET',
             data: { categ: categoryId, page: page, limit: 40, search: searchTerm, sid: sessionId },
             headers: { 'X-Requested-With': 'XMLHttpRequest' },
             cache: true,
             success: (response) => {
+                if (requestVersion !== productRequestVersion) return;
+                if (String(categoryId) !== String(currentCategory)) return;
+                if ((searchTerm || '') !== (nameFilterInput.val() || '')) return;
+
                 const key = makeCategoryKey(categoryId, searchTerm, page);
                 if (response && response.trim() !== '') {
                     categoryCacheSet(key, response);
@@ -2258,7 +2319,8 @@ $('#btn_clear_debug_micotex').on('click', function() {
                     }
                 }
             },
-            error: () => {
+            error: (xhr, status) => {
+                if (status === 'abort' || requestVersion !== productRequestVersion) return;
                 if (!append) {
                     // Randăm fallback doar dacă nu aveam cache
                     if (!renderFromCacheIfAny(categoryId, page, searchTerm)) {
@@ -2266,7 +2328,12 @@ $('#btn_clear_debug_micotex').on('click', function() {
                     }
                 }
             },
-            complete: () => { isLoading = false; }
+            complete: () => {
+                if (requestVersion === productRequestVersion) {
+                    isLoading = false;
+                    activeProductRequest = null;
+                }
+            }
         });
     }
 
@@ -2496,21 +2563,13 @@ $('#btn_clear_debug_micotex').on('click', function() {
 
     // reloadBonPanel doar dacă avem nevoie de el ca noi încercăm să încărcăm doar o singură dată
     function reloadBonPanel() {
-        const cacheBuster = new Date().getTime();
-        $("#bon-curent-panel").load(`${bonPanelEndpoint}?nr_bon=${nrBon}&cod_masa=${codMasa}&v=${cacheBuster}`, function() {
-            // **MODIFICARE**: Mută secțiunea de totaluri din #bon-curent-panel în .grup-dreapta (footer)
-            const totalsElement = $(this).find('.receipt-totals');
-            if (totalsElement.length) {
-                $('.grup-dreapta').html(totalsElement); // Folosim .html() pentru a înlocui complet
-            }
-            
-            // Restul logicii originale, care depinde de elementele încărcate
-            let total = parseFloat($('#total_de_incasat_display').text().replace(',', '.')) || 0;
-            $('#totalmixt').val(total.toFixed(2));
-            $('#numerar').val(total.toFixed(2));   // fără .attr('max', ...)
-            $('#card').val('0.00');                // fără .attr('max', ...)
-            updateCard();
-        });
+        clearTimeout(bonPanelReloadTimer);
+        if (activeBonPanelRequest && activeBonPanelRequest.readyState !== 4) {
+            activeBonPanelRequest.abort();
+            activeBonPanelRequest = null;
+        }
+        bonPanelRequestVersion++;
+        bonPanelReloadTimer = setTimeout(requestBonPanelLoad, 60);
         
         // Logica de focus rămâne neschimbată
         if (['18', '21', '22','16'].includes(String(clientId))) {

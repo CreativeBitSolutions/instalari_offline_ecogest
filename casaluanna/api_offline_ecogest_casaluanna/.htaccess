@@ -1,0 +1,4 @@
+Require local
+<FilesMatch "\.(json|sqlite|db|log|lock|preluat)$">
+Require all denied
+</FilesMatch>

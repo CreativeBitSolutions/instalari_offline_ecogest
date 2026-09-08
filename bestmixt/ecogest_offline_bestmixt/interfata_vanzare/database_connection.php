@@ -32,6 +32,7 @@ $restaurantConfig = [
     'api_root_absolute' => (string)($restaurantAppConfig['api_root_absolute'] ?? ''),
     'ca_bundle_path' => (string)($restaurantAppConfig['ca_bundle_path'] ?? ''),
     'no_session_validation' => (int)($restaurantAppConfig['no_session_validation'] ?? ($_SESSION['no_session_validation'] ?? 0)),
+    'offline_sales_sync' => is_array($restaurantAppConfig['offline_sales_sync'] ?? null) ? $restaurantAppConfig['offline_sales_sync'] : [],
     'online_products_sync' => is_array($restaurantAppConfig['online_products_sync'] ?? null) ? $restaurantAppConfig['online_products_sync'] : [],
 ];
 

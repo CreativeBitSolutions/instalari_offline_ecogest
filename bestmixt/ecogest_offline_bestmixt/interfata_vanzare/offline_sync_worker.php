@@ -19,8 +19,8 @@ function offline_sync_worker_acquire(PDO $pdo): string
     $token = bin2hex(random_bytes(12));
     $pdo->exec('BEGIN IMMEDIATE TRANSACTION');
     try {
-        $row = $pdo->query('SELECT locked_until FROM offline_sync_runtime WHERE id = 1')->fetch(PDO::FETCH_ASSOC);
-        if (!empty($row['locked_until']) && strtotime((string)$row['locked_until']) > time()) {
+        $row = $pdo->query("SELECT CASE WHEN datetime(locked_until) > datetime('now') THEN 1 ELSE 0 END AS busy FROM offline_sync_runtime WHERE id = 1")->fetch(PDO::FETCH_ASSOC);
+        if (!empty($row['busy'])) {
             $pdo->exec('ROLLBACK');
             return '';
         }
@@ -42,6 +42,38 @@ function offline_sync_worker_release(PDO $pdo, string $token, string $error = ''
     $stmt->execute([$error !== '' ? $error : null, $token]);
 }
 
+function bestmixt_sync_verify_operator_policy(array $config): bool
+{
+    // Acest apel cere numai starea. Nu trimite XML, vânzări sau operațiuni de import.
+    if ($config['state_url'] === '' || !function_exists('curl_init')) {
+        return false;
+    }
+    $ch = curl_init($config['state_url']);
+    if ($ch === false) { return false; }
+    $options = [
+        CURLOPT_POST => true, CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_CONNECTTIMEOUT => 3, CURLOPT_TIMEOUT => 6,
+        CURLOPT_SSL_VERIFYPEER => true, CURLOPT_SSL_VERIFYHOST => 2,
+        CURLOPT_HTTPHEADER => ['Content-Type: application/json', 'X-Sync-Api-Key: ' . $config['api_key']],
+        CURLOPT_POSTFIELDS => json_encode([
+            'client_id' => $config['client_id'], 'cod_locatie' => $config['cod_locatie'],
+            'installation_uuid' => $config['installation_uuid'],
+        ]),
+    ];
+    if ($config['ca_bundle_path'] !== '' && is_file($config['ca_bundle_path'])) {
+        $options[CURLOPT_CAINFO] = $config['ca_bundle_path'];
+    }
+    curl_setopt_array($ch, $options);
+    $body = curl_exec($ch);
+    $code = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+    $state = is_string($body) ? json_decode($body, true) : null;
+    return $code === 200 && is_array($state) && ($state['status'] ?? '') === 'ok'
+        && (int)($state['client_id'] ?? 0) === 21
+        && (int)($state['cod_locatie'] ?? 0) === (int)$config['cod_locatie']
+        && ($state['operator_identity_mode'] ?? '') === 'existing_online_only';
+}
+
 function offline_sync_worker_retry_delay(int $attempts): int
 {
     $steps = [30, 60, 120, 300, 600, 900];
@@ -50,10 +82,15 @@ function offline_sync_worker_retry_delay(int $attempts): int
 
 try {
     offline_sync_queue_ensure_schema($pdo);
-    offline_sync_queue_discover($pdo);
     $token = offline_sync_worker_acquire($pdo);
     if ($token === '') {
         offline_sync_worker_json(200, ['status' => 'busy', 'queue' => offline_sync_queue_counts($pdo)]);
+    }
+
+    offline_sync_queue_recover_stale($pdo);
+    offline_sync_queue_discover($pdo);
+    if (session_status() === PHP_SESSION_ACTIVE) {
+        session_write_close();
     }
 
     $stmt = $pdo->query("SELECT * FROM offline_sync_outbox
@@ -69,6 +106,14 @@ try {
     $config = offline_sync_queue_config();
     if ($config['url'] === '' || $config['api_key'] === '') {
         throw new RuntimeException('Configurarea sincronizarii automate este incompleta.');
+    }
+
+    if ((int)$config['client_id'] === 21 && !bestmixt_sync_verify_operator_policy($config)) {
+        $message = 'Online nu a confirmat politica Bestmixt fără creare de utilizatori. Datele rămân local. Verificați conexiunea și publicați actualizarea importatorului online.';
+        $policyRetry = $pdo->prepare("UPDATE offline_sync_outbox SET status='retry', next_attempt_at=datetime('now', '+60 seconds'), locked_at=NULL, last_error=? WHERE id=?");
+        $policyRetry->execute([$message, (int)$event['id']]);
+        offline_sync_worker_release($pdo, $token, $message);
+        offline_sync_worker_json(200, ['status' => 'retry', 'message' => $message, 'queue' => offline_sync_queue_counts($pdo)]);
     }
 
     $stmt = $pdo->prepare("UPDATE offline_sync_outbox SET status = 'sending', attempts = attempts + 1, locked_at = CURRENT_TIMESTAMP, last_error = NULL WHERE id = ?");

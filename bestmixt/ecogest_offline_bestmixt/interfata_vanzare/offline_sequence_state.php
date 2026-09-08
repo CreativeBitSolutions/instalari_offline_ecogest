@@ -22,101 +22,10 @@ function offline_sequence_config(): array
     return $config;
 }
 
-function offline_sequence_table_exists(PDO $pdo, string $table): bool
-{
-    $stmt = $pdo->prepare("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = ? LIMIT 1");
-    $stmt->execute([$table]);
-    return (bool)$stmt->fetchColumn();
-}
-
-function offline_sequence_columns(PDO $pdo, string $table): array
-{
-    if (!offline_sequence_table_exists($pdo, $table)) {
-        return [];
-    }
-    $columns = [];
-    foreach ($pdo->query('PRAGMA table_info("' . str_replace('"', '""', $table) . '")') as $row) {
-        $columns[(string)$row['name']] = true;
-    }
-    return $columns;
-}
-
 function offline_sequence_ensure_schema(PDO $pdo): void
 {
-    $pdo->exec("CREATE TABLE IF NOT EXISTS offline_sequence_state (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        installation_uuid TEXT NOT NULL,
-        client_id INTEGER NOT NULL,
-        cod_locatie INTEGER NOT NULL,
-        serie_casa_marcat TEXT NOT NULL DEFAULT '',
-        sequence_name TEXT NOT NULL,
-        last_online_value INTEGER NOT NULL DEFAULT 0,
-        last_local_value INTEGER NOT NULL DEFAULT 0,
-        last_synced_at TEXT NULL,
-        updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        UNIQUE (installation_uuid, cod_locatie, serie_casa_marcat, sequence_name)
-    )");
-    $pdo->exec("CREATE TABLE IF NOT EXISTS offline_sequence_events (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        installation_uuid TEXT NOT NULL,
-        client_id INTEGER NOT NULL,
-        cod_locatie INTEGER NOT NULL,
-        serie_casa_marcat TEXT NOT NULL DEFAULT '',
-        sequence_name TEXT NOT NULL,
-        sequence_value INTEGER NOT NULL,
-        event_type TEXT NOT NULL,
-        source TEXT NOT NULL DEFAULT 'offline',
-        reference_type TEXT NULL,
-        reference_id TEXT NULL,
-        created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
-    )");
-    $pdo->exec('CREATE INDEX IF NOT EXISTS idx_offline_sequence_events_lookup ON offline_sequence_events (installation_uuid, cod_locatie, sequence_name, sequence_value)');
-
-    $transactionTables = [
-        'rapoarte_z', 'inchideri_r_12', 'note', 'det_note',
-        'discounturi_acordate', 'bonuri_casa_marcat', 'miscari',
-        'log_reglari_casa_marcat', 'nir', 'achizitii',
-    ];
-    foreach ($transactionTables as $table) {
-        $columns = offline_sequence_columns($pdo, $table);
-        if (!$columns) {
-            continue;
-        }
-        $quoted = '"' . str_replace('"', '""', $table) . '"';
-        if (!isset($columns['identificator_offline'])) {
-            $pdo->exec("ALTER TABLE {$quoted} ADD COLUMN identificator_offline TEXT NULL");
-        }
-        if (!isset($columns['cod_locatie'])) {
-            $pdo->exec("ALTER TABLE {$quoted} ADD COLUMN cod_locatie INTEGER NOT NULL DEFAULT 0");
-            if (isset($columns['locatie'])) {
-                $pdo->exec("UPDATE {$quoted} SET cod_locatie = locatie WHERE cod_locatie = 0 AND locatie > 0");
-            }
-        }
-        $pdo->exec('CREATE INDEX IF NOT EXISTS "idx_' . $table . '_offline_id" ON ' . $quoted . ' (identificator_offline)');
-    }
-
-    $noteColumns = offline_sequence_columns($pdo, 'note');
-    foreach (['nr_raport_z', 'cod_inchidere', 'valoare_vanzare_cu_tva', 'tva_colectata', 'discount', 'numerar', 'card', 'tichete', 'rest', 'protocol', 'glovo'] as $column) {
-        if (isset($noteColumns[$column])) {
-            $quotedColumn = '"' . str_replace('"', '""', $column) . '"';
-            $pdo->exec("UPDATE note SET {$quotedColumn} = 0 WHERE {$quotedColumn} IS NULL");
-        }
-    }
-    $closureColumns = offline_sequence_columns($pdo, 'inchideri_r_12');
-    if (isset($closureColumns['nr_raport_z'])) {
-        $pdo->exec('UPDATE inchideri_r_12 SET nr_raport_z = 0 WHERE nr_raport_z IS NULL');
-    }
-
-    try {
-        $pdo->exec('CREATE UNIQUE INDEX IF NOT EXISTS uq_rapoarte_z_offline_fiscal ON rapoarte_z (cod_locatie, serie_casa_marcat, nr_raport_z)');
-    } catch (Throwable $e) {
-        error_log('Nu s-a putut crea indexul fiscal local pentru rapoarte_z: ' . $e->getMessage());
-    }
-    try {
-        $pdo->exec('CREATE UNIQUE INDEX IF NOT EXISTS uq_inchideri_offline_locatie_cod ON inchideri_r_12 (cod_locatie, cod_inchidere)');
-    } catch (Throwable $e) {
-        error_log('Nu s-a putut crea indexul local pentru inchideri: ' . $e->getMessage());
-    }
+    require_once __DIR__ . '/tools/sqlite_schema.php';
+    bestmixt_sqlite_apply_schema_if_needed($pdo);
 }
 
 function offline_sequence_record(PDO $pdo, string $name, int $value, int $location, string $series = '', string $event = 'generated', string $referenceType = '', string $referenceId = ''): void

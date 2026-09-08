@@ -1,0 +1,22 @@
+Instalare AGECSDEMO, client 8, locatie 1
+Sursa: Lorand, magazin, starea din 04.09.2026.
+
+Plan de lucru
+[x] Inventarierea sursei, a configuratiilor si a regulilor vechi pentru clientul 8.
+[x] Copie separata, fara tranzactii, cozi, identitate, licenta sau EXE POS Lorand.
+[x] Configurarea clientului 8, a cheii proprii, a API-urilor si a scannerelor.
+[x] Pastrarea functiilor Lorand, fara activarea exceptiilor istorice pentru clientul 8.
+[x] Baza SQLite curata, 1117 produse Lorand si doi operatori AGECSDEMO.
+[x] Shortcuturi, proiect ExeOutput si BAT de impachetare, fara build.
+[x] Documentarea personalizarilor si verificari statice.
+
+Nu se porneste aplicatia, nu se ruleaza teste, nu se creeaza bonuri,
+nu se acceseaza baza online si nu se modifica instalarea Lorand.
+Numele interne ale helperelor Lorand pot ramane, dar caile fizice si
+clientul efectiv trebuie sa indice exclusiv instalarea AGECSDEMO.
+
+Rezultat: 352 fisiere PHP verificate sintactic. Configurarile JSON, caile,
+shortcuturile si lista de surse ExeOutput au fost verificate static.
+Nu s-au pornit aplicatia, utilitarele, buildul sau impachetarea.
+Urmeaza validarea licentei AGECSDEMO, actualizarea fisierelor in compiler
+si compilarea facute de utilizator, apoi arhiveaza_agecsdemo.bat.

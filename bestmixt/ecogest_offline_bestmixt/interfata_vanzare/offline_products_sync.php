@@ -768,6 +768,17 @@ function ops_sync_table_columns(string $table): array
             'cota',
             'dep_casa',
         ],
+        'observatii_predefinite' => [
+            'id',
+            'text_observatie',
+            'ordine',
+            'activ',
+            'toate_produsele',
+        ],
+        'atribuiri_observatii_produse' => [
+            'id_observatie',
+            'cod_produs',
+        ],
     ];
 
     return $columns[$table] ?? [];
@@ -794,12 +805,16 @@ function ops_hash_column_type(string $column): string
         'id',
         'cod_locatie',
         'dep_casa',
+        'id_observatie',
+        'ordine',
+        'toate_produsele',
     ];
     static $numericColumns = [
         'pret_cu_tva',
         'pret_achizitie',
         'pret_site',
         'cota_tva',
+        'cota',
         'stoc_critic',
         'infopret_kg',
     ];
@@ -965,6 +980,8 @@ function ops_online_compatible_hash(array $online, array $products): string
         'categorii_locatii' => ops_filter_rows_for_hash('categorii_locatii', isset($online['categorii_locatii']) && is_array($online['categorii_locatii']) ? $online['categorii_locatii'] : []),
         'gestiuni' => ops_filter_rows_for_hash('gestiuni', isset($online['gestiuni']) && is_array($online['gestiuni']) ? $online['gestiuni'] : []),
         'cote_tva' => ops_filter_cote_tva_for_products($onlineCoteTva, $products),
+        'observatii_predefinite' => ops_filter_rows_for_hash('observatii_predefinite', isset($online['observatii_predefinite']) && is_array($online['observatii_predefinite']) ? $online['observatii_predefinite'] : []),
+        'atribuiri_observatii_produse' => ops_filter_rows_for_hash('atribuiri_observatii_produse', isset($online['atribuiri_observatii_produse']) && is_array($online['atribuiri_observatii_produse']) ? $online['atribuiri_observatii_produse'] : []),
     ]);
 }
 
@@ -984,6 +1001,8 @@ function ops_local_hash(PDO $pdo): string
         'categorii_locatii' => ops_fetch_table($pdo, 'categorii_locatii', 'id', ops_sync_table_columns('categorii_locatii')),
         'gestiuni' => ops_fetch_table($pdo, 'gestiuni', 'id_gestiune', ops_sync_table_columns('gestiuni')),
         'cote_tva' => ops_local_cote_tva_for_hash($pdo),
+        'observatii_predefinite' => ops_fetch_table($pdo, 'observatii_predefinite', 'id', ops_sync_table_columns('observatii_predefinite')),
+        'atribuiri_observatii_produse' => ops_fetch_table($pdo, 'atribuiri_observatii_produse', 'id_observatie', ops_sync_table_columns('atribuiri_observatii_produse')),
     ]);
 }
 
@@ -1007,6 +1026,7 @@ function ops_fetch_online_products(array $config, string $localHash): array
     $query = [
         'cod_client' => $config['cod_client'] > 0 ? $config['cod_client'] : null,
         'local_hash' => $config['force'] ? null : $localHash,
+        'include_observations' => 1,
     ];
     if ($config['send_api_key_in_query']) {
         $query['api_key'] = $config['api_key'];
@@ -1467,6 +1487,98 @@ function ops_delete_products_missing_online(PDO $pdo, array $onlineProducts, int
     return $stats;
 }
 
+function ops_replace_observation_tables(PDO $pdo, array $observations, array $assignments): array
+{
+    foreach (['observatii_predefinite', 'atribuiri_observatii_produse'] as $table) {
+        if (!ops_table_exists($pdo, $table)) {
+            throw new RuntimeException("Tabela locala {$table} lipseste. Actualizeaza aplicatia pentru ensure schema.");
+        }
+    }
+
+    $observationColumns = ops_table_columns($pdo, 'observatii_predefinite');
+    $assignmentColumns = ops_table_columns($pdo, 'atribuiri_observatii_produse');
+    foreach (ops_sync_table_columns('observatii_predefinite') as $column) {
+        if (!isset($observationColumns[$column])) {
+            throw new RuntimeException("Coloana observatii_predefinite.{$column} lipseste din schema locala.");
+        }
+    }
+    foreach (ops_sync_table_columns('atribuiri_observatii_produse') as $column) {
+        if (!isset($assignmentColumns[$column])) {
+            throw new RuntimeException("Coloana atribuiri_observatii_produse.{$column} lipseste din schema locala.");
+        }
+    }
+
+    $seenObservationIds = [];
+    foreach ($observations as $index => $row) {
+        if (!is_array($row) || !array_key_exists('id', $row) || (int)$row['id'] <= 0) {
+            throw new RuntimeException("Observatia online de la pozitia {$index} nu are un id valid.");
+        }
+        foreach (ops_sync_table_columns('observatii_predefinite') as $column) {
+            if (!array_key_exists($column, $row)) {
+                throw new RuntimeException("Observatia online {$row['id']} nu contine coloana {$column}.");
+            }
+        }
+        $id = (int)$row['id'];
+        if (isset($seenObservationIds[$id])) {
+            throw new RuntimeException("Observatia online {$id} apare de mai multe ori.");
+        }
+        $seenObservationIds[$id] = true;
+    }
+
+    $seenAssignments = [];
+    foreach ($assignments as $index => $row) {
+        if (!is_array($row)
+            || !array_key_exists('id_observatie', $row)
+            || !array_key_exists('cod_produs', $row)
+            || (int)$row['id_observatie'] <= 0
+            || (int)$row['cod_produs'] <= 0) {
+            throw new RuntimeException("Atribuirea online de la pozitia {$index} nu este valida.");
+        }
+        $observationId = (int)$row['id_observatie'];
+        if (!isset($seenObservationIds[$observationId])) {
+            throw new RuntimeException("Atribuirea online foloseste observatia inexistenta {$observationId}.");
+        }
+        $key = $observationId . ':' . (int)$row['cod_produs'];
+        if (isset($seenAssignments[$key])) {
+            throw new RuntimeException("Atribuirea online {$key} apare de mai multe ori.");
+        }
+        $seenAssignments[$key] = true;
+    }
+
+    $pdo->exec('DELETE FROM atribuiri_observatii_produse');
+    $pdo->exec('DELETE FROM observatii_predefinite');
+
+    $observationFields = ops_sync_table_columns('observatii_predefinite');
+    foreach ($observations as $row) {
+        ops_insert_row($pdo, 'observatii_predefinite', $observationFields, $row, $observationColumns);
+    }
+    $assignmentFields = ops_sync_table_columns('atribuiri_observatii_produse');
+    foreach ($assignments as $row) {
+        ops_insert_row($pdo, 'atribuiri_observatii_produse', $assignmentFields, $row, $assignmentColumns);
+    }
+
+    return [
+        'observatii_predefinite' => [
+            'received' => count($observations),
+            'inserted' => count($observations),
+            'updated' => 0,
+            'unchanged' => 0,
+            'skipped' => 0,
+            'ignored_columns' => [],
+            'preview_changes' => [],
+        ],
+        'atribuiri_observatii_produse' => [
+            'received' => count($assignments),
+            'inserted' => count($assignments),
+            'updated' => 0,
+            'unchanged' => 0,
+            'skipped' => 0,
+            'ignored_columns' => [],
+            'preview_changes' => [],
+        ],
+    ];
+}
+
 function ops_ensure_log_table(PDO $pdo): void
 {
     $pdo->exec("
@@ -1649,6 +1761,37 @@ try {
         $onlineProductKeys[$productKey] = true;
     }
 
+    if (!array_key_exists('observatii_predefinite', $online) || !is_array($online['observatii_predefinite'])) {
+        throw new RuntimeException('Endpointul online nu a trimis observatii_predefinite. Datele locale au fost pastrate.');
+    }
+    if (!array_key_exists('atribuiri_observatii_produse', $online) || !is_array($online['atribuiri_observatii_produse'])) {
+        throw new RuntimeException('Endpointul online nu a trimis atribuiri_observatii_produse. Datele locale au fost pastrate.');
+    }
+    $onlineObservationColumns = isset($online['observatii_predefinite_columns']) && is_array($online['observatii_predefinite_columns'])
+        ? $online['observatii_predefinite_columns']
+        : [];
+    $onlineAssignmentColumns = isset($online['atribuiri_observatii_produse_columns']) && is_array($online['atribuiri_observatii_produse_columns'])
+        ? $online['atribuiri_observatii_produse_columns']
+        : [];
+    if (!in_array('toate_produsele', $onlineObservationColumns, true)) {
+        foreach ($online['observatii_predefinite'] as &$onlineObservation) {
+            if (is_array($onlineObservation) && !array_key_exists('toate_produsele', $onlineObservation)) {
+                $onlineObservation['toate_produsele'] = 0;
+            }
+        }
+        unset($onlineObservation);
+        $onlineObservationColumns[] = 'toate_produsele';
+    }
+    foreach (ops_sync_table_columns('observatii_predefinite') as $requiredColumn) {
+        if (!in_array($requiredColumn, $onlineObservationColumns, true)) {
+            throw new RuntimeException("Schema online observatii_predefinite nu contine coloana {$requiredColumn}. Datele locale au fost pastrate.");
+        }
+    }
+    foreach (ops_sync_table_columns('atribuiri_observatii_produse') as $requiredColumn) {
+        if (!in_array($requiredColumn, $onlineAssignmentColumns, true)) {
+            throw new RuntimeException("Schema online atribuiri_observatii_produse nu contine coloana {$requiredColumn}. Datele locale au fost pastrate.");
+        }
+    }
     $compatibleHash = ops_online_compatible_hash($online, $products);
 
     $pdo->beginTransaction();
@@ -1669,11 +1812,20 @@ try {
         isset($deleteStats['preview_changes']) && is_array($deleteStats['preview_changes']) ? $deleteStats['preview_changes'] : []
     ), 0, 80);
 
+    $observationStats = ops_replace_observation_tables(
+        $pdo,
+        $online['observatii_predefinite'],
+        $online['atribuiri_observatii_produse']
+    );
+    $lookupStats = array_merge($lookupStats, $observationStats);
+
     if ($config['dry_run']) {
         $pdo->rollBack();
         $status = 'dry_run';
     } else {
         $pdo->commit();
+        require_once __DIR__ . '/cache_tools.php';
+        clear_cache_for_client_location($config['cod_client'], (int)($restaurantConfig['cod_locatie'] ?? 1));
         $status = 'success';
     }
 

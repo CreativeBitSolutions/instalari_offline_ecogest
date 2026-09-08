@@ -69,7 +69,7 @@
         running = true;
         var nextDelay = idleIntervalMs;
         var controller = window.AbortController ? new AbortController() : null;
-        var timeout = window.setTimeout(function () { if (controller) { controller.abort(); } }, 14000);
+        var timeout = window.setTimeout(function () { if (controller) { controller.abort(); } }, 25000);
         fetch('offline_sync_worker.php', {
             method: 'POST',
             headers: { 'Accept': 'application/json' },

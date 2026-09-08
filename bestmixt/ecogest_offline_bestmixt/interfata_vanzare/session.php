@@ -9,10 +9,6 @@ if (!isset($_SESSION['admin_id'])) {
 }
 
 include('db.php');
-require_once __DIR__ . '/offline_import_schema.php';
-offline_import_schema_ensure($pdo);
-require_once __DIR__ . '/offline_audit_log_schema.php';
-offline_audit_log_ensure_schema($pdo);
 $live_id = 12;
 
 function offline_sales_only_enabled(): bool
@@ -104,7 +100,7 @@ offline_sales_only_guard();
 
 $user_check = $_SESSION['admin_id'];
 
-$zsql = "SELECT admin_id FROM $tabel_final_admins WHERE admin_id = :id";
+$zsql = "SELECT admin_id FROM $tabel_final_admins WHERE admin_id = :id AND admin_id IN (SELECT admin_id FROM offline_online_operators)";
 $zstmt = $pdo->prepare($zsql);
 $zstmt->execute([':id' => $user_check]);
 

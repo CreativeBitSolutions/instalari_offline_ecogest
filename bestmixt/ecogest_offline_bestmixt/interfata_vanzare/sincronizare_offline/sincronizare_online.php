@@ -6,6 +6,12 @@ require_once __DIR__ . '/../db.php';
 require_once __DIR__ . '/export_vanzari_offline_lib.php';
 
 date_default_timezone_set('Europe/Bucharest');
+if ((int)offline_export_app_config_value('client_id', 0) === 21) {
+    sync_local_json(409, [
+        'status' => 'error',
+        'message' => 'Bestmixt transmite operațiunile numai prin coada protejată. Folosiți butonul Trimite operațiunile din pagina de conectare.',
+    ]);
+}
 
 function sync_local_json($code, array $data)
 {

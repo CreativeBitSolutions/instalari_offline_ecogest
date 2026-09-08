@@ -21,10 +21,11 @@ try {
     $pdo = new PDO('sqlite:' . $DB_PATH);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-    // Pentru SQLite e util să fie ON
-    $pdo->exec('PRAGMA foreign_keys = ON;');
+    $pdo->exec('PRAGMA foreign_keys = ON');
+    $pdo->exec('PRAGMA busy_timeout = 5000');
+    require_once __DIR__ . '/tools/sqlite_schema.php';
+    bestmixt_sqlite_apply_schema_if_needed($pdo);
     require_once __DIR__ . '/offline_sequence_state.php';
-    offline_sequence_ensure_schema($pdo);
 } catch (PDOException $e) {
     die("Nu se poate deschide baza locală: " . $e->getMessage());
 }

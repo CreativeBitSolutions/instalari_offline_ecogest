@@ -1,0 +1,12 @@
+{
+  "OfflineApiPath": "C:\\xampp\\htdocs\\github\\instalari_offline_ecogest\\casaluanna\\api_offline_ecogest_casaluanna",
+  "DatabasePath": "C:\\xampp\\htdocs\\github\\instalari_offline_ecogest\\casaluanna\\api_offline_ecogest_casaluanna\\db_local\\pos.db",
+  "ProductsApiUrl": "https://agecs.agecs.in/sincronizare_online_app_restaurant/sincronizare_date_offline.php",
+  "ClientId": 19,
+  "ScanIntervalMinutes": 10,
+  "RequestTimeoutMinutes": 15,
+  "SchedulerEnabled": true,
+  "RunImmediatelyOnLaunch": true,
+  "StartWithWindows": false,
+  "StartMinimized": false
+}

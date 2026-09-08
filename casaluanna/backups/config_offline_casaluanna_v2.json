@@ -1,0 +1,26 @@
+{
+  "client_id": 19,
+  "cod_locatie_default": 1,
+  "driver": "sqlite",
+  "db_runtime_file": "C:\\xampp\\htdocs\\github\\instalari_offline_ecogest\\casaluanna\\api_offline_ecogest_casaluanna\\db_local\\pos.db",
+  "api_root_absolute": "C:\\xampp\\htdocs\\github\\instalari_offline_ecogest\\casaluanna\\api_offline_ecogest_casaluanna",
+  "online_base_url": "https://agecs.agecs.in",
+  "invoice_sync_url": "https://agecs.agecs.in/sincronizare_online_app_restaurant/sincronizare_facturi_offline.php",
+  "api_key": "casaluanna33e2ea3a39d7936322364e268140274e8bf37297ede4878b",
+  "online_products_sync": {
+    "enabled": true,
+    "strict": true,
+    "api_url": "https://agecs.agecs.in/sincronizare_online_app_restaurant/sincronizare_date_offline.php",
+    "api_key": "casaluanna33e2ea3a39d7936322364e268140274e8bf37297ede4878b",
+    "cod_client": 21,
+    "timeout_seconds": 30,
+    "dry_run": false,
+    "rewrite_existing": false,
+    "send_api_key_in_query": true,
+    "verify_ssl": true,
+    "allow_http_without_session": true,
+    "include_observations": true,
+    "client_id": 19
+  },
+  "ca_bundle_path": "C:\\xampp\\htdocs\\github\\instalari_offline_ecogest\\casaluanna\\api_offline_ecogest_casaluanna\\cacert.pem"
+}

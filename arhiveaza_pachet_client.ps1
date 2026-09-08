@@ -100,7 +100,8 @@ try {
         Get-ChildItem -LiteralPath $clientSource -Recurse -Directory -Force -ErrorAction SilentlyContinue |
             Where-Object {
                 $_.Name -eq 'vechi_propuse_spre_eliminare' -or
-                $_.Name -eq '.playwright-cli'
+                $_.Name -eq '.playwright-cli' -or
+                ($ClientName -eq 'bestmixt' -and $_.Name -like 'backups_update_bestmixt_*')
             } |
             Select-Object -ExpandProperty FullName
     )

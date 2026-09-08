@@ -128,6 +128,14 @@ if (!function_exists('offline_installation_identity_columns')) {
 if (!function_exists('offline_installation_identity_ensure_column')) {
     function offline_installation_identity_ensure_column(PDO $pdo, string $table): bool
     {
+        static $checkedConnections;
+        if (!$checkedConnections instanceof SplObjectStorage) {
+            $checkedConnections = new SplObjectStorage();
+        }
+        $checkedTables = $checkedConnections->contains($pdo) ? $checkedConnections[$pdo] : [];
+        if (isset($checkedTables[$table])) {
+            return true;
+        }
         if (!offline_installation_identity_table_exists($pdo, $table)) {
             return false;
         }
@@ -136,6 +144,8 @@ if (!function_exists('offline_installation_identity_ensure_column')) {
             $pdo->exec('ALTER TABLE "' . $table . '" ADD COLUMN identificator_offline TEXT NULL');
         }
         $pdo->exec('CREATE UNIQUE INDEX IF NOT EXISTS "uq_offline_ident_' . $table . '" ON "' . $table . '" (identificator_offline) WHERE identificator_offline IS NOT NULL AND TRIM(identificator_offline) <> \'\'');
+        $checkedTables[$table] = true;
+        $checkedConnections[$pdo] = $checkedTables;
         return true;
     }
 }

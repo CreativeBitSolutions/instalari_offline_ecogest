@@ -1,7 +1,7 @@
 TIPURI DE INSTALĂRI OFFLINE ECOGEST
 ====================================
 
-Data verificării codului: 03.09.2026
+Data verificării codului: 04.09.2026
 Rădăcina de lucru: C:\xampp\htdocs\github\instalari_offline_ecogest
 
 Acest fișier descrie instalarea activă din fiecare folder, tipul aplicației și personalizările care trebuie păstrate la copiere, compilare sau actualizare. Cheile API, parolele și alte valori sensibile nu sunt reproduse aici.
@@ -11,6 +11,7 @@ REGULĂ STRICTĂ PENTRU PROIECTELE DE COMPILARE
 
 - la modificările aplicațiilor offline se editează scripturile sursă și numai configurările externe cerute.
 - fișierele de proiect pentru compilare, inclusiv `.exop`, proiectele ExeOutput for PHP și configurările interne ale proiectului de compilare, nu se modifică decât dacă utilizatorul cere explicit acest lucru.
+- pentru actualizarea Bestmixt din 04.09.2026 este autorizată numai adăugarea fișierelor PHP noi în lista files.xml din .exop. Celelalte setări interne ale proiectului rămân identice.
 - nu se pornește compilarea, recompile sau build-ul executabilului. Utilizatorul rulează personal recompile și rebuild după ce primește scripturile actualizate.
 - o cerere de corectare a căilor aplicațiilor sau utilitarelor nu autorizează implicit modificarea proiectului de compilare. Căile se actualizează în fișierele JSON, PHP, URL, shortcuturi și celelalte configurări externe aflate în scop.
 
@@ -18,7 +19,7 @@ REGULĂ STRICTĂ PENTRU PROIECTELE DE COMPILARE
 1. REGULI COMUNE INSTALĂRILOR DE MAGAZIN
 =========================================
 
-Foldere vizate: agremprejba, andreearobertshop, bestmixt, dailycoffee, la_voinica și lorand.
+Foldere vizate: agremprejba, andreearobertshop, bestmixt, dailycoffee, la_voinica, lorand și agecsdemo.
 
 Structura obișnuită:
 - ecogest_offline_<client>: sursele PHP ale interfeței de vânzare și locul în care se păstrează executabilul compilat cu ExeOutput for PHP.
@@ -145,26 +146,83 @@ Componente livrate:
 5. BESTMIXT
 ============
 
-Tip: MAGAZIN, POS offline sales-only.
+Tip: MAGAZIN, POS offline sales-only, fără imprimantă pentru note de plată.
 Client online: 21.
 Locație: 1.
-Aplicație: bestmixt\ecogest_offline_bestmixt.
-API local: bestmixt\api_offline_ecogest_bestmixt.
-Baza: api_offline_ecogest_bestmixt\db_local\pos.db.
+Aplicație: bestmixt\\ecogest_offline_bestmixt.
+API local: bestmixt\\api_offline_ecogest_bestmixt.
+Baza: api_offline_ecogest_bestmixt\\db_local\\pos.db.
 Identitate configurată: bestmixt-c21-l1-pos1.
 
-Personalizări active:
-- butonul Protocol este ascuns pentru clientul 21.
-- după adăugarea unui produs, filtrarea pe categorie sau închiderea unui modal, focusul revine pe câmpul codului de bare.
-- folosește designul modern al loginului, coadă automată fără operator conectat, statusul pe file, verificarea CUI, verificarea stocului online și controalele de zoom.
-- nu există o regulă comercială exclusivă pentru clientul 21 privind discountul, prețul sau cantitatea. Se aplică regulile comune ale magazinului.
-- administrarea NIR, produselor, categoriilor și furnizorilor rămâne blocată în offline.
+Personalizări păstrate:
+- Protocol rămâne ascuns. Nu se adaugă metoda ONLINE specifică Lorand.
+- scannerul de coduri de bare și cântarul rămân disponibile. Focusul revine pe codul de bare după adăugare, schimbarea categoriei și închiderea modalelor.
+- discountul global și pe produs, modificarea prețului și cantității păstrează regulile Bestmixt.
+- închiderea turei și raportul Z sunt permise în offline. Nu depind de tipărirea unei note de plată și nu folosesc fluxul imprimantei BAR.
+- administrarea locală a utilizatorilor, NIR-urilor, produselor, categoriilor și furnizorilor rămâne blocată.
+- configurația clientului, locației, căilor, parolelor și licenței se păstrează. Configurarea și binarele utilitarului fiscal nu au fost înlocuite.
 
-Componente livrate:
-- ecogest_autoscanner_products_magazin_1_4_6_0.
-- ecogest_casa_marcat_v3_inp.
-- shortcut ECOGEST AutoScanner și shortcut ECOGEST Casa de Marcat.
-- compiler exe project bestmixt.exop este proiectul local ExeOutput. Nu intră în arhiva clientului.
+Utilizatori exclusiv din online:
+- butonul Utilizatori și TVA din login descarcă operatorii prin api/offline-users.php, cu app_mode=magazin, clientul 21 și locația configurată.
+- cererea locală este POST cu token CSRF. Operația nu creează conturi în online.
+- ID-ul admin_id, numele, rangul și parola vin din contul online. Nu se generează un operator offline în locul acestuia.
+- offline_online_operators reține ID-urile confirmate la ultima preluare. Loginul și verificarea sesiunii acceptă numai aceste ID-uri.
+- conturile inactive nu sunt autorizate. Un răspuns invalid, incomplet sau pentru alt client ori altă locație nu înlocuiește datele locale.
+- preluarea operatorilor și oglindirea cotelor TVA se fac în aceeași tranzacție SQLite. Starea conectat a unui operator existent nu este resetată prin sincronizare.
+- actualizarea utilizatorilor și TVA este refuzată dacă există linii pe o notă deschisă sau un fișier fiscal în așteptare.
+- importatorul online pentru clientul 21 validează existența ID-ului primit. Dacă utilizatorul nu există, importul este oprit. Nu creează conturi, mapări automate sau utilizatori de tip OPERATOR OFFLINE.
+- mapările automate vechi nu se aplică importurilor Bestmixt. ID-urile online descărcate rămân neschimbate. Regulile celorlalți clienți nu sunt modificate.
+- înaintea fiecărei trimiteri din coadă, workerul cere numai starea serverului și verifică operator_identity_mode=existing_online_only. Dacă serverul nu confirmă politica, nu trimite XML-ul operațiunii. Evenimentul rămâne local pentru reîncercare.
+- ruta veche sincronizare_offline/sincronizare_online.php nu mai importă direct pentru Bestmixt. Se folosește aceeași coadă protejată din login și vânzare.
+
+Produse, observații și interfață:
+- loginul include Produse și observații, Utilizatori și TVA, Trimite operațiunile, Istoric sincronizare, Verifică licența și Curățare date locale.
+- preluarea produselor include observatii_predefinite și atribuiri_observatii_produse. Hashurile verificării și sincronizării includ ambele tabele.
+- se păstrează progresul asincron și jurnalul Bestmixt. Produsele absente online sunt arhivate și eliminate local numai după validarea completitudinii listei și a codurilor unice.
+- observațiile și atribuirile sunt înlocuite în aceeași tranzacție cu produsele. Listele și cache-ul codurilor de bare sunt invalidate după confirmarea actualizării.
+- AutoScannerul existent rămâne neschimbat. Extensia pentru observații este în sincronizarea web din login.
+- lista produselor rămâne paginată cu 40 de poziții. Cache-ul browserului este limitat la 120 de intrări, cu preîncărcări deduplicate.
+- cererile GET de afișare depășite sunt anulate și răspunsurile vechi sunt ignorate. Operațiile de adăugare, modificare și ștergere nu sunt anulate.
+- reîncărcările panoului bonului sunt grupate la 60 ms. Endpointurile de afișare eliberează sesiunea înaintea citirilor.
+- totalul afișat este calculat din liniile istorice în același parcurs. Un produs eliminat din catalog nu dispare de pe bon și nu reduce totalul.
+- rapoarte_produse_bestmixt.php afișează cantități, valori, TVA și discounturi pe interval de cel mult 31 de zile, cu filtre de operator și produs. Accesul este controlat de operator_acces_rapoarte. Nu conține imprimare sau Protocol.
+
+SQLite și coada:
+- tools/sqlite_schema.php aplică schema centrală Bestmixt, versiunea 1. PRAGMA user_version evită repetarea migrării, cu reverificare după BEGIN IMMEDIATE și rollback la eroare.
+- WAL este activat la migrare. Conexiunile folosesc foreign_keys=ON și busy_timeout=5000.
+- schema include indexuri pentru filtrarea produselor, coduri de bare, note și detalii, tabelele cozii, observațiile, proveniența utilizatorilor și setarea rapoartelor.
+- licența păstrează regulile existente. Configurația și identitatea hardware sunt reutilizate în memoria requestului.
+- verificarea coloanelor și a indexurilor identității tranzacțiilor este memorată pe conexiune și tabel în cadrul requestului.
+- recuperarea evenimentelor sending abandonate rulează numai în worker, după dobândirea blocării. Inițializarea schemei nu resetează coada.
+- expirarea blocării workerului este comparată în UTC direct în SQLite. Diferența dintre ora locală și UTC nu poate elibera prematur blocarea.
+- limita de așteptare a heartbeatului este 25 de secunde, pentru a permite verificarea politicii online și trimiterea operațiunii.
+- identitățile evenimentelor, hashurile și confirmările online rămân mecanismul de protecție împotriva duplicatelor.
+- istoricul este disponibil și fără operator conectat. Trimiterea automată și butonul manual folosesc același worker.
+
+Fiscalizare fără imprimantă de note:
+- casa_marcat_vanzare.php nu mai generează de_listat_la_imprimanta.json. Nu există condiția listare_nota_dupa_fiscalizare.
+- bon_casa_marcat.json este publicat prin fișier temporar și redenumire sub blocare. Un fișier în așteptare nu este suprascris.
+- API-ul local și trimiterea directă folosesc același printer_queue_atomic_helper.php pentru preluarea exclusivă. Denumirea helperului este tehnică și nu activează o imprimantă.
+- asteapta_casa_marcat.php așteaptă preluarea bonului. Expirarea celor 300 de secunde nu șterge și nu arhivează automat bonul.
+- trimiterea directă devine disponibilă după 5 secunde. Citește configurația existentă ecogest_casa_marcat_v3_inp/config.json, validează clientul și locația și scrie INP atomic, fără BOM.
+- continuarea fără retrimitere cere confirmarea operatorului că bonul a fost deja fiscalizat. Documentul rămas este arhivat local.
+- dispariția fișierului din coadă confirmă preluarea de către scanner, nu confirmarea fiscală de la aparat. Nu se repetă încasarea.
+
+Curățarea locală din 04.09.2026:
+- backup: bestmixt\\api_offline_ecogest_bestmixt\\db_local\\backups_update_bestmixt_20260904_053805\\pos_before_update.sqlite.
+- au fost eliminate 5745 de rânduri, dintre care 5632 de produse, din datele operaționale, jurnale, catalog, date auxiliare, utilizatori și TVA. Înainte exista o notă S fără detalii și nicio operațiune în outbox.
+- s-au păstrat structura, setările firmei și locației, referințele statice, licența, offline_sequence_state și contoarele sqlite_sequence. Identitatea instalării și transaction_uuid nu au fost schimbate.
+- cache-ul, bonuri_trimise și bonuri_backup erau goale. Nu existau fișiere fiscale în directorul clientului 21.
+- produsele, observațiile, utilizatorii și TVA trebuie preluate de utilizator din online. Vânzările istorice nu sunt descărcate automat înapoi. Backupul păstrează datele anterioare.
+- pagina obișnuită Curățare date locale păstrează funcția existentă de resetare operațională. Nu reprezintă curățarea extinsă de catalog efectuată la această actualizare.
+
+Punere în funcțiune:
+- în aplicația online trebuie publicate împreună sincronizare_online_app_vanzare/operatori_offline_creare_automata_lib.php, operatori_offline_mapare_lib.php și api_stare_secvente_offline.php din sursele actualizate.
+- până la publicarea lor, Bestmixt refuză să trimită operațiuni către un server care nu confirmă politica fără creare de utilizatori.
+- în compiler exe project bestmixt.exop au fost adăugate numai cele șapte surse PHP noi, inclusiv tools/sqlite_schema.php. Celelalte componente interne ale arhivei proiectului au fost verificate identice.
+- utilizatorul execută recompile și rebuild. API-ul local trebuie livrat împreună cu noul printer_queue_atomic_helper.php. Se livrează și offline_installation_identity_lib.php extern actualizat. Backupul de mentenanță se păstrează separat, nu se folosește ca bază activă.
+- după pornire se preiau Utilizatori și TVA, apoi Produse și observații. Nu se folosesc datele vechi din baza de backup ca date active.
+- verificarea actualizării a inclus sintaxa PHP și JavaScript, dependențele și integritatea SQLite. Nu au fost create note, vânzări, tranzacții comerciale sau simulări. Nu au fost apelate endpointurile online și nu s-a pornit buildul.
 
 
 6. DAILYCOFFEE
@@ -460,7 +518,41 @@ Componente livrate:
 - arhiveaza_lorand.bat, bazat pe scriptul comun de împachetare.
 
 
-13. FOLDERE TEHNICE DIN RĂDĂCINĂ
+13. AGECSDEMO
+============
+
+Tip: MAGAZIN offline, copie a funcționalităților Lorand din 04.09.2026.
+Client online: 8. Locație: 1.
+Surse: agecsdemo\ecogest_offline_agecsdemo\interfata_vanzare.
+Executabil și Data: agecsdemo\ecogest_offline_agecsdemo.
+API și baza locală: agecsdemo\api_offline_ecogest_agecsdemo\db_local\pos.db.
+Configurare: config_offline_agecsdemo.json, cu cheia AGECSDEMO și identitate proprie.
+
+Date inițiale:
+- păstrează cele 1.117 produse din baza Lorand și nomenclatoarele asociate, conform cererii utilizatorului.
+- cei doi operatori de magazin pentru locația 1 și datele firmei sunt preluate din exportul local u681731335_agecsdemo.sql din 22.08.2026. Nu sunt copiate conturile Lorand.
+- tranzacțiile, istoricul, licența, identitatea hardware, stările de sincronizare și cozile pornesc goale.
+- sincronizarea produselor și utilizatorilor folosește clientul 8. Sincronizarea automată poate actualiza ulterior produsele Lorand cu nomenclatorul AGECSDEMO din online.
+
+Personalizări și optimizări:
+- moștenește funcțiile offline descrise la Lorand: login modern, observații, utilizatori și TVA, rapoarte, PROTOCOL, ONLINE, imprimantă BAR și configurator cu două exemplare inițiale.
+- păstrează listarea notei după generarea bonului fiscal, documentele separate la închiderea zilei, așteptarea casei și imprimantei, metodele alternative după 5 secunde și protecțiile la dublarea documentelor.
+- alternativa fiscală scrie INP fără BOM. Alternativa imprimantei produce RAW fără HTML și diacritice, cu avans de hârtie și tăiere.
+- nu are cântar sau secțiune de coduri de bare. Nu activează excepțiile istorice ale clientului 8 pentru meniuri, facturi, editări speciale de produse, cantități negative ori recalcularea liniei fiscale T.
+- păstrează optimizările Lorand: migrare SQLite versionată, WAL la migrare, indexuri, ensure fără DDL repetat, cache limitat, anularea și versionarea cererilor AJAX, eliberarea sesiunii la citire și recuperarea cozii în worker.
+- denumirile interne lorand ale fișierelor, funcțiilor și tabelului de istoric al imprimantei sunt păstrate. Căile și condițiile de client sunt adaptate la AGECSDEMO 8.
+- această copiere nu modifică interfața online app_vanzare_v2 și nu extinde în online regulile specifice clientului 1019.
+
+Distribuție:
+- scanerele de produse, fiscal și imprimantă sunt cele din Lorand, cu configurațiile și shortcuturile adaptate. Resursa criptată AutoScanner este generată cu cheia clientului 8.
+- imprimanta Windows este configurată BAR. Numele fizic se verifică pe calculatorul de instalare.
+- Admin Login.url deschide sursele AGECSDEMO din localhost.
+- compiler exe project agecsdemo.exop este un proiect nou cu căi și identificatori proprii, fără build. Executabilul POS compilat pentru Lorand nu este reutilizat.
+- arhiveaza_agecsdemo.bat folosește scriptul comun și necesită mai întâi executabilul AGECSDEMO și Data.
+- detalii în agecsdemo\README_AGECSDEMO.txt și PLAN_INSTALARE_AGECSDEMO_8.txt. S-au făcut numai inspecții statice și verificări de sintaxă, fără teste funcționale sau acces la baza online.
+
+
+14. FOLDERE TEHNICE DIN RĂDĂCINĂ
 =================================
 
 _pachete_clienti
@@ -474,10 +566,10 @@ _pachete_clienti
 - nu intră în pachetele clienților și este ignorat de Git.
 
 
-14. SCRIPTURI DE ÎMPACHETARE ȘI REGULI DE DISTRIBUȚIE
+15. SCRIPTURI DE ÎMPACHETARE ȘI REGULI DE DISTRIBUȚIE
 ======================================================
 
-În rădăcină există câte un script arhiveaza_<client>.bat pentru fiecare dintre cele zece instalări și scriptul comun arhiveaza_pachet_client.ps1.
+În rădăcină există câte un script arhiveaza_<client>.bat pentru fiecare dintre cele unsprezece instalări și scriptul comun arhiveaza_pachet_client.ps1.
 
 Scriptul comun:
 - presupune că XAMPP este deja instalat pe calculatorul clientului.

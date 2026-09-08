@@ -4,6 +4,19 @@ ini_set('log_errors', 1); // Activează logarea erorilor
 ini_set('error_log', 'error_log.log'); // Specifică calea către fișierul de log
 include('session.php');
 require_once __DIR__ . '/offline_api_path.php';
+require_once __DIR__ . '/offline_fiscal_flow_helper.php';
+
+$bestmixtClientId = (int)($_SESSION['client_id'] ?? 0);
+$bestmixtLocationId = (int)($_SESSION['cod_locatie'] ?? 0);
+$bestmixtRequestedRelist = (int)($_POST['nota_de_relistat'] ?? $_GET['nota_de_relistat'] ?? 0);
+if ($bestmixtClientId === 21 && is_file(bestmixt_fiscal_queue_path($bestmixtClientId, $bestmixtLocationId))) {
+    $_SESSION['bestmixt_fiscal_after_url'] = $bestmixtRequestedRelist > 0
+        ? 'casa_marcat_vanzare.php?nota_de_relistat=' . rawurlencode((string)$bestmixtRequestedRelist)
+        : 'casa_marcat_vanzare.php';
+    unset($_SESSION['bon_procesat']);
+    header('Location: asteapta_casa_marcat.php');
+    exit;
+}
 
 // --- START BLOC NOU: Prevenire Execuție Dublă ---
 // Verificăm dacă acest bon a fost deja procesat în această sesiune
@@ -21,7 +34,7 @@ if (isset($_SESSION['nr_bon'])) {
 
 error_reporting(E_ALL); // Raportează toate tipurile de erori
 // Presupunem că variabila nota_de_relistat vine din sesiune sau este definită undeva
-$nota_de_relistat = $_POST['nota_de_relistat'] ?? 0;
+$nota_de_relistat = $bestmixtRequestedRelist;
 
 if ($nota_de_relistat == 0) {
 
@@ -211,6 +224,8 @@ if ($nota_de_relistat == 0) {
     date_default_timezone_set("Europe/Bucharest");
     
     // --- Inserția în tabela bonuri_casa_marcat și generarea fișierelor JSON (codul existent) ---
+    $bon_fiscal_json_scris = false;
+    $bon_fiscal_insert_id = 0;
     try {
         $insert_sql = "INSERT INTO bonuri_casa_marcat (data, ora, continut_bon, de_trimis_la_casa_marcat, nrbon, locatie)
                           VALUES (:data, :ora, :continut_bon, :de_trimis, :nrbon, :locatie)";
@@ -227,6 +242,7 @@ if ($nota_de_relistat == 0) {
             ':nrbon' => $nr_bon,
             ':locatie' => $cod_locatie
         ]);
+        $bon_fiscal_insert_id = (int)$pdo->lastInsertId();
     
         if (isset($_SESSION['client_id'])) {
             $client_id = $_SESSION['client_id'];
@@ -254,12 +270,26 @@ if ($nota_de_relistat == 0) {
             $folder_path = offline_api_path($client_id, $locatie_val);
     
             if (!offline_api_ensure_dir($folder_path)) {
-                error_log("Nu s-a putut crea directorul API offline: " . $folder_path);
+                throw new RuntimeException("Nu s-a putut crea directorul API offline: " . $folder_path);
+            }
+            if ($json_data === false) {
+                throw new RuntimeException('Bonul fiscal nu a putut fi convertit în JSON.');
             }
     
             $json_file_path = $folder_path . "/bon_casa_marcat.json";
-            file_put_contents($json_file_path, $json_data);
+            if (!bestmixt_fiscal_publish_json($json_file_path, $json_data)) {
+                if ($bon_fiscal_insert_id > 0) {
+                    $cleanup_stmt = $pdo->prepare("DELETE FROM bonuri_casa_marcat WHERE id = :id AND de_trimis_la_casa_marcat = 1");
+                    $cleanup_stmt->execute([':id' => $bon_fiscal_insert_id]);
+                }
+                $_SESSION['bestmixt_fiscal_after_url'] = 'casa_marcat_vanzare.php';
+                unset($_SESSION['bon_procesat']);
+                header('Location: asteapta_casa_marcat.php');
+                exit;
+            }
+            $bon_fiscal_json_scris = true;
     
+            // Marcarea ca preluat se face numai după scrierea cu succes a fișierului fiscal.
             $update_sql = "UPDATE bonuri_casa_marcat 
                            SET de_trimis_la_casa_marcat = 0 
                            WHERE nrbon = :nrbon AND de_trimis_la_casa_marcat = 1";
@@ -267,244 +297,42 @@ if ($nota_de_relistat == 0) {
             $update_stmt->bindParam(':nrbon', $nr_bon, PDO::PARAM_INT);
             $update_stmt->execute();
         } else {
-            error_log("Client_id nu este setat în sesiune.");
+            throw new RuntimeException('Client_id nu este setat în sesiune.');
         }
     
-    } catch (PDOException $e) {
-        error_log("Eroare la inserția bonului: " . $e->getMessage());
-    }
-    
-    // --- Generarea datelor pentru imprimantă (codul existent) ---
-    try {
-        $departments_sql = "
-            SELECT DISTINCT ps.departament
-            FROM $tabel_final_det_note dn
-            JOIN $tabel_final_nomenclator ps ON dn.cod_p = ps.cod_produs
-            WHERE dn.nr_bon = :nrbon
-              AND ps.departament IS NOT NULL
-              AND ps.departament != ''
-        ";
-        $departments_stmt = $pdo->prepare($departments_sql);
-        $departments_stmt->execute([':nrbon' => $nr_bon]);
-        $departments = $departments_stmt->fetchAll(PDO::FETCH_COLUMN);
-    
-        $printData = [];
-    
-        if (!empty($departments)) {
-            $current_date = date('Y-m-d');
-            $current_time = date('H:i:s');
-            $de_trimis = 1;
-    
-            foreach ($departments as $departament_listare) {
-                $products_sql = "
-                    SELECT 
-                        dn.pachet,
-                        dn.discount,
-                        dn.cod_p,
-                        ps.nume,
-                        ps.um,
-                        dn.cantitate,
-                        dn.tva_col,
-                        dn.pret_vanzare,
-                        dn.valoare_vanzare,
-                        dn.valoare_vanzare_cu_tva,
-                        ps.cota_tva,
-                        ps.departament
-                    FROM $tabel_final_det_note dn
-                    JOIN $tabel_final_nomenclator ps ON dn.cod_p = ps.cod_produs
-                    WHERE dn.nr_bon = :nrbon
-                      AND ps.departament = :departament
-                ";
-                $products_stmt = $pdo->prepare($products_sql);
-                $products_stmt->execute([':nrbon' => $nr_bon, ':departament' => $departament_listare]);
-                $products = $products_stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-                $continut = "";
-                $continut .= $den_ent . "\n";
-                $continut .= $sediu . "\n";
-                $continut .= "C.I.F.: " . $cod_fiscal_ent . "\n";
-                $continut .= "C.I.F. CLIENT: " . $cif_client . "\n";
-                $continut .= $data_bon . " " . $ora_bon . "\n";
-                $continut .= "LEI\n";
-                $continut .= "OPERATOR: " . $admin_firstname . " " . $admin_lastname . "\n\n";
-    
-                foreach ($products as $product) {
-                    $pachet = $product['pachet'];
-                    $pprodus = $product['nume'];
-                    $produs = substr($pprodus, 0, 20);
-                    $um = $product['um'];
-                    $cantitate = $product['cantitate'];
-                    $tva_col = $product['tva_col'];
-                    $pret_vanzare = $product['pret_vanzare'];
-                    $valoare_vanzare_cu_tva = $product['valoare_vanzare_cu_tva'];
-                    $cota_tva = $product['cota_tva'];
-                    $departament = $product['departament'];
-                    $discount = $product['discount'];
-    
-                    $continut .= "Produs: " . $produs . "\n";
-                    $continut .= "Cantitate: " . $cantitate . " " . $um . " X " . number_format($pret_vanzare, 2) . " LEI\n";
-                    $continut .= "Valoare Vânzare: " . number_format($valoare_vanzare_cu_tva, 2) . " LEI\n\n";
-                }
-    
-                $f_tot_sql = "
-                    SELECT SUM(dn.valoare_vanzare_cu_tva) AS total_vanzare
-                    FROM $tabel_final_det_note dn 
-                    JOIN $tabel_final_nomenclator ps ON dn.cod_p = ps.cod_produs 
-                    WHERE dn.nr_bon = :nrbon 
-                      AND ps.departament = :departament
-                ";
-                $f_tot_stmt = $pdo->prepare($f_tot_sql);
-                $f_tot_stmt->execute([':nrbon' => $nr_bon, ':departament' => $departament_listare]);
-                $row = $f_tot_stmt->fetch(PDO::FETCH_ASSOC);
-                $total_val_vz_cu_tva = $row['total_vanzare'] ?? 0;
-    
-                $ds_tot_sql = "
-                    SELECT SUM(dn.discount) AS total_discount
-                    FROM $tabel_final_det_note dn 
-                    JOIN $tabel_final_nomenclator ps ON dn.cod_p = ps.cod_produs 
-                    WHERE dn.nr_bon = :nrbon 
-                      AND ps.departament = :departament
-                ";
-                $ds_tot_stmt = $pdo->prepare($ds_tot_sql);
-                $ds_tot_stmt->execute([':nrbon' => $nr_bon, ':departament' => $departament_listare]);
-                $row = $ds_tot_stmt->fetch(PDO::FETCH_ASSOC);
-                $total_disc = $row['total_discount'] ?? 0;
-    
-                $total_val_vz_cu_tva = $total_val_vz_cu_tva - $total_disc;
-                $continut .= "TOTAL LEI: " . number_format($total_val_vz_cu_tva, 2) . " LEI\n";
-    
-                if ($numerar != 0) {
-                    $continut .= "Numerar: " . number_format($numerar, 2) . " LEI\n";
-                }
-                if ($tichete != 0) {
-                    $continut .= "Tichete: " . number_format($tichete, 2) . " LEI\n";
-                }
-                if ($card != 0) {
-                    $continut .= "Card: " . number_format($card, 2) . " LEI\n";
-                }
-                if ($protocol != 0) {
-                    $continut .= "Protocol: " . number_format($protocol, 2) . " LEI\n";
-                }
-                $continut .= "Rest: " . number_format($rest, 2) . " LEI\n\n";
-    
-                $cote_tva_sql = "
-                    SELECT 
-                        ps.cota_tva,
-                        ps.departament,
-                        dn.tva_col 
-                    FROM $tabel_final_det_note dn
-                    JOIN $tabel_final_nomenclator ps ON dn.cod_p = ps.cod_produs
-                    WHERE dn.nr_bon = :nrbon 
-                      AND ps.departament = :departament
-                ";
-                $cote_tva_stmt = $pdo->prepare($cote_tva_sql);
-                $cote_tva_stmt->execute([':nrbon' => $nr_bon, ':departament' => $departament_listare]);
-    
-                $tva_a = 0;
-                $tva_b = 0;
-                $tva_c = 0;
-                $faratva = 0;
-    
-                while ($row = $cote_tva_stmt->fetch(PDO::FETCH_ASSOC)) {
-                    $cota_tva = $row['cota_tva'];
-                    $tva_col = $row['tva_col'];
-    
-                    if ($cota_tva == 19) {
-                        $tva_a += $tva_col;
-                    } elseif ($cota_tva == 9) {
-                        $tva_b += $tva_col;
-                    } elseif ($cota_tva == 5) {
-                        $tva_c += $tva_col;
-                    } else {
-                        $faratva += $tva_col;
-                    }
-                }
-    
-                if ($tva_a > 0) {
-                    $continut .= "A: TVA A (19%): " . number_format($tva_a, 3) . " LEI\n";
-                }
-                if ($tva_b > 0) {
-                    $continut .= "B: TVA B (9%): " . number_format($tva_b, 3) . " LEI\n";
-                }
-                if ($tva_c > 0) {
-                    $continut .= "C: TVA C (5%): " . number_format($tva_c, 3) . " LEI\n";
-                }
-                if ($faratva > 0) {
-                    $continut .= "FARA TVA: " . number_format($faratva, 3) . " LEI\n";
-                }
-                $continut .= "TOTAL TVA: " . number_format($tva_a + $tva_b + $tva_c + $faratva, 3) . " LEI\n\n";
-    
-                $continut .= "Nr. nota: " . $nr_bon . "\n";
-    
-                $printData[] = [
-                    'data'                    => $current_date,
-                    'ora'                     => $current_time,
-                    'de_trimis_la_imprimanta' => $de_trimis,
-                    'nrbon'                   => $nr_bon,
-                    'locatie'                 => $cod_locatie,
-                    'departament_listare'     => $departament_listare,
-                    'continut'                => $continut
-                ];
+    } catch (Throwable $e) {
+        error_log("Eroare la inserția/generarea bonului fiscal: " . $e->getMessage());
+        if ($bon_fiscal_json_scris) {
+            // Publicarea a reușit. O eroare SQL ulterioară nu autorizează retrimiterea bonului.
+            unset($_SESSION['nr_bon'], $_SESSION['bon_procesat'], $_SESSION['numerarprim'], $_SESSION['cardprim'],
+                $_SESSION['cif_client'], $_SESSION['rest_tichete'], $_SESSION['total_tichete'], $_SESSION['masa_curenta']);
+            $_SESSION['bestmixt_fiscal_after_url'] = 'vanzare_magazin.php';
+            header('Location: asteapta_casa_marcat.php');
+            exit;
+        }
+        if ((int)$client_agecs === 21 && !$bon_fiscal_json_scris && $bon_fiscal_insert_id > 0) {
+            try {
+                $cleanup_stmt = $pdo->prepare("DELETE FROM bonuri_casa_marcat WHERE id = :id AND de_trimis_la_casa_marcat = 1");
+                $cleanup_stmt->execute([':id' => $bon_fiscal_insert_id]);
+            } catch (Throwable $cleanupError) {
+                error_log('Curățare bon fiscal Bestmixt nepregătit: ' . $cleanupError->getMessage());
             }
         }
-    
-        $json_array_imprimanta = [
-            "status"  => "success",
-            "message" => "Date pentru imprimantă generate cu succes.",
-            "data"    => $printData
-        ];
-        $json_data_imprimanta = json_encode($json_array_imprimanta, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-    
-        $json_file_path_imprimanta = $folder_path . "/de_listat_la_imprimanta.json";
-        file_put_contents($json_file_path_imprimanta, $json_data_imprimanta);
-    
-        unset($_SESSION['nr_bon']);
-        unset($_SESSION['bon_procesat']); // <-- CURĂȚARE LOCK
-        unset($_SESSION['numerarprim']);
-        unset($_SESSION['cardprim']);
-        unset($_SESSION['cif_client']);
-        unset($_SESSION['rest_tichete']);
-        unset($_SESSION['total_tichete']);
-        unset($_SESSION['masa_curenta']);
-    
-
-    //redirect factura automata 
-    if ($client_agecs == 2 || $client_agecs==8) {
-        if (!empty($cif_client)) {
-            // Preluăm folder-ul și numele scriptului curent
-            $folder = basename(__DIR__);           // ex: "app_vanzare" sau "app_restaurant"
-            $script="";
-            if($folder=="app_vanzare"){$script="vanzare_magazin.php";}
-            elseif($folder=="app_restaurant"){$script="vanzare_restaurant.php";}
-            elseif($folder=="app_vanzare_v2"){$script="vanzare_magazin.php";}
-            elseif($folder=="app_restaurant_v2"){$script="vanzare_restaurant.php";}
-            elseif($folder=="app_restaurant_hp"){$script="vanzare_restaurant.php";}
-            $path   = $folder . '/' . $script;       // ex: "app_vanzare/casa_marcat_vanzare.php"
-
-            // 1) determinăm cod_metoda_plata (rămâne la fel)
-            if ($numerar > 0 && $card == 0) {
-                $cod_metoda_plata = 10;
-            } elseif ($card > 0 && $numerar == 0) {
-                $cod_metoda_plata = 48;
-            } else {
-                $cod_metoda_plata = 'ZZZ';
-            }
-
-            printf(
-                "<script>location.href='../vanzare_genereaza_factura_nota.php?nr_bon=%s&cif_client=%s&cod_metoda_plata=%s&path=%s'</script>",
-                urlencode($nr_bon),
-                urlencode($cif_client),
-                urlencode($cod_metoda_plata),
-                urlencode($path)
-            );
-
-        }
+        unset($_SESSION['bon_procesat']);
+        http_response_code(503);
+        echo '<meta charset="utf-8"><p>Bonul fiscal nu a putut fi pregătit. Vânzarea nu trebuie încasată din nou.</p>';
+        echo '<p>Verificați jurnalul local și spațiul disponibil, apoi reîncercați numai trimiterea fiscală.</p>';
+        echo '<a href="casa_marcat_vanzare.php' . ($bestmixtRequestedRelist > 0 ? '?nota_de_relistat=' . $bestmixtRequestedRelist : '') . '">Reîncearcă trimiterea fiscală</a>';
+        exit;
     }
-        printf("<script>location.href='vanzare_magazin.php'</script>");
     
-    } catch (PDOException $e) {
-        error_log("Eroare la generarea datelor pentru imprimantă: " . $e->getMessage());
-    }
+    // Bestmixt nu are imprimantă pentru note de plată. Se așteaptă numai preluarea fiscală.
+    unset($_SESSION['nr_bon'], $_SESSION['bon_procesat'], $_SESSION['numerarprim'], $_SESSION['cardprim'],
+        $_SESSION['cif_client'], $_SESSION['rest_tichete'], $_SESSION['total_tichete'], $_SESSION['masa_curenta']);
+    $_SESSION['bestmixt_fiscal_after_url'] = 'vanzare_magazin.php';
+    header('Location: asteapta_casa_marcat.php');
+    exit;
+
 }
 else {
     // === Dacă nota_de_relistat este setată (diferită de 0): se preiau datele notei din tabela "note" ===
@@ -709,6 +537,8 @@ else {
     date_default_timezone_set("Europe/Bucharest");
     
     // --- Inserția în tabela bonuri_casa_marcat și generarea fișierelor JSON (la fel ca mai sus) ---
+    $bon_fiscal_relistat_scris = false;
+    $bon_fiscal_relistat_insert_id = 0;
     try {
         $insert_sql = "INSERT INTO bonuri_casa_marcat (data, ora, continut_bon, de_trimis_la_casa_marcat, nrbon, locatie)
                           VALUES (:data, :ora, :continut_bon, :de_trimis, :nrbon, :locatie)";
@@ -727,6 +557,7 @@ else {
             ':nrbon' => $nr_bon,
             ':locatie' => $cod_locatie
         ]);
+        $bon_fiscal_relistat_insert_id = (int)$pdo->lastInsertId();
     
         if (isset($_SESSION['client_id'])) {
             $client_id = $_SESSION['client_id'];
@@ -754,11 +585,23 @@ else {
             $folder_path = offline_api_path($client_id, $locatie_val);
     
             if (!offline_api_ensure_dir($folder_path)) {
-                error_log("Nu s-a putut crea directorul API offline: " . $folder_path);
+                throw new RuntimeException("Nu s-a putut crea directorul API offline: " . $folder_path);
+            }
+            if ($json_data === false) {
+                throw new RuntimeException('Bonul fiscal relistat nu a putut fi convertit în JSON.');
             }
     
             $json_file_path = $folder_path . "/bon_casa_marcat.json";
-            file_put_contents($json_file_path, $json_data);
+            if (!bestmixt_fiscal_publish_json($json_file_path, $json_data)) {
+                if ($bon_fiscal_relistat_insert_id > 0) {
+                    $cleanup_stmt = $pdo->prepare("DELETE FROM bonuri_casa_marcat WHERE id = :id AND de_trimis_la_casa_marcat = 1");
+                    $cleanup_stmt->execute([':id' => $bon_fiscal_relistat_insert_id]);
+                }
+                $_SESSION['bestmixt_fiscal_after_url'] = 'casa_marcat_vanzare.php?nota_de_relistat=' . rawurlencode((string)$nr_bon);
+                header('Location: asteapta_casa_marcat.php');
+                exit;
+            }
+            $bon_fiscal_relistat_scris = true;
     
             $update_sql = "UPDATE bonuri_casa_marcat 
                            SET de_trimis_la_casa_marcat = 0 
@@ -767,211 +610,40 @@ else {
             $update_stmt->bindParam(':nrbon', $nr_bon, PDO::PARAM_INT);
             $update_stmt->execute();
         } else {
-            error_log("Client_id nu este setat în sesiune.");
+            throw new RuntimeException('Client_id nu este setat în sesiune.');
         }
     
-    } catch (PDOException $e) {
-        error_log("Eroare la inserția bonului (nota relistata): " . $e->getMessage());
-    }
-    
-    // --- Generarea datelor pentru imprimantă (la fel ca mai sus) ---
-    try {
-        $departments_sql = "
-            SELECT DISTINCT ps.departament
-            FROM $tabel_final_det_note dn
-            JOIN $tabel_final_nomenclator ps ON dn.cod_p = ps.cod_produs
-            WHERE dn.nr_bon = :nrbon
-              AND ps.departament IS NOT NULL
-              AND ps.departament != ''
-        ";
-        $departments_stmt = $pdo->prepare($departments_sql);
-        $departments_stmt->execute([':nrbon' => $nr_bon]);
-        $departments = $departments_stmt->fetchAll(PDO::FETCH_COLUMN);
-    
-        $printData = [];
-    
-        if (!empty($departments)) {
-            $current_date = date('Y-m-d');
-            $current_time = date('H:i:s');
-            $de_trimis = 1;
-    
-            foreach ($departments as $departament_listare) {
-                $products_sql = "
-                    SELECT 
-                        dn.pachet,
-                        dn.discount,
-                        dn.cod_p,
-                        ps.nume,
-                        ps.um,
-                        dn.cantitate,
-                        dn.tva_col,
-                        dn.pret_vanzare,
-                        dn.valoare_vanzare,
-                        dn.valoare_vanzare_cu_tva,
-                        ps.cota_tva,
-                        ps.departament
-                    FROM $tabel_final_det_note dn
-                    JOIN $tabel_final_nomenclator ps ON dn.cod_p = ps.cod_produs
-                    WHERE dn.nr_bon = :nrbon
-                      AND ps.departament = :departament
-                ";
-                $products_stmt = $pdo->prepare($products_sql);
-                $products_stmt->execute([':nrbon' => $nr_bon, ':departament' => $departament_listare]);
-                $products = $products_stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-                $continut = "";
-                $continut .= $den_ent . "\n";
-                $continut .= $sediu . "\n";
-                $continut .= "C.I.F.: " . $cod_fiscal_ent . "\n";
-                $continut .= "C.I.F. CLIENT: " . $cif_client . "\n";
-                $continut .= $data_bon . " " . $ora_bon . "\n";
-                $continut .= "LEI\n";
-                $continut .= "OPERATOR: " . $admin_firstname . " " . $admin_lastname . "\n\n";
-    
-                foreach ($products as $product) {
-                    $pachet = $product['pachet'];
-                    $pprodus = $product['nume'];
-                    $produs = substr($pprodus, 0, 20);
-                    $um = $product['um'];
-                    $cantitate = $product['cantitate'];
-                    $tva_col = $product['tva_col'];
-                    $pret_vanzare = $product['pret_vanzare'];
-                    $valoare_vanzare_cu_tva = $product['valoare_vanzare_cu_tva'];
-                    $cota_tva = $product['cota_tva'];
-                    $departament = $product['departament'];
-                    $discount = $product['discount'];
-    
-                    $continut .= "Produs: " . $produs . "\n";
-                    $continut .= "Cantitate: " . $cantitate . " " . $um . " X " . number_format($pret_vanzare, 2) . " LEI\n";
-                    $continut .= "Valoare Vânzare: " . number_format($valoare_vanzare_cu_tva, 2) . " LEI\n\n";
-                }
-    
-                $f_tot_sql = "
-                    SELECT SUM(dn.valoare_vanzare_cu_tva) AS total_vanzare
-                    FROM $tabel_final_det_note dn 
-                    JOIN $tabel_final_nomenclator ps ON dn.cod_p = ps.cod_produs 
-                    WHERE dn.nr_bon = :nrbon 
-                      AND ps.departament = :departament
-                ";
-                $f_tot_stmt = $pdo->prepare($f_tot_sql);
-                $f_tot_stmt->execute([':nrbon' => $nr_bon, ':departament' => $departament_listare]);
-                $row = $f_tot_stmt->fetch(PDO::FETCH_ASSOC);
-                $total_val_vz_cu_tva = $row['total_vanzare'] ?? 0;
-    
-                $ds_tot_sql = "
-                    SELECT SUM(dn.discount) AS total_discount
-                    FROM $tabel_final_det_note dn 
-                    JOIN $tabel_final_nomenclator ps ON dn.cod_p = ps.cod_produs 
-                    WHERE dn.nr_bon = :nrbon 
-                      AND ps.departament = :departament
-                ";
-                $ds_tot_stmt = $pdo->prepare($ds_tot_sql);
-                $ds_tot_stmt->execute([':nrbon' => $nr_bon, ':departament' => $departament_listare]);
-                $row = $ds_tot_stmt->fetch(PDO::FETCH_ASSOC);
-                $total_disc = $row['total_discount'] ?? 0;
-    
-                $total_val_vz_cu_tva = $total_val_vz_cu_tva - $total_disc;
-                $continut .= "TOTAL LEI: " . number_format($total_val_vz_cu_tva, 2) . " LEI\n";
-    
-                if ($numerar != 0) {
-                    $continut .= "Numerar: " . number_format($numerar, 2) . " LEI\n";
-                }
-                if ($tichete != 0) {
-                    $continut .= "Tichete: " . number_format($tichete, 2) . " LEI\n";
-                }
-                if ($card != 0) {
-                    $continut .= "Card: " . number_format($card, 2) . " LEI\n";
-                }
-                if ($protocol != 0) {
-                    $continut .= "Protocol: " . number_format($protocol, 2) . " LEI\n";
-                }
-                $continut .= "Rest: " . number_format($rest, 2) . " LEI\n\n";
-    
-                $cote_tva_sql = "
-                    SELECT 
-                        ps.cota_tva,
-                        ps.departament,
-                        dn.tva_col 
-                    FROM $tabel_final_det_note dn
-                    JOIN $tabel_final_nomenclator ps ON dn.cod_p = ps.cod_produs
-                    WHERE dn.nr_bon = :nrbon 
-                      AND ps.departament = :departament
-                ";
-                $cote_tva_stmt = $pdo->prepare($cote_tva_sql);
-                $cote_tva_stmt->execute([':nrbon' => $nr_bon, ':departament' => $departament_listare]);
-    
-                $tva_a = 0;
-                $tva_b = 0;
-                $tva_c = 0;
-                $faratva = 0;
-    
-                while ($row = $cote_tva_stmt->fetch(PDO::FETCH_ASSOC)) {
-                    $cota_tva = $row['cota_tva'];
-                    $tva_col = $row['tva_col'];
-    
-                    if ($cota_tva == 19) {
-                        $tva_a += $tva_col;
-                    } elseif ($cota_tva == 9) {
-                        $tva_b += $tva_col;
-                    } elseif ($cota_tva == 5) {
-                        $tva_c += $tva_col;
-                    } else {
-                        $faratva += $tva_col;
-                    }
-                }
-    
-                if ($tva_a > 0) {
-                    $continut .= "A: TVA A (19%): " . number_format($tva_a, 3) . " LEI\n";
-                }
-                if ($tva_b > 0) {
-                    $continut .= "B: TVA B (9%): " . number_format($tva_b, 3) . " LEI\n";
-                }
-                if ($tva_c > 0) {
-                    $continut .= "C: TVA C (5%): " . number_format($tva_c, 3) . " LEI\n";
-                }
-                if ($faratva > 0) {
-                    $continut .= "FARA TVA: " . number_format($faratva, 3) . " LEI\n";
-                }
-                $continut .= "TOTAL TVA: " . number_format($tva_a + $tva_b + $tva_c + $faratva, 3) . " LEI\n\n";
-    
-                $continut .= "Nr. nota: " . $nr_bon . "\n";
-    
-                $printData[] = [
-                    'data'                    => $current_date,
-                    'ora'                     => $current_time,
-                    'de_trimis_la_imprimanta' => $de_trimis,
-                    'nrbon'                   => $nr_bon,
-                    'locatie'                 => $cod_locatie,
-                    'departament_listare'     => $departament_listare,
-                    'continut'                => $continut
-                ];
+    } catch (Throwable $e) {
+        error_log("Eroare la inserția/generarea bonului relistat: " . $e->getMessage());
+        if ($bon_fiscal_relistat_scris) {
+            // Publicarea a reușit. O eroare SQL ulterioară nu autorizează retrimiterea bonului.
+            unset($_SESSION['nr_bon'], $_SESSION['bon_procesat'], $_SESSION['numerarprim'], $_SESSION['cardprim'],
+                $_SESSION['cif_client'], $_SESSION['rest_tichete'], $_SESSION['total_tichete'], $_SESSION['masa_curenta']);
+            $_SESSION['bestmixt_fiscal_after_url'] = 'vanzare_magazin.php';
+            header('Location: asteapta_casa_marcat.php');
+            exit;
+        }
+        if ((int)$client_agecs === 21 && !$bon_fiscal_relistat_scris && $bon_fiscal_relistat_insert_id > 0) {
+            try {
+                $cleanup_stmt = $pdo->prepare("DELETE FROM bonuri_casa_marcat WHERE id = :id AND de_trimis_la_casa_marcat = 1");
+                $cleanup_stmt->execute([':id' => $bon_fiscal_relistat_insert_id]);
+            } catch (Throwable $cleanupError) {
+                error_log('Curățare bon fiscal Bestmixt relistat nepregătit: ' . $cleanupError->getMessage());
             }
         }
-    
-        $json_array_imprimanta = [
-            "status"  => "success",
-            "message" => "Date pentru imprimantă generate cu succes.",
-            "data"    => $printData
-        ];
-        $json_data_imprimanta = json_encode($json_array_imprimanta, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-    
-        $json_file_path_imprimanta = $folder_path . "/de_listat_la_imprimanta.json";
-        file_put_contents($json_file_path_imprimanta, $json_data_imprimanta);
-    
-        // Resetare variabile (dacă este necesar)
-        unset($_SESSION['nr_bon']);
-        unset($_SESSION['bon_procesat']); // <-- CURĂȚARE LOCK
-        unset($_SESSION['numerarprim']);
-        unset($_SESSION['cardprim']);
-        unset($_SESSION['cif_client']);
-        unset($_SESSION['rest_tichete']);
-        unset($_SESSION['total_tichete']);
-        unset($_SESSION['masa_curenta']);
-    
-        printf("<script>location.href='vanzare_magazin.php'</script>");
-    
-    } catch (PDOException $e) {
-        error_log("Eroare la generarea datelor pentru imprimantă (nota relistata): " . $e->getMessage());
+        unset($_SESSION['bon_procesat']);
+        http_response_code(503);
+        echo '<meta charset="utf-8"><p>Bonul fiscal nu a putut fi pregătit. Vânzarea nu trebuie încasată din nou.</p>';
+        echo '<p>Verificați jurnalul local și spațiul disponibil, apoi reîncercați numai trimiterea fiscală.</p>';
+        echo '<a href="casa_marcat_vanzare.php' . ($bestmixtRequestedRelist > 0 ? '?nota_de_relistat=' . $bestmixtRequestedRelist : '') . '">Reîncearcă trimiterea fiscală</a>';
+        exit;
     }
+
+    // Bestmixt nu are imprimantă pentru note de plată. Se așteaptă numai preluarea fiscală.
+    unset($_SESSION['nr_bon'], $_SESSION['bon_procesat'], $_SESSION['numerarprim'], $_SESSION['cardprim'],
+        $_SESSION['cif_client'], $_SESSION['rest_tichete'], $_SESSION['total_tichete'], $_SESSION['masa_curenta']);
+    $_SESSION['bestmixt_fiscal_after_url'] = 'vanzare_magazin.php';
+    header('Location: asteapta_casa_marcat.php');
+    exit;
 }
 ?>

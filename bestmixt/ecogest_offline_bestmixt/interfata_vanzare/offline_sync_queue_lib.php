@@ -17,6 +17,7 @@ function offline_sync_queue_config(): array
         'cod_locatie' => $location,
         'installation_uuid' => preg_replace('/[^A-Za-z0-9_-]/', '_', (string)($config['transaction_uuid'] ?? $config['installation_uuid'] ?? ('client' . $clientId . '_loc' . $location))),
         'profile' => (string)($config['sync_profile'] ?? ($clientId === 2 ? 'dailycoffee' : 'agremprejba')),
+        'state_url' => trim((string)($config['sync_state_url'] ?? '')),
         'url' => trim((string)($config['sync_import_url'] ?? '')),
         'api_key' => trim((string)($config['sync_api_key'] ?? '')),
         'ca_bundle_path' => $caBundlePath,
@@ -41,41 +42,12 @@ function offline_sync_queue_columns(PDO $pdo, string $table): array
 
 function offline_sync_queue_ensure_schema(PDO $pdo): void
 {
-    $pdo->exec("CREATE TABLE IF NOT EXISTS offline_sync_outbox (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        event_uuid TEXT NOT NULL UNIQUE,
-        event_type TEXT NOT NULL,
-        aggregate_type TEXT NOT NULL,
-        aggregate_id TEXT NOT NULL,
-        cod_locatie INTEGER NOT NULL,
-        payload_xml TEXT NOT NULL,
-        payload_sha256 TEXT NOT NULL,
-        status TEXT NOT NULL DEFAULT 'pending',
-        attempts INTEGER NOT NULL DEFAULT 0,
-        next_attempt_at TEXT NULL,
-        locked_at TEXT NULL,
-        last_http_code INTEGER NULL,
-        last_error TEXT NULL,
-        created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        sent_at TEXT NULL
-    )");
-    $pdo->exec('CREATE INDEX IF NOT EXISTS idx_offline_sync_outbox_due ON offline_sync_outbox (status, next_attempt_at, id)');
-    $pdo->exec("CREATE TABLE IF NOT EXISTS offline_sync_entity_state (
-        entity_type TEXT NOT NULL,
-        entity_id TEXT NOT NULL,
-        payload_sha256 TEXT NOT NULL,
-        updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        PRIMARY KEY (entity_type, entity_id)
-    )");
-    $pdo->exec("CREATE TABLE IF NOT EXISTS offline_sync_runtime (
-        id INTEGER PRIMARY KEY CHECK (id = 1),
-        lock_token TEXT NULL,
-        locked_until TEXT NULL,
-        last_tick_at TEXT NULL,
-        last_success_at TEXT NULL,
-        last_error TEXT NULL
-    )");
-    $pdo->exec('INSERT OR IGNORE INTO offline_sync_runtime (id) VALUES (1)');
+    require_once __DIR__ . '/tools/sqlite_schema.php';
+    bestmixt_sqlite_apply_schema_if_needed($pdo);
+}
+
+function offline_sync_queue_recover_stale(PDO $pdo): void
+{
     $pdo->exec("UPDATE offline_sync_outbox SET status = 'retry', locked_at = NULL, next_attempt_at = CURRENT_TIMESTAMP
         WHERE status = 'sending' AND datetime(COALESCE(locked_at, created_at)) < datetime('now', '-3 minutes')");
 }

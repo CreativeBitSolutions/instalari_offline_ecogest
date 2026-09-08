@@ -1,0 +1,8 @@
+{
+    "bold": true,
+    "size": "11",
+    "align": "left",
+    "width_chars": 42,
+    "copies": 2,
+    "destination": "BAR"
+}

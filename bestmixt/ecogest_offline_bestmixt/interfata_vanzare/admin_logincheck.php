@@ -59,6 +59,13 @@ function logIn()
     }
 
     if ($row) {
+        $sourceCheck = $pdo->prepare('SELECT 1 FROM offline_online_operators WHERE admin_id = ?');
+        $sourceCheck->execute([(int)$row['admin_id']]);
+        if (!$sourceCheck->fetchColumn()) {
+            $_SESSION['error'] = 'Preia utilizatorii din online înainte de conectare.';
+            header('Location: agecs_login.php');
+            return;
+        }
         $_SESSION['error'] = '';
         $_SESSION['adminloggedin'] = $row['admin_id'];
 

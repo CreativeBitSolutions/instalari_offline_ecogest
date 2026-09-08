@@ -1,0 +1,175 @@
+{
+  "add_product.php": [
+    "database_connection.php"
+  ],
+  "conexiune_centrala_sigura.php": [
+    "/conectare.php",
+    "/resetare_conexiune_client.php"
+  ],
+  "country_utils.php": [],
+  "delete_item.php": [
+    "database_connection.php"
+  ],
+  "detalii_factura.php": [
+    "descarca_xml_saga_factura.php",
+    "duplicare_factura_corectare.php",
+    "email_factura.php",
+    "factura.php",
+    "facturi.php",
+    "footer.php",
+    "genereaza_bon.php",
+    "header.php",
+    "listeaza_fact.php",
+    "preview_factura_stornare.php"
+  ],
+  "duplicare_factura.php": [
+    "database_connection.php",
+    "factura.php"
+  ],
+  "factura.php": [
+    "/anaf_xml_artifacts.php",
+    "/country_utils.php",
+    "/factura.php",
+    "add_product.php",
+    "anaf_incarcare.php",
+    "anaf_validare.php",
+    "anaf_xml_genereaza.php",
+    "anaf_xml_previzualizare.php",
+    "database_connection.php",
+    "delete_item.php",
+    "detalii_factura.php",
+    "email_factura.php",
+    "factura.php",
+    "factura_get_client_data.php",
+    "factura_importa_pvi.php",
+    "facturi.php",
+    "footer.php",
+    "genereaza_bon.php",
+    "get_company_data.php",
+    "get_next_nr_factura.php",
+    "get_produs_factura.php",
+    "header.php",
+    "istoric_incarcari.php",
+    "istoric_validari.php",
+    "listeaza_fact.php",
+    "listeaza_fact_deviz_simplificat.php",
+    "modifica_cantitate_factura.php",
+    "modifica_pret_factura.php",
+    "modifica_um_factura.php",
+    "save_step.php",
+    "set_zero_item.php",
+    "sterge_validari.php",
+    "update_factura.php",
+    "widget_touch.php"
+  ],
+  "factura_get_client_data.php": [
+    "database_connection.php"
+  ],
+  "facturi.php": [
+    "database_connection.php",
+    "detalii_factura.php",
+    "duplicare_factura.php",
+    "factura.php",
+    "footer.php",
+    "header.php",
+    "istoric_validari.php",
+    "proc/incasare_factura.php",
+    "raport_facturi.php",
+    "raport_facturi_excel.php",
+    "sterge_validari.php",
+    "stergere_factura.php",
+    "store_mesaje_anaf.php",
+    "stornare_factura.php"
+  ],
+  "fpdf186/fpdf.php": [],
+  "genereaza_bon.php": [
+    "database_connection.php",
+    "detalii_factura.php",
+    "factura.php",
+    "genereaza_bon.php"
+  ],
+  "get_next_nr_factura.php": [
+    "database_connection.php",
+    "get_next_nr_factura.php"
+  ],
+  "get_produs_factura.php": [
+    "database_connection.php"
+  ],
+  "listeaza_fact.php": [
+    "database_connection.php",
+    "tcpdf/tcpdf.php"
+  ],
+  "listeaza_fact_deviz_simplificat.php": [
+    "database_connection.php",
+    "tcpdf/tcpdf.php"
+  ],
+  "modifica_cantitate_factura.php": [
+    "database_connection.php"
+  ],
+  "modifica_pret_factura.php": [
+    "database_connection.php"
+  ],
+  "modifica_um_factura.php": [
+    "database_connection.php"
+  ],
+  "persistent_session.php": [],
+  "proc/../database_connection.php": [
+    "/conexiune_centrala_sigura.php",
+    "/persistent_session.php"
+  ],
+  "proc/incasare_factura.php": [
+    "database_connection.php",
+    "facturi.php"
+  ],
+  "raport_facturi.php": [
+    "database_connection.php",
+    "fpdf186/fpdf.php"
+  ],
+  "raport_facturi_excel.php": [
+    "database_connection.php",
+    "vendor/autoload.php"
+  ],
+  "save_step.php": [],
+  "set_zero_item.php": [
+    "database_connection.php"
+  ],
+  "stergere_factura.php": [
+    "database_connection.php"
+  ],
+  "stornare_factura.php": [
+    "database_connection.php",
+    "facturi.php",
+    "header.php",
+    "login.php"
+  ],
+  "tcpdf/tcpdf.php": [
+    "/include/tcpdf_colors.php",
+    "/include/tcpdf_font_data.php",
+    "/include/tcpdf_fonts.php",
+    "/include/tcpdf_images.php",
+    "/include/tcpdf_static.php",
+    "/tcpdf_autoconfig.php",
+    "/tcpdf_barcodes_1d.php",
+    "/tcpdf_barcodes_2d.php",
+    "/www.php"
+  ],
+  "update_factura.php": [
+    "database_connection.php"
+  ],
+  "vendor/autoload.php": [
+    "/composer/autoload_real.php"
+  ],
+  "vendor/composer/ClassLoader.php": [
+    "/www.php"
+  ],
+  "vendor/composer/autoload_real.php": [
+    "/ClassLoader.php",
+    "/autoload_static.php",
+    "/platform_check.php"
+  ],
+  "vendor/composer/autoload_static.php": [
+    "/composer/InstalledVersions.php"
+  ],
+  "vendor/composer/platform_check.php": [],
+  "widget_touch.php": []
+}

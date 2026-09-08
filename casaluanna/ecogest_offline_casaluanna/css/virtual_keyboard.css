@@ -1,0 +1,69 @@
+/* virtual_keyboard.css */
+
+/* Stil general pentru containerul tastaturii virtuale */
+.virtual-keyboard-container {
+  background-color: #2c3e50; /* Albastru închis */
+  border: none;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  display: inline-block;
+}
+
+/* Stil pentru butoanele tastaturii */
+.virtual-keyboard-button {
+  background-color: #34495e; /* Gri-albastru închis */
+  border: none;
+  color: #ecf0f1; /* Alb deschis */
+  padding: 30px 20px;
+  margin: 5px;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+  display: inline-block;
+  text-align: center;
+  min-width: 70px;
+}
+
+/* Efect de hover pentru butoanele tastaturii */
+.virtual-keyboard-button:hover,
+.virtual-keyboard-button-hover {
+  background-color: #3b5998; /* Albastru intens */
+}
+
+/* Efect la apăsarea butonului */
+.virtual-keyboard-button:active {
+  transform: scale(0.95);
+}
+
+/* Stil pentru butoanele de acțiune (ex: Enter, Shift) */
+.virtual-keyboard-action-button {
+  background-color: #e74c3c; /* Roșu */
+  color: #fff;
+}
+
+/* Stil pentru butoanele dezactivate */
+.virtual-keyboard-disabled-button {
+  background-color: #7f8c8d; /* Gri */
+  color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+/* Stil pentru font */
+.virtual-keyboard-container,
+.virtual-keyboard-button {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Aliniere și spațiere pentru rândurile tastaturii */
+.virtual-keyboard-container .virtual-keyboard-row-button {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Stil pentru rândurile tastaturii */
+.virtual-keyboard-container .virtual-keyboard-keyset {
+  display: block;
+  text-align: center;
+}
