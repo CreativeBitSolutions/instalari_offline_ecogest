@@ -4,7 +4,7 @@ import json, shutil, re, importlib.util
 ROOT = Path(__file__).resolve().parents[1]
 SRC = Path('C:/xampp/htdocs/github/agecsin')
 BASE = ROOT.parent/'bestmixt'
-APP = ROOT/'ecogest_offline_casaluanna'
+APP = ROOT/'ecogest_offline_casaluanna'/'admin'
 API = ROOT/'api_offline_ecogest_casaluanna'
 API.mkdir(exist_ok=True)
 (API/'db_local').mkdir(exist_ok=True)

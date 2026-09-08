@@ -1,0 +1,28 @@
+VERIFICĂRI STATICE CASA LUANNA, 08.09.2026
+
+63 de fișiere PHP din aplicație, proc, API local și copia pentru publicare: php -l, fără erori.
+Cele două fișiere API din agecsin: php -l, fără erori.
+offline_ui.js: node --check, fără erori.
+Referințe statice verificate către fișiere PHP, JavaScript și CSS locale: 0 fișiere lipsă.
+Cele patru configurații JSON ale instalării și scannerelor au fost citite și parsate fără erori.
+Copiile offline_runtime.php, offline_schema.php și offline_fiscal.php din aplicație și API-ul extern au conținut identic.
+Cele două surse API din online_de_publicat și agecsin au conținut identic.
+Diff-ul fișierului comun sincronizare_date_offline.php: două linii adăugate, fără ștergeri.
+Proiect creat ulterior la cererea explicită: compiler exe project casaluanna.exop. Verificare statică ZIP/XML reușită, 3334 de fișiere în manifest cu căi existente, fără referințe Bestmixt în configurarea proiectului. Hashul proiectului original Bestmixt a rămas identic. Identificatori proprii pentru aplicație și profil. Nu s-a pornit ExeOutput și nu s-a compilat un executabil.
+Structura pentru Casa Luanna păstrează modelul de distribuire Bestmixt: executabilul și Data sunt în ecogest_offline_casaluanna, iar codul administrativ și de facturare este în ecogest_offline_casaluanna\admin. Arhivatorul pregătit este arhiveaza_casaluanna.bat în folderul instalari_offline_ecogest. Verificarea manifestului după mutare: 3334 fișiere, 0 căi lipsă.
+
+Revizuire prin citirea codului:
+Autentificarea folosește utilizatori și verificarea conturilor dezactivate.
+Factura în lucru nu intră automat în coadă. Confirmările sunt legate de eveniment și hash.
+ID-urile locale ale facturilor, liniilor, mișcărilor și încasărilor sunt mapate la ID-uri online.
+Formularul de încasare folosește ID-ul intern, nu numărul afișat al facturii.
+Adăugarea produselor și modificarea cantităților sunt tranzacționale.
+Stornarea este 380, în aceeași serie, cu următorul număr disponibil recalculat în tranzacție. Cantitatea, discountul și valorile sunt inversate.
+Mișcările se copiază la duplicare și stornare, cu identificatori noi și relații păstrate.
+Bonurile se livrează scannerului prin JSON și nu sunt refiscalizate prin importul online.
+Fișierele de lucru și backupurile sensibile sunt protejate prin reguli Apache.
+
+Limita verificărilor:
+Nu au fost executate aplicația, pagini PHP, scannere, cereri API locale sau online, teste funcționale ori builduri.
+Nu au fost efectuate verificări de execuție SQL sau deschideri ale bazei locale în această revizuire. Baza instalării fusese creată anterior din dumpul furnizat.
+Sintaxa validă și citirea codului nu reprezintă confirmarea comportamentului în execuție. Validarea pe instalarea efectivă și compilarea EXE rămân la utilizator, conform instrucțiunilor sale.

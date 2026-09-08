@@ -6,6 +6,7 @@ Casa Luanna, client 19, locația 1
 4. Finalizare explicită a facturii. Coadă persistentă, identificator de instalare, evenimente cu hash și confirmare online. Retrimiterea după întrerupere nu dublează factura. Documentele în lucru nu se trimit.
 5. Endpoint online separat, livrat în folderul pentru publicare, fără apelarea lui în timpul dezvoltării. Maparea identificatorilor facturilor și a înregistrărilor dependente. Coliziunile de serie și număr se raportează, nu suprascriu facturile existente.
 6. AutoScanner produse configurat pentru clientul 19 și baza locală. Scanner fiscal preluat din Bestmixt, cu directoare operaționale noi și fișiere JSON publicate atomic.
-7. Verificări statice ale dependențelor, interogărilor și sintaxei. Fără pornirea aplicației, teste funcționale, cereri online, modificări .exop sau build EXE.
+7. Verificări statice ale dependențelor, interogărilor și sintaxei. Fără pornirea aplicației, teste funcționale, cereri online sau build EXE. Ulterior, la cererea explicită, a fost creat separat proiectul .exop Casa Luanna din copia Bestmixt.
+8. Structură de distribuire aliniată la modelul Bestmixt: ecogest_offline_casaluanna\admin pentru surse, Data și executabil în folderul părinte. Arhivarea se face cu arhiveaza_casaluanna.bat.
 
 Datele de autentificare și cheia API nu se reproduc în acest document.

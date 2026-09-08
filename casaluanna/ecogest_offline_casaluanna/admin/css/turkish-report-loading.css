@@ -1,0 +1,236 @@
+:root {
+  --ledger-ink: #163447;
+  --ledger-deep: #0d2635;
+  --ledger-paper: #f4f0e5;
+  --ledger-cyan: #39b7bd;
+  --ledger-gold: #e0a93c;
+  --ledger-muted: #78909d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+  background: var(--ledger-deep);
+  color: var(--ledger-ink);
+  font-family: Bahnschrift, Aptos, Calibri, sans-serif;
+}
+
+.report-loading-shell {
+  position: relative;
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 2rem;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(57, 183, 189, 0.16), transparent 34%),
+    radial-gradient(circle at 82% 78%, rgba(224, 169, 60, 0.12), transparent 30%),
+    linear-gradient(135deg, #0b2230 0%, #153a4b 55%, #0d2938 100%);
+}
+
+.ledger-grid {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.25;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, transparent, #000 22%, #000 78%, transparent);
+}
+
+.report-loading-card {
+  position: relative;
+  width: min(35rem, 100%);
+  padding: 3.25rem 3.5rem 2.75rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 1.15rem;
+  background:
+    linear-gradient(90deg, transparent 0 2.8rem, rgba(224, 169, 60, 0.2) 2.8rem 2.9rem, transparent 2.9rem),
+    var(--ledger-paper);
+  box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.34);
+}
+
+.report-loading-card::after {
+  position: absolute;
+  right: -4rem;
+  bottom: -5rem;
+  width: 13rem;
+  height: 13rem;
+  border: 1.4rem solid rgba(57, 183, 189, 0.08);
+  border-radius: 50%;
+  content: "";
+}
+
+.report-loading-mark {
+  position: relative;
+  display: grid;
+  width: 5.25rem;
+  height: 5.25rem;
+  margin-bottom: 2rem;
+  place-items: center;
+}
+
+.mark-ring,
+.mark-core {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.mark-ring-one {
+  inset: 0;
+  border: 2px solid rgba(22, 52, 71, 0.14);
+  border-top-color: var(--ledger-cyan);
+  animation: ledger-spin 1.8s linear infinite;
+}
+
+.mark-ring-two {
+  inset: 0.55rem;
+  border: 2px dashed rgba(224, 169, 60, 0.72);
+  animation: ledger-spin-reverse 3.4s linear infinite;
+}
+
+.mark-core {
+  display: grid;
+  width: 2.65rem;
+  height: 2.65rem;
+  place-items: center;
+  background: var(--ledger-ink);
+  color: #fff;
+  font-family: Constantia, Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.report-loading-kicker {
+  margin: 0 0 0.7rem;
+  color: #9a6c12;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.17em;
+}
+
+.report-loading-card h1 {
+  max-width: 25rem;
+  margin: 0;
+  color: var(--ledger-deep);
+  font-family: Constantia, Georgia, serif;
+  font-size: clamp(2rem, 5vw, 3.15rem);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+}
+
+.report-loading-copy {
+  max-width: 27rem;
+  margin: 1.15rem 0 1.8rem;
+  color: #526b78;
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+.report-loading-progress {
+  height: 0.35rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(22, 52, 71, 0.1);
+}
+
+.report-loading-progress span {
+  display: block;
+  width: 42%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--ledger-cyan), var(--ledger-gold));
+  animation: ledger-progress 1.65s ease-in-out infinite;
+}
+
+.report-loading-status {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 1.5rem;
+  margin-top: 1rem;
+  color: var(--ledger-ink);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.status-pulse {
+  width: 0.55rem;
+  height: 0.55rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--ledger-cyan);
+  box-shadow: 0 0 0 0 rgba(57, 183, 189, 0.45);
+  animation: ledger-pulse 1.6s ease-out infinite;
+}
+
+.report-loading-hint {
+  margin: 1.4rem 0 0;
+  color: var(--ledger-muted);
+  font-size: 0.78rem;
+}
+
+.report-loading-continue {
+  position: fixed;
+  left: 50%;
+  bottom: 2rem;
+  z-index: 3;
+  padding: 0.75rem 1.1rem;
+  transform: translateX(-50%);
+  border: 0;
+  border-radius: 0.4rem;
+  background: var(--ledger-gold);
+  color: var(--ledger-deep);
+  font-weight: 800;
+}
+
+@keyframes ledger-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes ledger-spin-reverse {
+  to { transform: rotate(-360deg); }
+}
+
+@keyframes ledger-progress {
+  0% { transform: translateX(-110%); }
+  55% { transform: translateX(110%); }
+  100% { transform: translateX(245%); }
+}
+
+@keyframes ledger-pulse {
+  70% { box-shadow: 0 0 0 0.55rem rgba(57, 183, 189, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(57, 183, 189, 0); }
+}
+
+@media (max-width: 600px) {
+  .report-loading-shell {
+    padding: 1rem;
+  }
+
+  .report-loading-card {
+    padding: 2.25rem 1.5rem 2rem;
+    background: var(--ledger-paper);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mark-ring,
+  .report-loading-progress span,
+  .status-pulse {
+    animation-duration: 4.5s;
+  }
+}

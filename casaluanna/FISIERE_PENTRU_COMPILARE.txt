@@ -1,7 +1,8 @@
-Punct de intrare: index.php
-Folder surse: ecogest_offline_casaluanna
-PHP necesar: PDO_SQLite, cURL, mbstring, XML, ZIP, GD.
-Baza, cheia API și endpointurile locale rămân externe.
+Punct de intrare: admin\index.php
+Folder surse: ecogest_offline_casaluanna\admin
+PHP minim: 8.1 (biblioteca XLSX).
+Extensii: PDO_SQLite, cURL, mbstring, XML, ZIP, GD.
+Baza SQLite și configurările rămân externe. Proiect pregătit la cererea explicită: compiler exe project casaluanna.exop, PHP 8.2, index.php. Buildul nu a fost executat.
 
 CBS_functions.js
 add_product.php
@@ -311,6 +312,7 @@ fpdf186/tutorial/tuto6.php
 fpdf186/tutorial/tuto7.htm
 fpdf186/tutorial/tuto7.php
 genereaza_bon.php
+genereaza_factura_stornare.php
 get_company_data.php
 get_next_nr_factura.php
 get_produs_factura.php
