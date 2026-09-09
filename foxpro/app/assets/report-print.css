@@ -1,0 +1,62 @@
+@page {
+    size: A4 landscape;
+    margin: 10mm;
+}
+
+.topbar,
+.report-controls,
+.report-path-status,
+.report-check,
+.report-toolbar,
+.report-path-note {
+    box-shadow: none;
+}
+
+.report-toolbar,
+.report-controls,
+.report-path-status,
+.report-check,
+.report-path-note {
+    display: none !important;
+}
+
+.app-shell {
+    width: 100%;
+    padding: 0;
+}
+
+.report-summary-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.summary-card {
+    min-height: 62px;
+    box-shadow: none;
+    padding: 8px;
+}
+
+.summary-card strong {
+    font-size: 15px;
+}
+
+.report-panel {
+    margin-bottom: 10px;
+    box-shadow: none;
+    padding: 8px;
+}
+
+.report-products-grid {
+    gap: 10px;
+}
+
+.report-table th,
+.report-table td {
+    padding: 5px 7px;
+    font-size: 10px;
+}
+
+.section-title {
+    margin-bottom: 6px;
+}

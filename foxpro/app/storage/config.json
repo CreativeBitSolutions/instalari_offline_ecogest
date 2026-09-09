@@ -1,0 +1,12 @@
+{
+    "restaurant_name": "TOAN'S",
+    "note_path": "D:\\trendy_terasa_09_09_2026\\ServerLocal\\note.dbf",
+    "compnote_path": "D:\\trendy_terasa_09_09_2026\\ServerLocal\\compnote.dbf",
+    "bonuri_path": "D:\\trendy_terasa_09_09_2026\\ServerLocal\\bon_comanda.dbf",
+    "totaluri_path": "D:\\trendy_terasa_09_09_2026\\ServerLocal\\totaluri.dbf",
+    "comp_total_path": "D:\\trendy_terasa_09_09_2026\\ServerLocal\\comp_total.dbf",
+    "disponibilitati_path": "D:\\trendy_terasa_09_09_2026\\ServerLocal\\disponibilitati.dbf",
+    "prod_mat_path": "D:\\trendy_terasa_09_09_2026\\ServerLocal\\prod_mat.dbf",
+    "dbf_encoding": "CP1250",
+    "include_deleted_bonuri": true
+}

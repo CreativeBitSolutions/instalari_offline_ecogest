@@ -1,0 +1,275 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    background: #f4f2ec;
+    color: #000;
+    font-family: "Courier New", Courier, monospace;
+    letter-spacing: 0;
+}
+
+body {
+    margin: 0;
+}
+
+.toolbar {
+    position: sticky;
+    top: 0;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #d9d6ca;
+    background: #fff;
+    font-family: Bahnschrift, "Segoe UI", sans-serif;
+    z-index: 2;
+}
+
+.toolbar a,
+.toolbar button,
+.missing a {
+    min-height: 36px;
+    border: 1px solid #c8c8c8;
+    border-radius: 6px;
+    padding: 8px 12px;
+    background: #fff;
+    color: #111;
+    font: inherit;
+    font-weight: 800;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.toolbar button {
+    background: #167052;
+    border-color: #167052;
+    color: #fff;
+}
+
+.receipt {
+    width: 80mm;
+    min-height: 160mm;
+    margin: 18px;
+    padding: 4mm 0 0;
+    background: #fff;
+    color: #000;
+    font-size: 13px;
+}
+
+.receipt-nota {
+    text-align: center;
+}
+
+.receipt-nota h1 {
+    margin: 0 0 12px;
+    font-family: Arial, sans-serif;
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.receipt-nota h2 {
+    margin: 12px 0 4px;
+    font-family: Arial, sans-serif;
+    font-size: 19px;
+}
+
+.receipt-nota h3 {
+    margin: 0 0 6px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+}
+
+.receipt-nota p {
+    margin: 0;
+}
+
+.nota-items {
+    width: 100%;
+    border-collapse: collapse;
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+    text-align: left;
+}
+
+.nota-items th,
+.nota-items td {
+    padding: 2px 4px;
+}
+
+.nota-items thead tr:last-child th {
+    border-bottom: 2px solid #000;
+}
+
+.nota-items th {
+    text-align: center;
+}
+
+.nota-items .product td {
+    padding-top: 6px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.nota-items .values td {
+    width: 33.333%;
+    text-align: right;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.nota-items .obs td {
+    color: #333;
+    font-size: 11px;
+}
+
+.total-line {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 8px;
+    font-family: Arial, sans-serif;
+    font-size: 19px;
+    font-weight: 900;
+}
+
+.payments {
+    margin: 8px 0 22px;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.payments p {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 22px;
+}
+
+.receipt-nota footer {
+    display: grid;
+    gap: 10px;
+}
+
+.receipt-nota footer strong {
+    font-size: 15px;
+}
+
+.receipt-nota footer b {
+    font-size: 18px;
+}
+
+.receipt-nota small {
+    line-height: 1.45;
+}
+
+.receipt-bon {
+    padding-top: 2mm;
+}
+
+.bon-head {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 10px;
+}
+
+.bon-head strong {
+    padding-left: 3mm;
+    font-size: 14px;
+}
+
+.bon-head dl {
+    display: grid;
+    gap: 4px;
+    margin: 0;
+}
+
+.bon-head div {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+}
+
+.bon-head dt,
+.bon-head dd {
+    margin: 0;
+}
+
+.bon-head dd {
+    font-weight: 800;
+}
+
+.bon-items {
+    width: 100%;
+    margin-top: 6px;
+    border-collapse: collapse;
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+}
+
+.bon-items td {
+    padding: 2px 3px;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 900;
+    vertical-align: top;
+}
+
+.bon-items td:first-child {
+    width: 28px;
+}
+
+.bon-items td:last-child {
+    width: 72px;
+    text-align: right;
+}
+
+.bon-items .obs td {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.bon-foot {
+    display: grid;
+    gap: 8px;
+    justify-items: center;
+    margin-top: 8px;
+}
+
+.bon-foot strong {
+    font-family: Arial, sans-serif;
+    font-size: 17px;
+}
+
+.missing {
+    max-width: 520px;
+    margin: 40px auto;
+    border: 1px solid #d9d6ca;
+    border-radius: 8px;
+    padding: 20px;
+    background: #fff;
+    font-family: Bahnschrift, "Segoe UI", sans-serif;
+}
+
+@media print {
+    @page {
+        size: A4;
+        margin: 0;
+    }
+
+    html,
+    body {
+        background: #fff;
+    }
+
+    .toolbar {
+        display: none;
+    }
+
+    .receipt {
+        margin: 0;
+        box-shadow: none;
+    }
+}
