@@ -443,6 +443,10 @@ $report_results = $stmt_report->fetchAll(PDO::FETCH_ASSOC);
         }
       </style>                   
 
+      <div class="form-group px-3">
+          <label for="casa-invoice-search">Caută în facturi</label>
+          <input id="casa-invoice-search" type="search" class="form-control" placeholder="Număr, serie, client..." aria-controls="facturiTable" autocomplete="off">
+      </div>
       <div class="table-responsive facturi-table-wrap">
         <link href="vendor/offline/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
         <link href="vendor/offline/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -464,6 +468,7 @@ $report_results = $stmt_report->fetchAll(PDO::FETCH_ASSOC);
 </thead>
           <tbody>
             <?php 
+            if(isset($_GET['casa_fragment']))ob_start();
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
               $storn_factura = strval($row['nr_factura']) . 'S';
               $nr_factura    = $row['nr_factura'];
@@ -828,17 +833,18 @@ echo "<td class='client-scurt' data-label='Client' title='" . htmlspecialchars($
 
 // Sfârșitul rândului
 echo "</tr>";}
+            if(isset($_GET['casa_fragment'])){
+                // Capture the rows directly. Parsing the entire HTML response with
+                // a regular expression can exceed PCRE limits on larger lists.
+                $rowsHtml=ob_get_clean();
+                ob_end_clean();
+                $version=hash('sha256',$rowsHtml);
+                $reply=['success'=>true,'version'=>$version];
+                if(($_GET['version']??'')!==$version)$reply['rows']=$rowsHtml;
+                casa_json($reply);
+            }
             ?>
           </tbody>
-          <?php
-          if(isset($_GET['casa_fragment'])){
-              $html=ob_get_clean();
-              if(!preg_match('~<table[^>]*id=["\x27]facturiTable["\x27][^>]*>.*?<tbody[^>]*>(.*?)</tbody>~s',$html,$match))casa_json(['success'=>false,'error'=>'Lista locală nu a putut fi actualizată.'],500);
-              $version=hash('sha256',$match[1]);$reply=['success'=>true,'version'=>$version];
-              if(($_GET['version']??'')!==$version)$reply['rows']=$match[1];
-              casa_json($reply);
-          }
-          ?>
           <tfoot>
             <tr>
               <th>Numar Factura</th>
@@ -1280,10 +1286,11 @@ echo "</tr>";}
       lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "Toate"]],
       order: [[0, 'desc']],
       stateSave: false,
-      dom: '<"row"<"col-sm-6"l><"col-sm-6"f>>rtip',
+      dom: 'lrtip',
       language: {search: 'Caută:', searchPlaceholder: 'Număr, serie, client...', lengthMenu: 'Afișează _MENU_ facturi', info: '_START_ - _END_ din _TOTAL_ facturi', infoEmpty: 'Nicio factură', infoFiltered: '(din _MAX_ facturi)', zeroRecords: 'Nicio factură găsită', emptyTable: 'Nu există facturi', paginate: {first: 'Prima', previous: 'Înapoi', next: 'Înainte', last: 'Ultima'}}
     });
     window.facturiDataTable = table;
+    $('#casa-invoice-search').on('input', function(){table.search(this.value).draw();});
     $('#serie_filter_select').val('');
     table.column(1).search('', true, false).draw();
     $('#facturiTable').on('draw.dt', function() {
@@ -1403,6 +1410,7 @@ echo "</tr>";}
       $('#invoice_type').val('');
       $('#serie_filter_select').val('');
       table.search('');
+      $('#casa-invoice-search').val('');
       table.columns().search('');
       table.draw();
     });
