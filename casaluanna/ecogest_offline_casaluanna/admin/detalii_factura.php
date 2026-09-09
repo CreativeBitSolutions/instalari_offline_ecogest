@@ -217,11 +217,13 @@ $email_firma_detalii = htmlspecialchars($df_ef_row['email'] ?? '');
 
    <?php 
 // Afișăm butonul "Modifică Factura" doar dacă factura nu a fost trimisă la ANAF
-if (!$factura_trimisa_anaf) {
+if (!$factura_trimisa_anaf && !casa_invoice_readonly($pdo,(int)$id_factura) && !casa_invoice_anaf_locked($pdo,(int)$id_factura)) {
     echo '<a href="factura.php?id_factura=' . $id_factura . '" class="btn btn-primary btn-block">Modifică Factura</a>';
 
 
 } else {
+    echo '<p class="alert alert-info">Copia offline este pentru consultare. Modificările și trimiterea la ANAF se fac din aplicația online.</p>';
+    if(!empty($casaPageMeta['online_id']))echo '<a class="btn btn-primary btn-block" target="_blank" rel="noopener" href="'.casa_h(casa_config()['online_base_url']).'/detalii_factura.php?id_factura='.(int)$casaPageMeta['online_id'].'">Deschide factura online</a>';
     echo '<a href="duplicare_factura_corectare.php?id_factura=' . urlencode($id_factura) . '" class="btn btn-warning btn-block" style="display: none;" 
           onclick="return confirm(\'Ești sigur că vrei să generezi o factură corectată?\');">
                 Generează Factură Corectare Antet
@@ -247,7 +249,7 @@ if (!$factura_trimisa_anaf) {
 
 
               
-    echo '<a href="genereaza_bon.php?id_factura=' . urlencode($id_factura) . '" class="btn btn-success btn-block" 
+    if(!casa_invoice_readonly($pdo,(int)$id_factura))echo '<a href="genereaza_bon.php?id_factura=' . urlencode($id_factura) . '" class="btn btn-success btn-block" 
           onclick="return confirm(\'Ești sigur că vrei să trimiți această factură la casa de marcat?\');">
                 Trimite la Casa de Marcat
           </a>
@@ -314,7 +316,7 @@ $(document).ready(function () {
 </script>
 <script>
 $(document).ready(function() {
-    $('#ef_btn_trimite').on('click', function() {
+    $(document).on('click', '#ef_btn_trimite', function() {
         var email = $('#ef_email_dest').val().trim();
         var $btn  = $(this);
         var $msg  = $('#ef_msg');

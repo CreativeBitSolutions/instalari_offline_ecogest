@@ -1,8 +1,10 @@
 <?php
-require __DIR__.'/invoice_gate.php';
+require_once __DIR__.'/database_connection.php';
+header('Cache-Control: no-store');
+if(isset($_GET['casa_fragment']))ob_start();
 include('header.php');
 if(!empty($GLOBALS['casa_unverified']))echo '<div class="alert alert-warning m-3">Lista nu a fost verificată online. Verificați seria și ultimul număr facturat înainte de emitere.</div>';
-if (isset($_SESSION['completed_steps'])) {
+if (!isset($_GET['casa_fragment']) && isset($_SESSION['completed_steps'])) {
     unset($_SESSION['completed_steps']);
 }
 
@@ -141,7 +143,7 @@ $report_results = $stmt_report->fetchAll(PDO::FETCH_ASSOC);
 <!-- Begin Page Content -->
 <div class="container-fluid">
   <!-- Afișare mesaje flash, dacă există -->
-  <?php if(isset($_SESSION['message'])): ?>
+  <?php if(!isset($_GET['casa_fragment']) && isset($_SESSION['message'])): ?>
       <div class="alert alert-<?php echo isset($_SESSION['message_type']) ? $_SESSION['message_type'] : 'info'; ?> alert-dismissible fade show" role="alert">
           <?php
             echo htmlspecialchars($_SESSION['message']);
@@ -250,6 +252,21 @@ $report_results = $stmt_report->fetchAll(PDO::FETCH_ASSOC);
         }
         #facturiTable tbody tr:hover > td {
             background-color: #f8f9fc;
+        }
+        #facturiTable tbody tr.offline-origin-row > td {
+            background-color: #eaf3ff !important;
+        }
+        #facturiTable tbody tr.offline-origin-row:hover > td {
+            background-color: #dceaff !important;
+        }
+        #facturiTable tbody tr.offline-unfinished-row > td {
+            background-color: #fff3cd !important;
+        }
+        #facturiTable tbody tr.offline-unfinished-row:hover > td {
+            background-color: #ffe8a1 !important;
+        }
+        #facturiTable tbody tr.offline-unfinished-row > td:first-child {
+            border-left: 5px solid #d39e00;
         }
         #facturiTable tbody tr.anaf-unauthorized-row > td {
             background-color: #fde8e8 !important;
@@ -653,7 +670,15 @@ if ($este_bon_automat) {
 }
 
           
-         echo "<tr" . ($rand_eroare_autorizare_anaf ? " class='anaf-unauthorized-row'" : "") . ">";
+        $localSync=casa_one($pdo,'SELECT state,origin,online_id,error,finalized,authority FROM casa_invoices WHERE id_factura=?',[$id_factura]);
+        $createdHere=($localSync['origin']??'')==='local';
+        $offlineWithoutNumber=$createdHere && is_numeric($nr_factura) && (int)$nr_factura===0;
+        $canDeleteOffline=$createdHere && !$factura_este_incarcata_anaf && empty($remoteStatus['online_changed']) && ($remoteStatus['lifecycle']??'')!=='online' && !in_array($localSync['state']??'', ['delete_requested','deleted'], true);
+        $rowClasses=[];
+        if($createdHere || ($remoteStatus['source_origin']??'')==='offline')$rowClasses[]='offline-origin-row';
+        if($offlineWithoutNumber)$rowClasses[]='offline-unfinished-row';
+        if($rand_eroare_autorizare_anaf)$rowClasses[]='anaf-unauthorized-row';
+        echo '<tr class="'.casa_h(implode(' ', $rowClasses)).'">';
 
     // 1. Coloana "Numar Factura", care acum conține și meniul de acțiuni
 $sort_key = is_numeric($nr_factura) ? (int)$nr_factura : (int)preg_replace('/\D+/', '', (string)$nr_factura);
@@ -673,7 +698,7 @@ echo "<a href='detalii_factura.php?id_factura=" . htmlspecialchars($id_factura) 
             // Meniul dropdown ascuns, care conține TOATE opțiunile
             echo "<div class='dropdown-menu dropdown-menu-right'>";
                 
-                echo "<a class='dropdown-item' href='detalii_factura.php?id_factura=" . htmlspecialchars($id_factura) . "' target='_blank' '>
+                echo "<a class='dropdown-item' href='detalii_factura.php?id_factura=" . htmlspecialchars($id_factura) . "'>
                         <i class='fas fa-info-circle fa-fw mr-2 text-info'></i>Detalii Factură
                       </a>";
 
@@ -685,7 +710,7 @@ echo "<a href='detalii_factura.php?id_factura=" . htmlspecialchars($id_factura) 
 $este_deja_incasata = $este_bon_automat || (!empty($data_incasare) && $data_incasare != '0000-00-00 00:00:00');
 
                 // Logica pentru Încasare
-           if (!$este_deja_incasata) {
+           if (!$este_deja_incasata && $createdHere && ($localSync['authority']??'')==='local') {
     if ($can_receive_payment) {
         echo "<button class='dropdown-item incasare' data-toggle='modal' data-target='#modal_incasare'
                 data-id_factura='" . htmlspecialchars($id_factura) . "'
@@ -719,7 +744,7 @@ $este_deja_incasata = $este_bon_automat || (!empty($data_incasare) && $data_inca
 
                 echo "<div class='dropdown-divider'></div>";
 
-             if (!$factura_este_incarcata_anaf) {
+             if ($canDeleteOffline) {
     echo "<button class='dropdown-item stergere' data-toggle='modal' data-target='#modal_stergere' 
             data-id-factura='" . htmlspecialchars($id_factura) . "'>
             <i class='fas fa-trash-alt fa-fw mr-2 text-danger'></i>Ștergere
@@ -729,9 +754,19 @@ $este_deja_incasata = $este_bon_automat || (!empty($data_incasare) && $data_inca
             echo "</div>"; // Sfârșit dropdown-menu
         echo "</div>"; // Sfârșit btn-group
         echo $produse_preview_output;
-        $localSync=casa_one($pdo,'SELECT state,origin,online_id,error,finalized FROM casa_invoices WHERE id_factura=?',[$id_factura]);
+        if($offlineWithoutNumber){
+            echo '<div class="mt-2 font-weight-bold text-dark">Factură neterminată, fără număr alocat</div>';
+            echo '<div class="mt-1">';
+            if(($localSync['state']??'')==='draft'&&($localSync['authority']??'')==='local')echo '<a class="btn btn-warning btn-sm mr-1" href="factura.php?id_factura='.urlencode($id_factura).'">Continuă</a>';
+            if($canDeleteOffline)echo '<button type="button" class="btn btn-outline-danger btn-sm stergere" data-toggle="modal" data-target="#modal_stergere" data-id-factura="'.casa_h($id_factura).'">Șterge</button>';
+            echo '</div>';
+        }
+        $originLabel=($localSync['origin']??'')==='local'?'Origine OFFLINE, această instalare':(($remoteStatus['source_origin']??'')==='offline'?'Origine OFFLINE, altă instalare, preluată online':'Origine ONLINE, preluată local');
+        echo '<div class="mt-2"><span class="badge '.(($localSync['origin']??'')==='local'?'badge-primary':'badge-secondary').'">'.casa_h($originLabel).'</span></div>';
+        if(($localSync['authority']??'')==='online')echo '<div class="small">Consultare offline. Corecțiile se fac online.</div>';
+        if(($localSync['state']??'')==='delete_requested')echo '<div class="text-warning font-weight-bold">Ștergere în așteptarea confirmării online</div>';
         if($localSync&&$localSync['origin']==='local'){
-            echo '<div class="small mt-1">'.casa_h($localSync['online_id']?'Număr înregistrat online':'Număr neconfirmat online').'</div>';
+            if(!$offlineWithoutNumber)echo '<div class="small mt-1">'.casa_h($localSync['online_id']?'Număr înregistrat online':'Număr neconfirmat online').'</div>';
             if($localSync['error']!=='')echo '<div class="text-danger small">'.casa_h($localSync['error']).'</div>';
         }
         if($remoteRecord)echo '<div class="small text-muted">Status online verificat: '.casa_h($remoteRecord['checked_at']).'</div>';
@@ -795,6 +830,15 @@ echo "<td class='client-scurt' data-label='Client' title='" . htmlspecialchars($
 echo "</tr>";}
             ?>
           </tbody>
+          <?php
+          if(isset($_GET['casa_fragment'])){
+              $html=ob_get_clean();
+              if(!preg_match('~<table[^>]*id=["\x27]facturiTable["\x27][^>]*>.*?<tbody[^>]*>(.*?)</tbody>~s',$html,$match))casa_json(['success'=>false,'error'=>'Lista locală nu a putut fi actualizată.'],500);
+              $version=hash('sha256',$match[1]);$reply=['success'=>true,'version'=>$version];
+              if(($_GET['version']??'')!==$version)$reply['rows']=$match[1];
+              casa_json($reply);
+          }
+          ?>
           <tfoot>
             <tr>
               <th>Numar Factura</th>
@@ -942,6 +986,7 @@ echo "</tr>";}
       </div>      
       <div class="modal-body">
         <form action="stergere_factura.php" method="POST">
+          <p>Se șterge factura creată în această instalare offline. Dacă a fost sincronizată, se solicită și ștergerea online. Până la confirmare, factura rămâne blocată. Se păstrează o copie în arhivă.</p>
           <table width="100%" border="0" cellpadding="0" cellspacing="2"> 
             <tr>
               <td><input class="form-control" hidden type="number" id="id_fact_stergere" name="id_fact_stergere" /></td>
@@ -1235,9 +1280,8 @@ echo "</tr>";}
       lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "Toate"]],
       order: [[0, 'desc']],
       stateSave: false,
-      language: {
-          url: "vendor/offline/datatables/ro.json"
-      }
+      dom: '<"row"<"col-sm-6"l><"col-sm-6"f>>rtip',
+      language: {search: 'Caută:', searchPlaceholder: 'Număr, serie, client...', lengthMenu: 'Afișează _MENU_ facturi', info: '_START_ - _END_ din _TOTAL_ facturi', infoEmpty: 'Nicio factură', infoFiltered: '(din _MAX_ facturi)', zeroRecords: 'Nicio factură găsită', emptyTable: 'Nu există facturi', paginate: {first: 'Prima', previous: 'Înapoi', next: 'Înainte', last: 'Ultima'}}
     });
     window.facturiDataTable = table;
     $('#serie_filter_select').val('');
@@ -1279,7 +1323,7 @@ echo "</tr>";}
     $('#facturiTable tbody').on('mouseleave', 'tr', function() {
       $(this).find('.factura-produse-preview').removeClass('is-visible');
     });
-    $('.incasare').on('click', function(){
+    $(document).on('click', '#facturiTable .incasare', function(){
         $("#nr_factura_incasata").val($(this).data("nr_fact"));
         $("#suma_incasata").val($(this).data("suma_incasata"));
         $("#id_factura_incasata").val($(this).data("id_factura"));
@@ -1290,7 +1334,7 @@ echo "</tr>";}
           $("#modal_incasare button[type='submit']").prop('disabled', false);
         }
     });
-    $('.duplicare').on('click', function(){
+    $(document).on('click', '#facturiTable .duplicare', function(){
         var id_factura = $(this).data('id_factura');
         var nr_fact_duplicata = $(this).data('nr_fact_duplicata');
         $('#id_factura').val(id_factura);
@@ -1314,7 +1358,7 @@ echo "</tr>";}
           alert('Factura selectată nu are un ID valid. Închideți fereastra și selectați din nou factura.');
         }
     });
-    $('.stornare').on('click', function(){
+    $(document).on('click', '#facturiTable .stornare', function(){
         var id_factura = $(this).data('id_factura');
         var nr_factura = $(this).data('nr_factura');
         $('#modal_stornare form').attr('action', 'stornare_factura.php?id_factura=' + id_factura);

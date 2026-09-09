@@ -23,6 +23,9 @@ Bonurile se livrează scannerului prin JSON și nu sunt refiscalizate prin impor
 Fișierele de lucru și backupurile sensibile sunt protejate prin reguli Apache.
 
 Limita verificărilor:
+Continuarea sincronizării: 73 fișiere PHP verificate cu php -l, fără erori. Cele trei blocuri JavaScript noi din autentificare, administrare și verificarea facturilor au fost verificate cu node --check, fără executare. offline_ui.js a trecut aceeași verificare. Copia externă offline_schema.php a trecut lintarea și are același hash ca sursa din admin.
+Inițializarea online este versionată în casa_invoice_schema.php și apelată din client_login.php numai pentru clientul 19. API-ul nu mai conține CREATE TABLE sau ALTER TABLE pentru schema Casa Luanna. Se publică fișierele din ACTUALIZARE_SYNC_ONLINE.txt și se efectuează autentificarea online înainte de sincronizare.
+În această actualizare .exop și EXE au rămas nemodificate. La recompilarea manuală se includ cele trei surse noi offline_pull.php, pull_online.php și invoice_gate.php.
 Nu au fost executate aplicația, pagini PHP, scannere, cereri API locale sau online, teste funcționale ori builduri.
 Nu au fost efectuate verificări de execuție SQL sau deschideri ale bazei locale în această revizuire. Baza instalării fusese creată anterior din dumpul furnizat.
 Sintaxa validă și citirea codului nu reprezintă confirmarea comportamentului în execuție. Validarea pe instalarea efectivă și compilarea EXE rămân la utilizator, conform instrucțiunilor sale.

@@ -1,6 +1,6 @@
 <?php
 include('header.php');
-if(isset($_GET['id_factura'])) { $cm=casa_one($pdo,'SELECT state FROM casa_invoices WHERE id_factura=?',[(int)$_GET['id_factura']]); if($cm && $cm['state']!=='draft'){ echo '<script>location.href="detalii_factura.php?id_factura='.(int)$_GET['id_factura'].'"</script>'; exit; } }
+if(isset($_GET['id_factura'])) { $cid=(int)$_GET['id_factura'];$cm=casa_one($pdo,'SELECT state FROM casa_invoices WHERE id_factura=?',[$cid]); if(!$cm || $cm['state']!=='draft'||casa_invoice_readonly($pdo,$cid)||casa_invoice_anaf_locked($pdo,$cid)){ echo '<script>location.href="detalii_factura.php?id_factura='.$cid.'"</script>'; exit; } }
 
 // Start the session if not already started
 if (session_status() == PHP_SESSION_NONE) {

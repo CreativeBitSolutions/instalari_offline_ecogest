@@ -1,10 +1,14 @@
-Punct de intrare: admin\index.php
+Punct de intrare: index.php, relativ la folderul sursă admin
 Folder surse: ecogest_offline_casaluanna\admin
 PHP minim: 8.1 (biblioteca XLSX).
 Extensii: PDO_SQLite, cURL, mbstring, XML, ZIP, GD.
 Baza SQLite și configurările rămân externe. Proiect pregătit la cererea explicită: compiler exe project casaluanna.exop, PHP 8.2, index.php. Buildul nu a fost executat.
 
 CBS_functions.js
+offline_pull.php
+offline_delete.php
+pull_online.php
+invoice_gate.php
 add_product.php
 administrare.php
 anaf_incarcare.php

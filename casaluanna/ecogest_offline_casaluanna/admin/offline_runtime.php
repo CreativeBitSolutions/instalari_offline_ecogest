@@ -55,6 +55,15 @@ function casa_rows(PDO $db,string $sql,array $args=[]): array {$q=$db->prepare($
 function casa_one(PDO $db,string $sql,array $args=[]): ?array {$rows=casa_rows($db,$sql,$args);return $rows[0]??null;}
 function casa_h($value): string {return htmlspecialchars((string)$value,ENT_QUOTES,'UTF-8');}
 function casa_installation(PDO $db): string {return (string)$db->query("SELECT value FROM casa_meta WHERE name='installation_uuid'")->fetchColumn();}
+function casa_invoice_readonly(PDO $db,int $id): bool {
+    $meta=casa_one($db,'SELECT origin,authority FROM casa_invoices WHERE id_factura=?',[$id]);
+    return !$meta || $meta['origin']!=='local' || $meta['authority']==='online';
+}
+function casa_invoice_anaf_locked(PDO $db,int $id): bool {
+    $remote=casa_one($db,'SELECT payload FROM casa_remote_status WHERE id_factura=?',[$id]);
+    $status=$remote?json_decode($remote['payload'],true):[];
+    return !empty($status['anaf_sent']) || !empty($status['anaf']['index_incarcare']) || (bool)casa_one($db,"SELECT 1 FROM facturi WHERE id_factura=? AND COALESCE(data_incarcare,'') NOT IN ('','0000-00-00 00:00:00')",[$id]);
+}
 
 function casa_copy_line_movements(PDO $db,int $oldLine,int $newLine,int $newInvoice,int $number,string $date): void {
     foreach(casa_rows($db,'SELECT * FROM miscari WHERE id_vanz_fact=?',[$oldLine]) as $row){

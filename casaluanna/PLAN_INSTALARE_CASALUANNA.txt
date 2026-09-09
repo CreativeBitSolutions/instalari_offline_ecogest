@@ -3,10 +3,11 @@ Casa Luanna, client 19, locația 1
 1. Inventarierea facturării din agecsin și a dependențelor sale. Păstrarea formularelor, calculelor, listărilor, încasărilor, duplicării și stornării.
 2. Bază SQLite externă derivată din dumpul furnizat. Autentificare în utilizatori. Istoricul importat rămâne separat de documentele noi eligibile pentru sincronizare.
 3. Adaptarea interogărilor MySQL pentru SQLite și încărcarea resurselor locale. Navigație limitată la facturare și administrarea necesară.
-4. Finalizare explicită a facturii. Coadă persistentă, identificator de instalare, evenimente cu hash și confirmare online. Retrimiterea după întrerupere nu dublează factura. Documentele în lucru nu se trimit.
-5. Endpoint online separat, livrat în folderul pentru publicare, fără apelarea lui în timpul dezvoltării. Maparea identificatorilor facturilor și a înregistrărilor dependente. Coliziunile de serie și număr se raportează, nu suprascriu facturile existente.
+4. Transmiterea automată a antetului imediat după salvarea seriei și numărului. Revizii persistente pentru modificări și finalizare, cu hash și confirmare online. Documentele în lucru sunt marcate distinct online și nu pot fi trimise la ANAF înainte de finalizare.
+5. Endpoint și helperi online în sursele agecsin, fără apelarea lor în timpul dezvoltării. Inițializare versionată din client_login.php numai pentru clientul 19. Maparea ID-urilor și index unic pentru serie-număr. Coliziunile se raportează, fără suprascrierea facturii existente.
 6. AutoScanner produse configurat pentru clientul 19 și baza locală. Scanner fiscal preluat din Bestmixt, cu directoare operaționale noi și fișiere JSON publicate atomic.
 7. Verificări statice ale dependențelor, interogărilor și sintaxei. Fără pornirea aplicației, teste funcționale, cereri online sau build EXE. Ulterior, la cererea explicită, a fost creat separat proiectul .exop Casa Luanna din copia Bestmixt.
 8. Structură de distribuire aliniată la modelul Bestmixt: ecogest_offline_casaluanna\admin pentru surse, Data și executabil în folderul părinte. Arhivarea se face cu arhiveaza_casaluanna.bat.
+9. Preluare online a firmei, seriilor, utilizatorilor, TVA și produselor. Verificarea paginată a facturilor și statusurilor ANAF la fiecare deschidere a listei, cu opțiunea de continuare fără verificare după câteva secunde și avertizare explicită.
 
 Datele de autentificare și cheia API nu se reproduc în acest document.

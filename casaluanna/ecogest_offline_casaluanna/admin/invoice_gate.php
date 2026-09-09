@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__.'/offline_runtime.php';casa_auth();
+header('Cache-Control: no-store, no-cache, must-revalidate');
 $gate=(string)($_GET['casa_gate']??'');$entry=$_SESSION['casa_gates'][$gate]??null;
 $bypass=isset($_GET['casa_unverified']);
 if($entry&&time()-(int)$entry['started']<1800&&(!empty($entry['verified'])||($bypass&&time()-(int)$entry['started']>=6))) {
@@ -10,6 +11,7 @@ if($entry&&time()-(int)$entry['started']<1800&&(!empty($entry['verified'])||($by
 foreach(($_SESSION['casa_gates']??[]) as $key=>$old)if(time()-(int)$old['started']>1800)unset($_SESSION['casa_gates'][$key]);
 $gate=bin2hex(random_bytes(16));$_SESSION['casa_gates'][$gate]=['started'=>time(),'after'=>0];
 include __DIR__.'/header.php';
+echo '<style>nav.casa a{pointer-events:none;opacity:.55}</style>';
 ?><main class="container-fluid"><div class="card p-4"><h1 class="h4">Verificare facturi online</h1><p id="check-message">Se preiau facturile și statusurile ANAF înainte de afișarea listei.</p><p id="check-warning" class="alert alert-warning" hidden>Verificarea nu este confirmată. Verificați cu mare atenție seria și ultimul număr facturat online înainte de a emite o factură. Fără internet, numărul nu poate fi rezervat online și poate intra în conflict cu o factură emisă de alt utilizator.</p><div><button id="check-retry" class="btn btn-primary" hidden>Reîncearcă verificarea</button> <button id="check-skip" class="btn btn-outline-danger" hidden>Continuă fără verificare</button></div></div></main>
 <script>
 (function(){
