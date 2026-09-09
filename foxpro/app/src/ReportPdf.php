@@ -51,20 +51,18 @@ final class ReportPdf
         $pdf->Cell(42, 8, self::pdfText('Total'), 1, 0, 'L');
         $pdf->Cell(42, 8, self::pdfText('Numerar'), 1, 0, 'L');
         $pdf->Cell(42, 8, self::pdfText('Card'), 1, 0, 'L');
-        $pdf->Cell(42, 8, self::pdfText('Bar'), 1, 0, 'L');
-        $pdf->Cell(42, 8, self::pdfText('Buc'), 1, 1, 'L');
+        $pdf->Cell(42, 8, self::pdfText('Alte plati'), 1, 1, 'L');
         $pdf->SetFont('Arial', '', 10);
         $pdf->Cell(42, 8, self::money($totals['total']) . ' RON', 1, 0, 'R');
         $pdf->Cell(42, 8, self::money($totals['cash']) . ' RON', 1, 0, 'R');
         $pdf->Cell(42, 8, self::money($totals['card']) . ' RON', 1, 0, 'R');
-        $pdf->Cell(42, 8, self::money($totals['bar']) . ' RON', 1, 0, 'R');
-        $pdf->Cell(42, 8, self::money($totals['buc']) . ' RON', 1, 1, 'R');
+        $pdf->Cell(42, 8, self::money($totals['other']) . ' RON', 1, 1, 'R');
     }
 
     private static function operatorTable(FPDF $pdf, array $operators): void
     {
-        $widths = [48, 18, 34, 34, 34, 34, 34, 34];
-        $headers = ['Operator', 'Note', 'Total', 'Numerar', 'Card', 'Bar', 'Buc', 'Alte plati'];
+        $widths = [54, 20, 38, 38, 38, 38, 38];
+        $headers = ['Operator', 'Note', 'Total', 'Numerar', 'Card', 'Alte plati', 'Linii produse'];
         self::headerRow($pdf, $headers, $widths);
         $pdf->SetFont('Arial', '', 9);
         foreach ($operators as $row) {
@@ -74,9 +72,8 @@ final class ReportPdf
                 self::money($row['total']),
                 self::money($row['cash']),
                 self::money($row['card']),
-                self::money($row['bar']),
-                self::money($row['buc']),
                 self::money($row['other']),
+                (string) $row['product_lines'],
             ];
             foreach ($values as $index => $value) {
                 $align = $index < 2 ? 'L' : 'R';
@@ -87,14 +84,13 @@ final class ReportPdf
 
     private static function productTable(FPDF $pdf, array $products): void
     {
-        $widths = [18, 118, 28, 38, 28];
-        self::headerRow($pdf, ['Cod', 'Produs', 'Dep', 'Cantitate', 'Valoare'], $widths);
+        $widths = [18, 140, 38, 28];
+        self::headerRow($pdf, ['Cod', 'Produs', 'Cantitate', 'Valoare'], $widths);
         $pdf->SetFont('Arial', '', 9);
         foreach ($products as $row) {
             $values = [
                 (string) $row['id'],
                 self::pdfText((string) $row['name']),
-                strtoupper((string) $row['category']),
                 self::quantity($row['quantity']),
                 self::money($row['value']),
             ];

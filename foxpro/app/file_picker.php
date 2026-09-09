@@ -78,6 +78,10 @@ if (DIRECTORY_SEPARATOR === '\\') {
 }
 
 $quickLinks = [];
+$localCandidate = class_exists('DbfReader') ? DbfReader::findLocalCandidate($current) : null;
+if ($localCandidate !== null) {
+    $quickLinks['Sursa locala detectata'] = dirname($localCandidate);
+}
 $desktopPath = 'C:\\Users\\Me\\Desktop';
 if (is_dir($desktopPath)) {
     $quickLinks['Desktop'] = $desktopPath;

@@ -97,7 +97,6 @@ $difference = (float) $totals['total'] - (float) $closing['total'];
             <article class="summary-card"><span>Total vanzari</span><strong><?= h(app_money($totals['total'])) ?> RON</strong></article>
             <article class="summary-card"><span>Numerar</span><strong><?= h(app_money($totals['cash'])) ?> RON</strong></article>
             <article class="summary-card"><span>Card</span><strong><?= h(app_money($totals['card'])) ?> RON</strong></article>
-            <article class="summary-card"><span>Bar / Buc</span><strong><?= h(app_money($totals['bar'])) ?> / <?= h(app_money($totals['buc'])) ?></strong></article>
             <article class="summary-card"><span>Note</span><strong><?= h((int) $totals['notes']) ?></strong></article>
         </section>
 
@@ -115,8 +114,6 @@ $difference = (float) $totals['total'] - (float) $closing['total'];
                         <th class="num">Total</th>
                         <th class="num">Numerar</th>
                         <th class="num">Card</th>
-                        <th class="num">Bar</th>
-                        <th class="num">Buc</th>
                         <th class="num">Alte plati</th>
                     </tr>
                     </thead>
@@ -128,8 +125,6 @@ $difference = (float) $totals['total'] - (float) $closing['total'];
                             <td class="num strong"><?= h(app_money($row['total'])) ?></td>
                             <td class="num"><?= h(app_money($row['cash'])) ?></td>
                             <td class="num"><?= h(app_money($row['card'])) ?></td>
-                            <td class="num"><?= h(app_money($row['bar'])) ?></td>
-                            <td class="num"><?= h(app_money($row['buc'])) ?></td>
                             <td class="num"><?= h(app_money($row['other'])) ?></td>
                         </tr>
                     <?php endforeach; ?>
@@ -158,7 +153,6 @@ $difference = (float) $totals['total'] - (float) $closing['total'];
                             <thead>
                             <tr>
                                 <th>Produs</th>
-                                <th>Dep</th>
                                 <th class="num">Cant.</th>
                                 <th class="num">Valoare</th>
                             </tr>
@@ -167,7 +161,6 @@ $difference = (float) $totals['total'] - (float) $closing['total'];
                             <?php foreach ($row['products'] as $product): ?>
                                 <tr>
                                     <td><?= h($product['name']) ?></td>
-                                    <td><?= h(strtoupper($product['category'])) ?></td>
                                     <td class="num"><?= h(number_format((float) $product['quantity'], 2, '.', '')) ?></td>
                                     <td class="num strong"><?= h(app_money($product['value'])) ?></td>
                                 </tr>
@@ -187,7 +180,7 @@ $difference = (float) $totals['total'] - (float) $closing['total'];
         </div>
         <div class="path-status-grid">
             <?php foreach ($pathStatus as $status): ?>
-                <div class="path-status-card <?= $status['exists'] && $status['readable'] ? 'is-ok' : 'is-bad' ?>">
+                <div class="path-status-card <?= $status['available'] ? 'is-ok' : 'is-bad' ?>">
                     <strong><?= h($status['label']) ?></strong>
                     <span><?= h($status['message']) ?></span>
                     <small><?= h($status['path']) ?></small>

@@ -6,8 +6,14 @@ require_once __DIR__ . '/src/DbfReader.php';
 require_once __DIR__ . '/src/DbfCache.php';
 require_once __DIR__ . '/src/RelistareRepository.php';
 require_once __DIR__ . '/src/ReportRepository.php';
+require_once __DIR__ . '/src/ProductReportRepository.php';
+require_once __DIR__ . '/src/ProductReportText.php';
+require_once __DIR__ . '/src/TransactionRepository.php';
+require_once __DIR__ . '/src/TransactionPdf.php';
+require_once __DIR__ . '/src/TransactionXlsx.php';
 require_once __DIR__ . '/src/ReceiptPdf.php';
 require_once __DIR__ . '/src/ReportPdf.php';
+require_once __DIR__ . '/src/ThermalPrinter.php';
 
 function h(mixed $value): string
 {

@@ -78,7 +78,7 @@ $cacheStatus = $cache->status();
         </div>
         <div class="status-strip" aria-label="Status tabele">
             <?php foreach ($pathStatus as $status): ?>
-                <span class="status-pill <?= $status['exists'] && $status['readable'] ? 'is-ok' : 'is-bad' ?>">
+                <span class="status-pill <?= $status['available'] ? 'is-ok' : 'is-bad' ?>">
                     <?= h($status['label']) ?>
                 </span>
             <?php endforeach; ?>
@@ -190,8 +190,8 @@ $cacheStatus = $cache->status();
                 <?php foreach ($pathStatus as $status): ?>
                     <div>
                         <dt><?= h($status['label']) ?></dt>
-                        <dd class="<?= $status['exists'] && $status['readable'] ? 'ok' : 'bad' ?>">
-                            <?= $status['exists'] && $status['readable'] ? h(number_format((float) $status['size'] / 1024 / 1024, 2)) . ' MB' : h($status['message']) ?>
+                        <dd class="<?= $status['available'] ? 'ok' : 'bad' ?>">
+                            <?= $status['available'] ? h(number_format((float) $status['size'] / 1024 / 1024, 2)) . ' MB, ' . h($status['message']) : h($status['message']) ?>
                         </dd>
                     </div>
                 <?php endforeach; ?>

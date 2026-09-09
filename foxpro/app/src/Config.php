@@ -85,13 +85,21 @@ final class Config
             $path = (string) ($config[$key] ?? '');
             $exists = is_file($path);
             $readable = $exists && is_readable($path);
+            $snapshotPath = class_exists('DbfReader') ? DbfReader::snapshotPath($path) : '';
+            $snapshotExists = $snapshotPath !== '' && is_file($snapshotPath);
+            $snapshotReadable = $snapshotExists && is_readable($snapshotPath) && (int) @filesize($snapshotPath) >= 32;
+            $localCandidate = class_exists('DbfReader') ? DbfReader::findLocalCandidate($path) : null;
+            $available = $readable || $snapshotReadable || $localCandidate !== null;
             $status[$key] = [
                 'label' => $label,
                 'path' => $path,
                 'exists' => $exists,
                 'readable' => $readable,
-                'size' => $exists ? (int) filesize($path) : 0,
-                'message' => !$exists ? 'Fisier lipsa' : (!$readable ? 'Fisier inaccesibil' : 'OK'),
+                'available' => $available,
+                'snapshot_exists' => $snapshotExists,
+                'local_candidate' => $localCandidate,
+                'size' => $readable ? (int) @filesize($path) : ($localCandidate !== null ? (int) @filesize($localCandidate) : ($snapshotReadable ? (int) @filesize($snapshotPath) : 0)),
+                'message' => $readable ? 'OK' : ($localCandidate !== null ? 'Sursa locala detectata' : ($snapshotReadable ? 'Copie locala disponibila' : (!$exists ? 'Fisier lipsa' : 'Fisier inaccesibil'))),
             ];
         }
 
