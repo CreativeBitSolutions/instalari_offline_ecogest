@@ -24,7 +24,7 @@ if(!isset($GLOBALS['casa_write_lock'])&& (($_SERVER['REQUEST_METHOD']??'GET')===
 $casaEditScripts=['update_factura.php','add_product.php','delete_item.php','set_zero_item.php','modifica_cantitate_factura.php','modifica_pret_factura.php','modifica_um_factura.php','stergere_factura.php'];
 if(($_SERVER['REQUEST_METHOD']??'')==='POST'&&basename($_SERVER['SCRIPT_NAME']??'')!=='stergere_factura.php'){
     $target=(int)($_POST['id_factura']??$_GET['id_factura']??0);
-    if($target && !in_array(basename($_SERVER['SCRIPT_NAME']??''),['duplicare_factura.php','genereaza_factura_stornare.php','stornare_factura.php','preview_factura_stornare.php'],true) && casa_invoice_readonly($pdo,$target))casa_json(['success'=>false,'error'=>'Factura se modifică numai în aplicația online. Copia offline este doar pentru consultare.'],409);
+    if($target && !in_array(basename($_SERVER['SCRIPT_NAME']??''),['duplicare_factura.php','genereaza_bon.php','genereaza_factura_stornare.php','stornare_factura.php','preview_factura_stornare.php'],true) && casa_invoice_readonly($pdo,$target))casa_json(['success'=>false,'error'=>'Factura se modifică numai în aplicația online. Copia offline este doar pentru consultare.'],409);
     if($target&&casa_one($pdo,"SELECT 1 FROM casa_invoices WHERE id_factura=? AND state IN ('delete_requested','deleted')",[$target]))casa_json(['success'=>false,'error'=>'Factura este blocată pentru ștergere.'],409);
 }
 if(basename($_SERVER['SCRIPT_NAME']??'')==='factura.php'&&isset($_GET['id_factura'])&&casa_one($pdo,"SELECT 1 FROM casa_invoices WHERE id_factura=? AND state IN ('delete_requested','deleted')",[(int)$_GET['id_factura']])){
@@ -42,6 +42,6 @@ if(in_array(basename($_SERVER['SCRIPT_NAME']??''),$casaEditScripts,true)){
     if(basename($_SERVER['SCRIPT_NAME']??'')!=='stergere_factura.php'&&(!$meta||$meta['state']!=='draft'||$meta['origin']==='historical'))casa_json(['success'=>false,'error'=>'Factura este blocată, finalizată sau aparține istoricului online.'],409);
 }
 
-if(in_array(basename($_SERVER['SCRIPT_NAME']??''),['add_product.php','delete_item.php','set_zero_item.php','modifica_cantitate_factura.php','modifica_pret_factura.php','modifica_um_factura.php','stergere_factura.php'],true)){
+if(in_array(basename($_SERVER['SCRIPT_NAME']??''),['add_product.php','delete_item.php','set_zero_item.php','modifica_cantitate_factura.php','modifica_pret_factura.php','modifica_um_factura.php'],true)){
     if(casa_one($pdo,"SELECT name FROM sqlite_master WHERE type='table' AND name='casa_fiscal_jobs'")&&casa_one($pdo,'SELECT id FROM casa_fiscal_jobs WHERE id_factura=?',[$editId]))casa_json(['success'=>false,'error'=>'Factura are un bon fiscal pregătit. Conținutul nu mai poate fi modificat.'],409);
 }

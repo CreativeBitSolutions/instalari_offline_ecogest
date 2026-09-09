@@ -50,7 +50,10 @@ write_json(ROOT/'ecogest_autoscanner_products_magazin_1_4_6_0/aplicatie/settings
 write_json(ROOT/'ecogest_casa_marcat_v3_inp/appsettings.json',{'ScanSettings':{
     'Url':'http://localhost/github/instalari_offline_ecogest/casaluanna/api_offline_ecogest_casaluanna/bonuri_de_trimis_casa_marcat.php','IntervalSeconds':3}})
 write_json(ROOT/'ecogest_casa_marcat_v3_inp/config.json',{'client_id':'19','CasaMarcatFolder':'C:\\Fisco\\Bonuri','BackupFolder':str(ROOT/'bonuri_backup'),'LocationId':'1','Extensie':'inp'})
-for name in ['printer_queue_atomic_helper.php','bonuri_de_trimis_casa_marcat.php']:
+# Casa Luanna keeps its own scanner endpoint. Copy only the shared atomic helper,
+# otherwise a later resource assembly would silently replace the client-specific
+# JSON queue implementation with the Bestmixt endpoint.
+for name in ['printer_queue_atomic_helper.php']:
     shutil.copy2(BASE/'api_offline_ecogest_bestmixt'/name,API/name)
 for name in ['preview_factura_stornare.php','duplicare_factura_corectare.php','descarca_xml_saga_factura.php']:
     shutil.copy2(SRC/name,APP/name)

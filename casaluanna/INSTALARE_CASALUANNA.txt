@@ -78,8 +78,8 @@ Bonul are previzualizare și confirmare. Metodele de plată trebuie să însumez
 Discountul nu se scade a doua oară din totalul net al liniilor.
 MASA SERVITA 11% folosește codul TVA fiscal 4. Celelalte cote folosesc coduri_casa_tva.
 Cantitatea și prețul se verifică față de precizia acceptată de formatul fiscal.
-Coada este persistentă. Endpointul publică atomic bon_casa_marcat_<id>.json în api_offline_ecogest_casaluanna\19\1.
-După preluare se păstrează copia .json.preluat. Fiecare factură are un singur job fiscal, pentru a preveni dublarea la reîncărcarea paginii.
+Coada este persistentă. La confirmarea bonului se publică atomic fișierul api_offline_ecogest_casaluanna\19\1\bon_casa_marcat.json, fără generarea sau descărcarea unui fișier TXT.
+Scannerul revendică atomic fișierul JSON și îl elimină după preluare. Fiecare trimitere la casa de marcat are un job fiscal distinct, iar retrimiterea aceleiași facturi este permisă.
 Stările sunt vizibile în Sincronizare. Preluat de scanner nu înseamnă confirmarea fizică a tipăririi. Scannerul existent nu are un endpoint de confirmare fiscală.
 Dacă se întrerupe transferul după marcarea preluării, se verifică scannerul, fișierul arhivat și casa înainte de orice retransmitere manuală. Nu se retrimite automat un bon cu rezultat fiscal incert.
 

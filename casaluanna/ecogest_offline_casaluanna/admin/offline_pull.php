@@ -27,8 +27,9 @@ function casa_pull_save(PDO $db,string $table,string $pk,array $row,?int $id=nul
 }
 function casa_pull_catalog(PDO $db,string $action,array $reply): int {
     $keys=['date_firma'=>'id','serii_documente'=>'id_serie','utilizatori'=>'id_utilizator','produse_servicii'=>'cod_produs','categorii'=>'id_categorie','categorii_locatii'=>'id','gestiuni'=>'id_gestiune','cote_tva'=>'id','coduri_casa_tva'=>'id','observatii_predefinite'=>'id','atribuiri_observatii_produse'=>'id'];
-    $required=['company'=>['date_firma','serii_documente'],'users'=>['utilizatori'],'products'=>['produse_servicii']];
+    $required=['company'=>['date_firma','serii_documente'],'users'=>['utilizatori','cote_tva','coduri_casa_tva'],'products'=>['produse_servicii','cote_tva','coduri_casa_tva']];
     foreach($required[$action] as $table) if(!isset($reply['tables'][$table])||!is_array($reply['tables'][$table]))throw new RuntimeException('Export online incomplet.');
+    if(in_array($action,['users','products'],true))foreach(['cote_tva','coduri_casa_tva'] as $table)if(!$reply['tables'][$table])throw new RuntimeException('Exportul online nu conține nomenclatorul '.$table.'. Preluarea a fost oprită.');
     if($action==='users'&&!$reply['tables']['utilizatori'])throw new RuntimeException('Lista online de utilizatori este goală. Conturile locale au fost păstrate.');
     if($action==='company'&&!$reply['tables']['date_firma'])throw new RuntimeException('Datele firmei lipsesc online. Configurarea locală a fost păstrată.');
     $db->beginTransaction();
@@ -156,6 +157,14 @@ function casa_pull_invoices(PDO $db,array $reply): int {
                 }
             }
             if(!$deferred&&!empty($doc['fingerprint']))$db->prepare('INSERT OR REPLACE INTO casa_remote_fingerprints(online_id,hash) VALUES(?,?)')->execute([$online,$doc['fingerprint']]);
+        }
+        foreach(($reply['deleted']??[]) as $deleted){
+            $online=(int)($deleted['online_id']??0);if($online<1)continue;
+            $meta=casa_one($db,"SELECT * FROM casa_invoices WHERE online_id=? AND origin='local'",[$online]);
+            if(!$meta||($meta['state']??'')==='deleted')continue;
+            $remote=['source_origin'=>'offline','online_deleted'=>true,'online_id'=>$online,'lifecycle'=>'deleted','serie_factura'=>(string)($deleted['serie_factura']??''),'nr_factura'=>(int)($deleted['nr_factura']??0)];
+            $db->prepare('INSERT OR REPLACE INTO casa_remote_status(id_factura,payload,checked_at) VALUES(?,?,?)')->execute([(int)$meta['id_factura'],json_encode($remote,JSON_THROW_ON_ERROR),date('Y-m-d H:i:s')]);
+            $db->prepare("UPDATE casa_invoices SET state='remote_deleted',authority='online',error=? WHERE id_factura=? AND state<>'deleted'")->execute(['Factura a fost ștearsă online. Poate fi eliminată local.',(int)$meta['id_factura']]);
         }
         if($reply['done'])$db->prepare("INSERT OR REPLACE INTO casa_meta(name,value) VALUES('pull_invoices',?)")->execute([date('Y-m-d H:i:s')]);
         $db->exec("DELETE FROM casa_meta WHERE name='pull_running'");

@@ -3,7 +3,6 @@ require_once __DIR__.'/database_connection.php';require_once __DIR__.'/offline_f
 $id=(int)($_GET['id_factura']??0);$invoice=casa_one($pdo,'SELECT * FROM facturi WHERE id_factura=?',[$id]);
 if(!$invoice){http_response_code(404);exit('Factura nu există.');}
 $meta=casa_one($pdo,'SELECT * FROM casa_invoices WHERE id_factura=?',[$id]);
-if(casa_invoice_readonly($pdo,$id)){http_response_code(409);exit('Factura se gestionează din aplicația online. Copia offline este doar pentru consultare.');}
 $total=(float)$pdo->query('SELECT COALESCE(SUM(valoare_vanzare_cu_tva),0) FROM vanzari WHERE id_factura='.$id)->fetchColumn();
 $payments=$_POST['metode_plata']??[['tip'=>'0','valoare'=>number_format($total,2,'.','')]];
 $cui=isset($_POST['sterge_cui'])?'':trim((string)($_POST['cui']??$invoice['cod_fiscal']));$preview='';$error='';$message='';

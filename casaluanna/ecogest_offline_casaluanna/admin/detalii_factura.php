@@ -249,7 +249,7 @@ if (!$factura_trimisa_anaf && !casa_invoice_readonly($pdo,(int)$id_factura) && !
 
 
               
-    if(!casa_invoice_readonly($pdo,(int)$id_factura))echo '<a href="genereaza_bon.php?id_factura=' . urlencode($id_factura) . '" class="btn btn-success btn-block" 
+    echo '<a href="genereaza_bon.php?id_factura=' . urlencode($id_factura) . '" class="btn btn-success btn-block" 
           onclick="return confirm(\'Ești sigur că vrei să trimiți această factură la casa de marcat?\');">
                 Trimite la Casa de Marcat
           </a>

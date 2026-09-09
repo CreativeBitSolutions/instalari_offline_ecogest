@@ -18,6 +18,9 @@ anaf_xml_genereaza.php
 anaf_xml_previzualizare.php
 conectare.php
 country_utils.php
+countrylist_ro.json
+countrylist_en.json
+um_efactura.csv
 css/conectare.css
 css/dashboard.css
 css/dist/css/keyboard-basic.min.css

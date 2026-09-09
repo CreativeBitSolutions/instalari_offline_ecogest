@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__.'/database_connection.php';
 header('Cache-Control: no-store');
+$resetInvoiceFilters=!isset($_GET['casa_fragment'])&&!empty($_SESSION['casa_reset_invoice_filters']);
+if($resetInvoiceFilters)unset($_SESSION['casa_reset_invoice_filters']);
 if(isset($_GET['casa_fragment']))ob_start();
 include('header.php');
 if(!empty($GLOBALS['casa_unverified']))echo '<div class="alert alert-warning m-3">Lista nu a fost verificată online. Verificați seria și ultimul număr facturat înainte de emitere.</div>';
@@ -444,6 +446,12 @@ $report_results = $stmt_report->fetchAll(PDO::FETCH_ASSOC);
       </style>                   
 
       <div class="form-group px-3">
+          <label for="casa-origin-filter">Originea facturilor</label>
+          <select id="casa-origin-filter" class="form-control mb-3" aria-controls="facturiTable">
+              <option value="">Afișează toate facturile</option>
+              <option value="online">Afișează facturile din online</option>
+              <option value="offline">Afișează facturile din offline</option>
+          </select>
           <label for="casa-invoice-search">Caută în facturi</label>
           <input id="casa-invoice-search" type="search" class="form-control" placeholder="Număr, serie, client..." aria-controls="facturiTable" autocomplete="off">
       </div>
@@ -683,7 +691,8 @@ if ($este_bon_automat) {
         if($createdHere || ($remoteStatus['source_origin']??'')==='offline')$rowClasses[]='offline-origin-row';
         if($offlineWithoutNumber)$rowClasses[]='offline-unfinished-row';
         if($rand_eroare_autorizare_anaf)$rowClasses[]='anaf-unauthorized-row';
-        echo '<tr class="'.casa_h(implode(' ', $rowClasses)).'">';
+        $invoiceOrigin=($createdHere || ($remoteStatus['source_origin']??'')==='offline')?'offline':'online';
+        echo '<tr data-invoice-origin="'.$invoiceOrigin.'" class="'.casa_h(implode(' ', $rowClasses)).'">';
 
     // 1. Coloana "Numar Factura", care acum conține și meniul de acțiuni
 $sort_key = is_numeric($nr_factura) ? (int)$nr_factura : (int)preg_replace('/\D+/', '', (string)$nr_factura);
@@ -738,17 +747,6 @@ $este_deja_incasata = $este_bon_automat || (!empty($data_incasare) && $data_inca
 
                 echo "<div class='dropdown-divider'></div>";
                 
-                echo "<a class='dropdown-item' href='istoric_validari.php?id_factura=" . urlencode($id_factura) . "'>
-                        <i class='fas fa-history fa-fw mr-2 text-muted'></i>Istoric Validări
-                      </a>";
-
-                echo "<a class='dropdown-item' href='sterge_validari.php?id_factura=" . urlencode($id_factura) . "' 
-                       onclick='return confirm(\"Ești sigur că vrei să ștergi validările pentru această factură?\");'>
-                        <i class='fas fa-eraser fa-fw mr-2 text-muted'></i>Șterge Validări
-                      </a>";
-
-                echo "<div class='dropdown-divider'></div>";
-
              if ($canDeleteOffline) {
     echo "<button class='dropdown-item stergere' data-toggle='modal' data-target='#modal_stergere' 
             data-id-factura='" . htmlspecialchars($id_factura) . "'>
@@ -769,6 +767,7 @@ $este_deja_incasata = $este_bon_automat || (!empty($data_incasare) && $data_inca
         $originLabel=($localSync['origin']??'')==='local'?'Origine OFFLINE, această instalare':(($remoteStatus['source_origin']??'')==='offline'?'Origine OFFLINE, altă instalare, preluată online':'Origine ONLINE, preluată local');
         echo '<div class="mt-2"><span class="badge '.(($localSync['origin']??'')==='local'?'badge-primary':'badge-secondary').'">'.casa_h($originLabel).'</span></div>';
         if(($localSync['authority']??'')==='online')echo '<div class="small">Consultare offline. Corecțiile se fac online.</div>';
+        if(($localSync['state']??'')==='remote_deleted')echo '<div class="text-success font-weight-bold">Factura a fost ștearsă online. Poate fi ștearsă și din copia offline.</div>';
         if(($localSync['state']??'')==='delete_requested')echo '<div class="text-warning font-weight-bold">Ștergere în așteptarea confirmării online</div>';
         if($localSync&&$localSync['origin']==='local'){
             if(!$offlineWithoutNumber)echo '<div class="small mt-1">'.casa_h($localSync['online_id']?'Număr înregistrat online':'Număr neconfirmat online').'</div>';
@@ -1235,6 +1234,10 @@ echo "</tr>";}
   // Funcția custom de filtrare pentru DataTables
   $.fn.dataTable.ext.search.push(
     function(settings, data, dataIndex) {
+      if (settings.nTable.id !== 'facturiTable') return true;
+      var originFilter = $('#casa-origin-filter').val();
+      var rowNode = settings.aoData[dataIndex].nTr;
+      if (originFilter && (!rowNode || rowNode.getAttribute('data-invoice-origin') !== originFilter)) return false;
       // Filtrele din modal se aplică doar după apăsarea butonului „Aplică Filtru”.
       // Astfel, lista inițială rămâne completă.
       if (!window.facturiFiltruActiv) {
@@ -1272,12 +1275,20 @@ echo "</tr>";}
   );
 
   $(document).ready(function() {
-    // La deschiderea paginii afișăm toate facturile, fără filtre salvate din browser.
-    window.facturiFiltruActiv = false;
-    $('#client_filter_select').val('');
-    $('#date_from').val('');
-    $('#date_to').val('');
-    $('#invoice_type').val('');
+    var filterKey = 'casa-invoice-filters:' + location.pathname + ':<?= (int)$_SESSION['admin_id'] ?>';
+    var savedFilters = {};
+    try {
+      if (<?= $resetInvoiceFilters?'true':'false' ?>) sessionStorage.removeItem(filterKey);
+      savedFilters = JSON.parse(sessionStorage.getItem(filterKey) || '{}') || {};
+    } catch(e) { savedFilters = {}; }
+    var filterFields = ['client_filter_select','date_from','date_to','invoice_type','serie_filter_select','casa-origin-filter','casa-invoice-search'];
+    filterFields.forEach(function(id){$('#'+id).val(typeof savedFilters[id] === 'string' ? savedFilters[id] : '');});
+    window.facturiFiltruActiv = savedFilters.active === true;
+    function rememberFilters(){
+      var value = {active: window.facturiFiltruActiv};
+      filterFields.forEach(function(id){value[id]=$('#'+id).val() || '';});
+      try { sessionStorage.setItem(filterKey, JSON.stringify(value)); } catch(e) {}
+    }
 
     var table = $('#facturiTable').DataTable({
       responsive: false,
@@ -1290,10 +1301,13 @@ echo "</tr>";}
       language: {search: 'Caută:', searchPlaceholder: 'Număr, serie, client...', lengthMenu: 'Afișează _MENU_ facturi', info: '_START_ - _END_ din _TOTAL_ facturi', infoEmpty: 'Nicio factură', infoFiltered: '(din _MAX_ facturi)', zeroRecords: 'Nicio factură găsită', emptyTable: 'Nu există facturi', paginate: {first: 'Prima', previous: 'Înapoi', next: 'Înainte', last: 'Ultima'}}
     });
     window.facturiDataTable = table;
+    $('#casa-origin-filter').on('change', function(){table.draw();});
     $('#casa-invoice-search').on('input', function(){table.search(this.value).draw();});
-    $('#serie_filter_select').val('');
-    table.column(1).search('', true, false).draw();
+    var restoredSeries = $('#serie_filter_select').val() || '';
+    table.search($('#casa-invoice-search').val() || '');
+    table.column(1).search(restoredSeries ? '^' + $.fn.dataTable.util.escapeRegex(restoredSeries) + '$' : '', true, false).draw();
     $('#facturiTable').on('draw.dt', function() {
+      rememberFilters();
       $('[data-toggle="dropdown"]').dropdown();
     });
     $('#facturiTable tbody').on('mousemove', 'tr', function(e) {
@@ -1411,6 +1425,7 @@ echo "</tr>";}
       $('#serie_filter_select').val('');
       table.search('');
       $('#casa-invoice-search').val('');
+      $('#casa-origin-filter').val('');
       table.columns().search('');
       table.draw();
     });

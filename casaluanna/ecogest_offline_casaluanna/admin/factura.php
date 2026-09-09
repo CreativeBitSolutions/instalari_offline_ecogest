@@ -644,12 +644,16 @@ var disablePreiaPretAchizitie = <?php echo $disable_preia_pret_achizitie ? 'true
                             <select name="serie_factura" id="serie_factura" class="form-control" required>
                                 <option value="">Selectați o serie</option>
                                 <?php
-                                // Fetch series where tip_registru contains 'factura'
-                                $series_sql = "SELECT serie FROM casa_online_series WHERE tip_registru LIKE '%factura%'";
+                                // Seriile sunt cele preluate din online. Pentru o factură nouă,
+                                // prima serie configurată este aleasă automat.
+                                $series_sql = "SELECT serie FROM casa_online_series WHERE tip_registru LIKE '%factura%' ORDER BY id_serie ASC, serie ASC";
                                 $series_stmt = $pdo->prepare($series_sql);
                                 $series_stmt->execute();
-                                while ($serie = $series_stmt->fetch(PDO::FETCH_ASSOC)) {
-                                    // Preserve the selected option
+                                $invoiceSeries = $series_stmt->fetchAll(PDO::FETCH_ASSOC);
+                                $isUnnumberedInvoice = (int)$nr_factura < 1 && trim((string)$serie_factura) === '';
+                                $defaultInvoiceSeries = $invoiceSeries[0]['serie'] ?? '';
+                                if ($isUnnumberedInvoice && $defaultInvoiceSeries !== '') $serie_factura = $defaultInvoiceSeries;
+                                foreach ($invoiceSeries as $serie) {
                                     $selected = ($serie_factura === $serie['serie']) ? 'selected' : '';
                                     echo "<option value='" . htmlspecialchars($serie['serie']) . "' $selected>" . htmlspecialchars($serie['serie']) . "</option>";
                                 }
@@ -658,7 +662,7 @@ var disablePreiaPretAchizitie = <?php echo $disable_preia_pret_achizitie ? 'true
                         </div>
                         <div class="col-md-6 col-sm-12 mb-3">
                             <label for="numar_factura"><strong>Număr Factură</strong></label>
-                            <input type="number" name="nr_factura" id="numar_factura" value="<?php echo htmlspecialchars(max(1, (int)$nr_factura)); ?>" min="1" step="1" class="form-control virtual-keyboard" required>
+                            <input type="number" name="nr_factura" id="numar_factura" value="<?php echo htmlspecialchars($isUnnumberedInvoice ? '' : max(1, (int)$nr_factura)); ?>" min="1" step="1" placeholder="Se completează după selectarea seriei" class="form-control virtual-keyboard" required>
                         </div>
                     </div>
                 </div>
@@ -1252,6 +1256,17 @@ document.getElementById('serie_factura').addEventListener('change', function() {
         var inputEvent = new Event('input', { bubbles: true });
         nrFacturaInput.dispatchEvent(inputEvent);
     }
+});
+</script>
+
+<script>
+// La o factură nouă, seria aleasă din configurarea online determină automat
+// următorul număr disponibil din aceeași serie.
+document.addEventListener('DOMContentLoaded', function() {
+    var serieFactura = document.getElementById('serie_factura');
+    var numarFactura = document.getElementById('numar_factura');
+    if (!serieFactura || !numarFactura || !serieFactura.value || numarFactura.value) return;
+    serieFactura.dispatchEvent(new Event('change', { bubbles: true }));
 });
 </script>
 

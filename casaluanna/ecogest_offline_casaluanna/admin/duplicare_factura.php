@@ -87,6 +87,7 @@ $new_factura['id_factura_stornare']=null;
 
         // Commit the transaction
         $pdo->commit();
+        $_SESSION['casa_reset_invoice_filters']=true;
 
         // Display an alert and redirect
         echo "<script>alert('Factura a fost duplicată cu succes.'); window.location.href='factura.php?id_factura=$new_id_factura';</script>";
