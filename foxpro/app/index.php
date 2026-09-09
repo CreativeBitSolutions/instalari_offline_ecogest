@@ -85,9 +85,10 @@ $cacheStatus = $cache->status();
             <span class="status-pill <?= $cacheStatus['built'] && $cacheStatus['fresh'] ? 'is-ok' : 'is-bad' ?>">
                 Cache SQLite
             </span>
-            <a class="ghost-button" href="report.php">Raport operatori</a>
         </div>
-    </header>
+</header>
+
+    <?php $activeNav = 'documents'; require __DIR__ . '/partials/navigation.php'; ?>
 
     <?php if ($notice): ?>
         <div class="notice"><?= h($notice) ?></div>
@@ -411,6 +412,20 @@ $cacheStatus = $cache->status();
             <?php endif; ?>
         </section>
     </section>
+
+    <div class="cache-prompt" data-cache-prompt hidden>
+        <div class="cache-prompt-backdrop" data-cache-prompt-backdrop></div>
+        <section class="cache-prompt-dialog" role="dialog" aria-modal="true" aria-labelledby="cache-prompt-title">
+            <button class="cache-prompt-close" type="button" data-cache-prompt-close aria-label="Inchide">X</button>
+            <p class="eyebrow">Actualizare necesara</p>
+            <h2 id="cache-prompt-title">Cache-ul trebuie reincarcat</h2>
+            <p data-cache-prompt-message>Cache-ul nu este incarcat sau nu mai este actual. Apasa butonul pentru reincarcare.</p>
+            <div class="cache-prompt-actions">
+                <button class="primary-button" type="button" data-cache-prompt-rebuild>Reincarca cache</button>
+                <button class="ghost-button" type="button" data-cache-prompt-close>Mai tarziu</button>
+            </div>
+        </section>
+    </div>
 </main>
 <script>
 document.querySelectorAll('.picker-button').forEach((button) => {
@@ -545,5 +560,6 @@ if (touchKeyboard && touchKeyboardInput && touchKeyboardModal && touchKeyboardOp
     });
 }
 </script>
+<script src="assets/cache-prompt.js"></script>
 </body>
 </html>

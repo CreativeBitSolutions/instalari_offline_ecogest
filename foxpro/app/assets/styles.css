@@ -949,6 +949,97 @@ td {
     padding: 18px;
 }
 
+.main-navigation {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 18px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 4px;
+    background: #eef2ec;
+}
+
+.main-navigation a {
+    border-radius: 6px;
+    padding: 10px 14px;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 900;
+    text-decoration: none;
+}
+
+.main-navigation a:hover,
+.main-navigation a.active {
+    background: #fff;
+    color: var(--ink);
+}
+
+.cache-prompt {
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    display: grid;
+    place-items: center;
+    padding: 18px;
+}
+
+.cache-prompt-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(23, 33, 27, 0.52);
+}
+
+.cache-prompt-dialog {
+    position: relative;
+    width: min(480px, 100%);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 24px;
+    background: var(--panel);
+    box-shadow: 0 24px 70px rgba(23, 33, 27, 0.32);
+}
+
+.cache-prompt-dialog h2 {
+    margin: 0 0 10px;
+    font-size: 24px;
+}
+
+.cache-prompt-dialog p:not(.eyebrow) {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.cache-prompt-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: #fff;
+    color: var(--ink);
+    font: inherit;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.cache-prompt-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.cache-prompt-actions button:disabled {
+    cursor: wait;
+    opacity: 0.65;
+}
+
 .path-status-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
