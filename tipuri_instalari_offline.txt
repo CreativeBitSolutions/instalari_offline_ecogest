@@ -46,7 +46,7 @@ Funcții comune active:
 - sincronizarea manuală a produselor și AutoScannerul folosesc endpointul online, dar produsele locale rămân utilizabile când internetul lipsește.
 - verificarea stocului caută produsul în nomenclatorul local, apoi calculează stocul numai la apăsarea butonului, exclusiv din mișcările existente online. Verificarea stocului nu condiționează și nu modifică trimiterea mișcărilor offline.
 - unitatea H87 este afișată operatorului ca buc.
-- verificarea CUI folosește un modal cu pas de verificare și confirmare. Datele firmei sunt salvate în sesiune numai după confirmarea operatorului.
+- verificarea CUI folosește un modal cu pas de verificare și confirmare. Datele firmei sunt salvate în sesiune numai după confirmarea operatorului. Dacă verificarea nu poate comunica cu serviciul online din cauza conexiunii, a serverului ANAF sau a serviciului ECOGEST, modalul avertizează operatorul și permite continuarea cu valoarea introdusă, pe propria răspundere. CUI-ul trebuie să treacă validarea locală a structurii. Lipsa internetului nu blochează încasarea.
 - zoomul ales este memorat și sunt disponibile controale de mărire și micșorare. Antetul și subsolul vânzării sunt menținute accesibile pe ecrane mici și la zoom mărit.
 - exportul XML sau SQL există tehnic, dar butonul din login este ascuns în interfața curentă.
 - curățarea datelor locale se face într-o pagină separată, cu preview și confirmare protejată. Operația curăță numai baza locală și nu șterge ce a fost deja confirmat online.
@@ -79,7 +79,7 @@ Funcții comune active:
 - workerul rulează și din loginul local, fără o sesiune de operator, și reia coada după revenirea internetului.
 - comenzile de pe tablete sunt preluate periodic, sunt filtrate după ospătar și locație și sunt importate idempotent. Confirmarea online rămâne în retry dacă internetul cade după importul local.
 - det_note.departament_listare păstrează departamentul existent la momentul comenzii. Mutarea, împărțirea, relistarea și restaurarea notei nu schimbă departamentul istoric.
-- verificarea CUI, confirmarea pentru bonurile cu CIF peste 500 lei, licența la 30 de zile, zoomul persistent, statusul transmiterilor și sincronizarea manuală a produselor sunt incluse în aplicația offline.
+- verificarea CUI, confirmarea pentru bonurile cu CIF peste 500 lei, licența la 30 de zile, zoomul persistent, statusul transmiterilor și sincronizarea manuală a produselor sunt incluse în aplicația offline. Dacă verificarea CUI nu poate comunica cu serviciul online din cauza conexiunii, a serverului ANAF sau a serviciului ECOGEST, modalul avertizează operatorul și permite continuarea cu valoarea introdusă, pe propria răspundere. CUI-ul trebuie să treacă validarea locală a structurii. Lipsa internetului nu blochează încasarea.
 - sincronizarea produselor nu se execută automat la simpla autentificare. Actualizarea periodică este făcută de AutoScanner, iar butonul din login pornește verificarea manuală.
 - AutoScannerul nu trebuie să depindă de existența surselor app_restaurant_v2. RestaurantPath indică folderul care conține executabilul compilat și Data, adică C:\xampp\htdocs\github\instalari_offline_ecogest\<client>\<client>.
 - DatabasePath din AutoScanner indică baza externă C:\xampp\htdocs\github\instalari_offline_ecogest\<client>\api_offline_<client>\restaurant.sqlite. Baza nu se compilează în executabil și nu se mută în Data.

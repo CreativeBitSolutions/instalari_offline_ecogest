@@ -81,7 +81,7 @@ if (empty($_SESSION['offline_cui_csrf'])) {
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary mr-auto d-none" id="cifClientManualSaveButton">Salvează fără verificare</button>
+          <button type="button" class="btn btn-outline-warning mr-auto d-none" id="cifClientManualSaveButton">Continuă cu CUI-ul introdus</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Anulează</button>
           <button type="submit" class="btn btn-primary" id="cifClientSaveButton">Verifică CUI</button>
         </div>
@@ -238,9 +238,17 @@ if (empty($_SESSION['offline_cui_csrf'])) {
     postAction('lookup').done(function (response) {
       try { showCompanyResult(response); }
       catch (error) { showError(error.message, false); }
-    }).fail(function (xhr) {
+    }).fail(function (xhr, textStatus) {
       var response = xhr.responseJSON || {};
-      showError(response.message || 'CUI-ul nu a putut fi verificat.', response.manual_allowed === true);
+      var manualAllowed = response.manual_allowed === true
+        || xhr.status === 0
+        || xhr.status >= 500
+        || textStatus === 'timeout'
+        || textStatus === 'parsererror';
+      var message = manualAllowed
+        ? 'Firma nu a putut fi verificată. Este posibil să nu existe conexiune la internet sau serviciul ANAF ori ECOGEST să fie temporar indisponibil. Verificați atent CUI-ul introdus. Puteți continua și salva valoarea fără verificare, pe propria răspundere.'
+        : (response.message || 'CUI-ul nu a putut fi verificat.');
+      showError(message, manualAllowed);
     }).always(function () {
       $('#cifClientLookupProgress').addClass('d-none');
       button.prop('disabled', false);

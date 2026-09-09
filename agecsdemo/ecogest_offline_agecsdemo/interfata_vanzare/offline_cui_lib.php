@@ -124,7 +124,9 @@ function offline_cui_remote_lookup(array $config, $cui)
     }
     $response['http_status'] = $http['status'];
     if (empty($response['ok'])) {
-        $response['manual_allowed'] = $http['status'] === 0 || $http['status'] >= 500;
+        $response['manual_allowed'] = !empty($response['manual_allowed'])
+            || $http['status'] === 0
+            || $http['status'] >= 500;
     }
     return $response;
 }

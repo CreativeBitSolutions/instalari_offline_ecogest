@@ -77,7 +77,7 @@ $offlineCuiCurrent = isset($_SESSION['cif_client']) ? (string)$_SESSION['cif_cli
                 <div class="alert alert-danger offline-cui-error d-none" id="offlineCuiError" role="alert"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary mr-auto d-none" id="offlineCuiManualButton">SALVEAZĂ FĂRĂ VERIFICARE</button>
+                <button type="button" class="btn btn-outline-warning mr-auto d-none" id="offlineCuiManualButton">CONTINUĂ CU CUI-UL INTRODUS</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">ANULEAZĂ</button>
                 <button type="button" class="btn btn-primary" id="offlineCuiPrimaryButton">VERIFICĂ CUI</button>
             </div>
@@ -230,9 +230,17 @@ if (!window.jQuery) return;
         post('lookup').done(function (response) {
             try { showCompany(response); }
             catch (error) { showError(error.message, false); }
-        }).fail(function (xhr) {
+        }).fail(function (xhr, textStatus) {
             var response = xhr.responseJSON || {};
-            showError(response.message || 'CUI-ul nu a putut fi verificat.', response.manual_allowed === true);
+            var manualAllowed = response.manual_allowed === true
+                || xhr.status === 0
+                || xhr.status >= 500
+                || textStatus === 'timeout'
+                || textStatus === 'parsererror';
+            var message = manualAllowed
+                ? 'Firma nu a putut fi verificată. Este posibil să nu existe conexiune la internet sau serviciul ANAF ori ECOGEST să fie temporar indisponibil. Verificați atent CUI-ul introdus. Puteți continua și salva valoarea fără verificare, pe propria răspundere.'
+                : (response.message || 'CUI-ul nu a putut fi verificat.');
+            showError(message, manualAllowed);
         }).always(function () {
             $('#offlineCuiProgress').addClass('d-none');
             button.prop('disabled', false);
