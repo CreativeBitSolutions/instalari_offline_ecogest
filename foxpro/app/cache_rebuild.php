@@ -7,10 +7,12 @@ header('Content-Type: application/json; charset=utf-8');
 @set_time_limit(0);
 
 try {
-    $status = (new DbfCache(Config::load()))->rebuild();
+    $config = Config::load();
+    $status = (new DbfCache($config))->rebuild();
+    $message = 'Cache reincarcat in ' . app_money($status['seconds']) . ' secunde.';
     echo json_encode([
         'ok' => true,
-        'message' => 'Cache reincarcat in ' . app_money($status['seconds']) . ' secunde.',
+        'message' => $message,
         'status' => $status,
     ], JSON_UNESCAPED_SLASHES);
 } catch (Throwable $exception) {

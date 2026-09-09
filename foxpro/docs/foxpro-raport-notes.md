@@ -12,7 +12,11 @@ Clasificarea ramane pastrata in `ReportRepository.php` pentru o eventuala nevoie
 
 ## Citire fara lock FoxPro
 
-`DbfReader.php` incearca sa creeze o copie locala a fiecarui DBF in `app/storage/dbf_snapshots` si citeste copia, nu fisierul FoxPro original. Copia se actualizeaza la fiecare citire cand sursa este accesibila. Daca FoxPro tine temporar fisierul blocat, se foloseste ultima copie valida. Copiile locale nu sunt incluse in arhiva de instalare.
+sync_foxpro_from_server.bat foloseste sursa hardcodata a serverului si copiaza fisierele in baza_date_copiata. BAT-ul este rulat manual de utilizator, nu de Apache. Interfata indica numele fisierului si folderul destinatie.
+
+Cache-ul SQLite si rapoartele citesc copiile din baza_date_copiata. Dupa copiere, utilizatorul reincarca pagina si poate reincarca manual cache-ul.
+
+DbfReader.php incearca sa creeze si o copie locala a fiecarui DBF in app/storage/dbf_snapshots si citeste copia, nu fisierul FoxPro original. Daca FoxPro tine temporar fisierul blocat, se foloseste ultima copie valida. Folderele cu date locale nu sunt incluse in arhiva de instalare.
 
 ## Surse raport
 

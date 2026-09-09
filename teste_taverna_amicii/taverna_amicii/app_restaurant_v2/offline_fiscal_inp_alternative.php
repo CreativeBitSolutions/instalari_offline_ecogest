@@ -74,8 +74,17 @@ function agecs_fiscal_inp_normalize_content($content): string
     $content = str_replace("\0", '', $content);
     $content = str_replace("\n", "\r\n", $content);
 
-    if (strncmp($content, 'S,1,', 4) !== 0) {
-        throw new RuntimeException('Bonul FiscalWire nu începe cu linia S,1 și nu a fost trimis.');
+    $startsWithProduct = strncmp($content, 'S,1,', 4) === 0;
+    $startsWithCui = strncmp($content, 'K,1,', 4) === 0;
+    if (!$startsWithProduct && !$startsWithCui) {
+        throw new RuntimeException('Bonul FiscalWire nu începe cu linia S,1 sau K,1 și nu a fost trimis.');
+    }
+    if ($startsWithCui) {
+        $firstLineEnd = strpos($content, "\r\n");
+        $lineAfterCui = $firstLineEnd === false ? '' : substr($content, $firstLineEnd + 2);
+        if (strncmp($lineAfterCui, 'S,1,', 4) !== 0) {
+            throw new RuntimeException('Linia K a bonului FiscalWire nu este urmată de o linie S,1.');
+        }
     }
     if ($content === '' || substr($content, -2) !== "\r\n") {
         $content .= "\r\n";
@@ -360,4 +369,3 @@ agecs_fiscal_inp_response(true, 'written', $message, [
     'files' => $writtenFiles,
     'backup_warning' => $backupWarnings !== [],
 ]);
-

@@ -52,17 +52,17 @@ final class Config
 
     public static function defaults(): array
     {
-        $root = dirname(__DIR__, 2);
+        $source = '\\BAR\ecosoft\ServerLocal';
 
         return [
-            'restaurant_name' => "TOAN'S",
-            'note_path' => $root . DIRECTORY_SEPARATOR . 'note.dbf',
-            'compnote_path' => $root . DIRECTORY_SEPARATOR . 'COMPNOTE.DBF',
-            'bonuri_path' => $root . DIRECTORY_SEPARATOR . 'temp_bonuri.dbf',
-            'totaluri_path' => $root . DIRECTORY_SEPARATOR . 'totaluri.dbf',
-            'comp_total_path' => $root . DIRECTORY_SEPARATOR . 'comp_total.dbf',
-            'disponibilitati_path' => $root . DIRECTORY_SEPARATOR . 'disponibilitati.dbf',
-            'prod_mat_path' => $root . DIRECTORY_SEPARATOR . 'prod_mat.dbf',
+            'restaurant_name' => 'caru cu flori',
+            'note_path' => $source . '\\note.dbf',
+            'compnote_path' => $source . '\\COMPNOTE.DBF',
+            'bonuri_path' => $source . '\\bon_comanda.dbf',
+            'totaluri_path' => $source . '\\totaluri.dbf',
+            'comp_total_path' => $source . '\\comp_total.dbf',
+            'disponibilitati_path' => $source . '\\disponibilitati.dbf',
+            'prod_mat_path' => $source . '\\prod_mat.dbf',
             'dbf_encoding' => 'CP1250',
             'include_deleted_bonuri' => true,
         ];
@@ -89,7 +89,10 @@ final class Config
             $snapshotExists = $snapshotPath !== '' && is_file($snapshotPath);
             $snapshotReadable = $snapshotExists && is_readable($snapshotPath) && (int) @filesize($snapshotPath) >= 32;
             $localCandidate = class_exists('DbfReader') ? DbfReader::findLocalCandidate($path) : null;
-            $available = $readable || $snapshotReadable || $localCandidate !== null;
+            $localMirrorPath = class_exists('DbfReader') ? DbfReader::localMirrorPath($path) : '';
+            $localMirrorExists = $localMirrorPath !== '' && is_file($localMirrorPath);
+            $localMirrorReadable = $localMirrorExists && is_readable($localMirrorPath) && (int) @filesize($localMirrorPath) >= 32;
+            $available = $readable || $localMirrorReadable || $snapshotReadable || $localCandidate !== null;
             $status[$key] = [
                 'label' => $label,
                 'path' => $path,
@@ -98,8 +101,10 @@ final class Config
                 'available' => $available,
                 'snapshot_exists' => $snapshotExists,
                 'local_candidate' => $localCandidate,
-                'size' => $readable ? (int) @filesize($path) : ($localCandidate !== null ? (int) @filesize($localCandidate) : ($snapshotReadable ? (int) @filesize($snapshotPath) : 0)),
-                'message' => $readable ? 'OK' : ($localCandidate !== null ? 'Sursa locala detectata' : ($snapshotReadable ? 'Copie locala disponibila' : (!$exists ? 'Fisier lipsa' : 'Fisier inaccesibil'))),
+                'local_mirror' => $localMirrorPath,
+                'local_mirror_exists' => $localMirrorExists,
+                'size' => $readable ? (int) @filesize($path) : ($localMirrorReadable ? (int) @filesize($localMirrorPath) : ($localCandidate !== null ? (int) @filesize($localCandidate) : ($snapshotReadable ? (int) @filesize($snapshotPath) : 0))),
+                'message' => $readable ? 'OK' : ($localMirrorReadable ? 'Copie sincronizata local' : ($localCandidate !== null ? 'Sursa locala detectata' : ($snapshotReadable ? 'Copie locala disponibila' : (!$exists ? 'Fisier lipsa' : 'Fisier inaccesibil')))),
             ];
         }
 

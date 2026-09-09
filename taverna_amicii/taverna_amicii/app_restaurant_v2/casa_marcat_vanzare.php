@@ -111,10 +111,10 @@ if (!isset($_POST['nota_de_relistat'])) {
     $cif_client = trim((string)($_SESSION['cif_client'] ?? ''));
     
     // (MODIFICAT pentru a omite H când client_id=23)
-    // REGULĂ STRICTĂ CLIENT 1008: FiscalWire primește direct liniile S și T, exact ca aplicația FoxPro.
-    // Nu se emit antetele K sau H pentru acest client.
+    // REGULĂ STRICTĂ CLIENT 1008: FiscalWire nu primește antetul H.
+    // Dacă nota are CUI, linia K trebuie să fie prima, urmată direct de liniile S și T.
     if ($isFiscalWireClient) {
-        $myBuffer = '';
+        $myBuffer = $cif_client !== '' ? $K . $cif_client . $cr : '';
     } elseif ($cif_client) {
         $myBuffer = $K . $cif_client . $cr;
         if (!$omitH) { $myBuffer .= $H . $cr; }
@@ -576,9 +576,9 @@ else {
     
     // Construim $myBuffer pornind de la CIF-ul clientului (din nota)
     // (MODIFICAT pentru a omite H când client_id=23)
-    // REGULĂ STRICTĂ CLIENT 1008: retransmiterea păstrează același format FiscalWire, numai S și T.
+    // REGULĂ STRICTĂ CLIENT 1008: retransmiterea omite H, dar păstrează K când nota are CUI.
     if ($isFiscalWireClient) {
-        $myBuffer = '';
+        $myBuffer = $cif_client !== '' ? $K . $cif_client . $cr : '';
     } elseif ($cif_client) {
         $myBuffer = $K . $cif_client . $cr;
         if (!$omitH) { $myBuffer .= $H . $cr; }

@@ -39,14 +39,26 @@ final class DbfReader
             . DIRECTORY_SEPARATOR . sha1(trim($sourcePath)) . '.dbf';
     }
 
+    public static function localMirrorPath(string $sourcePath): string
+    {
+        return dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'baza_date_copiata'
+            . DIRECTORY_SEPARATOR . basename(str_replace('\\', DIRECTORY_SEPARATOR, trim($sourcePath)));
+    }
+
     public static function findLocalCandidate(string $sourcePath): ?string
     {
         $sourcePath = trim($sourcePath);
-        if (preg_match('/^\\\\[^\\]+\\(.+)$/', $sourcePath, $matches) !== 1) {
+        if (strncmp($sourcePath, '\\\\', 2) !== 0) {
             return null;
         }
 
-        $relativePath = $matches[1];
+        $withoutPrefix = substr($sourcePath, 2);
+        $separator = strpos($withoutPrefix, '\\');
+        if ($separator === false || $separator === strlen($withoutPrefix) - 1) {
+            return null;
+        }
+
+        $relativePath = substr($withoutPrefix, $separator + 1);
         foreach (range('C', 'Z') as $drive) {
             $candidate = $drive . ':\\' . $relativePath;
             if (is_file($candidate) && is_readable($candidate)) {
@@ -163,6 +175,12 @@ final class DbfReader
         $copySource = $sourcePath;
         if ($sourcePath === '' || !is_file($sourcePath) || !is_readable($sourcePath)) {
             $copySource = self::findLocalCandidate($sourcePath) ?? '';
+            if ($copySource === '') {
+                $localMirror = self::localMirrorPath($sourcePath);
+                if (is_file($localMirror) && is_readable($localMirror) && (int) @filesize($localMirror) >= 32) {
+                    $copySource = $localMirror;
+                }
+            }
         }
 
         if ($copySource === '') {

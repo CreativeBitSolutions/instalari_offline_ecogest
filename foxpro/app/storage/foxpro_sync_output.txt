@@ -1,0 +1,2 @@
+Sursa FoxPro nu este accesibila: "\\NONEXISTENT\ServerLocal"
+Nu s-au modificat copiile locale existente.

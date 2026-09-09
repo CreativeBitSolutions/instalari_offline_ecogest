@@ -6,15 +6,16 @@ require_once __DIR__ . '/bootstrap.php';
 $config = Config::load();
 $notice = null;
 $error = null;
+$action = (string) ($_POST['action'] ?? '');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'save_config') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'save_config') {
     $config = Config::saveFromPost($_POST);
     $notice = 'Configuratia a fost salvata.';
 }
 
 $cache = new DbfCache($config);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'rebuild_cache') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'rebuild_cache') {
     try {
         $rebuilt = $cache->rebuild();
         $notice = 'Tabelele au fost reincarcate in cache in ' . app_money($rebuilt['seconds']) . ' secunde.';
@@ -185,6 +186,17 @@ $cacheStatus = $cache->status();
 
                 <button type="submit" class="primary-button">Salveaza path-uri</button>
             </form>
+
+            <div class="cache-box sync-box">
+                <div class="section-title compact">
+                    <span>Copiere manuala</span>
+                    <strong>DBF din server</strong>
+                </div>
+                <p class="form-note">Deschide folderul aplicatiei in Windows Explorer si ruleaza manual:</p>
+                <p><strong>sync_foxpro_from_server.bat</strong></p>
+                <p class="form-note">Copiile ajung in folderul <strong>baza_date_copiata</strong>. Dupa terminare revino aici si reincarca pagina.</p>
+                <a class="ghost-button" href="file:///C:/xampp/htdocs/github/instalari_offline_ecogest/foxpro">Deschide folderul aplicatiei</a>
+            </div>
 
             <dl class="path-list">
                 <?php foreach ($pathStatus as $status): ?>

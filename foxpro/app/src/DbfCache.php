@@ -576,10 +576,18 @@ final class DbfCache
 
         foreach (['note_path', 'compnote_path', 'bonuri_path'] as $key) {
             $path = (string) ($this->config[$key] ?? '');
+            $effectivePath = $path;
+            if ((!is_file($effectivePath) || !is_readable($effectivePath)) && class_exists('DbfReader')) {
+                $localMirror = DbfReader::localMirrorPath($path);
+                if (is_file($localMirror) && is_readable($localMirror)) {
+                    $effectivePath = $localMirror;
+                }
+            }
             $state['files'][$key] = [
                 'path' => $path,
-                'size' => is_file($path) ? (int) filesize($path) : -1,
-                'mtime' => is_file($path) ? (int) filemtime($path) : -1,
+                'effective_path' => $effectivePath,
+                'size' => is_file($effectivePath) ? (int) filesize($effectivePath) : -1,
+                'mtime' => is_file($effectivePath) ? (int) filemtime($effectivePath) : -1,
             ];
         }
 

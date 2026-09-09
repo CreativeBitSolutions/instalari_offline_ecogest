@@ -134,7 +134,7 @@ final class TransactionRepository
     private function reader(string $key): DbfReader
     {
         $path = trim((string) ($this->config[$key] ?? ''));
-        if ($path === '' || !is_file($path) || !is_readable($path)) {
+        if ($path === '') {
             throw new RuntimeException('Path invalid pentru ' . $key . ': ' . $path);
         }
         return new DbfReader($path, (string) ($this->config['dbf_encoding'] ?? 'CP1250'));

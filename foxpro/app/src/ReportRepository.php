@@ -187,7 +187,7 @@ final class ReportRepository
         ];
 
         $path = (string) ($this->config['totaluri_path'] ?? '');
-        if (!is_file($path) || !is_readable($path)) {
+        if (trim($path) === '') {
             return $result;
         }
 
