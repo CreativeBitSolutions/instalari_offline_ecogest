@@ -1,0 +1,63 @@
+ACTIVITĂȚI GRAND PLAZA ȘI CONTABILITATE
+Client AGECS: client_id 25
+Export local analizat: u681731335_grandplaza.sql
+Tip client: restaurant
+Data analizei: 24.08.2026
+
+1. ACCES ȘI APLICAȚIE
+
+Butonul Restaurant este disponibil. La locația 1, login.php direcționează clientul către app_restaurant_v2/agecs_login.php. Alte locații folosesc app_restaurant/agecs_login.php.
+
+Butonul Administrare este ascuns dacă sesiunea nu conține viz_admin = da.
+
+Exportul local are comunicare_anaf = 1, cu_imprimanta = 1 și autologin_restaurant = 1. listare_automata_comenzi_site este 0.
+
+2. REGULI DE LUCRU ÎN RESTAURANT
+
+Discounturile sunt ascunse în bon, la împărțirea notei și în afișarea produselor. Acțiunile de tură sunt ascunse în fereastra de selectare a mesei.
+
+Comenzile WooCommerce sunt verificate periodic din pagina de login și din restaurant. Importul folosește mapare_woo_pos și woo_order_imports.
+
+Pentru produsul WooCommerce 20090, opțiunea Ciorbă meniului zilei fără salată este mapată la produsul POS 10017. Celelalte opțiuni folosesc maparea standard.
+
+În listarea de bucătărie, produsele cu mai multe departamente care includ BUCĂTĂRIE rămân pe linii individuale. Regula este aplicată și comenzilor venite de pe tabletă.
+
+Pentru produsul POS 447, alegerile WooCommerce MENIUL ZILEI COMPLET și FEL 2 MEN ZILEI rămân poziții separate, cu denumirea și prețul propriu.
+
+Bonurile și comenzile sunt tipărite cu evidențiere. La plata pe protocol este blocată listarea suplimentară duplicată.
+
+3. CONTABILITATE ȘI RAPOARTE
+
+Nu există rapoarte contabile cu sufix Grand Plaza. Sunt folosite rutele standard de gestiune mărfuri, materii, producție, stocuri, NIR, rapoarte Z și registre.
+
+Controlul zilnic trebuie să compare comenzile Woo importate, maparea produselor, liniile din det_note, nota finalizată și raportul Z. woo_order_imports previne dublarea importului aceleiași comenzi.
+
+Separarea pe departamente trebuie păstrată pentru produsele BAR,BUCĂTĂRIE. Gruparea acestor linii poate reduce numărul de bonuri de producție sau poate trimite o comandă incompletă către bucătărie.
+
+4. DIFERENȚE DE STRUCTURĂ
+
+Exportul conține 107 tabele.
+
+În produse_servicii lipsește id_categ_meniuri_personalizate, prezentă în 14 exporturi. Exportul are însă categ_meniuri_personalizate, meniuri_personalizate și produse_meniu_categ.
+
+Sunt prezente mapare_woo_pos, woo_order_imports, fiscalizare_raspunsuri, atribuiri_observatii_produse, carduri, evenimente și mesageria internă.
+
+Structura necesară fluxului WooCommerce este prezentă. id_categ_meniuri_personalizate trebuie creată numai dacă aplicația va lega direct produsul de categoria meniului prin această coloană.
+
+5. PERSONALIZĂRI ÎN ADMINISTRARE ȘI FACTURARE
+
+După autorizarea administrării prin viz_admin, factura manuală, lista facturilor, facturile de achiziție și fluxurile ANAF folosesc implementarea comună.
+
+Sincronizarea WooCommerce și opțiunile produsului 20090 sunt limitate la restaurant și la preluarea comenzilor. Ele nu schimbă seriile, calculele sau formatul facturii administrative.
+
+6. FIȘIERE ACTIVE RELEVANTE
+
+login.php
+conectare.php
+app_restaurant_v2/agecs_login.php
+app_restaurant_v2/vanzare_restaurant_listare_nota.php
+app_restaurant_v2/vanzare_imparte_nota_complex.php
+app_restaurant_v2/woo_check_comenzi_noi.php
+app_restaurant_v2/includes/woo_sync_helpers.php
+api/Tableta/trimite_comanda.php
+tableta/trimite_la_imprimanta.php

@@ -1,0 +1,63 @@
+ACTIVITĂȚI HOLZTREPPE ȘI CONTABILITATE
+Client AGECS: client_id 14
+Export local analizat: u681731335_holz.sql
+Tip client: restaurant
+Data analizei: 22.08.2026
+
+1. ACCES ȘI APLICAȚIE
+
+Butonul Restaurant este disponibil. Clientul 14 nu se află în lista clientsHP, iar ruta principală este app_restaurant/agecs_login.php.
+
+Ecranul de autentificare afișează accesul la Caiet Ospătar. Copyrightul este ascuns pe pagina de conectare și în antet.
+
+Exportul local are comunicare_anaf = 1, cu_imprimanta = 1 și listare_automata_comenzi_site = 1.
+
+2. REGULI DE LUCRU ÎN RESTAURANT
+
+Interfața afișează Muta nota pe caiet și Muta de pe caiet. Funcțiile sunt permise numai clientului 14.
+
+Notele temporare sunt păstrate în note_temporare și det_note_temporare. Lista administrativă Caiete temporare ospătari este vizibilă numai pentru Holztreppe.
+
+Lista laterală afișează notele operatorului. Când există un bon activ, interfața verifică periodic starea acestuia prin vanzare_check_status.php.
+
+3. REGULI CMP ȘI PRODUCȚIE
+
+Exportul conține 51 de reguli active în reguli_cmp_override. Ele stabilesc valori CMP pe produs, gestiunea MATERII și dată de început. Multe reguli corectează situațiile în care CMP-ul istoric a devenit negativ.
+
+raport_productie_holz.php calculează recursiv costul produsului finit din rețetă. Materiile și mărfurile sunt evaluate la CMP istoric. Dacă rezultatul este zero sau negativ, clientul 14 folosește pret_achizitie din produse_servicii ca reper pozitiv.
+
+Aceeași protecție este aplicată în raport_consum_operatori.php, reteta_continut.php și reteta_cost_cmp.php. Costul de rezervă nu trebuie folosit pentru ceilalți clienți.
+
+4. CONTABILITATE ȘI RAPOARTE
+
+Raportul de producție este raport_productie_holz.php.
+
+Raportul de gestiune pentru materii este raport_gestiune_materii_pu.php. Situația stocurilor pentru materii este situatie_stocuri_materii_pu.php.
+
+Rapoartele de mărfuri și celelalte situații folosesc rutele standard. Raportul consum operatori aplică protecția CMP a clientului 14.
+
+Sarcini operative este disponibil. Configurația curentă include corectarea metodei de plată pentru două note din 09.08.2026, fără modificarea produselor și a mișcărilor de stoc.
+
+Controlul lunar trebuie să compare costul rețetelor, CMP-ul rezultat, regulile override active, consumurile operatorilor și raportul de producție. O regulă CMP nouă trebuie delimitată prin produs și dată.
+
+5. DIFERENȚE DE STRUCTURĂ
+
+Exportul conține 103 tabele. Nu lipsește nicio tabelă sau coloană prezentă în cel puțin 8 exporturi.
+
+Structurile note_temporare și det_note_temporare sunt unice în lot. Sunt prezente actiuni_operative, actiuni_operative_modificari_text, consum_personal, det_consum_personal, istoric_mutari_mese și mesageria internă.
+
+reguli_cmp_override este prezentă și populată. Nu este necesară o intervenție structurală pentru regulile CMP curente.
+
+6. FIȘIERE ACTIVE RELEVANTE
+
+login.php
+app_restaurant/agecs_login.php
+app_restaurant/vanzare_restaurant.php
+app_restaurant/note_temporare_common.php
+raport_productie_holz.php
+raport_gestiune_materii_pu.php
+situatie_stocuri_materii_pu.php
+raport_consum_operatori.php
+reteta_continut.php
+reteta_cost_cmp.php
+sarcini_operative_taskuri.php

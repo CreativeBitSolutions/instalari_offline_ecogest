@@ -1,0 +1,49 @@
+ACTIVITĂȚI CASA LUANNA ȘI CONTABILITATE
+Client AGECS: client_id 19
+Export local analizat: u681731335_casaluanna.sql
+Tip client: restaurant
+Data analizei: 22.08.2026
+
+1. ACCES ȘI APLICAȚIE
+
+Butonul Restaurant este disponibil. Clientul 19 nu se află în lista clientsHP, iar login.php îl direcționează către app_restaurant/agecs_login.php.
+
+Exportul local are comunicare_anaf = 1 și cu_imprimanta = 1.
+
+2. REGULI DE LUCRU
+
+Administrarea operatorilor permite rangul client numai pentru client_id 19. La salvare, rangul rămâne client, lucreaza_la este fixat la restaurant, iar locația este preluată din sesiune dacă formularul nu conține o locație.
+
+La generarea bonului fiscal, produsul cu denumirea exactă MASA SERVITA 11% folosește codul de cotă al casei de marcat 4. Regula este prezentă atât în genereaza_bon.php, cât și în genereaza_bon_dep_casa_personalizat.php.
+
+Denumiri asemănătoare sau scrise diferit nu intră în această excepție. Schimbarea denumirii produsului poate modifica încadrarea fiscală la imprimantă.
+
+3. CONTABILITATE ȘI RAPOARTE
+
+Nu există rapoarte cu sufix Casa Luanna. Rutele sunt cele standard pentru restaurant, mărfuri, materii, producție, NIR, facturi și rapoarte Z.
+
+Controlul fiscal trebuie să compare cota TVA din produs, maparea coduri_casa_tva și excepția cod 4 pentru MASA SERVITA 11%. Codul transmis casei de marcat nu schimbă direct cota și valoarea păstrate în det_note.
+
+Rangul client trebuie separat de operatorii care încasează. Dacă acest rang este folosit numai pentru acces, nu trebuie inclus automat în rapoartele de consum pe operator.
+
+4. DIFERENȚE DE STRUCTURĂ
+
+Exportul conține 90 de tabele.
+
+Lipsește reguli_cmp_override, prezentă în 9 exporturi.
+
+Lipsesc det_note.departament_listare și produse_servicii.cod_mapare_import_extern, prezente în 12 exporturi. Lipsesc continut_bonuri_consum.id_retur și setari_platforma.listare_automata_comenzi_site, prezente în 8 exporturi.
+
+retururi.operator este prezentă. anaf_xml_facturi este prezentă.
+
+departament_listare este necesară dacă nota trebuie listată pe alt departament decât cel definit în nomenclator. cod_mapare_import_extern este necesară la importuri externe. reguli_cmp_override este utilă numai când există corecții CMP reale.
+
+5. FIȘIERE ACTIVE RELEVANTE
+
+login.php
+app_restaurant/agecs_login.php
+app_restaurant/vanzare_restaurant.php
+operatori.php
+operatori_action.php
+genereaza_bon.php
+genereaza_bon_dep_casa_personalizat.php

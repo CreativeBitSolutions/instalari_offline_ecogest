@@ -1,0 +1,153 @@
+DIFERENȚE DE STRUCTURĂ ÎNTRE BAZELE DE DATE ALE CLIENȚILOR
+Sursă: 17 exporturi SQL locale din baze_date_clienti
+Data comparației: 24.08.2026
+
+1. REGULA DE COMPARAȚIE
+
+Comparația folosește numai instrucțiunile CREATE TABLE din exporturile locale. Nu a fost deschisă nicio conexiune MySQL.
+
+O lipsă majoritară este o tabelă sau coloană prezentă în cel puțin 9 dintre cele 17 exporturi. Structurile prezente la puțini clienți sunt tratate separat, deoarece aparțin unor funcții dedicate.
+
+2. NUMĂRUL DE TABELE
+
+AGECS Demo, client 8: 115
+Daily Coffee, client 2: 104
+Mark Catering, client 3: 100
+Maya Catering, client 4: 89
+Depo Fun, client 6: 93
+Hotel Rin, client 7: 90
+Holztreppe, client 14: 103
+Turkish, client 17: 99
+Agrem Prejba, client 18: 98
+Casa Luanna, client 19: 90
+Best Mixt, client 21: 99
+Andreea Robert, client 22: 96
+Grand Plaza, client 25: 107
+Coche House Sibiu, client 1006: 92
+Korn Atelier, client 1007: 90
+Hanul Patrisiei, client 9: 115
+Taverna Amicii, client 1008: 108
+
+3. TABELE MAJORITARE ABSENTE
+
+AGECS Demo: observatii_predefinite, prezentă în 15 exporturi. anaf_xml_facturi, prezentă în 11 exporturi.
+
+Agrem Prejba: anaf_xml_facturi, prezentă în 11 exporturi. reguli_cmp_override, prezentă în 10 exporturi.
+
+Andreea Robert: reguli_cmp_override, prezentă în 10 exporturi.
+
+Best Mixt: anaf_xml_facturi, prezentă în 11 exporturi. reguli_cmp_override, prezentă în 10 exporturi.
+
+Casa Luanna: reguli_cmp_override, prezentă în 10 exporturi.
+
+Coche House Sibiu: reguli_cmp_override, prezentă în 10 exporturi.
+
+Daily Coffee: nicio tabelă majoritară absentă.
+
+Depo Fun: nicio tabelă majoritară absentă.
+
+Grand Plaza: nicio tabelă majoritară absentă.
+
+Holztreppe: nicio tabelă majoritară absentă.
+
+Hotel Rin: reguli_cmp_override, prezentă în 10 exporturi.
+
+Korn Atelier: anaf_xml_facturi, prezentă în 11 exporturi.
+
+Mark Catering: nicio tabelă majoritară absentă.
+
+Maya Catering: observatii_predefinite, prezentă în 15 exporturi. reguli_cmp_override, prezentă în 10 exporturi.
+
+Turkish: anaf_xml_facturi, prezentă în 11 exporturi.
+
+Taverna Amicii: anaf_xml_facturi, prezentă în 11 exporturi.
+
+4. COLOANE MAJORITARE ABSENTE
+
+AGECS Demo: produse_servicii.id_categ_meniuri_personalizate, prezentă în 14 exporturi.
+
+Agrem Prejba: setari_platforma.listare_automata_comenzi_site, prezentă în 9 exporturi.
+
+Andreea Robert: setari_platforma.listare_automata_comenzi_site, prezentă în 9 exporturi.
+
+Best Mixt: continut_bonuri_consum.id_retur și setari_platforma.listare_automata_comenzi_site, prezente în 9 exporturi.
+
+Casa Luanna: det_note.departament_listare și produse_servicii.cod_mapare_import_extern, prezente în 13 exporturi. continut_bonuri_consum.id_retur și setari_platforma.listare_automata_comenzi_site, prezente în 9 exporturi.
+
+Coche House Sibiu: det_note.departament_listare, produse_servicii.cod_mapare_import_extern și retururi.operator, prezente în 13 exporturi. continut_bonuri_consum.id_retur și setari_platforma.listare_automata_comenzi_site, prezente în 9 exporturi.
+
+Daily Coffee: nicio coloană majoritară absentă.
+
+Depo Fun: retururi.operator, prezentă în 13 exporturi. continut_bonuri_consum.id_retur și setari_platforma.listare_automata_comenzi_site, prezente în 9 exporturi.
+
+Grand Plaza: produse_servicii.id_categ_meniuri_personalizate, prezentă în 14 exporturi.
+
+Holztreppe: nicio coloană majoritară absentă.
+
+Hotel Rin: det_note.departament_listare, produse_servicii.cod_mapare_import_extern și retururi.operator, prezente în 13 exporturi. continut_bonuri_consum.id_retur, prezentă în 9 exporturi.
+
+Korn Atelier: continut_bonuri_consum.id_retur, prezentă în 9 exporturi.
+
+Mark Catering: nicio coloană majoritară absentă.
+
+Maya Catering: det_note.departament_listare, produse_servicii.cod_mapare_import_extern și retururi.operator, prezente în 13 exporturi. continut_bonuri_consum.id_retur și setari_platforma.listare_automata_comenzi_site, prezente în 9 exporturi.
+
+Turkish: continut_bonuri_consum.id_retur și setari_platforma.listare_automata_comenzi_site, prezente în 9 exporturi.
+
+Taverna Amicii: produse_servicii.id_categ_meniuri_personalizate, prezentă în 14 exporturi.
+
+5. LEGĂTURA DINTRE LIPSĂ ȘI FUNCȚIE
+
+observatii_predefinite păstrează observații reutilizabile pentru produse și comenzi.
+
+anaf_xml_facturi păstrează XML-uri ANAF. Comunicarea ANAF poate funcționa prin alte tabele și fișiere, astfel încât absența ei nu dovedește singură o eroare.
+
+reguli_cmp_override permite fixarea CMP-ului pe produs, gestiune și dată. Este necesară numai pentru clienții cu excepții CMP controlate.
+
+det_note.departament_listare separă departamentul de imprimare de departamentul implicit al produsului.
+
+produse_servicii.cod_mapare_import_extern leagă produsul AGECS de un cod dintr-un sistem extern.
+
+retururi.operator atribuie returul unui operator.
+
+continut_bonuri_consum.id_retur leagă o linie de consum de returul sursă.
+
+setari_platforma.listare_automata_comenzi_site controlează listarea automată a comenzilor venite din site.
+
+produse_servicii.id_categ_meniuri_personalizate leagă direct produsul de categoria meniului personalizat. Unele baze folosesc tabele de legătură separate.
+
+6. STRUCTURI SPECIALIZATE
+
+actiuni_operative și actiuni_operative_modificari_text sunt prezente la Andreea Robert, Best Mixt, Hanul Patrisiei și Holztreppe. Ele aparțin sarcinilor operative și sunt excluse din uniformizare.
+
+sincronizare_importuri_offline este prezentă la Agrem Prejba, Best Mixt și Daily Coffee.
+
+Instalațiile offline de magazin sunt active pentru Daily Coffee, Agrem Prejba, Best Mixt și Andreea Robert. Manifestul aplică profilul offline_magazin acestor patru clienți, chiar dacă exportul Andreea Robert nu conține încă toate tabelele de sincronizare.
+
+Taverna Amicii folosește profilul offline_restaurant. Structurile online dedicate sunt offline_sync_event_inbox, offline_sync_imported și offline_tablet_import_receipts.
+
+fiscalizare_raspunsuri este prezentă la Best Mixt, Grand Plaza și Mark Catering.
+
+mapare_woo_pos și woo_order_imports sunt prezente la AGECS Demo, Grand Plaza și Hanul Patrisiei.
+
+Structura hotelieră completă este prezentă numai la AGECS Demo.
+
+note_temporare și det_note_temporare sunt prezente numai la Holztreppe.
+
+turkish_z_fiscal_cache este prezentă numai la Turkish.
+
+Tabelele de corecții, generări de rețete și închideri operative Hanul sunt excluse. Ele au fost create pentru intervenții punctuale și nu reprezintă infrastructură comună.
+
+Tabelele de audit, log, backup, date șterse și variante vechi sunt excluse. eliberari_mese_vechi nu înlocuiește eliberari_mese.
+
+7. ORDINEA DECIZIEI DE ACTUALIZARE
+
+Prima verificare privește profilul funcțional. Structurile offline se creează numai pentru aplicația locală compatibilă.
+
+A doua verificare privește datele inițiale și valorile implicite. O tabelă goală poate produce rezultate diferite față de lipsa tabelei dacă scriptul verifică numai existența ei.
+
+A treia verificare privește indexurile, cheile și istoricul. CREATE TABLE trebuie preluat dintr-un export compatibil cu același modul, nu reconstruit numai din denumirea coloanelor.
+
+A patra verificare privește raportarea. După actualizare trebuie comparate soldurile inițiale, intrările, ieșirile, soldurile finale și numărul documentelor înainte și după schimbare.
+
+A cincea verificare privește instalația locală. Uniformizarea MySQL nu modifică bazele SQLite, fișierele de configurare, cozile locale sau copiile de siguranță.

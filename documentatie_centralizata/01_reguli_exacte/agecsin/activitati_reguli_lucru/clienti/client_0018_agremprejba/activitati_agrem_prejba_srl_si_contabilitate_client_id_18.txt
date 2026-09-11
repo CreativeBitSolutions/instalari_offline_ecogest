@@ -1,0 +1,64 @@
+ACTIVITĂȚI AGREM PREJBA SRL ȘI CONTABILITATE
+Client AGECS: client_id 18
+Export local analizat: u681731335_agremprejba.sql
+Tip client: magazin
+Data analizei: 24.08.2026
+
+1. ACCES ȘI APLICAȚIE
+
+Butonul Vânzare este disponibil. login.php direcționează clientul către app_vanzare_v2/agecs_login.php.
+
+Exportul local are comunicare_anaf = 0 și cu_imprimanta = 0. listare_automata_comenzi_site nu există în setari_platforma.
+
+2. REGULI DE LUCRU
+
+Discountul global este ascuns și blocat la nivel de server. Reglarea diferențelor casei de marcat este ascunsă. Metoda Protocol este indisponibilă.
+
+Sumele turei exclud notele care au identificator_offline. Regula evită includerea operațiunilor provenite din sistemul offline în totalul interfeței curente.
+
+Căutarea începe în câmpul cod de bare. Dacă textul introdus începe cu o cifră, load_prod.php caută numai potrivirea exactă a codului de bare, după eliminarea spațiilor și a cratimelor.
+
+La locația 1 este disponibilă citirea directă a cântarului prin Web Serial COM1. Pentru un produs cu unitatea KG, cântarul este citit înainte de adăugarea produsului.
+
+Interfața include ghidul local pentru comunicarea cu scannerul.
+
+3. SINCRONIZARE OFFLINE
+
+Importul operațiunilor offline este blocat pe profilul agremprejba. Uniformizarea aplică profilul offline_magazin. Sunt folosite sincronizare_importuri_offline, sincronizare_operatori_offline, sincronizare_operatori_offline_istoric, offline_installation_state și offline_sequence_history.
+
+Produsele, notele și liniile importate au identificator_offline și cod_locatie. Acești identificatori trebuie păstrați pentru detectarea dublurilor.
+
+Instalația activă se află în C:\xampp\htdocs\instalari_offline\agecs_offline_agremprejba, iar API-ul local se află în C:\xampp\htdocs\instalari_offline\api_offline_agecs_agremprejba.
+
+4. CONTABILITATE ȘI RAPOARTE
+
+Nu există rapoarte cu sufix Agrem Prejba. Sunt folosite rapoartele standard de gestiune, stocuri, NIR, mișcări, facturi și rapoarte Z.
+
+La închiderea zilnică trebuie separate vânzările curente de înregistrările importate offline. Interdicția discountului global nu exclude discounturile deja înscrise pe linii înainte de import, iar acestea trebuie verificate în det_note.
+
+5. DIFERENȚE DE STRUCTURĂ
+
+Exportul conține 98 de tabele. Structura offline de magazin include tabelele de import, maparea operatorilor, controlul secvențelor și coloanele identificator_offline.
+
+Crearea listare_automata_comenzi_site nu este necesară pentru importul offline. Câmpul se referă la comenzile provenite din site.
+
+Tabelele de audit, log, backup, date șterse și sarcini operative punctuale sunt excluse din uniformizare. offline_sync_import_logs nu este preluată în structura țintă.
+
+reguli_cmp_override trebuie creată numai dacă apar corecții CMP delimitate pe produs și dată. anaf_xml_facturi este necesară numai pentru stocarea XML-urilor ANAF.
+
+6. PERSONALIZĂRI ÎN ADMINISTRARE ȘI FACTURARE
+
+În documentele NIR complete și defalcate, secțiunea Observații este eliminată pentru clientul 18. Zona de semnături conține CONTABIL, MANAGER și GESTIONAR. Formatele simplificate nu au o ramură separată pentru acest client.
+
+Facturarea manuală, listarea facturilor și fluxurile ANAF folosesc implementarea comună. Nu există o condiție explicită pentru clientul 18 în factura.php, add_product.php sau listeaza_fact.php.
+
+7. FIȘIERE ACTIVE RELEVANTE
+
+login.php
+app_vanzare_v2/vanzare_magazin.php
+app_vanzare_v2/load_prod.php
+app_vanzare_v2/modal_discount_global.php
+app_vanzare_v2/modal_ghiduri.php
+sincronizare_online_app_vanzare/import_operatiuni_offline.php
+sincronizare_online_app_vanzare/operatori_offline_mapare.php
+sincronizare_online_app_vanzare/offline_sequence_state_lib.php

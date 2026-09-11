@@ -1,0 +1,62 @@
+ACTIVITĂȚI MARK CATERING ȘI CONTABILITATE
+Client AGECS: client_id 3
+Export local analizat: u681731335_markcatering.sql
+Tip client: restaurant
+Data analizei: 22.08.2026
+
+1. ACCES ȘI APLICAȚIE
+
+Butonul Restaurant din conectare.php este disponibil. Clientul nu se află în lista clientsHP din login.php, astfel încât ruta principală este app_restaurant/agecs_login.php.
+
+Exportul local are comunicare_anaf = 1, cu_imprimanta = 1 și listare_automata_comenzi_site = 1.
+
+2. REGULI DE LUCRU ÎN RESTAURANT
+
+Ecranul de autentificare oferă acces la Caiet Ospătar și la shortcutul Avize. Shortcutul Avize este permis strict clientului 3 și păstrează separat operatorul folosit pentru aviz.
+
+Interfața afișează Facturi și Mutare produse. Notele deschise sunt filtrate după operatorul curent. Lista laterală prezintă numai notele operatorului autentificat.
+
+La imprimarea comenzii, denumirea în limba engleză este tipărită sub produs când descriere_en este completată. Regula este aplicată atât în fluxul POS, cât și în cel de tabletă.
+
+Produsele din interfață sunt agregate numai după încărcare. Mutarea produselor este deblocată explicit și lucrează pe bonul și masa curentă.
+
+Pentru numerar, card și plata mixtă, un bon cu CIF poate declanșa fluxul de factură automată. Operatorul poate omite factura automată prin confirmarea prevăzută în interfață.
+
+Perioada maximă permisă pentru vânzări poate fi extinsă din panoul administrativ prin api/3/data_ora_maxima_vanzari.json.
+
+3. ÎNCHIDEREA TUREI ȘI FISCALIZAREA
+
+Închiderea turei și închiderea zilei calculează distinct totalurile pe departamente și metode de plată. Sumele numerar, card, tichete, protocol, glovo și virament bancar sunt repartizate proporțional pe BAR, BUCĂTĂRIE și celelalte departamente rezultate din det_note.departament_listare sau produse_servicii.departament.
+
+Închiderea automată generează raportul de vânzări pentru imprimanta termică. Tabela fiscalizare_raspunsuri este prezentă și permite reconcilierea răspunsurilor casei de marcat cu note.fiscalizat.
+
+cron_email_bonuri_nefiscalizate_mark.php verifică bonurile nefiscalizate și poate transmite alertă. Scriptul este dedicat clientului 3. Nu trebuie rulat în timpul unei analize statice.
+
+4. CONTABILITATE ȘI RAPOARTE
+
+Nu există un raport de gestiune cu sufix Mark. Rutele administrative folosesc rapoartele standard de mărfuri, materii, producție, NIR, mișcări și rapoarte Z.
+
+Controlul zilnic trebuie să compare raportul Z, totalurile pe departamente, totalurile pe metode de plată și marcajul fiscalizat al fiecărei note. Produsele listate în engleză nu modifică denumirea contabilă și valoarea din det_note.
+
+Avizele folosesc avize_expeditie și avize_expeditie_linii. Bonurile de transfer folosesc bonuri_transfer și det_bonuri_transfer.
+
+5. DIFERENȚE DE STRUCTURĂ
+
+Exportul conține 100 de tabele. Nu lipsește nicio tabelă prezentă în cel puțin 8 exporturi și nicio coloană prezentă în cel puțin 8 exporturi.
+
+Sunt prezente fiscalizare_raspunsuri, avize_expeditie, avize_expeditie_linii, categorii_tableta, consum_personal și det_consum_personal.
+
+Nu sunt prezente mapare_woo_pos și woo_order_imports. Aceste tabele sunt necesare numai dacă Mark Catering va prelua comenzi WooCommerce prin fluxul folosit de Grand Plaza.
+
+6. FIȘIERE ACTIVE RELEVANTE
+
+login.php
+app_restaurant/agecs_login.php
+app_restaurant/admin_logincheck.php
+app_restaurant/vanzare_restaurant.php
+app_restaurant/vanzare_restaurant_listare_nota.php
+app_restaurant/vanzare_listare_inchide_tura.php
+app_restaurant/vanzare_listare_inchidere_zi.php
+api/Tableta/trimite_comanda.php
+tableta/trimite_la_imprimanta.php
+cron_email_bonuri_nefiscalizate_mark.php

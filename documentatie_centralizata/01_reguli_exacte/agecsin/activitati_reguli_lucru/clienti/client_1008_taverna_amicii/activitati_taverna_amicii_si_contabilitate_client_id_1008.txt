@@ -1,0 +1,63 @@
+ACTIVITĂȚI TAVERNA AMICII ȘI CONTABILITATE
+Client AGECS: client_id 1008
+Export local analizat: u681731335_taverna_amicii.sql
+Tip client: restaurant cu instalație offline
+Data analizei: 24.08.2026
+
+1. ACCES ȘI APLICAȚII
+
+Pentru restaurantul online, login.php direcționează locația 1 către app_restaurant_hp. Celelalte situații folosesc ruta standard app_restaurant.
+
+Instalația offline nu folosește această rutare. Interfața locală este o adaptare SQLite a app_restaurant_v2 și continuă să funcționeze când conexiunea la internet lipsește.
+
+2. INSTALAȚIA OFFLINE DE RESTAURANT
+
+Aplicația locală se află în C:\xampp\htdocs\github\instalari_offline_ecogest\taverna_amicii\taverna_amicii\app_restaurant_v2.
+
+API-ul local și baza SQLite se află în C:\xampp\htdocs\github\instalari_offline_ecogest\taverna_amicii\api_offline_taverna_amicii.
+
+Instalația gestionează note, detalii, mișcări, discounturi, închideri, rapoarte Z, bonuri fiscale și documente pentru imprimante. Evenimentele sale sunt transmise online printr-o coadă persistentă.
+
+3. SINCRONIZAREA ONLINE
+
+Evenimentele sale_finalized, shift_closed și z_closed sunt procesate idempotent. offline_sync_event_inbox păstrează starea evenimentului, iar offline_sync_imported păstrează legătura dintre cheia locală și cheia online.
+
+Coloana identificator_offline este necesară în det_note, discounturi_acordate, inchideri_r_12, miscari, note și rapoarte_z. Retrimiterea aceluiași eveniment nu trebuie să creeze a doua notă, a doua mișcare sau o nouă închidere.
+
+Comenzile de pe tablete sunt preluate în com_tableta și det_com_tableta. Confirmarea importului este păstrată în offline_tablet_import_receipts.
+
+Operatorii locali sunt actualizați prin api/offline-users.php. Datele din admins_12 sunt preluate direct pentru locația clientului. Taverna Amicii nu folosește sincronizare_operatori_offline, specifică instalațiilor offline de magazin.
+
+4. STRUCTURA BAZEI ONLINE
+
+Exportul conține 108 tabele. Uniformizarea aplică profilul offline_restaurant.
+
+Profilul păstrează offline_sync_event_inbox, offline_sync_imported și offline_tablet_import_receipts. offline_sync_import_logs este exclusă deoarece are rol de jurnal tehnic, nu de stare funcțională obligatorie pentru uniformizare.
+
+Tabelele din profilul offline_magazin nu sunt propuse. Sunt omise offline_installation_state, offline_sequence_history, sincronizare_importuri_offline, sincronizare_operatori_offline și sincronizare_operatori_offline_istoric.
+
+Baza SQLite locală, cozile locale, copiile JSON și directoarele de backup nu sunt atinse de sarcina MySQL din AGECS online.
+
+5. CONTABILITATE ȘI RAPOARTE
+
+Mișcările de vânzare sunt generate online la procesarea evenimentului sale_finalized, folosind nomenclatorul, gestiunile și rețetele din baza online. Închiderea turei și raportul Z completează legăturile documentelor fără regenerarea rețetelor.
+
+Identificatorii offline trebuie verificați la reconcilierea notelor, mișcărilor, închiderilor și rapoartelor Z. Evenimentele repetate sunt confirmate ca deja procesate.
+
+6. ADMINISTRARE ȘI FACTURARE
+
+Factura manuală, listarea PDF, facturile de achiziție și fluxurile ANAF folosesc implementarea comună. Nu există o ramură dedicată clientului 1008 în factura.php, listeaza_fact.php sau facturi_achizitii.php.
+
+Uniformizare structură BD este disponibilă administratorului clientului 1008. Preview-ul afișează profilul offline_restaurant și separă structurile omise din profilul de magazin.
+
+7. FIȘIERE ACTIVE RELEVANTE
+
+login.php
+api/offline-users.php
+api/offline-tablet-orders.php
+api/offline-tablet-2fa.php
+sincronizare_online_app_restaurant/sincronizare_date_offline.php
+sarcina_uniformizare_structura_baza_date.php
+sarcini_operative_uniformizare_structura_service.php
+C:\xampp\htdocs\github\instalari_offline_ecogest\taverna_amicii\taverna_amicii\app_restaurant_v2\offline_users_sync.php
+C:\xampp\htdocs\github\instalari_offline_ecogest\taverna_amicii\taverna_amicii\app_restaurant_v2\offline_sync_queue_lib.php

@@ -1,0 +1,28 @@
+fisier;tip;surse_principale
+00_registru\harta_clienti_instalari.md;registru clienți;tipuri_instalari_offline.txt și activitati_reguli_lucru
+00_registru\registru_coduri_si_identitati.md;registru coduri;configurații offline și reguli de sincronizare
+02_sinteze\comune\reguli_magazin.md;reguli comune;tipuri_instalari_offline.txt și importuri AGECS
+02_sinteze\comune\reguli_restaurant.md;reguli comune;tipuri_instalari_offline.txt și sincronizare restaurant
+02_sinteze\comune\reguli_facturare_offline.md;reguli comune;Casa Luanna și sincronizare facturi
+03_fluxuri\magazin_offline.md;flux tehnic;cozi locale și import magazin AGECS
+03_fluxuri\restaurant_offline.md;flux tehnic;cozi locale și sincronizare restaurant AGECS
+03_fluxuri\facturare_offline.md;flux tehnic;Casa Luanna și endpointurile de facturi
+04_lacune_si_conflicte\clienti_fara_reguli_dedicate.md;registru lacune;inventarul celor două repository-uri
+04_lacune_si_conflicte\copii_istorice.md;registru versiuni;hashuri și variante istorice
+02_sinteze\clienti\client_0002_daily_coffee.md;fișă client;tipuri_instalari_offline.txt și agecsin client 2
+02_sinteze\clienti\client_0008_agecsdemo.md;fișă client;tipuri_instalari_offline.txt, README AGECSDEMO și agecsin client 8
+02_sinteze\clienti\client_0018_agremprejba.md;fișă client;tipuri_instalari_offline.txt și agecsin client 18
+02_sinteze\clienti\client_0019_casa_luanna.md;fișă client;documentația Casa Luanna și agecsin client 19
+02_sinteze\clienti\client_0021_bestmixt.md;fișă client;tipuri_instalari_offline.txt și agecsin client 21
+02_sinteze\clienti\client_0022_andreea_robert.md;fișă client;tipuri_instalari_offline.txt și agecsin client 22
+02_sinteze\clienti\client_0025_grand_plaza.md;fișă client;tipuri instalare Grand Plaza și agecsin client 25
+02_sinteze\clienti\client_0026_glovo_grand_plaza.md;fișă client;tipuri instalare Glovo și surse locale, fără regulă agecsin dedicată
+02_sinteze\clienti\client_1008_taverna_amicii.md;fișă client;tipuri instalare, documentație Taverna și agecsin client 1008
+02_sinteze\clienti\client_1015_la_voinica.md;fișă client;tipuri instalare și surse client 1015 din agecsin
+02_sinteze\clienti\client_1019_lorand.md;fișă client;tipuri instalare, README și plan Lorand
+02_sinteze\clienti\client_1021_teste_taverna_amicii.md;fișă client;tipuri instalare și documentația comună pentru 1008 și 1021
+03_fluxuri\sincronizare_agecsin.md;flux tehnic;cozile locale și endpointurile AGECS
+03_fluxuri\woo_tableta_imprimare.md;flux tehnic;documentația restaurantelor, WooCommerce și tablete
+03_fluxuri\foxpro.md;flux tehnic;foxpro\docs\foxpro-raport-notes.md
+04_lacune_si_conflicte\coduri_locale_vs_sincronizare.md;registru lacune;configurații și identificatori offline
+04_lacune_si_conflicte\cai_istorice.md;registru lacune;documente AGECS și copii locale

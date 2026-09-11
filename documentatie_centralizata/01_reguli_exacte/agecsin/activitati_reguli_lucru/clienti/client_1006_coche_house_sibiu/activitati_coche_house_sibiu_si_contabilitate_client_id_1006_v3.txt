@@ -1,0 +1,61 @@
+ACTIVITĂȚI COCHE HOUSE SIBIU ȘI CONTABILITATE
+Client AGECS: client_id 1006
+Export local analizat: u681731335_cochethouse.sql
+Tip client: magazin
+Data analizei: 23.08.2026
+
+1. ACCES ȘI APLICAȚIE
+
+Butonul Vânzare este disponibil. login.php direcționează clientul către app_vanzare_v2/agecs_login.php.
+
+Imaginea copyright este ascunsă pe pagina de conectare.
+
+Exportul local are comunicare_anaf = 1 și cu_imprimanta = 0. listare_automata_comenzi_site nu există în setari_platforma.
+
+2. REGULI DE LUCRU
+
+Interfața folosește ramura specială vanzare_adaug_prod_pe_nota_1005.php, elemente_bon_1005.php și schimbarea denumirii produsului.
+
+Produsele cu CAZARE în denumire generează taxa hotelieră de 2% din valoarea netă. Taxa este recalculată pe bon, are TVA 0 și poate avea semn negativ la stornare.
+
+Aceeași regulă se aplică facturilor create din interfața administrativă prin add_product.php și factura.php.
+
+Endpointul pentru modificarea permanentă a denumirii păstrează o listă de clienți mai restrânsă decât endpointul de modificare temporară. Pentru clientul 1006 trebuie verificat dacă schimbarea permanentă este permisă înainte de folosirea ei ca regulă operațională.
+
+3. CONTABILITATE ȘI RAPOARTE
+
+Nu există rapoarte cu sufix Coche House. Sunt folosite rutele standard de gestiune, stocuri, NIR, facturi și rapoarte Z.
+
+Taxa hotelieră se verifică separat la TVA 0. Valoarea ei trebuie să fie 2% din baza netă a cazării, fără includerea taxei în propria bază.
+
+Exportul conține facturi_vanzare_spv și continut_facturi_vanzare_spv. Aceste tabele păstrează documentele de vânzare preluate din SPV și sunt prezente numai în două exporturi.
+
+4. DIFERENȚE DE STRUCTURĂ
+
+Exportul conține 92 de tabele.
+
+Lipsește reguli_cmp_override, prezentă în 9 exporturi.
+
+Lipsesc det_note.departament_listare, produse_servicii.cod_mapare_import_extern și retururi.operator, prezente în 12 exporturi. Lipsesc continut_bonuri_consum.id_retur și setari_platforma.listare_automata_comenzi_site, prezente în 8 exporturi.
+
+Nu există structura hotelieră completă cu camere și rezervări. Taxa hotelieră din vânzare nu depinde de aceste tabele.
+
+cod_mapare_import_extern este necesară numai pentru maparea produselor din surse externe. departament_listare este necesară pentru rutarea imprimării pe un departament diferit. operator în retururi permite responsabilizarea retururilor.
+
+5. PERSONALIZĂRI ÎN ADMINISTRARE ȘI FACTURARE
+
+În factura.php, un produs cu CAZARE activează panoul pentru baza netă, taxa hotelieră și totalul de booking. Prețul cu TVA este blocat pentru editare cât timp calculul automat este activ.
+
+add_product.php adaugă taxa de 2% cu TVA 0, folosind produsul TAXA DE ORAS sau TAXA HOTELIERA. Stornările păstrează valoarea negativă. Listeaza_fact.php folosește formatul comun, fără adaptarea siglei sau a codului extern aplicată clienților 2 și 3.
+
+Imaginea copyright este ascunsă în conectare.php pentru clientul 1006. Această regulă nu schimbă drepturile funcționale din administrare.
+
+6. FIȘIERE ACTIVE RELEVANTE
+
+login.php
+conectare.php
+app_vanzare_v2/vanzare_magazin.php
+app_vanzare_v2/vanzare_adaug_prod_pe_nota_1005.php
+app_vanzare_v2/vanzare_update_product_name_1005.php
+add_product.php
+factura.php

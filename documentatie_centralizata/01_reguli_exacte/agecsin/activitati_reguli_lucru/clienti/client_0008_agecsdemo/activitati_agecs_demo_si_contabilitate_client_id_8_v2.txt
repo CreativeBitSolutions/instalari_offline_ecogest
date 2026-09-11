@@ -1,0 +1,71 @@
+ACTIVITĂȚI AGECS DEMO ȘI CONTABILITATE
+Client AGECS: client_id 8
+Export local analizat: u681731335_agecsdemo.sql
+Tip client: toate
+Data analizei: 22.08.2026
+
+1. ACCES ȘI APLICAȚII
+
+Contul oferă acces la vânzare, restaurant, hotel și meniuri dinamice.
+
+Pentru vânzare, login.php direcționează clientul către app_vanzare_v2/agecs_login.php.
+
+Pentru restaurant, locația 1 este direcționată către app_restaurant_v2/agecs_login.php. Locația 2 și celelalte situații folosesc app_restaurant/agecs_login.php.
+
+Butonul Hotel deschide app_hotel/agecs_login.php. Butonul Meniuri Dinamice deschide app_vanzare_v2_meniuri_dinamice/agecs_login.php.
+
+Exportul local are autologin_restaurant = 1 și listare_automata_comenzi_site = 1. Comunicarea ANAF este oprită. Imprimanta este activată.
+
+2. REGULI DE LUCRU ÎN VÂNZARE
+
+Interfața app_vanzare_v2 afișează Facturi și Import Comenzi Online. Categoria MENIURI și panoul meniu_vanzare_widget.php sunt active.
+
+Metoda ONLINE, stocată ca glovo, este disponibilă. Citirea prin Web Serial COM1 este permisă la locația 1.
+
+Adăugarea produselor folosește ramura specială vanzare_adaug_prod_pe_nota_1005.php. Sunt folosite elemente_bon_1005.php și serviciile de schimbare temporară sau permanentă a denumirii produsului.
+
+Produsele care conțin CAZARE generează o taxă hotelieră de 2% din valoarea netă. Taxa este introdusă separat, cu TVA 0. Denumirile TAXA HOTELIERĂ, TAXA DE ORAȘ și TAXA ORAȘ sunt tratate ca aceeași taxă. Recalcularea șterge taxa anterioară din bon și o înlocuiește cu valoarea curentă.
+
+Cantitățile negative sunt acceptate de ramura specială de adăugare. Ele permit corecții și stornări, inclusiv taxa hotelieră cu semn negativ.
+
+3. REGULI DE LUCRU ÎN RESTAURANT
+
+Interfața restaurant afișează Facturi. Pentru numerar, card și plata mixtă, când există CIF și valoarea este sub limita configurată, operatorul poate continua cu fluxul de factură automată sau îl poate omite explicit.
+
+În app_restaurant_v2, butonul Camera este vizibil. La listarea comenzilor, pozițiile nu sunt grupate. Ordinea și fiecare apariție a produsului se păstrează.
+
+Conținutul trimis la imprimantă este formatat cu evidențiere pentru clientul 8. La fiscalizare, unitatea de măsură este eliminată. Fișierul local de listare la imprimantă este salvat numai pentru clientul 8.
+
+Perioada maximă permisă pentru vânzări poate fi extinsă din panoul administrativ. Regula este comună cu Mark Catering și folosește fișierul local api/8/data_ora_maxima_vanzari.json.
+
+4. CONTABILITATE ȘI RAPOARTE
+
+Nu există rapoarte contabile cu sufix dedicat clientului 8. Rutele standard folosesc raport_gestiune_marfuri.php, raport_gestiune_marfuri_si_productie.php, raport_gestiune_materii.php, situatia_stocurilor_marfuri.php, situatia_stocurilor_materii.php și v2_raport_productie.php.
+
+Interfața administrativă oferă suplimentar dispozițiile de plată seria A, D și R, aceeași excepție fiind disponibilă clientului Versailles.
+
+Închiderea trebuie verificată pe note, detalii, mișcări BF, rapoarte Z, facturi automate și comenzile importate. Taxa hotelieră rămâne linie distinctă la TVA 0 și nu trebuie inclusă în baza de cazare de două ori.
+
+5. DIFERENȚE DE STRUCTURĂ
+
+Exportul conține 115 tabele.
+
+Lipsesc observatii_predefinite, prezentă în 14 din 16 exporturi, și anaf_xml_facturi, prezentă în 11 din 16 exporturi.
+
+În produse_servicii lipsește id_categ_meniuri_personalizate, prezentă în 14 din 16 exporturi. Exportul folosește însă structura separată categ_meniuri_personalizate și meniuri_personalizate.
+
+Structura hotelieră este cea mai completă dintre exporturile analizate. Sunt prezente camere, tipuri_camere, rezervari, rezervari_camere, hotel_setari, hotel_rezervari_facturi și hotel_rezervari_vanzari.
+
+Sunt prezente mapare_woo_pos și woo_order_imports. Crearea anaf_xml_facturi are sens numai dacă se activează fluxul care stochează XML-urile ANAF în această tabelă.
+
+6. FIȘIERE ACTIVE RELEVANTE
+
+login.php
+conectare.php
+app_vanzare_v2/vanzare_magazin.php
+app_vanzare_v2/vanzare_adaug_prod_pe_nota_1005.php
+app_restaurant/vanzare_restaurant.php
+app_restaurant_v2/vanzare_restaurant.php
+app_restaurant_v2/vanzare_restaurant_listare_nota.php
+app_restaurant_v2/casa_marcat_vanzare.php
+extinde_perioada.php

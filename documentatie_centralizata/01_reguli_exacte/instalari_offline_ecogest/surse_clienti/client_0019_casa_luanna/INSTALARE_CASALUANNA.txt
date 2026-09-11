@@ -1,0 +1,89 @@
+INSTALARE OFFLINE CASA LUANNA
+Client 19. Locația 1. Data pregătirii 08.09.2026.
+
+STRUCTURĂ
+Folder executabil: ecogest_offline_casaluanna.
+Surse aplicație: ecogest_offline_casaluanna\admin.
+Punct de intrare pentru ExeOutput: index.php, relativ la folderul sursă admin.
+Bază SQLite externă: api_offline_ecogest_casaluanna\db_local\pos.db.
+Baza a fost creată din u681731335_casaluanna.sql. Istoricul din dump se păstrează. Documentele istorice nu intră în coada de facturi noi.
+Configurare externă: config_offline_casaluanna.json.
+Autentificare: utilizatori, adresa_de_email, parola și dezactivat. Butonul Preia utilizatorii din online este disponibil la autentificare și în administrare. Conturile și parolele se actualizează din online. Conturile dispărute online sunt dezactivate local, fără ștergerea lor.
+Navigație: Facturi, Factură nouă, Date firmă și serii, Sincronizare.
+
+COMPILARE
+Proiectul compiler exe project casaluanna.exop a fost creat la cererea explicită din 08.09.2026, pornind de la copia Bestmixt. Originalul Bestmixt a rămas intact.
+Se deschide proiectul Casa Luanna în ExeOutput. Sursele sunt ecogest_offline_casaluanna\admin, pagina inițială index.php, PHP 8.2. Executabilul configurat este ecogest_offline_casaluanna\ECOGEST FACTURARE OFFLINE CASA LUANNA.exe.
+Compilarea rămâne în sarcina utilizatorului. Nu a fost pornit ExeOutput și nu a fost compilat executabilul.
+La recompilare se includ cele trei fișiere noi din admin: offline_pull.php, pull_online.php și invoice_gate.php. Actualizarea curentă nu modifică .exop și nu produce EXE. css, js, img și vendor păstrează modelul de resurse externe. La distribuire se păstrează resursele externe produse de compilator în structura generată.
+Proiectul nu se modifică automat la actualizări. Pentru fișiere noi este necesară includerea lor în proiect înainte de recompilare.
+Lista resurselor este FISIERE_PENTRU_COMPILARE.txt.
+PHP 8.1 sau mai nou este necesar pentru biblioteca existentă de export XLSX. Se activează PDO_SQLite, cURL, mbstring, XML, ZIP și GD.
+Executabilul final și folderul Data se păstrează în ecogest_offline_casaluanna. Codul sursă rămâne în subfolderul admin, deoarece instalarea Casa Luanna conține administrarea și facturarea, nu interfața de vânzare magazin. Configurarea și baza rămân în directoarele externe existente.
+Arhivatorul este C:\xampp\htdocs\github\instalari_offline_ecogest\arhiveaza_casaluanna.bat. El folosește arhivatorul comun și exclude admin din pachetul de distribuire.
+La actualizări nu se suprascriu pos.db, configurația clientului, identitatea instalării, fișierele operaționale și backupurile.
+Fișierele offline_runtime.php, offline_schema.php și offline_fiscal.php există și în API-ul extern. Dacă se modifică aceste fișiere, se actualizează ambele copii.
+Backupurile, tools și online_de_publicat nu intră în executabil și nu se livrează drept resurse publice.
+
+PORNIRE LOCALĂ
+Apache trebuie să fie pornit pentru endpointul scannerului fiscal.
+Admin Login.url deschide autentificarea locală în instalarea XAMPP.
+Porneste_AutoScanner_Produse.bat pornește executabilul de produse existent.
+Porneste_Scanner_Casa_Marcat.bat pornește executabilul scannerului fiscal existent.
+Niciun launcher nu a fost executat în timpul dezvoltării.
+Calea configurată a instalării este C:\xampp\htdocs\github\instalari_offline_ecogest\casaluanna.
+Directorul fiscal este C:\Fisco\Bonuri, extensia inp, conform modelului Bestmixt.
+
+PUBLICARE ONLINE NECESARĂ
+Din sursele C:\xampp\htdocs\github\agecsin se publică în directorul online sincronizare_online_app_restaurant:
+1. sincronizare_facturi_offline.php, endpoint nou pentru facturi și încasări.
+2. sincronizare_date_offline.php, aceeași sursă existentă, cu o singură gardă CASA_INVOICE_LIBRARY_ONLY înaintea dispecerului. Garda permite reutilizarea autentificării existente fără executarea endpointului de note.
+3. casa_offline_catalog_lib.php, preluări și protecția numerotării.
+În rădăcina online se publică împreună casa_invoice_lifecycle_lib.php și modificările punctuale din facturi.php, anaf_validare.php, anaf_incarcare.php, anaf_xml_genereaza.php, anaf_incarcare_directa.php, duplicare_factura.php, duplicare_factura_corectare.php, genereaza_factura_stornare.php și stornare_factura.php. Lista explicată este în ACTUALIZARE_SYNC_ONLINE.txt.
+Înainte de înlocuirea fișierului comun online, se păstrează copia lui. Dacă sursa online a fost modificată între timp, se adaugă numai garda din copia pregătită, fără înlocuirea celorlalte modificări.
+Ambele fișiere sunt instalate și în sursele C:\xampp\htdocs\github\agecsin\sincronizare_online_app_restaurant. Modificarea fișierului comun este de două linii. Nu s-au efectuat cereri către serverul live. Publicarea pe serverul găzduit rămâne necesară dacă acesta nu este actualizat din acest checkout.
+Fără publicarea endpointului nou, facturile rămân local în coadă.
+
+FACTURARE ȘI TRANSMITERE
+Se completează antetul și produsele în formularele preluate din agecsin. Listările PDF, exportul XLSX și XML SAGA folosesc datele locale.
+Antetul numerotat se pune automat în coadă și se încearcă transmiterea imediat după salvare, inclusiv pentru duplicare și stornare. Produsele și modificările ulterioare se transmit ca revizii ordonate. O revizie neconfirmată rămâne intactă, iar modificările următoare se trimit după confirmarea ei.
+Finalizarea se face din Sincronizare, prin Finalizează și sincronizează. Online apare distinct starea În lucru offline, număr rezervat sau Finalizată offline. Trimiterea la ANAF este blocată online pentru documentele încă în lucru offline.
+Fiecare încărcare a listei facturilor preia datele firmei, seriile și toate paginile facturilor online, inclusiv statusurile ANAF. Dacă apar facturi noi între pagini, preluarea continuă. Facturile importate au ID-uri locale mapate, fără suprascrierea facturilor locale cu același ID numeric.
+Fiecare cerere online are limita de 6 secunde. După aproximativ 6 secunde apare Continuă fără verificare, cu avertizare și confirmare explicită privind verificarea manuală a seriei și ultimului număr facturat. Confirmarea unei verificări este valabilă pentru o singură afișare, nu pentru încărcările viitoare ale listei.
+Workerul verifică transmiterea la 15 secunde cât timp aplicația este deschisă, inclusiv în pagina de autentificare fără utilizator conectat. Nu este instalat un serviciu Windows pentru sincronizare când aplicația este închisă.
+Evenimentele sunt persistente și au identificator unic, revizie, hash de conținut și identitatea instalării. După erori se reîncearcă progresiv, până la o oră între încercări. Butonul manual resetează așteptarea aceleiași cozi.
+Confirmarea se acceptă numai pentru același eveniment, același hash și un ID online valid.
+Stornarea creează o factură nouă de tip 380 în aceeași serie. Numărul se calculează la salvare ca următorul număr cronologic disponibil. Operația locală este serializată și tranzacțională. Cantitățile, discounturile și valorile se inversează, iar prețul unitar se păstrează. Mișcările și legătura cu factura sursă se copiază cu ID-uri noi.
+Se transmit factura, liniile sale, mișcările asociate, încasările, bonurile fiscale și legătura stornării. ID-urile locale sunt mapate la ID-urile online.
+Bonurile importate online au de_trimis_la_casa_marcat=0, pentru a nu fi fiscalizate a doua oară.
+Încasările noi ale facturilor istorice se trimit separat, folosind identificarea facturii istorice prin ID, serie și număr.
+Seria și numărul duplicate online produc un conflict. Nu se suprascrie factura existentă și nu se schimbă automat numărul facturii emise.
+Inițializarea din client_login.php instalează în baza clientului 19 o coloană calculată și indexul unic casa_unique_invoice_number pentru facturile numerotate. casa_invoice_schema.php memorează versiunea în casa_schema_versions după succes. Sesiunea memorează aceeași versiune. API-ul citește doar versiunea și nu repetă DDL. Se publică ambele fișiere și se efectuează autentificarea clientului online. Protecția se aplică tuturor scripturilor online, inclusiv salvărilor simultane. Documentele fără număr sunt exceptate. Dacă există deja duplicate, operația este refuzată fără ștergere sau renumerotare. Este necesar dreptul ALTER pentru inițializare.
+Fără conexiune nu poate fi garantată rezervarea unui număr folosit simultan de altă instalare. Conflictele se afișează în lista facturilor și în Sincronizare. Documentele rămân în coadă pentru reconciliere.
+O revizie neconfirmată nu se rescrie. Conflictele se reconciliază înainte de reluarea transmiterii.
+Facturile confirmate pot fi redeschise local pentru o revizie nouă. Serverul refuză modificările de conținut după încărcarea la ANAF și semnalează modificările concurente ale antetului sau liniilor online.
+Ștergerea locală este disponibilă numai înainte de prima transmitere și înainte de pregătirea unui bon fiscal. Ștergerile documentelor deja transmise se gestionează online.
+Butoanele de validare, generare XML și încărcare ANAF au fost eliminate din formularul offline. Statusul se preia din API și arată data ultimei verificări. Emailul și importul PVI rămân operații online. Tokenul ANAF nu este transmis de noul export al firmei.
+Datele firmei și seriile sunt administrate online și consultate local. Administrare oferă butoane pentru datele firmei și serii, utilizatori și TVA, respectiv produse. Preluarea eșuată nu înlocuiește setul local.
+
+PRODUSE
+AutoScannerul este configurat pentru clientul 19 și baza externă pos.db.
+Fișierul criptat Resurse a fost regenerat pentru Casa Luanna. Nu se reutilizează identitatea Bestmixt.
+Programarea automată este activă, cu interval de 10 minute și verificare la pornirea scannerului.
+Nomenclatorul deja salvat rămâne disponibil fără internet.
+Butonul Preia produsele descarcă același nomenclator al clientului 19 din baza online. Produsele dispărute din export sunt dezactivate local. Documentele deja emise își păstrează liniile și prețurile.
+
+CASA DE MARCAT
+Bonul are previzualizare și confirmare. Metodele de plată trebuie să însumeze totalul facturii.
+Discountul nu se scade a doua oară din totalul net al liniilor.
+MASA SERVITA 11% folosește codul TVA fiscal 4. Celelalte cote folosesc coduri_casa_tva.
+Cantitatea și prețul se verifică față de precizia acceptată de formatul fiscal.
+Coada este persistentă. La confirmarea bonului se publică atomic fișierul api_offline_ecogest_casaluanna\19\1\bon_casa_marcat.json, fără generarea sau descărcarea unui fișier TXT.
+Scannerul revendică atomic fișierul JSON și îl elimină după preluare. Fiecare trimitere la casa de marcat are un job fiscal distinct, iar retrimiterea aceleiași facturi este permisă.
+Stările sunt vizibile în Sincronizare. Preluat de scanner nu înseamnă confirmarea fizică a tipăririi. Scannerul existent nu are un endpoint de confirmare fiscală.
+Dacă se întrerupe transferul după marcarea preluării, se verifică scannerul, fișierul arhivat și casa înainte de orice retransmitere manuală. Nu se retrimite automat un bon cu rezultat fiscal incert.
+
+VERIFICĂRI EFECTUATE
+Numai citirea codului, verificări de dependențe locale și verificări de sintaxă.
+Nu au fost pornite pagini PHP, aplicația, scannerele sau buildul EXE. Nu s-au făcut vânzări de probă, cereri online sau teste funcționale.
+Rezultatele verificărilor finale sunt în VERIFICARI_STATICE.txt.

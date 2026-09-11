@@ -1,0 +1,47 @@
+ACTUALIZARE SINCRONIZARE CASA LUANNA, 08.09.2026
+
+SURSE OFFLINE
+Actualizare origine și ștergere: în listă apare Origine OFFLINE, această instalare, Origine ONLINE sau Origine OFFLINE, altă instalare. Sincronizarea nu schimbă originea documentului creat local.
+La recompilare se include și noul offline_delete.php. .exop și executabilul rămân nemodificate.
+Ștergerea este permisă numai pentru facturile create în această instalare. Pentru cele niciodată transmise se face local. Pentru cele deja intrate în sincronizare se înregistrează o revizie de ștergere, ordonată după transmiterile anterioare. Factura locală rămâne blocată și rezervă numărul până la confirmarea online.
+Serverul verifică proprietarul, seria și numărul, lipsa încasărilor, bonurilor și a încărcărilor ANAF, lipsa stornărilor referitoare la document și a numerelor ulterioare în aceeași serie. Verifică și modificările concurente ale facturii. Refuzul păstrează documentul și arată eroarea în Sincronizare.
+Documentul șters este arhivat în casa_remote_archive local și casa_invoice_deleted online. Confirmările sunt idempotente. Nu se șterg înregistrările cozii și maparea originii. Factura ștearsă nu se recreează printr-o revizie ulterioară.
+Publicare pentru această modificare: casa_invoice_schema.php, versiunea 2, și sincronizare_online_app_restaurant/sincronizare_facturi_offline.php. După publicare se efectuează autentificarea clientului 19 pentru noua versiune de schemă. Nu se modifică schema celorlalți clienți.
+Au fost verificate static și prin php -l cele nouă fișiere PHP modificate. Nu s-a executat nicio ștergere, migrare, aplicație sau cerere API în timpul dezvoltării. Backupul surselor este în backups/origini_stergere_v2.
+Folder: ecogest_offline_casaluanna\admin.
+La recompilarea manuală se includ offline_pull.php, pull_online.php și invoice_gate.php. Fișierele sunt relative la admin, fără prefix admin în manifestul ExeOutput.
+Proiectul .exop, executabilul, baza pos.db și configurarea clientului nu au fost modificate în această actualizare.
+offline_schema.php trebuie distribuit și în api_offline_ecogest_casaluanna. Copia externă este actualizată. Migrarea SQLite la versiunea 3 se execută de aplicație la prima folosire, nu a fost rulată în timpul dezvoltării.
+
+PUBLICARE ONLINE
+Sursa este C:\xampp\htdocs\github\agecsin.
+În sincronizare_online_app_restaurant se publică sincronizare_facturi_offline.php și noul casa_offline_catalog_lib.php. Fișierul sincronizare_date_offline.php trebuie să păstreze garda CASA_INVOICE_LIBRARY_ONLY existentă.
+În rădăcina aplicației online se publică noul casa_invoice_lifecycle_lib.php.
+În rădăcina online se publică și casa_invoice_schema.php împreună cu modificarea din client_login.php. Clientul Casa Luanna se autentifică online după publicare. Inițializarea rulează numai pentru clientul 19, memorează versiunea în casa_schema_versions după succes și păstrează versiunea și în sesiune. La autentificările din sesiuni noi se citește doar versiunea persistentă, fără repetarea DDL. API-urile citesc versiunea și cer autentificare online dacă inițializarea lipsește.
+Modificări punctuale în facturi.php: afișarea stării documentelor offline.
+Modificări punctuale în anaf_validare.php, anaf_incarcare.php, anaf_xml_genereaza.php și anaf_incarcare_directa.php: refuzul trimiterii facturii aflate încă în lucru offline.
+Modificări punctuale în duplicare_factura.php, duplicare_factura_corectare.php, genereaza_factura_stornare.php și stornare_factura.php: excluderea coloanei calculate casa_number_series la copierea dinamică a unei facturi.
+Se păstrează orice modificări mai noi de pe server. Publicarea acestor modificări este necesară înainte de folosirea versiunii offline actualizate.
+
+NUMEROTARE
+Inițializarea de la autentificarea online creează indexul unic pentru serie și număr, cu exceptarea documentelor fără număr. Operația nu renumerotează și nu șterge facturi. Dacă baza are deja duplicate sau nu permite ALTER, inițializarea raportează eroarea și nu marchează versiunea ca reușită. API-ul păstrează transmiterile locale în așteptare.
+Salvarea unui antet numerotat declanșează transmiterea automată. Numărul este confirmat numai după răspunsul API-ului. Reviziile sunt persistente și idempotente. Modificările făcute în timpul unei transmiteri se expediază după confirmarea reviziei precedente.
+Un conflict de numerotare necesită reconciliere, fără renumerotarea automată a documentului emis.
+
+PRELUARE
+La fiecare afișare a listei se verifică online datele firmei, seriile, facturile și statusurile ANAF, în fundal. Lista locală rămâne afișată. Fără conexiune apare avertizarea privind seria și ultimul număr, fără ecran de așteptare. Adăugarea unei facturi fără verificare cere confirmarea avertizării.
+Utilizatorii se preiau atât de la autentificare, cât și din Administrare. Datele firmei, seriile și produsele au butoane separate de preluare. Scanarea automată a produselor rămâne activă.
+Facturile și liniile online au mapări proprii. Încasările locale sunt urmărite separat pentru a nu fi dublate la preluare. Liniile importate care sunt ulterior eliminate online sunt arhivate local în casa_remote_archive înainte de reconciliere. Încasările create local sunt păstrate.
+
+BACKUP
+Copiile surselor dinaintea acestei actualizări se află în backups\sync_revision_20260908_130348.
+Nu s-au pornit aplicația, scannerele, API-urile, migrarea bazei, arhivatorul sau compilarea. Validarea este exclusiv statică și de sintaxă.
+
+ACTUALIZAREA DIN 09.09.2026
+Pentru această revizie se publică împreună, din agecsin: sincronizare_online_app_restaurant/casa_offline_catalog_lib.php, sincronizare_online_app_restaurant/sincronizare_facturi_offline.php, casa_invoice_lifecycle_lib.php și update_factura.php. Rămân necesare fișierele enumerate anterior dacă nu au fost încă publicate. Nu s-a făcut publicarea din această sesiune.
+Schema locală are versiunea 4. Creează obiectele lipsă din versiunea 3 și câmpul authority, fără schimbarea datelor de conectare. Se aplică la următoarea deschidere a aplicației de către utilizator. Schema din admin și cea din API-ul local sunt identice. Nu este necesar un ensure suplimentar în online pentru această revizie.
+Originea rămâne locală pentru o factură creată în această instalare, inclusiv după sincronizare. Dreptul de editare este separat. Facturile preluate din online sunt pentru consultare. Facturile locale rămân editabile cât timp sunt în lucru, cu protecțiile ANAF existente. După finalizare, confirmare și preluare, administrarea lor trece online.
+Salvarea antetului în editorul online transferă administrarea facturii Casa Luanna în online. API-ul refuză reviziile locale ulterioare pentru această factură. Preluarea detectează și schimbările de antet sau linii. O versiune locală neconfirmată se arhivează înainte de preluarea corecției online. Evenimentele în conflict rămân păstrate, dar nu mai sunt retransmise automat.
+Documentele neschimbate sunt comparate prin amprente. API-ul citește liniile grupat, pe pagini de maximum 40 de facturi. Detaliile unei facturi se verifică separat, prin ID-ul online. Lista se actualizează fără reîncărcarea paginii și păstrează căutarea DataTables, pagina și poziția. Înlocuirea rândurilor așteaptă închiderea dialogurilor și meniurilor.
+Eroarea 503 a sync_tick.php și întreruperea paginilor facturi/detalii au fost identificate în jurnalul Apache: lipseau casa_local_receipts și casa_online_company. Corecția este în schema locală, fără executarea migrării de către agent.
+Copiile anterioare acestei revizii sunt în backups/refresh_readonly_v2. Verificarea acestei revizii s-a făcut prin citirea codului, a jurnalului existent și verificarea căilor resurselor locale. Nu au fost executate aplicația, API-urile, teste funcționale sau interogări în baze. EXE și EXOP nu au fost modificate.

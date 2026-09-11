@@ -1,0 +1,905 @@
+ACTIVITĂȚI HANUL PATRISIEI ȘI CONTABILITATE
+Client AGECS: client_id 9
+Document operațional pentru gestiune, producție, stocuri și reconciliere contabilă
+Data ultimei consolidări: 21.08.2026
+
+
+1. SCOPUL DOCUMENTULUI
+
+Acest document fixează regulile de lucru aplicabile clientului Hanul Patrisiei, client_id 9.
+
+Regulile urmăresc ca rapoartele AGECS să păstreze aceeași logică pentru:
+
+- gestiunea MĂRFURI
+- gestiunea MATERII PRIME
+- gestiunea PRODUSE FINITE
+- producția restaurantului
+- consumurile pe rețete
+- bonurile de consum manuale
+- transformarea produselor finite în mărfuri
+- vânzările prin numerar, card și virament bancar
+- facturile PYN emise pentru consumurile de restaurant ale persoanelor cazate
+- închiderea lunară și preluarea soldului în luna următoare
+- reconcilierea cu fișele contabile 301.02, 345, 371.02, 378.02 și 4428.02
+
+Documentul trebuie verificat înaintea oricărei modificări în rapoartele dedicate Hanului Patrisiei.
+
+
+2. DOMENIUL DE APLICARE
+
+Regulile sunt dedicate exclusiv clientului cu client_id 9.
+
+Scripturile principale sunt:
+
+- raport_gestiune_marfuri_si_productie_hanul.php
+- raport_productie_hanul.php
+- raport_gestiune_materii_hanul.php
+- situatia_stocurilor_marfuri_hanul.php
+- situatia_stocurilor_materii_hanul.php
+- bon_consum.php
+- verificare_pyn_virament_hanul.php
+- sarcina_inchidere_stoc_hanul.php
+- sarcina_inchidere_stoc_materii_hanul.php
+- sarcina_corectie_consum_productie_iulie_hanul.php
+- sarcina_corectie_consum_productie_august_hanul.php
+
+Motoarele comune folosite de aceste fluxuri sunt:
+
+- hanul_cmp_engine.php
+- hanul_bcm_costing.php
+- hanul_bon_consum_reteta_service.php
+- bon_consum_reteta_api.php
+
+Fișierele cu sufixul _old.php sau _modificat.php sunt copii istorice. Ele nu reprezintă sursa curentă de calcul.
+
+
+3. PRINCIPII CONTABILE ȘI DE CONTROL
+
+3.1. Ecuația gestiunii de mărfuri și produse finite
+
+Sold final = Sold inițial + Total intrări - Total ieșiri
+
+Soldul final al unei perioade trebuie să devină soldul inițial al perioadei următoare.
+
+3.2. Ecuația gestiunii de materii prime
+
+Sold final MATERII = Sold inițial MATERII + Intrări MATERII - Ieșiri la CMP
+
+Ieșirile de materii sunt evaluate la cost mediu ponderat, denumit CMP.
+
+3.3. Autoritatea valorică și detaliul fizic
+
+Raportul de gestiune reprezintă sursa pentru totalurile global valorice.
+
+Situația stocurilor explică aceste totaluri prin cantități și valori repartizate pe articole.
+
+Dacă o diferență valorică nu are cantități pe articole, ea se prezintă separat în reconciliere. Nu se inventează cantități și nu se creează produse fictive doar pentru a forța egalitatea.
+
+3.4. Precizia
+
+Totalurile contabile se afișează la două zecimale.
+
+CMP-ul poate fi păstrat intern și afișat cu până la cinci zecimale.
+
+Rotunjirea intermediară nu trebuie să schimbe totalul contabil final.
+
+3.5. Egalitatea obligatorie între raportul de gestiune și situația stocurilor
+
+Pentru aceeași perioadă, aceeași gestiune, aceeași cotă TVA și aceleași filtre, soldul final valoric din situația stocurilor trebuie să fie egal cu soldul final din raportul de gestiune. Regula este reciprocă. Niciunul dintre cele două rapoarte nu poate închide perioada cu alt sold valoric.
+
+Raportul de gestiune prezintă rulajul global valoric. Situația stocurilor prezintă cantitățile și valorile repartizate pe articole, împreună cu reconcilierea valorică pentru elementele care nu au cantități asociate. După reconciliere trebuie să rezulte exact același sold final.
+
+Egalitatea obligatorie se verifică pentru soldul inițial, totalul intrărilor, totalul ieșirilor și soldul final. O diferență indică o omisiune, o dublare, o evaluare CMP diferită, o rotunjire aplicată neuniform sau o corecție valorică prezentă numai într-un raport.
+
+Corecțiile strict valorice nu modifică artificial cantitățile. Ele se afișează distinct în ambele rapoarte și intră o singură dată în calculul soldului valoric.
+
+Soldul final reconciliat al lunii devine soldul inițial al lunii următoare. Corecția deja inclusă în soldul transmis nu se afișează din nou ca intrare în luna următoare.
+
+
+4. DICȚIONARUL OPERAȚIUNILOR
+
+NIR
+
+Nota de recepție reprezintă o intrare reală în gestiune. Pentru mărfuri, intrarea global valorică este urmărită la preț de vânzare. Pentru materii prime, intrarea este urmărită la cost de achiziție.
+
+PVI
+
+Procesul verbal de inventariere fixează stocul de pornire la o dată de închidere. PVI-ul nu este o achiziție nouă în luna următoare.
+
+BT
+
+Bonul de transformare reprezintă obținerea produsului finit din consumul ingredientelor prevăzute în rețetă.
+
+BC
+
+Bonul de consum reprezintă consumul de producție generat pentru produsele finite vândute sau produse.
+
+BCM
+
+Bonul de consum manual reprezintă un consum intern introdus explicit. Începând cu 01.07.2026, pentru fluxul nou se introduc direct ingredientele din rețeta produsului finit ales.
+
+INCH
+
+Închiderea notei sau a raportului Z reprezintă vânzarea efectivă. Data ieșirii din gestiune este data notei închise.
+
+RAP sau NC-trsf PF la MF
+
+Nota de transfer produse finite către mărfuri introduce în gestiunea de mărfuri valoarea de vânzare a produselor finite obținute.
+
+TRF MĂRFURI către MATERII
+
+Transferul tehnic mută la CMP o marfă folosită ca ingredient într-o rețetă. În raportul de materii poate apărea ca intrare tehnică urmată de consum la același CMP.
+
+CMPA
+
+Regularizarea CMP este o ajustare tehnică necesară alinierii valorii consumului cu motorul CMP. Nu este NIR și nu reprezintă o achiziție.
+
+FACT SPV sau PYN
+
+Factura PYN este documentul fiscal emis pentru clientul cazat. Dacă vânzarea restaurantului există deja într-o notă închisă, factura nu produce o a doua ieșire din stoc.
+
+VB
+
+Viramentul bancar este metoda de încasare a notei de restaurant. Nu este o ieșire suplimentară față de produsele deja înregistrate în notă.
+
+BACSIS
+
+Bacșișul nu reprezintă marfă sau produs finit. El nu intră în cantitățile și valorile de gestiune și nu intră în reconcilierea PYN Restaurant.
+
+
+5. TRATAMENTUL MĂRFURILOR
+
+5.1. Intrări din NIR
+
+Mărfurile recepționate prin NIR intră cantitativ și valoric.
+
+Evidența global valorică a mărfurilor este ținută la preț de vânzare cu amănuntul.
+
+Valoarea de achiziție și CMP-ul rămân disponibile pentru analiza costului și pentru mărfurile folosite ca ingrediente.
+
+5.2. Intrări din produse finite
+
+Produsele finite realizate de restaurant trec în gestiunea de mărfuri prin NC-trsf PF la MF.
+
+Intrarea în mărfuri se face la valoarea de vânzare aferentă produselor finite.
+
+Această intrare este un transfer intern. Nu reprezintă o achiziție de la furnizor.
+
+5.3. Ieșiri prin vânzare
+
+Ieșirea se înregistrează la data notei de restaurant închise.
+
+Metoda de plată poate fi numerar, card sau virament bancar. Metoda de plată nu schimbă data și valoarea ieșirii din gestiune.
+
+Produsele nepatrimoniale, bacșișul și liniile fără caracter de marfă se exclud.
+
+5.4. Mărfuri folosite în rețete
+
+O marfă poate fi utilizată ca ingredient într-un produs finit.
+
+În această situație, cantitatea se scade din stocul mărfii.
+
+Valoarea consumată se calculează la CMP-ul mărfii.
+
+În raportul de materii, aceeași valoare poate fi prezentată ca transfer tehnic din MĂRFURI și consum în producție. Transferul nu creează valoare economică nouă.
+
+În raportul combinat de mărfuri și produse finite, aceeași valoare nu trebuie dublată.
+
+5.5. Prețul folosit în situația stocurilor
+
+Stocul global valoric al mărfurilor este urmărit la preț de vânzare.
+
+CMP-ul este informativ și este folosit pentru costul mărfurilor consumate în rețete.
+
+Dacă produsul nu are tranzacții de vânzare în perioada selectată, raportul caută ultimul preț cunoscut până la data finală.
+
+Dacă nu există un preț istoric, se poate utiliza prețul curent din produse_servicii ca rezervă. Această utilizare trebuie marcată în raport.
+
+Unitatea H87 se afișează ca BUC în rapoartele de stoc.
+
+
+6. TRATAMENTUL MATERIILOR PRIME
+
+6.1. Intrări reale
+
+NIR-urile de materii prime reprezintă intrări reale în contul 301.02.
+
+PVI-ul de închidere fixează stocul inițial. El nu se adaugă din nou la totalul NIR-urilor lunii următoare.
+
+6.2. Intrări tehnice
+
+O marfă folosită într-o rețetă poate genera o intrare tehnică în motorul de materii, de tip TRF MĂRFURI către MATERII.
+
+Această intrare este evaluată la CMP-ul mărfii.
+
+Ea trebuie separată de intrările NIR, deoarece nu reprezintă o achiziție externă.
+
+6.3. Ieșiri de materii
+
+Ieșirile prin BC și BCM se evaluează la CMP.
+
+Nota contabilă de consum a materiilor prime este:
+
+DEBIT 345
+CREDIT 301.02
+
+Suma notei trebuie să corespundă costului total al ingredientelor consumate pentru produsele finite și consumurile interne incluse în perioada contabilă.
+
+6.4. Marfă utilizată ca materie
+
+Costul mărfii utilizate în rețetă se include o singură dată în costul producției.
+
+Intrarea tehnică în materii și ieșirea prin consum se pot vedea separat pentru trasabilitate.
+
+Valoarea nu se adaugă de două ori în totalul economic al gestiunilor reunite.
+
+6.5. Închiderea materiilor la 30.06.2026
+
+Soldul final corect al materiilor prime la 30.06.2026 este 81.632,14 lei.
+
+Componența stabilită este:
+
+- stoc PVI repartizat pe articole, 51.940,32 lei
+- regularizare global valorică, 29.691,82 lei
+- total sold final, 81.632,14 lei
+
+Valoarea mai veche de 69.940,18 lei nu mai este reperul de închidere.
+
+Regularizarea de 29.691,82 lei apare în raportul lunii iunie și se preia în soldul inițial al lunii iulie fără a fi prezentată ca o nouă intrare în iulie.
+
+
+7. PRODUSE FINITE ȘI RAPORTUL DE PRODUCȚIE
+
+7.1. Fluxul normal
+
+Fluxul standard este:
+
+Rețetă -> consum ingrediente prin BC -> obținere produs finit prin BT -> transfer produs finit în mărfuri -> vânzare prin notă închisă
+
+7.2. Costul de producție
+
+Costul produsului finit este suma ingredientelor consumate la CMP.
+
+Cost unitar produs finit = Cost total ingrediente / Cantitate obținută prin BT
+
+Un produs finit vândut cu cost zero trebuie verificat pentru rețetă lipsă, ingrediente lipsă, BC lipsă sau ingredient neevaluat.
+
+Nu se inventează un cost pentru a închide diferența.
+
+7.3. Filtrarea pe cota TVA
+
+Începând cu rapoartele aferente lunii iulie 2026, costul se repartizează după cota TVA a produsului finit.
+
+Cota TVA a ingredientului nu mută costul în altă cotă de producție.
+
+Un produs finit cu TVA 11% poate avea ingrediente cu TVA 21%. Costul ingredientelor rămâne în totalul produsului finit cu TVA 11%.
+
+Un produs finit cu TVA 21% poate avea ingrediente cu TVA 11%. Costul ingredientelor rămâne în totalul produsului finit cu TVA 21%.
+
+7.4. Nota de transfer produse finite către mărfuri
+
+Pentru fiecare cotă TVA, nota are următoarea structură:
+
+DEBIT 371.02
+CREDIT 345, costul produselor finite
+CREDIT 378.02, adaosul comercial
+CREDIT 4428.02, TVA neexigibilă
+
+Valoarea totală transferată în 371.02 este valoarea de vânzare cu amănuntul.
+
+TVA neexigibilă = Valoare cu TVA x Cota TVA / (100 + Cota TVA)
+
+Adaos comercial = Valoare de vânzare - Cost de producție - TVA neexigibilă
+
+Verificarea obligatorie este:
+
+Cost de producție + Adaos comercial + TVA neexigibilă = Debit 371.02
+
+Valoarea producției pe fiecare cotă trebuie să corespundă rândului NC-trsf PF la MF din raportul de gestiune mărfuri și producție.
+
+7.5. Nota de consum a materiilor
+
+Costul total al ingredientelor aferente producției se înregistrează prin:
+
+DEBIT 345
+CREDIT 301.02
+
+Această notă este distinctă de nota de transfer 371.02 = 345 + 378.02 + 4428.02.
+
+
+8. MOTORUL CMP APLICABIL DIN 01.07.2026
+
+8.1. Data de aplicare
+
+Regulile noi de CMP se aplică mișcărilor începând cu 01.07.2026 inclusiv.
+
+Perioadele până la 30.06.2026 rămân istorice și nu se recalculează automat cu noul motor.
+
+8.2. Formula CMP
+
+CMP nou = (Valoare stoc vechi + Cantitate intrată x Preț intrare) / (Cantitate veche + Cantitate intrată)
+
+O ieșire folosește CMP-ul existent în momentul ieșirii.
+
+Ieșirea nu modifică prețul mediu al cantității rămase.
+
+8.3. Stoc ajuns la zero
+
+Ultimul CMP pozitiv cunoscut se păstrează chiar dacă stocul cantitativ ajunge la zero.
+
+8.4. Ieșire înaintea primei intrări din perioadă
+
+Ordinea de rezervă este:
+
+1. Ultimul CMP pozitiv cunoscut înaintea ieșirii.
+2. Prima intrare NIR ulterioară din perioada analizată.
+3. Prețul de achiziție din produse_servicii.
+
+Folosirea unei valori de rezervă trebuie marcată în raport.
+
+Dacă ingredientul nu poate fi evaluat, el primește starea NEEVALUAT. Generarea automată a consumului este blocată până la remediere.
+
+CMP-ul nu se reconstruiește prin propagarea unui stoc negativ.
+
+
+9. BONUL DE CONSUM MANUAL DIRECT DIN REȚETĂ
+
+9.1. Regula curentă
+
+Începând cu 01.07.2026, bon_consum.php permite alegerea unui produs finit și a cantității.
+
+Sistemul citește rețeta produsului și pregătește direct ingredientele necesare.
+
+Utilizatorul verifică previzualizarea înaintea salvării.
+
+În BCM se introduc materiile prime și mărfurile utilizate ca ingrediente.
+
+Nu se introduce produsul finit ca linie de consum.
+
+Nu se generează BT pentru consumul intern.
+
+Nu se generează vânzare fictivă.
+
+Nu se generează NC-trsf PF la MF pentru consumul intern direct pe ingrediente.
+
+9.2. Protecții
+
+Previzualizarea este legată de un hash al planului de consum.
+
+Dacă rețeta sau datele se schimbă între previzualizare și salvare, operațiunea trebuie recalculată.
+
+Generarea se jurnalizează în tabelele dedicate, pentru trasabilitate și prevenirea duplicării.
+
+Ingredientele neevaluate blochează salvarea automată.
+
+9.3. BUFET SUEDEZ 1 PERS, cod 1216
+
+Produsul poate fi vândut direct prin programul de restaurant pe bon fiscal.
+
+Vânzarea directă rămâne o vânzare normală de produs finit și nu este modificată de regula BCM.
+
+Pentru micul dejun oferit persoanelor cazate, începând cu 01.07.2026 se consumă direct ingredientele rețetei prin BCM.
+
+În acest caz, BUFET SUEDEZ nu trebuie să apară ca produs finit consumat prin BCM.
+
+Această regulă evită crearea artificială a unui stoc de BUFET SUEDEZ și evită includerea forțată a consumului intern în NC-trsf PF la MF.
+
+9.4. Regula istorică până la 30.06.2026
+
+În perioadele închise până la 30.06.2026 pot exista BCM-uri în care BUFET SUEDEZ apare ca produs finit.
+
+Tratamentul istoric este păstrat numai pentru documentele și rapoartele deja închise.
+
+Regula istorică nu trebuie extinsă după 01.07.2026.
+
+
+10. REȚETE LIPSĂ ȘI CONSUMURI DE PRODUCȚIE
+
+10.1. Corecția aferentă lunii iulie 2026
+
+Sarcina operativă a tratat produsele vândute fără consumuri complete:
+
+- cod 10063, CIORBĂ DE FASOLE CU AFUM
+- cod 10064, CRISPY DE PUI CU CARTOFI
+- cod 10065, DESERTUL BUCĂTARULUI
+
+Sarcina a avut următoarele obligații:
+
+- salvează rețetele anterioare
+- introduce numai ingredientele confirmate și existente în baza de date
+- generează numai mișcările BC lipsă
+- evită dublarea consumurilor existente
+- blochează ingredientele neevaluate
+- permite revenirea controlată
+
+BUFET SUEDEZ, cod 1216, nu face parte din această corecție a celor trei produse.
+
+10.2. Verificarea lunară
+
+La închiderea fiecărei luni se verifică:
+
+- produse finite vândute fără rețetă
+- produse finite cu rețetă goală
+- produse finite fără BC
+- ingrediente cu stare NEEVALUAT
+- produse finite cu cost zero
+- stocuri negative
+- consumuri duplicate
+- diferențe între costul din raportul de producție și ieșirile din raportul de materii
+
+Sarcina aferentă lunii august se rulează numai după închiderea perioadei și verificarea datelor.
+
+
+11. METODELE DE PLATĂ ȘI MOMENTUL IEȘIRII
+
+11.1. Numerar
+
+Încasarea în numerar nu schimbă momentul descărcării. Produsele ies din gestiune la data închiderii notei.
+
+11.2. Card
+
+Încasarea cu cardul nu schimbă momentul descărcării. Produsele ies din gestiune la data închiderii notei.
+
+Emiterea ulterioară a unei facturi cu CUI nu generează o a doua ieșire.
+
+11.3. Virament bancar
+
+Produsele ies din gestiune la data închiderii notei cu metoda de plată virament bancar.
+
+Factura PYN emisă ulterior nu generează o nouă ieșire.
+
+11.4. Bacșiș
+
+Bacșișul nu se include în ieșirea de mărfuri, în producție sau în totalul PYN Restaurant.
+
+
+12. FLUXUL PYN RESTAURANT ȘI VIRAMENT BANCAR
+
+12.1. Modul real de lucru
+
+Clientul este cazat la Hanul Patrisiei.
+
+În timpul sejurului consumă zilnic produse în restaurant.
+
+Nota de restaurant se închide în ziua consumului, cu metoda de plată virament bancar.
+
+Factura PYN pentru liniile RESTAURANT 11% și RESTAURANT 21% se emite la checkout.
+
+Checkout-ul poate avea loc în altă zi sau în altă lună față de consum.
+
+12.2. Data corectă pentru gestiune
+
+Data reală a ieșirii din stoc este data notei de restaurant închise.
+
+Data facturii PYN este data fiscală a facturării, nu data consumului fizic.
+
+Raportul de gestiune folosește notele restaurantului, inclusiv notele pe virament bancar.
+
+Factura PYN nu se adaugă din nou în Total ieșiri.
+
+12.3. Ce se include din PYN
+
+În verificarea informativă se includ numai liniile:
+
+- RESTAURANT 11%
+- RESTAURANT 21%
+
+Se exclud:
+
+- cazarea
+- taxele hoteliere
+- bacșișul
+- alte servicii fără caracter de vânzare de restaurant
+
+12.4. Reconcilierea lunară
+
+Diferență PYN/VB = Total virament bancar Restaurant - Total PYN Restaurant
+
+Dacă diferența este pozitivă, se afișează PLUS. Există consumuri înregistrate în perioada curentă care nu au fost încă facturate PYN în aceeași perioadă.
+
+Dacă diferența este negativă, se afișează MINUS. În perioada curentă au fost emise facturi PYN pentru consumuri înregistrate în perioade anterioare.
+
+Dacă diferența este zero, consumurile și facturile PYN se compensează în perioada analizată.
+
+Diferența este informativă pentru contabilitate. Ea nu se adaugă automat la ieșirile de gestiune.
+
+12.5. Sensul contabil al diferenței
+
+Contabilul importă facturile PYN după data facturii.
+
+Raportul AGECS urmărește consumul după data notei de restaurant.
+
+Din acest motiv, diferența lunară nu indică automat o lipsă de vânzare. Ea poate reprezenta doar decalajul dintre consum și checkout.
+
+Numărul camerei și numărul rezervării sunt informații de diagnostic. Ele nu sunt o cheie sigură de asociere, deoarece aceeași cameră poate avea clienți diferiți, iar utilizatorii nu asociază întotdeauna viramentul cu rezervarea.
+
+12.6. Regula de nedublare
+
+Totalul ieșirilor se bazează pe notele restaurantului.
+
+Totalul PYN se afișează informativ.
+
+Totalul viramentelor bancare se afișează informativ.
+
+PYN și viramentul bancar nu se adaugă încă o dată peste Total ieșiri.
+
+Regula a fost consolidată la 21.08.2026.
+
+12.7. Exemplu pentru august 2026, TVA 11%
+
+Total virament bancar Restaurant 11% = 19.047,00 lei
+
+Total PYN Restaurant 11% = 18.432,00 lei
+
+Diferență = +615,00 lei
+
+Interpretare: în august există cu 615,00 lei mai multe consumuri închise pe virament bancar decât facturi PYN Restaurant emise în aceeași lună. Suma poate fi facturată la un checkout ulterior.
+
+
+13. COTELE TVA
+
+13.1. Cotele curente
+
+Rapoartele curente folosesc cotele 11% și 21%.
+
+Pentru soldurile istorice, cotele vechi pot fi mapate astfel, unde logica raportului o cere:
+
+- 9% către 11%
+- 19% către 21%
+
+13.2. Berea fără alcool
+
+Berea fără alcool se tratează la cota standard de 21%.
+
+13.3. Corecția URSUS FĂRĂ ALC. din iulie 2026
+
+Produsul cu cod 343 a avut 166 bucăți înregistrate eronat la TVA 11%.
+
+Corecția aplicată la 31.07.2026 este:
+
+- la TVA 11%, ieșire suplimentară 1.660,01 lei
+- la TVA 21%, reducere a ieșirii cu 1.659,99 lei
+
+Corecția nu creează stoc fizic.
+
+Corecția se aplică o singură dată în iulie 2026 și influențează soldul inițial din august.
+
+
+14. ÎNCHIDEREA PVI LA 30.06.2026
+
+14.1. Mărfuri și produse finite
+
+Soldurile finale corecte la 30.06.2026 sunt:
+
+- TVA 11%, 18.099,51 lei
+- TVA 21%, 45.647,78 lei
+
+Aceste valori devin soldurile inițiale la 01.07.2026.
+
+PVI-ul reprezintă noua origine cantitativă și valorică.
+
+Produsele care nu există în PVI pornesc cu stoc zero la 01.07.2026.
+
+14.2. Materii prime
+
+Soldul final corect la 30.06.2026 este 81.632,14 lei.
+
+Acest sold devine soldul inițial al lunii iulie.
+
+14.3. Cerințe pentru sarcinile operative
+
+Operațiunile de închidere trebuie să fie:
+
+- tranzacționale
+- identificabile prin ID de sarcină
+- arhivate cu valorile anterioare
+- protejate împotriva rulării duble
+- reversibile controlat
+- limitate la data și gestiunea configurate
+
+O închidere de mărfuri nu trebuie să modifice materiile prime.
+
+O închidere de materii nu trebuie să modifice mărfurile.
+
+
+15. CORECȚII ISTORICE PENTRU IUNIE 2026
+
+15.1. Nota de corecție la TVA 11%
+
+La 30.06.2026 există o corecție istorică pentru descărcare eronată de gestiune, în valoare totală de 40.880,00 lei.
+
+Componența este:
+
+- cost, 19.944,30 lei
+- adaos comercial 378, 16.884,53 lei
+- TVA neexigibilă 4428, 4.051,17 lei
+
+Verificare:
+
+19.944,30 + 16.884,53 + 4.051,17 = 40.880,00 lei
+
+Această corecție este strict istorică pentru TVA 11% și data de 30.06.2026.
+
+15.2. Totaluri țintă pentru iunie 2026, TVA 11%
+
+- sold inițial, 54.704,51 lei
+- total intrări, 136.720,00 lei
+- ieșiri din activitate, 132.445,00 lei
+- corecție NC, 40.880,00 lei
+- total ieșiri, 173.325,00 lei
+- sold final, 18.099,51 lei
+
+15.3. Totaluri țintă pentru iunie 2026, TVA 21%
+
+- sold inițial, 38.237,78 lei
+- total intrări, 56.539,00 lei
+- total ieșiri, 49.129,00 lei
+- sold final, 45.647,78 lei
+
+
+16. ALTE AJUSTĂRI ISTORICE PĂSTRATE ÎN COD
+
+Aceste ajustări aparțin perioadelor deja închise și nu se extind asupra lunilor viitoare.
+
+31.01.2026:
+
+- TVA 11%, ajustare 5.533,11 lei
+- TVA 21%, ajustare 230,05 lei
+
+28.02.2026:
+
+- produse finite TVA 11%, 10.770,00 lei
+- produse finite TVA 21%, 4.995,00 lei
+- reducere de continuitate TVA 11%, 3.092,44 lei
+- reducere de continuitate TVA 21%, 472,64 lei
+
+30.03.2026:
+
+- intrare negativă TVA 21%, 8.861,00 lei
+
+31.03.2026:
+
+- ieșire TVA 21%, 0,01 lei
+
+31.05.2026:
+
+- ieșire TVA 11%, 143,00 lei
+- ieșire TVA 21%, 34,99 lei
+
+30.06.2026:
+
+- intrare invizibilă TVA 21%, 2.000,00 lei
+
+Nu se adaugă alte corecții istorice fără documentarea următoarelor elemente:
+
+- documentul justificativ
+- data exactă
+- cota TVA
+- sensul intrării sau ieșirii
+- valoarea
+- efectul asupra soldului lunii următoare
+
+
+17. SITUAȚIA STOCURILOR DE MĂRFURI
+
+17.1. Secțiunea pe articole
+
+Secțiunea fizică prezintă pentru fiecare produs:
+
+- cantitate inițială
+- valoare inițială la achiziție
+- valoare inițială la vânzare
+- cantități și valori intrate
+- cantități și valori ieșite
+- cantitate finală
+- valoare finală
+
+Cantitățile consumate prin rețete sau BCM se scad din produsul real, inclusiv când produsul este o marfă folosită drept ingredient.
+
+17.2. Reconcilierea global valorică
+
+Reconcilierea explică diferența dintre totalul repartizat pe articole și totalul contabil al gestiunii.
+
+Pot exista:
+
+- valori de intrare fără cantități pe articole
+- valori de ieșire fără cantități pe articole
+- corecții de TVA
+- diferențe de preț și reevaluare
+- documente suplimentare fără detaliu cantitativ
+- transferuri tehnice între gestiuni
+
+Raportul nu trebuie să prezinte un total intermediar ca sold contabil final.
+
+Singurul sold final evidențiat trebuie să fie totalul reconciliat cu raportul de gestiune.
+
+17.3. Diferențele de preț
+
+Dacă valoarea repartizată pe articole nu rezultă din cantitate x ultimul preț curent, raportul trebuie să explice separat diferența de preț sau reevaluare.
+
+Nu se modifică artificial prețul unitar al produsului pentru a ascunde diferența.
+
+
+18. SITUAȚIA STOCURILOR DE MATERII
+
+Situația stocurilor de materii trebuie să folosească același motor CMP ca raportul de gestiune materii și raportul de producție.
+
+Trebuie separate clar:
+
+- soldul inițial pe articole
+- regularizarea global valorică de pornire
+- intrările din NIR
+- intrările tehnice din mărfuri
+- regularizările CMP
+- consumurile BC
+- consumurile BCM
+- soldul final pe articole
+- reconcilierea valorică finală
+
+Totalul NIR-urilor se afișează distinct de celelalte intrări.
+
+Transferurile din mărfuri și regularizările CMP nu se prezintă ca achiziții de la furnizori.
+
+
+19. CONTROALE LUNARE OBLIGATORII
+
+19.1. Mărfuri și produse finite
+
+- soldul inițial este egal cu soldul final al lunii precedente
+- totalul intrărilor corespunde documentelor și transferurilor interne
+- totalul ieșirilor include numerar, card și virament bancar
+- PYN nu este adăugat încă o dată
+- bacșișul este exclus
+- NC-trsf PF la MF corespunde raportului de producție
+- cotele 11% și 21% sunt separate corect
+- mărfurile folosite în rețete sunt scăzute cantitativ
+- corecțiile istorice nu se repetă în alte luni
+
+19.2. Materii prime
+
+- soldul inițial este egal cu soldul final anterior
+- totalul NIR-urilor este afișat separat
+- transferurile tehnice din mărfuri sunt explicate
+- consumurile BC și BCM folosesc CMP-ul comun
+- nu există ingrediente neevaluate
+- nota 345 = 301.02 corespunde costului producției și consumurilor interne
+- produsele finite vândute nu au cost zero fără explicație
+
+19.3. Producție
+
+- cantitatea produsă și vândută are rețetă
+- consumurile sunt generate o singură dată
+- filtrul TVA urmărește produsul finit
+- costul, adaosul și TVA neexigibilă refac valoarea transferată în 371.02
+- totalul pe fiecare cotă corespunde raportului de gestiune
+- BCM direct pe ingrediente nu este inclus în NC-trsf PF la MF
+- vânzarea directă BUFET SUEDEZ rămâne inclusă normal
+
+19.4. PYN și virament bancar
+
+- totalul VB Restaurant este calculat din notele închise
+- totalul PYN include numai liniile RESTAURANT 11% și RESTAURANT 21%
+- bacșișul și cazarea sunt excluse
+- diferența este marcată PLUS sau MINUS
+- diferența este explicată prin decalajul dintre consum și checkout
+- PYN și VB sunt informative și nu dublează ieșirea
+
+
+20. ORDINEA DE VERIFICARE LA ÎNCHIDEREA LUNII
+
+1. Se verifică toate NIR-urile de mărfuri și materii.
+
+2. Se verifică notele restaurantului, inclusiv numerar, card și virament bancar.
+
+3. Se exclud bacșișul și liniile nepatrimoniale.
+
+4. Se verifică produsele finite vândute și rețetele lor.
+
+5. Se identifică produsele fără BC sau cu ingrediente neevaluate.
+
+6. Se verifică bonurile de consum manuale.
+
+7. Se verifică transferurile tehnice MĂRFURI către MATERII.
+
+8. Se compară costul producției cu ieșirile de materii la CMP.
+
+9. Se compară valoarea producției cu NC-trsf PF la MF.
+
+10. Se verifică totalurile 371.02, 378.02 și 4428.02 pe fiecare cotă TVA.
+
+11. Se verifică soldurile finale din rapoartele de gestiune și situațiile stocurilor.
+
+12. Se verifică puntea informativă PYN/VB.
+
+13. Soldul final validat se preia ca sold inițial în luna următoare.
+
+
+21. CRONOLOGIA REGULILOR
+
+Ianuarie 2026 până în mai 2026
+
+Se păstrează ajustările istorice punctuale documentate la secțiunea 16.
+
+01.06.2026 până la 30.06.2026
+
+Perioadă istorică închisă. Se păstrează tratamentul vechi al BCM-ului și corecția NC de 40.880,00 lei la TVA 11%.
+
+30.06.2026, ora 23:59:59
+
+Dată de închidere PVI pentru mărfuri, produse finite și materii prime.
+
+01.07.2026
+
+Intră în vigoare motorul CMP comun pentru rapoartele dedicate Hanului Patrisiei.
+
+01.07.2026
+
+Intră în vigoare BCM-ul direct pe ingredientele rețetei, fără linie de produs finit și fără transfer PF către mărfuri pentru consumul intern.
+
+01.07.2026
+
+Filtrarea costului producției se face după cota TVA a produsului finit.
+
+31.07.2026
+
+Se aplică o singură dată corecția de TVA pentru 166 bucăți URSUS FĂRĂ ALC., cod 343.
+
+14.08.2026
+
+Este reconfirmat soldul final al materiilor la 30.06.2026, în valoare de 81.632,14 lei.
+
+21.08.2026
+
+Este formalizată reconcilierea PYN Restaurant cu notele închise pe virament bancar, cu semn PLUS sau MINUS și fără dublarea ieșirilor.
+
+
+22. REGULI CARE NU TREBUIE ÎNCĂLCATE
+
+Nu se dublează o vânzare prin includerea simultană a notei restaurantului și a facturii PYN în Total ieșiri.
+
+Nu se adaugă viramentul bancar peste vânzarea deja conținută în notă.
+
+Nu se include bacșișul în gestiune.
+
+Nu se tratează factura PYN ca dată a consumului fizic.
+
+Nu se mută costul producției între cotele TVA după cota ingredientului.
+
+Nu se adaugă de două ori costul mărfii folosite ca materie.
+
+Nu se introduce produsul finit în BCM-ul direct pe rețetă după 01.07.2026.
+
+Nu se modifică vânzarea directă a produsului BUFET SUEDEZ.
+
+Nu se aplică regulile CMP noi perioadelor închise până la 30.06.2026.
+
+Nu se propagă un CMP calculat din stoc negativ.
+
+Nu se inventează cantități pentru reconcilierea unei diferențe strict valorice.
+
+Nu se rulează o sarcină operativă fără simulare, validare, arhivare și posibilitate de revenire.
+
+Nu se adaugă un ghost nou fără document, dată, cotă TVA, sens, valoare și regulă de continuitate.
+
+
+23. REZULTATUL URMĂRIT
+
+Pentru fiecare lună, rapoartele trebuie să permită următoarele verificări:
+
+Sold final mărfuri = Sold inițial + Intrări - Ieșiri
+
+Sold final materii = Sold inițial + Intrări - Consumuri la CMP
+
+Cost producție = Credit 301.02 = Debit 345
+
+Valoare transfer PF către mărfuri = Debit 371.02
+
+Debit 371.02 = Credit 345 + Credit 378.02 + Credit 4428.02
+
+Sold final raport gestiune = Sold final reconciliat situația stocurilor
+
+Sold final lună curentă = Sold inițial lună următoare
+
+Vânzarea prin numerar, card și virament bancar este recunoscută o singură dată, la data notei închise.
+
+Factura PYN rămâne document fiscal și element informativ de reconciliere, fără a produce o a doua descărcare din gestiune.

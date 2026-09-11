@@ -1,0 +1,47 @@
+ACTIVITĂȚI ANDREEA ROBERT ȘI CONTABILITATE
+Client AGECS: client_id 22
+Export local analizat: u681731335_andreearobert.sql
+Tip client: magazin
+Data analizei: 22.08.2026
+
+1. ACCES ȘI APLICAȚIE
+
+Butonul Vânzare este disponibil. login.php direcționează clientul către app_vanzare_v2/agecs_login.php.
+
+Exportul local are comunicare_anaf = 0 și cu_imprimanta = 0. listare_automata_comenzi_site nu există în setari_platforma.
+
+2. REGULI DE LUCRU
+
+Sume Tura este ascuns. Butoanele de discount, editare denumire, modificare cantitate și ștergere sunt eliminate din fiecare linie a bonului.
+
+Butonul Numerar afișează totalul curent al bonului. Metoda Protocol este ascunsă.
+
+Căutarea după cod de bare primește focus după încărcare, adăugare și schimbarea categoriei.
+
+Sarcini operative este disponibil. Configurația curentă conține importul notelor finalizate din SUMECASA și BONCASA pentru 11.08.2026. Importul păstrează plățile numerar, card și tichete și creează note, detalii și mișcări BF.
+
+3. CONTABILITATE ȘI RAPOARTE
+
+Nu există rapoarte cu sufix Andreea Robert. Sunt folosite rapoartele standard de gestiune, stocuri, NIR, mișcări, facturi și rapoarte Z.
+
+Restricțiile din interfață reduc corecțiile făcute de operator după adăugarea produsului. Orice corecție necesară trebuie făcută prin flux administrativ și verificată în audit_modificari_pret_produse sau în sarcina operativă relevantă.
+
+Importul legacy trebuie verificat prin identificator_offline și prin totalurile plăților. Bonurile importate nu trebuie introduse încă o dată manual.
+
+4. DIFERENȚE DE STRUCTURĂ
+
+Exportul conține 96 de tabele.
+
+Lipsește reguli_cmp_override, prezentă în 9 exporturi. Lipsește setari_platforma.listare_automata_comenzi_site, prezentă în 8 exporturi.
+
+Sunt prezente actiuni_operative, actiuni_operative_modificari_text, audit_modificari_pret_produse, audit_stergeri_det_note și produse_servicii_sterse.
+
+reguli_cmp_override trebuie creată numai dacă sunt necesare valori CMP fixe pe produs și dată. listare_automata_comenzi_site nu este necesară pentru importul legacy din sarcini operative.
+
+5. FIȘIERE ACTIVE RELEVANTE
+
+login.php
+app_vanzare_v2/vanzare_magazin.php
+sarcini_operative.php
+sarcini_operative_taskuri.php
+audit_modificari_pret_produse_helpers.php

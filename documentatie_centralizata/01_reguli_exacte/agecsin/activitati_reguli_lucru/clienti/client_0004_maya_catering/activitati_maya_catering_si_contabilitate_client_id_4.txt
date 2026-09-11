@@ -1,0 +1,56 @@
+ACTIVITĂȚI MAYA CATERING ȘI CONTABILITATE
+Client AGECS: client_id 4
+Export local analizat: u681731335_mayacatering.sql
+Tip client: magazin
+Data analizei: 24.08.2026
+
+1. ACCES ȘI APLICAȚIE
+
+Butonul Vânzare este disponibil. Clientul 4 nu se află în lista vanzareV2Clients, iar login.php îl direcționează către app_vanzare/agecs_login.php.
+
+Exportul local are comunicare_anaf = 1. Imprimanta, modul touch, listenerul și activarea automată a comenzilor de pe site sunt oprite sau indisponibile în setari_platforma.
+
+2. REGULI DE LUCRU
+
+În fluxul de facturare, adăugarea unui produs care conține CAZARE generează automat taxa hotelieră de 2% din valoarea netă. Taxa are TVA 0 și este înlocuită la recalculare. Stornarea păstrează semnul negativ prin cantitatea taxei.
+
+În fișierul trimis casei de marcat, unitatea de măsură este lăsată goală pentru fiecare produs. După liniile de plată este adăugată o linie T suplimentară. Aceeași regulă există în genereaza_bon.php, genereaza_bon_dep_casa_personalizat.php și în modulul de reglare a casei de marcat din interfețele v2.
+
+Regulile din app_vanzare_v2 pentru clientul 4 nu sunt accesate prin ruta principală actuală. Ele devin active numai dacă aplicația v2 este deschisă direct sau dacă ID-ul este introdus ulterior în vanzareV2Clients.
+
+3. CONTABILITATE ȘI RAPOARTE
+
+Nu există rapoarte cu sufix dedicat Maya Catering. Sunt folosite rutele standard pentru gestiune mărfuri, materii, producție, NIR, situația stocurilor și rapoarte Z.
+
+Taxa hotelieră trebuie urmărită separat la TVA 0. Valoarea cazării reprezintă baza taxei, iar linia taxei nu intră din nou în baza de calcul.
+
+Formatul fiscal special trebuie păstrat la retrimiterea bonurilor și la reglarea diferențelor casei de marcat. Eliminarea liniei T suplimentare poate schimba comportamentul imprimantei configurate pentru acest client.
+
+4. DIFERENȚE DE STRUCTURĂ
+
+Exportul conține 89 de tabele, cel mai mic număr din lotul analizat.
+
+Lipsesc observatii_predefinite, prezentă în 15 exporturi, și reguli_cmp_override, prezentă în 10 exporturi.
+
+Lipsesc det_note.departament_listare și produse_servicii.cod_mapare_import_extern, prezente în 13 exporturi. Lipsește retururi.operator, prezentă în 13 exporturi.
+
+Lipsesc continut_bonuri_consum.id_retur și setari_platforma.listare_automata_comenzi_site, prezente în 9 exporturi.
+
+Crearea departament_listare este justificată dacă se dorește listarea independentă de departamentul produsului. cod_mapare_import_extern este necesară numai pentru importuri din sisteme externe. operator în retururi permite atribuirea returului unui operator. id_retur permite legarea bonului de consum de returul care l-a generat.
+
+5. PERSONALIZĂRI ÎN ADMINISTRARE ȘI FACTURARE
+
+În factura.php, selectarea unui produs care conține CAZARE afișează baza netă, taxa hotelieră și totalul de booking. Prețul cu TVA al cazării devine needitabil cât timp regula este activă.
+
+add_product.php calculează taxa de 2% din valoarea netă și caută mai întâi produsul TAXA DE ORAS, apoi TAXA HOTELIERA. Linia are TVA 0. Valorile negative sunt acceptate la stornare. Celelalte funcții administrative și listarea facturii folosesc fluxul comun.
+
+6. FIȘIERE ACTIVE RELEVANTE
+
+login.php
+app_vanzare/vanzare_magazin.php
+add_product.php
+factura.php
+genereaza_bon.php
+genereaza_bon_dep_casa_personalizat.php
+app_vanzare_v2/reglare_casa_marcat.php
+app_vanzare_v2/reglare_casa_marcat_procesare_bon.php

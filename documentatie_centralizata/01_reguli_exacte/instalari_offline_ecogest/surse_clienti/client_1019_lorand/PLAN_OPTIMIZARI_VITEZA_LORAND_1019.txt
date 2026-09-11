@@ -1,0 +1,325 @@
+PLAN DE OPTIMIZARE A VITEZEI PENTRU LORAND OFFLINE
+CLIENT 1019, LOCAȚIA 1
+==================================================
+
+Data planificării: 03.09.2026
+
+Instalare vizată:
+- lorand\ecogest_offline_lorand\interfata_vanzare
+- aplicație de magazin bazată pe app_vanzare_v2
+- bază locală SQLite: api_offline_ecogest_lorand\db_local\pos.db
+
+Reguli de lucru:
+- optimizările se aplică numai instalării offline Lorand, client_id 1019.
+- nu se copiază mecanic logica specifică restaurantului.
+- nu se adaugă mese, categorii de mese, internaționalizare sau fluxuri de ospătari.
+- nu se schimbă sincronizarea operațiilor către online.
+- nu se schimbă generarea și transmiterea bonului fiscal.
+- nu se schimbă cozile atomice ale casei de marcat și imprimantei BAR.
+- nu se schimbă nota de plată, raportul Z, rapoartele de produse și istoricul PROTOCOL.
+- nu se schimbă regulile de licențiere, semnătura criptografică sau identificarea instalării.
+- nu se înlocuiește și nu se golește baza pos.db existentă.
+- nu se creează vânzări de probă și nu se accesează baza de date online.
+
+
+1. SITUAȚIA ACTUALĂ
+====================
+
+Inspecția statică și citirea metadatelor SQLite indică următoarele:
+- PRAGMA user_version este 0.
+- db.php execută offline_sequence_ensure_schema() la fiecare request.
+- offline_sequence_ensure_schema() verifică în mod repetat coloanele mai multor tabele, creează indexuri și execută operații de backfill.
+- session.php execută offline_import_schema_ensure() și offline_audit_log_ensure_schema() la fiecare request HTTP care îl include.
+- variabilele static din funcțiile ensure evită repetarea numai în același request. Ele nu evită operațiile la requestul următor.
+- offline_license_runtime_read() deschide o conexiune SQLite separată și execută CREATE TABLE IF NOT EXISTS și INSERT OR IGNORE la fiecare validare a licenței.
+- elemente_bon.php citește liniile bonului, apoi execută încă o interogare pentru total.
+- afis_prod.php conține două interogări SUM identice și încă o interogare pentru discount. Acesta este un flux vechi și nu este endpointul principal folosit de vanzare_magazin.php.
+- load_prod.php folosește GROUP BY n.cod_produs, deși legăturile cu categoriile și gestiunile nu trebuie să multiplice produsele.
+- încărcarea produselor are cache și paginare, dar folosește un singur indicator isLoading. O selecție nouă poate fi ignorată cât timp requestul anterior este activ.
+- requesturile de reîncărcare a bonului nu au anulare și control de versiune a răspunsului.
+- baza nu are indexuri funcționale pentru filtrarea produselor și pentru interogările uzuale ale bonului. Indexurile existente pe note și det_note sunt în principal pentru identificatorii offline.
+
+
+2. SCHEMA SQLITE VERSIONATĂ
+============================
+
+Se introduce o schemă centrală pentru magazin, separată de logica restaurantului.
+
+Fișier nou propus:
+- interfata_vanzare\tools\sqlite_schema.php
+
+Fișiere integrate cu migratorul:
+- interfata_vanzare\db.php
+- interfata_vanzare\offline_sequence_state.php
+- interfata_vanzare\offline_import_schema.php
+- interfata_vanzare\offline_audit_log_schema.php
+- interfata_vanzare\setari_lorand_schema.php
+- interfata_vanzare\offline_sync_queue_lib.php
+
+Prima versiune centralizată pentru Lorand va fi 1, deoarece baza actuală are user_version 0.
+
+Comportament planificat:
+- fiecare request citește PRAGMA user_version.
+- dacă versiunea este 1, toate operațiile DDL și verificările de coloane sunt omise.
+- dacă versiunea este 0, migrarea rulează o singură dată.
+- migrarea folosește BEGIN IMMEDIATE.
+- versiunea este reverificată după obținerea blocării.
+- PRAGMA user_version este actualizat numai după aplicarea completă a migrării.
+- la eroare se execută ROLLBACK.
+- o bază cu versiune mai nouă decât aplicația nu este retrogradată.
+- situația unei baze mai noi este scrisă în jurnalul PHP.
+
+Migrarea centrală va prelua operațiile executate acum repetat:
+- tabelele și indexurile secvențelor offline.
+- coloanele identificator_offline și cod_locatie.
+- indexurile identificatorilor offline.
+- normalizarea valorilor NULL folosite de note și închideri.
+- tabelele cozii de sincronizare.
+- tabela și triggerul audit_log.
+- setările Lorand pentru rapoarte și imprimare.
+- tabelele observațiilor predefinite și atribuirilor pe produse.
+- offline_reference_sync_runtime.
+- lorand_printer_queue_history.
+- offline_license_runtime.
+
+Funcțiile ensure existente rămân disponibile pentru compatibilitate. Pentru SQLite ele vor verifica versiunea centrală și vor reveni imediat când migrarea este deja aplicată. Ramurile MySQL nu sunt modificate.
+
+
+3. CONFIGURAREA CONEXIUNII SQLITE
+==================================
+
+Fișier principal:
+- interfata_vanzare\db.php
+
+Pe fiecare conexiune rămân numai setările necesare:
+- PRAGMA foreign_keys = ON.
+- PRAGMA busy_timeout = 5000.
+
+PRAGMA journal_mode = WAL se execută numai în migrarea inițială. WAL este persistent și nu trebuie solicitat la fiecare request.
+
+Conexiunea folosită de request va fi reutilizată de funcțiile de schemă care primesc deja obiectul PDO. Nu se vor deschide conexiuni suplimentare pentru aceleași operații.
+
+
+4. LICENȚA OFFLINE
+===================
+
+Fișier:
+- interfata_vanzare\offline_license_lib.php
+
+Modificări planificate:
+- offline_license_runtime_read() citește direct rândul existent.
+- CREATE TABLE IF NOT EXISTS și INSERT OR IGNORE sunt eliminate din fluxul normal.
+- crearea tabelei rămâne fallback numai pentru o bază complet nouă sau incompletă.
+- offline_license_runtime_write() încearcă mai întâi scrierea directă.
+- la lipsa tabelei, fallbackul o creează și repetă o singură dată scrierea.
+- configurația licenței și identitatea hardware sunt păstrate în memoria requestului.
+- fișierele JSON existente pentru stare și identitate rămân neschimbate.
+
+Validarea semnăturii, durata licenței, verificarea seriei hardware, toleranța ceasului și reînnoirea online rămân identice.
+
+
+5. ÎNCĂRCAREA BONULUI CURENT
+=============================
+
+Fișier principal:
+- interfata_vanzare\elemente_bon.php
+
+Optimizări:
+- totalul bonului este acumulat în același parcurs în care sunt afișate liniile.
+- interogarea SELECT SUM separată este eliminată.
+- setările date_firma sunt citite din sesiunea inițializată de vanzare_magazin.php.
+- interogarea date_firma rămâne numai ca fallback dacă valorile lipsesc din sesiune.
+- structura HTML, butoanele, discounturile, cantitățile și totalurile afișate nu se schimbă.
+
+Fișierul afis_prod.php va fi optimizat numai dacă o verificare finală confirmă că mai este folosit de un flux Lorand activ. Dacă este păstrat pentru compatibilitate, cele două interogări SUM vor fi înlocuite cu un singur calcul realizat în timpul parcurgerii liniilor.
+
+
+6. ÎNCĂRCAREA PRODUSELOR
+=========================
+
+Fișiere:
+- interfata_vanzare\load_prod.php
+- interfata_vanzare\vanzare_magazin.php
+
+Optimizări SQL:
+- se elimină GROUP BY n.cod_produs.
+- se păstrează numai coloanele necesare cardurilor de produs.
+- filtrarea pe categorie, activ și nume rămâne pe server.
+- paginarea de 40 de produse rămâne neschimbată.
+- afișarea H87 ca buc rămâne neschimbată.
+
+Optimizări JavaScript:
+- requestul principal pentru produse este păstrat într-o variabilă jqXHR.
+- la schimbarea categoriei sau a termenului de căutare, requestul de afișare anterior este anulat.
+- fiecare cerere primește un număr de versiune. Numai ultimul răspuns poate actualiza lista.
+- prefetchul paginii următoare rămâne separat și nu poate bloca cererea principală.
+- încărcarea pentru scroll infinit rămâne serială pentru a păstra ordinea paginilor.
+- cache-ul existent se păstrează, dar limita va fi redusă la un nivel proporțional cu catalogul Lorand, pentru a evita acumularea inutilă a răspunsurilor HTML din căutări.
+- la modificarea permanentă a unui produs se invalidează cache-ul, la fel ca în prezent.
+
+Requesturile care adaugă, modifică sau șterg produse de pe bon nu sunt anulate.
+
+
+7. REÎNCĂRCAREA BONULUI DUPĂ OPERAȚII
+======================================
+
+Fișier:
+- interfata_vanzare\vanzare_magazin.php
+
+Comportament planificat:
+- actualizarea locală rapidă a liniilor după adăugarea produsului se păstrează.
+- reîncărcările complete ale elemente_bon.php cerute într-un interval scurt sunt grupate la aproximativ 60 milisecunde.
+- requestul GET vechi al bonului este anulat când apare o reîncărcare mai nouă.
+- numai răspunsul cu versiunea curentă poate înlocui panoul bonului și totalurile.
+- focusul câmpului de căutare și valorile metodelor de plată sunt actualizate numai după răspunsul acceptat.
+
+Această optimizare se aplică doar requesturilor de afișare. Operațiile de scriere în SQLite sunt lăsate să se finalizeze integral.
+
+
+8. ELIBERAREA SESIUNII PENTRU REQUESTURILE DE CITIRE
+=====================================================
+
+Endpointurile AJAX care doar citesc date vor elibera blocarea sesiunii prin session_write_close() după validarea operatorului și preluarea valorilor necesare.
+
+Primele fișiere vizate:
+- interfata_vanzare\load_prod.php
+- interfata_vanzare\elemente_bon.php
+- endpointurile de citire folosite de rapoartele Lorand, unde nu se modifică sesiunea.
+
+Endpointurile care modifică bonul, plata, închiderea, sincronizarea sau starea licenței nu vor elibera sesiunea înainte de finalizarea operațiilor care depind de ea.
+
+
+9. INDEXURI PROPUSE
+====================
+
+Indexurile vor fi create de migrarea versiunii 1 numai dacă lipsesc:
+- idx_produse_activ_nume pe produse_servicii(activ, nume).
+- idx_produse_categorie_activ_nume pe produse_servicii(id_categorie, activ, nume).
+- idx_categorii_vanzare_nume pe categorii(se_vinde, den_categ).
+- idx_note_status_locatie_operator_inchidere_nrbon pe note(status, locatie, operator, cod_inchidere, nrbon).
+- idx_det_note_nr_bon_id_vanz pe det_note(nr_bon, id_vanz).
+- idx_det_note_bon_produs_pachet_pret pe det_note(nr_bon, cod_p, pachet, pret_vanzare, id_vanz).
+- idx_discounturi_id_vanz pe discounturi_acordate(id_vanz).
+
+Înaintea implementării se verifică structura cheilor primare, pentru a nu crea indexuri duplicate. Nu se adaugă un index dedicat codului de bare pentru clientul 1019, deoarece interfața de scanare este dezactivată pentru Lorand. Acesta poate fi introdus ulterior numai dacă un flux activ îl folosește frecvent.
+
+
+10. COD NEFOLOSIT DE LORAND
+============================
+
+Clientul 1019 nu are cântar și nu folosește secțiunea de cod de bare.
+
+În vanzare_magazin.php se vor folosi condiții timpurii pentru a evita inițializarea listenerelor și a fluxurilor hardware care nu au elemente active pentru Lorand. Nu se elimină codul comun necesar altor clienți din sursa app_vanzare_v2. Adaptarea rămâne limitată prin client_id 1019.
+
+Nu se introduc optimizările Taverna pentru:
+- mese și categorii de mese.
+- note deschise pe mese.
+- produse nelistate la bucătărie.
+- împărțirea notei de restaurant.
+- fișiere de internaționalizare.
+
+
+11. SINCRONIZARE, FISCALIZARE ȘI IMPRIMARE
+===========================================
+
+Aceste fluxuri nu își schimbă logica funcțională.
+
+Se optimizează numai inițializarea schemei de care depind:
+- offline_sync_queue_ensure_schema() nu mai execută DDL după ce user_version este curent.
+- offline_sequence_ensure_schema() nu mai verifică toate tabelele la fiecare request.
+- istoricul cozii imprimantei este creat de migrarea centrală.
+- recuperarea operațiilor rămase în starea sending rulează numai în workerul de sincronizare, nu la fiecare înscriere sau citire a cozii.
+
+Rămân intacte:
+- identificatorii offline ai bonurilor, închiderilor și rapoartelor Z.
+- transmiterea mișcărilor în online.
+- revendicarea atomică a cozilor.
+- metoda alternativă de listare directă.
+- metoda alternativă de depunere a fișierului INP.
+- generarea INP fără UTF-8 BOM.
+- cele două copii ale notei de plată la imprimanta BAR.
+- lista produselor vândute și lista produselor PROTOCOL la raportul Z.
+
+
+12. ORDINEA IMPLEMENTĂRII
+==========================
+
+Etapa 1:
+- introducerea migratorului versionat.
+- mutarea operațiilor DDL și a backfillurilor în versiunea 1.
+- configurarea busy_timeout și WAL.
+
+Etapa 2:
+- scurtcircuitarea funcțiilor ensure existente.
+- optimizarea citirii și scrierii stării licenței.
+
+Etapa 3:
+- adăugarea indexurilor.
+- eliminarea interogărilor duplicate din elemente_bon.php.
+- eliminarea GROUP BY din load_prod.php.
+
+Etapa 4:
+- controlul requesturilor AJAX pentru produse.
+- gruparea și anularea reîncărcărilor depășite ale bonului.
+- eliberarea sesiunii în endpointurile exclusiv de citire.
+
+Etapa 5:
+- verificarea statică a condițiilor client_id 1019.
+- verificarea că fiscalizarea, imprimarea, PROTOCOL și raportul Z nu au fost atinse funcțional.
+
+
+13. FIȘIERE ESTIMATE
+=====================
+
+Fișier nou:
+- interfata_vanzare\tools\sqlite_schema.php
+
+Fișiere modificate probabil:
+- interfata_vanzare\db.php
+- interfata_vanzare\session.php
+- interfata_vanzare\offline_sequence_state.php
+- interfata_vanzare\offline_import_schema.php
+- interfata_vanzare\offline_audit_log_schema.php
+- interfata_vanzare\offline_sync_queue_lib.php
+- interfata_vanzare\offline_sync_worker.php
+- interfata_vanzare\setari_lorand_schema.php
+- interfata_vanzare\det_note_departament_listare_schema.php
+- interfata_vanzare\offline_license_lib.php
+- interfata_vanzare\elemente_bon.php
+- interfata_vanzare\load_prod.php
+- interfata_vanzare\vanzare_magazin.php
+
+afis_prod.php se modifică numai dacă verificarea finală confirmă folosirea sa într-un flux activ Lorand.
+
+
+14. COMPILARE ȘI LIVRARE
+=========================
+
+Fișierul nou tools\sqlite_schema.php trebuie adăugat în compiler exe project lorand.exop.
+
+După implementare:
+1. Se actualizează fișierele existente în ExeOutput for PHP.
+2. Se adaugă noul fișier de schemă în proiect.
+3. Se rulează Recompile și Build de către administrator.
+4. Se rulează arhiveaza_lorand.bat numai după recompilare.
+5. La client se păstrează baza pos.db existentă.
+
+La prima pornire, baza trece de la versiunea 0 la versiunea 1. Prima cerere poate dura puțin mai mult deoarece aplică migrarea și creează indexurile. Requesturile următoare vor citi numai user_version și vor evita verificările complete de schemă.
+
+
+15. VALIDARE PREVĂZUTĂ
+=======================
+
+În timpul implementării se execută numai verificări statice și verificări de sintaxă PHP. Nu se pornește aplicația, nu se creează bonuri și nu se accesează baza online.
+
+Verificări statice obligatorii:
+- toate funcțiile ensure au cale rapidă după migrare.
+- nicio operație DDL nu mai apare în fluxul normal al fiecărui request.
+- toate fișierele noi sunt incluse în proiectul EXE.
+- query-urile folosesc denumirile reale ale coloanelor SQLite Lorand.
+- requesturile de scriere nu sunt anulate de optimizarea JavaScript.
+- răspunsurile AJAX vechi nu pot suprascrie categoria sau bonul curent.
+- funcțiile pentru fiscalizare și imprimare păstrează aceleași intrări și ieșiri.
+- arhivarea refuză un build mai vechi decât sursele actualizate sau se verifică explicit data EXE-ului înainte de livrare.
+
+Verificarea funcțională finală va fi făcută manual după recompilare, fără înlocuirea bazei active a clientului.

@@ -1,0 +1,52 @@
+ACTIVITĂȚI DEPO FUN ȘI CONTABILITATE
+Client AGECS: client_id 6
+Export local analizat: u681731335_depofun.sql
+Tip client: magazin
+Data analizei: 22.08.2026
+
+1. ACCES ȘI APLICAȚIE
+
+Butonul Vânzare este disponibil. Clientul 6 nu se află în lista vanzareV2Clients, iar ruta principală este app_vanzare/agecs_login.php.
+
+Exportul local are comunicare_anaf = 1. Imprimanta, modul touch și listenerul sunt oprite.
+
+2. REGULI DE LUCRU
+
+Interfața veche afișează Verifică Stoc și Recalculează Stoc. La apăsare este apelat update_stoc_produse.php.
+
+Lista de produse folosește load_prod_cu_stoc.php. Câmpul de cantitate pornește gol și primește automat focus, pentru introducerea explicită a cantității înainte de adăugare.
+
+În note_receptie.php, NIR-urile pot fi filtrate după starea achitat. Coloana nir.achitat este prezentă numai în exportul Depo Fun dintre cele 16 baze analizate.
+
+La introducerea produselor în NIR sunt disponibile cotele 9%, 19%, 11%, 21% și 0%. Pentru ceilalți clienți, formularul curent pornește numai cu 11%, 21% și 0%.
+
+Bonul de consum manual oferă Import PVI. bon_consum_importa_pvi.php este blocat pentru orice client diferit de 6 și importă liniile unui proces verbal de inventariere în bonul de consum selectat.
+
+Codul app_vanzare_v2 păstrează aceleași reguli de cantitate, produs cu stoc și recalculare. Ruta principală rămâne aplicația veche până la modificarea listei vanzareV2Clients.
+
+3. CONTABILITATE ȘI RAPOARTE
+
+Rapoartele sunt cele standard. Controlul specific include situația achitării NIR-urilor, concordanța dintre PVI și bonurile de consum importate, stocul recalculat și mișcările produse de consum.
+
+Importul PVI într-un bon de consum nu trebuie confundat cu o intrare nouă. El generează consum pe baza liniilor inventariate selectate.
+
+4. DIFERENȚE DE STRUCTURĂ
+
+Exportul conține 93 de tabele. Nu lipsește nicio tabelă prezentă în cel puțin 8 exporturi.
+
+Lipsește retururi.operator, prezentă în 12 exporturi. Lipsesc continut_bonuri_consum.id_retur și setari_platforma.listare_automata_comenzi_site, prezente în 8 exporturi.
+
+Tabela reguli_cmp_override este prezentă. Tabela pvi_recalculari_data_ora este prezentă numai în două exporturi și corespunde operațiunilor de recalculare PVI.
+
+operator în retururi trebuie creat numai dacă retururile vor fi urmărite pe operator. id_retur este necesară pentru legarea consumului de retur. listare_automata_comenzi_site este necesară numai la preluarea comenzilor din site.
+
+5. FIȘIERE ACTIVE RELEVANTE
+
+login.php
+app_vanzare/vanzare_magazin.php
+app_vanzare/load_prod_cu_stoc.php
+note_receptie.php
+nir_get_produs.php
+bon_consum.php
+bon_consum_importa_pvi.php
+app_vanzare/update_stoc_produse.php

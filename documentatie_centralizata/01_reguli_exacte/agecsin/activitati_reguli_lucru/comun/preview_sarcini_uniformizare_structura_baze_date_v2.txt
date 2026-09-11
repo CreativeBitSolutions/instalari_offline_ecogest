@@ -1,0 +1,479 @@
+PREVIEW STATIC AL SARCINILOR DE UNIFORMIZARE
+Data: 23.08.2026
+
+Preview-ul de mai jos folosește exporturile SQL locale. Pagina operativă recalculează planul din information_schema după conectarea în contul clientului.
+Nu sunt copiate date între clienți. Nu sunt șterse tabele, coloane sau înregistrări.
+
+DAILY COFFEE, CLIENT 2
+Task key: UNIFORMIZARE_STRUCTURA_CLIENT_2_2026_08_23
+Tabele existente în export: 104
+Tabele goale de creat: 55
+Coloane de adăugat în tabele existente: 52
+Coloane obligatorii cu inițializare explicită: 5
+Instrucțiuni SQL propuse: 72
+Tabele de creat: actiuni_operative, actiuni_operative_modificari_text, angajati, atribuiri_observatii_produse, audit_stergeri_det_note, bon_consum_generari_reteta_hanul, bon_consum_generari_reteta_hanul_detalii, bonuri_transfer, camere, carduri, categ_meniuri_personalizate, categorii_tableta, com_tableta, consum_personal, continut_doc_vanzare_suplimentare, continut_facturi_vanzare_spv, corectii_consum_direct_mic_dejun_hanul_detalii, corectii_consum_productie_hanul_detalii, corectii_consum_productie_hanul_retete_backup, det_bonuri_transfer, det_com_tableta, det_consum_personal, det_note_temporare, doc_vanzare_suplimentare, eliberari_mese_vechi, evenimente, facturi_vanzare_spv, fiscalizare_raspunsuri, hotel_rezervari_facturi, hotel_rezervari_vanzari, hotel_setari, inchideri_stoc_operative, inchideri_stoc_operative_linii, istoric_mutari_mese, mapare_woo_pos, meniuri_personalizate, mesagerie_conversatii, mesagerie_mesaje, miscari_audit, note_temporare, offline_sync_import_logs, offline_sync_imported, pontari, produse_meniu_categ, produse_servicii_sterse, proprietati, pvi_recalculari_data_ora, reguli_sold_initial_raport_gestiune, rezervari, rezervari_camere, sarcini_operative_corectii_productie_hanul, simulari_vanzari_asocieri, tipuri_camere, turkish_z_fiscal_cache, woo_order_imports
+Coloane de adăugat:
+achizitii: actiune_operativa_id
+admins_12: cod_2fa_tableta, data_generare_cod_2fa_tableta
+avize_expeditie: creat_de_admin_id, creat_de_nume, creat_de_rank, creat_de_email, actualizat_de_admin_id, actualizat_de_nume, id_factura_generata, factura_generata_at
+comenzi: importata_pos, nr_bon_pos, operator_import, locatie_import, data_import_pos, telefon_client, metoda_plata, nume_client
+det_note: cod_meniu_pers, meniu_instance_id, meniu_instance_qty, importat_din, importat_din_site
+furnizori: actiune_operativa_id
+inchideri_r_12: totaluri_plata_json
+mese: actiune_operativa_id, masa_comenzi_online
+miscari: actiune_operativa_id, id_detaliu_bon_transfer
+nir: actiune_operativa_id, achitat
+note: nr_camera, nr_rezervare, importat_din_nota_tmp
+observatii_predefinite: toate_produsele
+produse_servicii: nume_tableta, nume_listare_tableta, id_categorie_tableta, ordine_tableta, alege_optiune_bara, actiune_operativa_id, actiune_operativa_pret_id, fel_mancare
+retete: actiune_operativa_id
+setari_platforma: autologin_restaurant
+ultim_bon_conectat: device_uid, device_ip, device_user_agent
+ultima_conexiune: device_uid, device_ip, device_user_agent
+
+MARK CATERING, CLIENT 3
+Task key: UNIFORMIZARE_STRUCTURA_CLIENT_3_2026_08_23
+Tabele existente în export: 100
+Tabele goale de creat: 56
+Coloane de adăugat în tabele existente: 58
+Coloane obligatorii cu inițializare explicită: 10
+Instrucțiuni SQL propuse: 77
+Tabele de creat: actiuni_operative, actiuni_operative_modificari_text, angajati, atribuiri_observatii_produse, audit_modificari_pret_produse, audit_stergeri_det_note, bon_consum_generari_reteta_hanul, bon_consum_generari_reteta_hanul_detalii, bonuri_transfer_locatie, camere, carduri, categ_meniuri_personalizate, com_tableta, continut_doc_vanzare_suplimentare, continut_facturi_vanzare_spv, corectii_consum_direct_mic_dejun_hanul_detalii, corectii_consum_productie_hanul_detalii, corectii_consum_productie_hanul_retete_backup, det_bonuri_transfer_locatie, det_com_tableta, det_note_temporare, doc_vanzare_suplimentare, eliberari_mese_vechi, evenimente, facturi_vanzare_spv, hotel_rezervari_facturi, hotel_rezervari_vanzari, hotel_setari, inchideri_stoc_operative, inchideri_stoc_operative_linii, mapare_woo_pos, meniuri_personalizate, mesagerie_conversatii, mesagerie_mesaje, miscari_audit, note_temporare, offline_installation_state, offline_sequence_history, offline_sync_import_logs, offline_sync_imported, pontari, produse_meniu_categ, produse_servicii_sterse, proprietati, pvi_recalculari_data_ora, reguli_sold_initial_raport_gestiune, rezervari, rezervari_camere, sarcini_operative_corectii_productie_hanul, simulari_vanzari_asocieri, sincronizare_importuri_offline, sincronizare_operatori_offline, sincronizare_operatori_offline_istoric, tipuri_camere, turkish_z_fiscal_cache, woo_order_imports
+Coloane de adăugat:
+achizitii: cod_locatie, identificator_offline, actiune_operativa_id
+admins_12: cod_2fa_tableta, data_generare_cod_2fa_tableta
+bonuri_casa_marcat: identificator_offline, cod_locatie
+comenzi: importata_pos, nr_bon_pos, operator_import, locatie_import, data_import_pos, telefon_client, metoda_plata, nume_client
+det_note: cod_meniu_pers, meniu_instance_id, meniu_instance_qty, importat_din, importat_din_site, identificator_offline, cod_locatie
+discounturi_acordate: cod_locatie, identificator_offline
+furnizori: actiune_operativa_id
+inchideri_r_12: identificator_offline, cod_locatie, totaluri_plata_json
+log_reglari_casa_marcat: identificator_offline
+mese: actiune_operativa_id, masa_comenzi_online
+miscari: identificator_offline, id_detaliu_bon_transfer_locatie, actiune_operativa_id
+nir: cod_locatie, identificator_offline, actiune_operativa_id, achitat
+note: identificator_offline, nr_rezervare, cod_locatie, importat_din_nota_tmp
+observatii_predefinite: toate_produsele
+produse_servicii: actiune_operativa_id, actiune_operativa_pret_id, fel_mancare, identificator_offline, cod_locatie
+rapoarte_z: identificator_offline
+retete: actiune_operativa_id
+setari_platforma: autologin_restaurant
+stoc_produse: cod_locatie
+ultim_bon_conectat: device_uid, device_ip, device_user_agent
+ultima_conexiune: device_uid, device_ip, device_user_agent
+
+MAYA CATERING, CLIENT 4
+Task key: UNIFORMIZARE_STRUCTURA_CLIENT_4_2026_08_23
+Tabele existente în export: 89
+Tabele goale de creat: 67
+Coloane de adăugat în tabele existente: 70
+Coloane obligatorii cu inițializare explicită: 13
+Instrucțiuni SQL propuse: 89
+Tabele de creat: actiuni_operative, actiuni_operative_modificari_text, angajati, atribuiri_observatii_produse, audit_modificari_pret_produse, audit_stergeri_det_note, avize_expeditie, avize_expeditie_linii, bon_consum_generari_reteta_hanul, bon_consum_generari_reteta_hanul_detalii, bonuri_transfer, bonuri_transfer_locatie, camere, carduri, categ_meniuri_personalizate, categorii_tableta, com_tableta, consum_personal, continut_doc_vanzare_suplimentare, continut_facturi_vanzare_spv, corectii_consum_direct_mic_dejun_hanul_detalii, corectii_consum_productie_hanul_detalii, corectii_consum_productie_hanul_retete_backup, det_bonuri_transfer, det_bonuri_transfer_locatie, det_com_tableta, det_consum_personal, det_note_temporare, doc_vanzare_suplimentare, eliberari_mese_vechi, evenimente, facturi_vanzare_spv, fiscalizare_raspunsuri, hotel_rezervari_facturi, hotel_rezervari_vanzari, hotel_setari, inchideri_stoc_operative, inchideri_stoc_operative_linii, istoric_mutari_mese, mapare_woo_pos, meniuri_personalizate, mesagerie_conversatii, mesagerie_mesaje, miscari_audit, note_temporare, observatii_predefinite, offline_installation_state, offline_sequence_history, offline_sync_import_logs, offline_sync_imported, pontari, produse_meniu_categ, produse_servicii_sterse, proprietati, pvi_recalculari_data_ora, reguli_cmp_override, reguli_sold_initial_raport_gestiune, rezervari, rezervari_camere, sarcini_operative_corectii_productie_hanul, simulari_vanzari_asocieri, sincronizare_importuri_offline, sincronizare_operatori_offline, sincronizare_operatori_offline_istoric, tipuri_camere, turkish_z_fiscal_cache, woo_order_imports
+Coloane de adăugat:
+achizitii: cod_locatie, identificator_offline, actiune_operativa_id
+admins_12: cod_2fa_tableta, data_generare_cod_2fa_tableta
+bonuri_casa_marcat: identificator_offline, cod_locatie
+comenzi: importata_pos, nr_bon_pos, operator_import, locatie_import, data_import_pos, telefon_client, metoda_plata, nume_client
+continut_bonuri_consum: id_retur
+det_note: cod_meniu_pers, meniu_instance_id, meniu_instance_qty, importat_din, importat_din_site, departament_listare, identificator_offline, cod_locatie
+discounturi_acordate: cod_locatie, identificator_offline
+furnizori: actiune_operativa_id
+inchideri_r_12: identificator_offline, cod_locatie, totaluri_plata_json
+log_reglari_casa_marcat: identificator_offline
+mese: actiune_operativa_id, masa_comenzi_online
+miscari: id_consum_personal, identificator_offline, id_detaliu_bon_transfer_locatie, actiune_operativa_id, id_detaliu_bon_transfer
+nir: cod_locatie, identificator_offline, actiune_operativa_id, achitat
+note: identificator_offline, nr_camera, nr_rezervare, cod_locatie, importat_din_nota_tmp
+produse_servicii: cod_mapare_import_extern, nume_tableta, nume_listare_tableta, id_categorie_tableta, ordine_tableta, alege_optiune_bara, actiune_operativa_id, actiune_operativa_pret_id, fel_mancare, identificator_offline, cod_locatie
+rapoarte_z: identificator_offline
+retete: actiune_operativa_id
+retururi: operator
+setari_platforma: autologin_restaurant, listare_automata_comenzi_site
+stoc_produse: cod_locatie
+ultim_bon_conectat: device_uid, device_ip, device_user_agent
+ultima_conexiune: device_uid, device_ip, device_user_agent
+
+DEPO FUN, CLIENT 6
+Task key: UNIFORMIZARE_STRUCTURA_CLIENT_6_2026_08_23
+Tabele existente în export: 93
+Tabele goale de creat: 63
+Coloane de adăugat în tabele existente: 68
+Coloane obligatorii cu inițializare explicită: 13
+Instrucțiuni SQL propuse: 86
+Tabele de creat: actiuni_operative, actiuni_operative_modificari_text, angajati, atribuiri_observatii_produse, audit_stergeri_det_note, avize_expeditie, avize_expeditie_linii, bon_consum_generari_reteta_hanul, bon_consum_generari_reteta_hanul_detalii, bonuri_transfer, bonuri_transfer_locatie, camere, carduri, categ_meniuri_personalizate, categorii_tableta, com_tableta, consum_personal, continut_doc_vanzare_suplimentare, continut_facturi_vanzare_spv, corectii_consum_direct_mic_dejun_hanul_detalii, corectii_consum_productie_hanul_detalii, corectii_consum_productie_hanul_retete_backup, det_bonuri_transfer, det_bonuri_transfer_locatie, det_com_tableta, det_consum_personal, det_note_temporare, doc_vanzare_suplimentare, eliberari_mese_vechi, evenimente, facturi_vanzare_spv, fiscalizare_raspunsuri, hotel_rezervari_facturi, hotel_rezervari_vanzari, hotel_setari, inchideri_stoc_operative, inchideri_stoc_operative_linii, istoric_mutari_mese, mapare_woo_pos, meniuri_personalizate, mesagerie_conversatii, mesagerie_mesaje, miscari_audit, note_temporare, offline_installation_state, offline_sequence_history, offline_sync_import_logs, offline_sync_imported, pontari, produse_meniu_categ, produse_servicii_sterse, proprietati, reguli_sold_initial_raport_gestiune, rezervari, rezervari_camere, sarcini_operative_corectii_productie_hanul, simulari_vanzari_asocieri, sincronizare_importuri_offline, sincronizare_operatori_offline, sincronizare_operatori_offline_istoric, tipuri_camere, turkish_z_fiscal_cache, woo_order_imports
+Coloane de adăugat:
+achizitii: cod_locatie, identificator_offline, actiune_operativa_id
+admins_12: cod_2fa_tableta, data_generare_cod_2fa_tableta
+bonuri_casa_marcat: identificator_offline, cod_locatie
+comenzi: importata_pos, nr_bon_pos, operator_import, locatie_import, data_import_pos, telefon_client, metoda_plata, nume_client
+continut_bonuri_consum: id_retur
+det_note: cod_meniu_pers, meniu_instance_id, meniu_instance_qty, importat_din, importat_din_site, identificator_offline, cod_locatie
+discounturi_acordate: cod_locatie, identificator_offline
+furnizori: actiune_operativa_id
+inchideri_r_12: identificator_offline, cod_locatie, totaluri_plata_json
+log_reglari_casa_marcat: identificator_offline
+mese: actiune_operativa_id, masa_comenzi_online
+miscari: id_consum_personal, identificator_offline, id_detaliu_bon_transfer_locatie, actiune_operativa_id, id_detaliu_bon_transfer
+nir: cod_locatie, identificator_offline, actiune_operativa_id
+note: identificator_offline, nr_camera, nr_rezervare, cod_locatie, importat_din_nota_tmp
+observatii_predefinite: toate_produsele
+produse_servicii: nume_tableta, nume_listare_tableta, id_categorie_tableta, ordine_tableta, alege_optiune_bara, actiune_operativa_id, actiune_operativa_pret_id, fel_mancare, identificator_offline, cod_locatie
+rapoarte_z: identificator_offline
+retete: actiune_operativa_id
+retururi: operator
+setari_platforma: autologin_restaurant, listare_automata_comenzi_site
+stoc_produse: cod_locatie
+ultim_bon_conectat: device_uid, device_ip, device_user_agent
+ultima_conexiune: device_uid, device_ip, device_user_agent
+
+HOTEL RIN, CLIENT 7
+Task key: UNIFORMIZARE_STRUCTURA_CLIENT_7_2026_08_23
+Tabele existente în export: 90
+Tabele goale de creat: 66
+Coloane de adăugat în tabele existente: 70
+Coloane obligatorii cu inițializare explicită: 13
+Instrucțiuni SQL propuse: 89
+Tabele de creat: actiuni_operative, actiuni_operative_modificari_text, angajati, atribuiri_observatii_produse, audit_modificari_pret_produse, audit_stergeri_det_note, avize_expeditie, avize_expeditie_linii, bon_consum_generari_reteta_hanul, bon_consum_generari_reteta_hanul_detalii, bonuri_transfer, bonuri_transfer_locatie, camere, carduri, categ_meniuri_personalizate, categorii_tableta, com_tableta, consum_personal, continut_doc_vanzare_suplimentare, continut_facturi_vanzare_spv, corectii_consum_direct_mic_dejun_hanul_detalii, corectii_consum_productie_hanul_detalii, corectii_consum_productie_hanul_retete_backup, det_bonuri_transfer, det_bonuri_transfer_locatie, det_com_tableta, det_consum_personal, det_note_temporare, doc_vanzare_suplimentare, eliberari_mese_vechi, evenimente, facturi_vanzare_spv, fiscalizare_raspunsuri, hotel_rezervari_facturi, hotel_rezervari_vanzari, hotel_setari, inchideri_stoc_operative, inchideri_stoc_operative_linii, istoric_mutari_mese, mapare_woo_pos, meniuri_personalizate, mesagerie_conversatii, mesagerie_mesaje, miscari_audit, note_temporare, offline_installation_state, offline_sequence_history, offline_sync_import_logs, offline_sync_imported, pontari, produse_meniu_categ, produse_servicii_sterse, proprietati, pvi_recalculari_data_ora, reguli_cmp_override, reguli_sold_initial_raport_gestiune, rezervari, rezervari_camere, sarcini_operative_corectii_productie_hanul, simulari_vanzari_asocieri, sincronizare_importuri_offline, sincronizare_operatori_offline, sincronizare_operatori_offline_istoric, tipuri_camere, turkish_z_fiscal_cache, woo_order_imports
+Coloane de adăugat:
+achizitii: cod_locatie, identificator_offline, actiune_operativa_id
+admins_12: cod_2fa_tableta, data_generare_cod_2fa_tableta
+bonuri_casa_marcat: identificator_offline, cod_locatie
+comenzi: importata_pos, nr_bon_pos, operator_import, locatie_import, data_import_pos, telefon_client, metoda_plata, nume_client
+continut_bonuri_consum: id_retur
+det_note: cod_meniu_pers, meniu_instance_id, meniu_instance_qty, importat_din, importat_din_site, departament_listare, identificator_offline, cod_locatie
+discounturi_acordate: cod_locatie, identificator_offline
+furnizori: actiune_operativa_id
+inchideri_r_12: identificator_offline, cod_locatie, totaluri_plata_json
+log_reglari_casa_marcat: identificator_offline
+mese: actiune_operativa_id, masa_comenzi_online
+miscari: id_consum_personal, identificator_offline, id_detaliu_bon_transfer_locatie, actiune_operativa_id, id_detaliu_bon_transfer
+nir: cod_locatie, identificator_offline, actiune_operativa_id, achitat
+note: identificator_offline, nr_camera, nr_rezervare, cod_locatie, importat_din_nota_tmp
+observatii_predefinite: toate_produsele
+produse_servicii: cod_mapare_import_extern, nume_tableta, nume_listare_tableta, id_categorie_tableta, ordine_tableta, alege_optiune_bara, actiune_operativa_id, actiune_operativa_pret_id, fel_mancare, identificator_offline, cod_locatie
+rapoarte_z: identificator_offline
+retete: actiune_operativa_id
+retururi: operator
+setari_platforma: autologin_restaurant
+stoc_produse: cod_locatie
+ultim_bon_conectat: device_uid, device_ip, device_user_agent
+ultima_conexiune: device_uid, device_ip, device_user_agent
+
+AGECS DEMO, CLIENT 8
+Task key: UNIFORMIZARE_STRUCTURA_CLIENT_8_2026_08_23
+Tabele existente în export: 115
+Tabele goale de creat: 41
+Coloane de adăugat în tabele existente: 76
+Coloane obligatorii cu inițializare explicită: 13
+Instrucțiuni SQL propuse: 61
+Tabele de creat: actiuni_operative, actiuni_operative_modificari_text, anaf_xml_facturi, atribuiri_observatii_produse, audit_modificari_pret_produse, audit_stergeri_det_note, bon_consum_generari_reteta_hanul, bon_consum_generari_reteta_hanul_detalii, bonuri_transfer, bonuri_transfer_locatie, consum_personal, continut_doc_vanzare_suplimentare, continut_facturi_vanzare_spv, corectii_consum_direct_mic_dejun_hanul_detalii, corectii_consum_productie_hanul_detalii, corectii_consum_productie_hanul_retete_backup, det_bonuri_transfer, det_bonuri_transfer_locatie, det_consum_personal, det_note_temporare, doc_vanzare_suplimentare, eliberari_mese_vechi, facturi_vanzare_spv, fiscalizare_raspunsuri, inchideri_stoc_operative, inchideri_stoc_operative_linii, istoric_mutari_mese, note_temporare, observatii_predefinite, offline_installation_state, offline_sequence_history, offline_sync_import_logs, offline_sync_imported, produse_servicii_sterse, pvi_recalculari_data_ora, reguli_sold_initial_raport_gestiune, sarcini_operative_corectii_productie_hanul, sincronizare_importuri_offline, sincronizare_operatori_offline, sincronizare_operatori_offline_istoric, turkish_z_fiscal_cache
+Coloane de adăugat:
+achizitii: cod_locatie, identificator_offline, actiune_operativa_id
+avize_expeditie: creat_de_admin_id, creat_de_nume, creat_de_rank, creat_de_email, actualizat_de_admin_id, actualizat_de_nume, id_factura_generata, factura_generata_at
+bonuri_casa_marcat: identificator_offline, cod_locatie
+det_note: importat_din, identificator_offline, cod_locatie
+discounturi_acordate: cod_locatie, identificator_offline
+furnizori: actiune_operativa_id
+inchideri_r_12: identificator_offline, cod_locatie
+log_reglari_casa_marcat: identificator_offline
+mesagerie_conversatii: participant_tip, participant_id, participant_nume_snapshot, participant_rang_snapshot, participant_email_snapshot, initiata_de, categorie, status, prioritate, sursa_initiala, pagina_initiala, locatie_initiala, inchis_la
+mesagerie_mesaje: autor_id, autor_nume_snapshot, autor_rang_snapshot, destinatar_tip, destinatar_id, destinatar_nume_snapshot, sursa, pagina_sursa, locatie, context_tehnic, status
+mese: actiune_operativa_id, masa_comenzi_online
+miscari: id_consum_personal, identificator_offline, id_detaliu_bon_transfer_locatie, actiune_operativa_id, id_detaliu_bon_transfer
+nir: cod_locatie, identificator_offline, actiune_operativa_id, achitat
+note: identificator_offline, nr_camera, nr_rezervare, cod_locatie, importat_din_nota_tmp
+produse_servicii: id_categ_meniuri_personalizate, actiune_operativa_id, actiune_operativa_pret_id, identificator_offline, cod_locatie
+rapoarte_z: identificator_offline
+retete: actiune_operativa_id
+stoc_produse: cod_locatie
+ultim_bon_conectat: device_uid, device_ip, device_user_agent
+ultima_conexiune: device_uid, device_ip, device_user_agent
+
+HOLZTREPPE, CLIENT 14
+Task key: UNIFORMIZARE_STRUCTURA_CLIENT_14_2026_08_23
+Tabele existente în export: 103
+Tabele goale de creat: 55
+Coloane de adăugat în tabele existente: 74
+Coloane obligatorii cu inițializare explicită: 16
+Instrucțiuni SQL propuse: 76
+Tabele de creat: angajati, atribuiri_observatii_produse, audit_modificari_pret_produse, audit_stergeri_det_note, avize_expeditie, avize_expeditie_linii, bon_consum_generari_reteta_hanul, bon_consum_generari_reteta_hanul_detalii, bonuri_transfer, bonuri_transfer_locatie, camere, carduri, categ_meniuri_personalizate, categorii_tableta, com_tableta, continut_doc_vanzare_suplimentare, continut_facturi_vanzare_spv, corectii_consum_direct_mic_dejun_hanul_detalii, corectii_consum_productie_hanul_detalii, corectii_consum_productie_hanul_retete_backup, det_bonuri_transfer, det_bonuri_transfer_locatie, det_com_tableta, doc_vanzare_suplimentare, evenimente, facturi_vanzare_spv, fiscalizare_raspunsuri, hotel_rezervari_facturi, hotel_rezervari_vanzari, hotel_setari, inchideri_stoc_operative, inchideri_stoc_operative_linii, mapare_woo_pos, meniuri_personalizate, miscari_audit, offline_installation_state, offline_sequence_history, offline_sync_import_logs, offline_sync_imported, pontari, produse_meniu_categ, produse_servicii_sterse, proprietati, pvi_recalculari_data_ora, reguli_sold_initial_raport_gestiune, rezervari, rezervari_camere, sarcini_operative_corectii_productie_hanul, simulari_vanzari_asocieri, sincronizare_importuri_offline, sincronizare_operatori_offline, sincronizare_operatori_offline_istoric, tipuri_camere, turkish_z_fiscal_cache, woo_order_imports
+Coloane de adăugat:
+achizitii: cod_locatie, identificator_offline
+admins_12: cod_2fa_tableta, data_generare_cod_2fa_tableta
+bonuri_casa_marcat: identificator_offline, cod_locatie
+comenzi: importata_pos, nr_bon_pos, operator_import, locatie_import, data_import_pos, telefon_client, metoda_plata, nume_client
+det_note: cod_meniu_pers, meniu_instance_id, meniu_instance_qty, importat_din, importat_din_site, cod_locatie
+discounturi_acordate: cod_locatie, identificator_offline
+inchideri_r_12: identificator_offline, cod_locatie, totaluri_plata_json
+log_reglari_casa_marcat: identificator_offline
+mesagerie_conversatii: participant_tip, participant_id, participant_nume_snapshot, participant_rang_snapshot, participant_email_snapshot, initiata_de, categorie, status, prioritate, sursa_initiala, pagina_initiala, locatie_initiala, inchis_la
+mesagerie_mesaje: autor_id, autor_nume_snapshot, autor_rang_snapshot, destinatar_tip, destinatar_id, destinatar_nume_snapshot, sursa, pagina_sursa, locatie, context_tehnic, status
+mese: masa_comenzi_online
+miscari: id_detaliu_bon_transfer_locatie, id_detaliu_bon_transfer
+nir: cod_locatie, identificator_offline, achitat
+note: nr_rezervare, cod_locatie
+observatii_predefinite: toate_produsele
+produse_servicii: nume_listare_tableta, id_categorie_tableta, ordine_tableta, fel_mancare, identificator_offline, cod_locatie
+rapoarte_z: identificator_offline
+setari_platforma: autologin_restaurant
+stoc_produse: cod_locatie
+ultim_bon_conectat: device_uid, device_ip, device_user_agent
+ultima_conexiune: device_uid, device_ip, device_user_agent
+
+TURKISH, CLIENT 17
+Task key: UNIFORMIZARE_STRUCTURA_CLIENT_17_2026_08_23
+Tabele existente în export: 99
+Tabele goale de creat: 58
+Coloane de adăugat în tabele existente: 75
+Coloane obligatorii cu inițializare explicită: 17
+Instrucțiuni SQL propuse: 83
+Tabele de creat: actiuni_operative, actiuni_operative_modificari_text, anaf_xml_facturi, atribuiri_observatii_produse, audit_modificari_pret_produse, audit_stergeri_det_note, avize_expeditie, avize_expeditie_linii, bon_consum_generari_reteta_hanul, bon_consum_generari_reteta_hanul_detalii, bonuri_transfer, bonuri_transfer_locatie, camere, carduri, categorii_tableta, consum_personal, continut_doc_vanzare_suplimentare, continut_facturi_vanzare_spv, corectii_consum_direct_mic_dejun_hanul_detalii, corectii_consum_productie_hanul_detalii, corectii_consum_productie_hanul_retete_backup, det_bonuri_transfer, det_bonuri_transfer_locatie, det_consum_personal, det_note_temporare, doc_vanzare_suplimentare, eliberari_mese_vechi, evenimente, facturi_vanzare_spv, fiscalizare_raspunsuri, hotel_rezervari_facturi, hotel_rezervari_vanzari, hotel_setari, inchideri_stoc_operative, inchideri_stoc_operative_linii, istoric_mutari_mese, mapare_woo_pos, mesagerie_conversatii, mesagerie_mesaje, note_temporare, offline_installation_state, offline_sequence_history, offline_sync_import_logs, offline_sync_imported, produse_meniu_categ, produse_servicii_sterse, proprietati, pvi_recalculari_data_ora, reguli_sold_initial_raport_gestiune, rezervari, rezervari_camere, sarcini_operative_corectii_productie_hanul, simulari_vanzari_asocieri, sincronizare_importuri_offline, sincronizare_operatori_offline, sincronizare_operatori_offline_istoric, tipuri_camere, woo_order_imports
+Coloane de adăugat:
+achizitii: cod_locatie, identificator_offline, actiune_operativa_id
+admins_12: cod_2fa_tableta, data_generare_cod_2fa_tableta
+bonuri_casa_marcat: identificator_offline, cod_locatie
+categ_meniuri_personalizate: cod_meniu_pers, ordinea
+comenzi: importata_pos, nr_bon_pos, operator_import, locatie_import, data_import_pos, telefon_client, metoda_plata, nume_client
+continut_bonuri_consum: id_retur
+det_com_tableta: optiune_bara_selectata, departament_listare
+det_note: cod_meniu_pers, meniu_instance_id, meniu_instance_qty, importat_din, importat_din_site, identificator_offline, cod_locatie
+discounturi_acordate: cod_locatie, identificator_offline
+furnizori: actiune_operativa_id
+inchideri_r_12: identificator_offline, cod_locatie, totaluri_plata_json
+log_reglari_casa_marcat: identificator_offline
+meniuri_personalizate: um, cota_tva, dep_casa_marcat
+mese: actiune_operativa_id, masa_comenzi_online
+miscari: id_consum_personal, identificator_offline, id_detaliu_bon_transfer_locatie, actiune_operativa_id, id_detaliu_bon_transfer
+nir: cod_locatie, identificator_offline, actiune_operativa_id, achitat
+note: identificator_offline, nr_camera, nr_rezervare, cod_locatie, importat_din_nota_tmp
+observatii_predefinite: toate_produsele
+produse_servicii: nume_tableta, nume_listare_tableta, id_categorie_tableta, ordine_tableta, alege_optiune_bara, actiune_operativa_id, actiune_operativa_pret_id, fel_mancare, identificator_offline, cod_locatie
+rapoarte_z: identificator_offline
+retete: actiune_operativa_id
+setari_platforma: autologin_restaurant, listare_automata_comenzi_site
+stoc_produse: cod_locatie
+ultim_bon_conectat: device_uid, device_ip, device_user_agent
+ultima_conexiune: device_uid, device_ip, device_user_agent
+
+AGREM PREJBA SRL, CLIENT 18
+Task key: UNIFORMIZARE_STRUCTURA_CLIENT_18_2026_08_23
+Tabele existente în export: 98
+Tabele goale de creat: 58
+Coloane de adăugat în tabele existente: 52
+Coloane obligatorii cu inițializare explicită: 9
+Instrucțiuni SQL propuse: 75
+Tabele de creat: actiuni_operative, actiuni_operative_modificari_text, anaf_xml_facturi, angajati, atribuiri_observatii_produse, avize_expeditie, avize_expeditie_linii, bon_consum_generari_reteta_hanul, bon_consum_generari_reteta_hanul_detalii, bonuri_transfer, bonuri_transfer_locatie, camere, carduri, categ_meniuri_personalizate, categorii_tableta, com_tableta, consum_personal, continut_doc_vanzare_suplimentare, continut_facturi_vanzare_spv, corectii_consum_direct_mic_dejun_hanul_detalii, corectii_consum_productie_hanul_detalii, corectii_consum_productie_hanul_retete_backup, det_bonuri_transfer, det_bonuri_transfer_locatie, det_com_tableta, det_consum_personal, det_note_temporare, doc_vanzare_suplimentare, eliberari_mese_vechi, evenimente, facturi_vanzare_spv, fiscalizare_raspunsuri, hotel_rezervari_facturi, hotel_rezervari_vanzari, hotel_setari, inchideri_stoc_operative, inchideri_stoc_operative_linii, istoric_mutari_mese, mapare_woo_pos, meniuri_personalizate, mesagerie_conversatii, mesagerie_mesaje, miscari_audit, note_temporare, offline_installation_state, offline_sequence_history, pontari, produse_meniu_categ, proprietati, reguli_cmp_override, reguli_sold_initial_raport_gestiune, rezervari, rezervari_camere, sarcini_operative_corectii_productie_hanul, simulari_vanzari_asocieri, tipuri_camere, turkish_z_fiscal_cache, woo_order_imports
+Coloane de adăugat:
+achizitii: cod_locatie, identificator_offline, actiune_operativa_id
+admins_12: cod_2fa_tableta, data_generare_cod_2fa_tableta
+comenzi: importata_pos, nr_bon_pos, operator_import, locatie_import, data_import_pos, telefon_client, metoda_plata, nume_client
+det_note: cod_meniu_pers, meniu_instance_id, meniu_instance_qty, importat_din, importat_din_site
+furnizori: actiune_operativa_id
+inchideri_r_12: totaluri_plata_json
+mese: actiune_operativa_id, masa_comenzi_online
+miscari: id_consum_personal, id_detaliu_bon_transfer_locatie, actiune_operativa_id, id_detaliu_bon_transfer
+nir: cod_locatie, identificator_offline, actiune_operativa_id, achitat
+note: nr_camera, nr_rezervare, importat_din_nota_tmp
+observatii_predefinite: toate_produsele
+produse_servicii: nume_tableta, nume_listare_tableta, id_categorie_tableta, ordine_tableta, alege_optiune_bara, actiune_operativa_id, actiune_operativa_pret_id, fel_mancare
+retete: actiune_operativa_id
+setari_platforma: autologin_restaurant, listare_automata_comenzi_site
+stoc_produse: cod_locatie
+ultim_bon_conectat: device_uid, device_ip, device_user_agent
+ultima_conexiune: device_uid, device_ip, device_user_agent
+
+CASA LUANNA, CLIENT 19
+Task key: UNIFORMIZARE_STRUCTURA_CLIENT_19_2026_08_23
+Tabele existente în export: 90
+Tabele goale de creat: 66
+Coloane de adăugat în tabele existente: 70
+Coloane obligatorii cu inițializare explicită: 12
+Instrucțiuni SQL propuse: 88
+Tabele de creat: actiuni_operative, actiuni_operative_modificari_text, angajati, atribuiri_observatii_produse, audit_modificari_pret_produse, audit_stergeri_det_note, avize_expeditie, avize_expeditie_linii, bon_consum_generari_reteta_hanul, bon_consum_generari_reteta_hanul_detalii, bonuri_transfer, bonuri_transfer_locatie, camere, carduri, categ_meniuri_personalizate, categorii_tableta, com_tableta, consum_personal, continut_doc_vanzare_suplimentare, continut_facturi_vanzare_spv, corectii_consum_direct_mic_dejun_hanul_detalii, corectii_consum_productie_hanul_detalii, corectii_consum_productie_hanul_retete_backup, det_bonuri_transfer, det_bonuri_transfer_locatie, det_com_tableta, det_consum_personal, det_note_temporare, doc_vanzare_suplimentare, eliberari_mese_vechi, evenimente, facturi_vanzare_spv, fiscalizare_raspunsuri, hotel_rezervari_facturi, hotel_rezervari_vanzari, hotel_setari, inchideri_stoc_operative, inchideri_stoc_operative_linii, istoric_mutari_mese, mapare_woo_pos, meniuri_personalizate, mesagerie_conversatii, mesagerie_mesaje, miscari_audit, note_temporare, offline_installation_state, offline_sequence_history, offline_sync_import_logs, offline_sync_imported, pontari, produse_meniu_categ, produse_servicii_sterse, proprietati, pvi_recalculari_data_ora, reguli_cmp_override, reguli_sold_initial_raport_gestiune, rezervari, rezervari_camere, sarcini_operative_corectii_productie_hanul, simulari_vanzari_asocieri, sincronizare_importuri_offline, sincronizare_operatori_offline, sincronizare_operatori_offline_istoric, tipuri_camere, turkish_z_fiscal_cache, woo_order_imports
+Coloane de adăugat:
+achizitii: cod_locatie, identificator_offline, actiune_operativa_id
+admins_12: cod_2fa_tableta, data_generare_cod_2fa_tableta
+bonuri_casa_marcat: identificator_offline, cod_locatie
+comenzi: importata_pos, nr_bon_pos, operator_import, locatie_import, data_import_pos, telefon_client, metoda_plata, nume_client
+continut_bonuri_consum: id_retur
+det_note: cod_meniu_pers, meniu_instance_id, meniu_instance_qty, importat_din, importat_din_site, departament_listare, identificator_offline, cod_locatie
+discounturi_acordate: cod_locatie, identificator_offline
+furnizori: actiune_operativa_id
+inchideri_r_12: identificator_offline, cod_locatie, totaluri_plata_json
+log_reglari_casa_marcat: identificator_offline
+mese: actiune_operativa_id, masa_comenzi_online
+miscari: id_consum_personal, identificator_offline, id_detaliu_bon_transfer_locatie, actiune_operativa_id, id_detaliu_bon_transfer
+nir: cod_locatie, identificator_offline, actiune_operativa_id, achitat
+note: identificator_offline, nr_camera, nr_rezervare, cod_locatie, importat_din_nota_tmp
+observatii_predefinite: toate_produsele
+produse_servicii: cod_mapare_import_extern, nume_tableta, nume_listare_tableta, id_categorie_tableta, ordine_tableta, alege_optiune_bara, actiune_operativa_id, actiune_operativa_pret_id, fel_mancare, identificator_offline, cod_locatie
+rapoarte_z: identificator_offline
+retete: actiune_operativa_id
+setari_platforma: autologin_restaurant, listare_automata_comenzi_site
+stoc_produse: cod_locatie
+ultim_bon_conectat: device_uid, device_ip, device_user_agent
+ultima_conexiune: device_uid, device_ip, device_user_agent
+
+BEST MIXT, CLIENT 21
+Task key: UNIFORMIZARE_STRUCTURA_CLIENT_21_2026_08_23
+Tabele existente în export: 99
+Tabele goale de creat: 57
+Coloane de adăugat în tabele existente: 43
+Coloane obligatorii cu inițializare explicită: 10
+Instrucțiuni SQL propuse: 73
+Tabele de creat: anaf_xml_facturi, atribuiri_observatii_produse, audit_modificari_pret_produse, audit_stergeri_det_note, avize_expeditie, avize_expeditie_linii, bon_consum_generari_reteta_hanul, bon_consum_generari_reteta_hanul_detalii, bonuri_transfer, bonuri_transfer_locatie, camere, carduri, categ_meniuri_personalizate, categorii_tableta, com_tableta, consum_personal, continut_doc_vanzare_suplimentare, continut_facturi_vanzare_spv, corectii_consum_direct_mic_dejun_hanul_detalii, corectii_consum_productie_hanul_detalii, corectii_consum_productie_hanul_retete_backup, det_bonuri_transfer, det_bonuri_transfer_locatie, det_com_tableta, det_consum_personal, det_note_temporare, doc_vanzare_suplimentare, eliberari_mese_vechi, evenimente, facturi_vanzare_spv, hotel_rezervari_facturi, hotel_rezervari_vanzari, hotel_setari, inchideri_stoc_operative, inchideri_stoc_operative_linii, istoric_mutari_mese, mapare_woo_pos, meniuri_personalizate, mesagerie_conversatii, mesagerie_mesaje, miscari_audit, note_temporare, offline_sync_import_logs, offline_sync_imported, produse_meniu_categ, produse_servicii_sterse, proprietati, pvi_recalculari_data_ora, reguli_cmp_override, reguli_sold_initial_raport_gestiune, rezervari, rezervari_camere, sarcini_operative_corectii_productie_hanul, simulari_vanzari_asocieri, tipuri_camere, turkish_z_fiscal_cache, woo_order_imports
+Coloane de adăugat:
+achizitii: cod_locatie, identificator_offline
+admins_12: cod_2fa_tableta, data_generare_cod_2fa_tableta
+comenzi: importata_pos, nr_bon_pos, operator_import, locatie_import, data_import_pos, telefon_client, metoda_plata, nume_client
+continut_bonuri_consum: id_retur
+det_note: cod_meniu_pers, meniu_instance_id, meniu_instance_qty, importat_din, importat_din_site
+inchideri_r_12: totaluri_plata_json
+mese: masa_comenzi_online
+miscari: id_consum_personal, id_detaliu_bon_transfer_locatie, id_detaliu_bon_transfer
+nir: cod_locatie, identificator_offline, achitat
+note: nr_camera, nr_rezervare, importat_din_nota_tmp
+observatii_predefinite: toate_produsele
+produse_servicii: nume_listare_tableta, id_categorie_tableta, ordine_tableta, fel_mancare
+setari_platforma: autologin_restaurant, listare_automata_comenzi_site
+stoc_produse: cod_locatie
+ultim_bon_conectat: device_uid, device_ip, device_user_agent
+ultima_conexiune: device_uid, device_ip, device_user_agent
+
+ANDREEA ROBERT, CLIENT 22
+Task key: UNIFORMIZARE_STRUCTURA_CLIENT_22_2026_08_23
+Tabele existente în export: 96
+Tabele goale de creat: 60
+Coloane de adăugat în tabele existente: 44
+Coloane obligatorii cu inițializare explicită: 9
+Instrucțiuni SQL propuse: 76
+Tabele de creat: angajati, atribuiri_observatii_produse, avize_expeditie, avize_expeditie_linii, bon_consum_generari_reteta_hanul, bon_consum_generari_reteta_hanul_detalii, bonuri_transfer, bonuri_transfer_locatie, camere, carduri, categ_meniuri_personalizate, com_tableta, consum_personal, continut_doc_vanzare_suplimentare, continut_facturi_vanzare_spv, corectii_consum_direct_mic_dejun_hanul_detalii, corectii_consum_productie_hanul_detalii, corectii_consum_productie_hanul_retete_backup, det_bonuri_transfer, det_bonuri_transfer_locatie, det_com_tableta, det_consum_personal, det_note_temporare, doc_vanzare_suplimentare, eliberari_mese_vechi, evenimente, facturi_vanzare_spv, fiscalizare_raspunsuri, hotel_rezervari_facturi, hotel_rezervari_vanzari, hotel_setari, inchideri_stoc_operative, inchideri_stoc_operative_linii, istoric_mutari_mese, mapare_woo_pos, meniuri_personalizate, mesagerie_conversatii, mesagerie_mesaje, miscari_audit, note_temporare, offline_installation_state, offline_sequence_history, offline_sync_import_logs, offline_sync_imported, pontari, produse_meniu_categ, proprietati, pvi_recalculari_data_ora, reguli_cmp_override, reguli_sold_initial_raport_gestiune, rezervari, rezervari_camere, sarcini_operative_corectii_productie_hanul, simulari_vanzari_asocieri, sincronizare_importuri_offline, sincronizare_operatori_offline, sincronizare_operatori_offline_istoric, tipuri_camere, turkish_z_fiscal_cache, woo_order_imports
+Coloane de adăugat:
+achizitii: cod_locatie, identificator_offline
+admins_12: cod_2fa_tableta, data_generare_cod_2fa_tableta
+bonuri_casa_marcat: cod_locatie
+comenzi: importata_pos, nr_bon_pos, operator_import, locatie_import, data_import_pos, telefon_client, metoda_plata, nume_client
+det_note: cod_meniu_pers, meniu_instance_id, meniu_instance_qty, importat_din, importat_din_site
+inchideri_r_12: cod_locatie, totaluri_plata_json
+mese: masa_comenzi_online
+miscari: id_consum_personal, id_detaliu_bon_transfer_locatie, id_detaliu_bon_transfer
+nir: cod_locatie, identificator_offline, achitat
+note: nr_camera, nr_rezervare, cod_locatie, importat_din_nota_tmp
+observatii_predefinite: toate_produsele
+produse_servicii: fel_mancare, identificator_offline, cod_locatie
+setari_platforma: autologin_restaurant, listare_automata_comenzi_site
+stoc_produse: cod_locatie
+ultim_bon_conectat: device_uid, device_ip, device_user_agent
+ultima_conexiune: device_uid, device_ip, device_user_agent
+
+GRAND PLAZA, CLIENT 25
+Task key: UNIFORMIZARE_STRUCTURA_CLIENT_25_2026_08_23
+Tabele existente în export: 107
+Tabele goale de creat: 49
+Coloane de adăugat în tabele existente: 74
+Coloane obligatorii cu inițializare explicită: 12
+Instrucțiuni SQL propuse: 68
+Tabele de creat: actiuni_operative, actiuni_operative_modificari_text, audit_modificari_pret_produse, audit_stergeri_det_note, avize_expeditie, avize_expeditie_linii, bon_consum_generari_reteta_hanul, bon_consum_generari_reteta_hanul_detalii, bonuri_transfer, bonuri_transfer_locatie, camere, categorii_tableta, consum_personal, continut_doc_vanzare_suplimentare, continut_facturi_vanzare_spv, corectii_consum_direct_mic_dejun_hanul_detalii, corectii_consum_productie_hanul_detalii, corectii_consum_productie_hanul_retete_backup, det_bonuri_transfer, det_bonuri_transfer_locatie, det_consum_personal, det_note_temporare, doc_vanzare_suplimentare, eliberari_mese_vechi, facturi_vanzare_spv, hotel_rezervari_facturi, hotel_rezervari_vanzari, hotel_setari, inchideri_stoc_operative, inchideri_stoc_operative_linii, istoric_mutari_mese, note_temporare, offline_installation_state, offline_sequence_history, offline_sync_import_logs, offline_sync_imported, produse_servicii_sterse, proprietati, pvi_recalculari_data_ora, reguli_sold_initial_raport_gestiune, rezervari, rezervari_camere, sarcini_operative_corectii_productie_hanul, simulari_vanzari_asocieri, sincronizare_importuri_offline, sincronizare_operatori_offline, sincronizare_operatori_offline_istoric, tipuri_camere, turkish_z_fiscal_cache
+Coloane de adăugat:
+achizitii: cod_locatie, identificator_offline, actiune_operativa_id
+bonuri_casa_marcat: identificator_offline, cod_locatie
+comenzi: importata_pos, nr_bon_pos, operator_import, locatie_import, data_import_pos, telefon_client, metoda_plata, nume_client
+det_com_tableta: optiune_bara_selectata
+det_note: identificator_offline, cod_locatie
+discounturi_acordate: cod_locatie, identificator_offline
+furnizori: actiune_operativa_id
+inchideri_r_12: identificator_offline, cod_locatie
+log_reglari_casa_marcat: identificator_offline
+mesagerie_conversatii: participant_tip, participant_id, participant_nume_snapshot, participant_rang_snapshot, participant_email_snapshot, initiata_de, categorie, status, prioritate, sursa_initiala, pagina_initiala, locatie_initiala, inchis_la
+mesagerie_mesaje: autor_id, autor_nume_snapshot, autor_rang_snapshot, destinatar_tip, destinatar_id, destinatar_nume_snapshot, sursa, pagina_sursa, locatie, context_tehnic, status
+mese: actiune_operativa_id
+miscari: id_consum_personal, identificator_offline, id_detaliu_bon_transfer_locatie, actiune_operativa_id, id_detaliu_bon_transfer
+nir: cod_locatie, identificator_offline, actiune_operativa_id, achitat
+note: identificator_offline, nr_camera, nr_rezervare, cod_locatie, importat_din_nota_tmp
+produse_servicii: id_categ_meniuri_personalizate, nume_tableta, nume_listare_tableta, id_categorie_tableta, ordine_tableta, alege_optiune_bara, actiune_operativa_id, actiune_operativa_pret_id, identificator_offline, cod_locatie
+rapoarte_z: identificator_offline
+retete: actiune_operativa_id
+stoc_produse: cod_locatie
+
+COCHE HOUSE SIBIU, CLIENT 1006
+Task key: UNIFORMIZARE_STRUCTURA_CLIENT_1006_2026_08_23
+Tabele existente în export: 92
+Tabele goale de creat: 64
+Coloane de adăugat în tabele existente: 71
+Coloane obligatorii cu inițializare explicită: 13
+Instrucțiuni SQL propuse: 87
+Tabele de creat: actiuni_operative, actiuni_operative_modificari_text, angajati, atribuiri_observatii_produse, audit_modificari_pret_produse, audit_stergeri_det_note, avize_expeditie, avize_expeditie_linii, bon_consum_generari_reteta_hanul, bon_consum_generari_reteta_hanul_detalii, bonuri_transfer, bonuri_transfer_locatie, camere, carduri, categ_meniuri_personalizate, categorii_tableta, com_tableta, consum_personal, continut_doc_vanzare_suplimentare, corectii_consum_direct_mic_dejun_hanul_detalii, corectii_consum_productie_hanul_detalii, corectii_consum_productie_hanul_retete_backup, det_bonuri_transfer, det_bonuri_transfer_locatie, det_com_tableta, det_consum_personal, det_note_temporare, doc_vanzare_suplimentare, eliberari_mese_vechi, evenimente, fiscalizare_raspunsuri, hotel_rezervari_facturi, hotel_rezervari_vanzari, hotel_setari, inchideri_stoc_operative, inchideri_stoc_operative_linii, istoric_mutari_mese, mapare_woo_pos, meniuri_personalizate, mesagerie_conversatii, mesagerie_mesaje, miscari_audit, note_temporare, offline_installation_state, offline_sequence_history, offline_sync_import_logs, offline_sync_imported, pontari, produse_meniu_categ, produse_servicii_sterse, proprietati, pvi_recalculari_data_ora, reguli_cmp_override, reguli_sold_initial_raport_gestiune, rezervari, rezervari_camere, sarcini_operative_corectii_productie_hanul, simulari_vanzari_asocieri, sincronizare_importuri_offline, sincronizare_operatori_offline, sincronizare_operatori_offline_istoric, tipuri_camere, turkish_z_fiscal_cache, woo_order_imports
+Coloane de adăugat:
+achizitii: cod_locatie, identificator_offline, actiune_operativa_id
+admins_12: cod_2fa_tableta, data_generare_cod_2fa_tableta
+bonuri_casa_marcat: identificator_offline, cod_locatie
+comenzi: importata_pos, nr_bon_pos, operator_import, locatie_import, data_import_pos, telefon_client, metoda_plata, nume_client
+continut_bonuri_consum: id_retur
+det_note: cod_meniu_pers, meniu_instance_id, meniu_instance_qty, importat_din, importat_din_site, departament_listare, identificator_offline, cod_locatie
+discounturi_acordate: cod_locatie, identificator_offline
+furnizori: actiune_operativa_id
+inchideri_r_12: identificator_offline, cod_locatie, totaluri_plata_json
+log_reglari_casa_marcat: identificator_offline
+mese: actiune_operativa_id, masa_comenzi_online
+miscari: id_consum_personal, identificator_offline, id_detaliu_bon_transfer_locatie, actiune_operativa_id, id_detaliu_bon_transfer
+nir: cod_locatie, identificator_offline, actiune_operativa_id, achitat
+note: identificator_offline, nr_camera, nr_rezervare, cod_locatie, importat_din_nota_tmp
+observatii_predefinite: toate_produsele
+produse_servicii: cod_mapare_import_extern, nume_tableta, nume_listare_tableta, id_categorie_tableta, ordine_tableta, alege_optiune_bara, actiune_operativa_id, actiune_operativa_pret_id, fel_mancare, identificator_offline, cod_locatie
+rapoarte_z: identificator_offline
+retete: actiune_operativa_id
+retururi: operator
+setari_platforma: autologin_restaurant, listare_automata_comenzi_site
+stoc_produse: cod_locatie
+ultim_bon_conectat: device_uid, device_ip, device_user_agent
+ultima_conexiune: device_uid, device_ip, device_user_agent
+
+KORN ATELIER, CLIENT 1007
+Task key: UNIFORMIZARE_STRUCTURA_CLIENT_1007_2026_08_23
+Tabele existente în export: 90
+Tabele goale de creat: 66
+Coloane de adăugat în tabele existente: 59
+Coloane obligatorii cu inițializare explicită: 12
+Instrucțiuni SQL propuse: 87
+Tabele de creat: actiuni_operative, actiuni_operative_modificari_text, anaf_xml_facturi, angajati, atribuiri_observatii_produse, audit_modificari_pret_produse, audit_stergeri_det_note, avize_expeditie, avize_expeditie_linii, bon_consum_generari_reteta_hanul, bon_consum_generari_reteta_hanul_detalii, bonuri_transfer, bonuri_transfer_locatie, camere, carduri, categ_meniuri_personalizate, categorii_tableta, com_tableta, consum_personal, continut_doc_vanzare_suplimentare, continut_facturi_vanzare_spv, corectii_consum_direct_mic_dejun_hanul_detalii, corectii_consum_productie_hanul_detalii, corectii_consum_productie_hanul_retete_backup, det_bonuri_transfer, det_bonuri_transfer_locatie, det_com_tableta, det_consum_personal, det_note_temporare, doc_vanzare_suplimentare, eliberari_mese_vechi, evenimente, facturi_vanzare_spv, fiscalizare_raspunsuri, hotel_rezervari_facturi, hotel_rezervari_vanzari, hotel_setari, inchideri_stoc_operative, inchideri_stoc_operative_linii, istoric_mutari_mese, mapare_woo_pos, meniuri_personalizate, mesagerie_conversatii, mesagerie_mesaje, miscari_audit, note_temporare, offline_installation_state, offline_sequence_history, offline_sync_import_logs, offline_sync_imported, pontari, produse_meniu_categ, produse_servicii_sterse, proprietati, pvi_recalculari_data_ora, reguli_sold_initial_raport_gestiune, rezervari, rezervari_camere, sarcini_operative_corectii_productie_hanul, simulari_vanzari_asocieri, sincronizare_importuri_offline, sincronizare_operatori_offline, sincronizare_operatori_offline_istoric, tipuri_camere, turkish_z_fiscal_cache, woo_order_imports
+Coloane de adăugat:
+achizitii: cod_locatie, identificator_offline, actiune_operativa_id
+admins_12: cod_2fa_tableta, data_generare_cod_2fa_tableta
+bonuri_casa_marcat: identificator_offline, cod_locatie
+continut_bonuri_consum: id_retur
+det_note: cod_meniu_pers, meniu_instance_id, meniu_instance_qty, importat_din, importat_din_site, identificator_offline, cod_locatie
+discounturi_acordate: cod_locatie, identificator_offline
+furnizori: actiune_operativa_id
+inchideri_r_12: identificator_offline, cod_locatie, totaluri_plata_json
+log_reglari_casa_marcat: identificator_offline
+mese: actiune_operativa_id, masa_comenzi_online
+miscari: id_consum_personal, identificator_offline, id_detaliu_bon_transfer_locatie, actiune_operativa_id, id_detaliu_bon_transfer
+nir: cod_locatie, identificator_offline, actiune_operativa_id, achitat
+note: identificator_offline, nr_camera, nr_rezervare, cod_locatie, importat_din_nota_tmp
+observatii_predefinite: toate_produsele
+produse_servicii: nume_tableta, nume_listare_tableta, id_categorie_tableta, ordine_tableta, alege_optiune_bara, actiune_operativa_id, actiune_operativa_pret_id, fel_mancare, identificator_offline, cod_locatie
+rapoarte_z: identificator_offline
+retete: actiune_operativa_id
+setari_platforma: autologin_restaurant
+stoc_produse: cod_locatie
+ultim_bon_conectat: device_uid, device_ip, device_user_agent
+ultima_conexiune: device_uid, device_ip, device_user_agent
+
+STRUCTURI EXCLUSE
+daily_activity_dump: tabel de lucru pentru export punctual
+mesaje_anaf_structurat_backup: copie de siguranță punctuală
+miscari_02_09: copie istorică datată
+miscari_03_09: copie istorică datată
+miscari_31_12_2025: copie istorică datată
+pvi_fix: tabel temporar pentru o corecție punctuală
+retururi_vechi: copie istorică
+
+REGULI DE APLICARE
+Tabelele nou create sunt goale și includ coloanele și indexurile structurii consolidate.
+Tabelele existente primesc numai coloanele lipsă.
+Definițiile coloanelor existente și indexurile tabelelor existente rămân neschimbate.
+Constrângerile FOREIGN KEY definite separat în exporturi nu sunt adăugate automat.
+Coloanele obligatorii nou adăugate primesc valori explicite. Locațiile primesc 1, valorile numerice primesc 0, textele primesc șir gol, iar structurile JSON primesc {}.
+Aplicarea necesită rang de administrator, backup confirmat, ID-ul clientului și hashul planului.
+Execuția se oprește la prima eroare.

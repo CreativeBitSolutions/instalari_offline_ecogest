@@ -1,0 +1,60 @@
+ACTIVITĂȚI DAILY COFFEE ȘI CONTABILITATE
+Client AGECS: client_id 2
+Export local analizat: u681731335_dailycoffee.sql
+Tip client: magazin
+Data analizei: 23.08.2026
+
+1. ACCES ȘI APLICAȚIE
+
+Butonul Vânzare din conectare.php este disponibil. login.php direcționează clientul către app_vanzare_v2/agecs_login.php.
+
+Exportul local are comunicare_anaf = 1 și listare_automata_comenzi_site = 1. Imprimanta, modul touch și listenerul sunt oprite în setari_platforma.
+
+2. REGULI DE LUCRU
+
+NIR-urile sunt separate pe locații. note_receptie.php permite filtrarea după cod_locatie și afișează denumirea locației din loc_mese_12.
+
+Rapoartele NIR standard și agregate, în PDF și Excel, includ filtrul de locație și o coloană distinctă pentru locație.
+
+Importul operațiunilor offline este blocat pe profilul dailycoffee. Clientul 2 generează mișcări de stoc la import, remapează produsele și păstrează identificatori offline pentru note, NIR-uri și mișcări. Locația 2 aplică transferul tehnic de materii definit de profilul Daily Coffee.
+
+Codul vechi din app_vanzare/vanzare_magazin.php conține o interfață vizuală dedicată clientului 2. Ruta curentă din login.php este app_vanzare_v2, astfel încât regula veche nu reprezintă interfața principală.
+
+3. CONTABILITATE ȘI RAPOARTE
+
+calcul_situatia_stocurilor.php direcționează gestiunea MĂRFURI către situatia_stocurilor_marfuri_daily.php și gestiunea MATERII către situatia_stocurilor_materii_daily.php.
+
+Situația stocurilor de mărfuri curăță valorile de vânzare când cantitatea ajunge la zero. La 30.09.2025 aplică o ajustare valorică internă, propagată în soldurile perioadelor următoare. Pentru începutul de la 01.11.2025 este fixată continuitatea soldului valoric de 185,37 lei.
+
+Situația stocurilor de materii normalizează CMP-ul și păstrează un reper pozitiv când stocul revine pe plus. Pentru perioadele începând cu 01.10.2025 există o forțare a soldului inițial valoric. Totalurile generale ascund cantitățile care nu au sens prin însumare între articole.
+
+Rapoartele de gestiune rămân cele standard. Verificarea lunară trebuie făcută separat pe locații, apoi consolidată. NIR-urile, notele și mișcările importate offline trebuie urmărite prin identificator_offline pentru evitarea dublării.
+
+4. DIFERENȚE DE STRUCTURĂ
+
+Exportul conține 104 tabele. Nu lipsește nicio tabelă prezentă în cel puțin 8 dintre cele 16 exporturi și nicio coloană prezentă în cel puțin 8 exporturi.
+
+Sunt prezente tabelele sincronizare_importuri_offline, sincronizare_operatori_offline, sincronizare_operatori_offline_istoric, offline_installation_state și offline_sequence_history.
+
+Structura include bonuri_transfer_locatie și det_bonuri_transfer_locatie. Acestea susțin transferurile între locații și nu trebuie înlocuite cu bonuri_transfer, folosit într-un alt flux.
+
+5. PERSONALIZĂRI ÎN ADMINISTRARE ȘI FACTURARE
+
+În PDF-ul facturii, listeaza_fact.php mărește zona maximă a siglei la 65 pe 32 mm. Ceilalți clienți folosesc limita de 50 pe 20 mm. Conținutul și calculele facturii rămân cele comune.
+
+Documentele NIR complete și simplificate nu afișează blocul de observații pentru clientul 2. Zona de semnături este redusă la CONTABIL, MANAGER și GESTIONAR. Rapoartele NIR standard și agregate păstrează suplimentar locația în filtre, grupare și coloanele PDF sau Excel.
+
+6. FIȘIERE ACTIVE RELEVANTE
+
+login.php
+note_receptie.php
+raport_nir_standard_portrait.php
+raport_nir_standard_landscape.php
+raport_nir_excel.php
+raport_nir_agregat_portrait.php
+raport_nir_agregat_landscape.php
+raport_nir_agregat_excel.php
+calcul_situatia_stocurilor.php
+situatia_stocurilor_marfuri_daily.php
+situatia_stocurilor_materii_daily.php
+sincronizare_online_app_vanzare/import_operatiuni_offline.php

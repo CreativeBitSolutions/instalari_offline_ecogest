@@ -1,0 +1,53 @@
+ACTIVITĂȚI HOTEL RIN ȘI CONTABILITATE
+Client AGECS: client_id 7
+Export local analizat: u681731335_hotelrin.sql
+Tip client: magazin
+Data analizei: 23.08.2026
+
+1. ACCES ȘI APLICAȚIE
+
+Deși denumirea comercială indică activitate hotelieră, tip_client din exportul central este magazin. conectare.php afișează Vânzare, iar login.php direcționează clientul către app_vanzare/agecs_login.php.
+
+Butonul Hotel nu este afișat pentru tip_client magazin. Schimbarea către app_hotel necesită mai întâi modificarea controlată a tipului clientului sau o regulă explicită de rutare.
+
+Exportul local are comunicare_anaf = 0, cu_imprimanta = 0 și listare_automata_comenzi_site = 1.
+
+2. REGULI DE LUCRU
+
+În facturare, orice produs cu CAZARE în denumire generează taxa hotelieră de 2% din valoarea netă. Taxa are TVA 0, este introdusă separat și este recalculată la modificarea cazării.
+
+Regula este prezentă în add_product.php și factura.php. Nu există o ramură dedicată clientului 7 în app_vanzare/vanzare_magazin.php.
+
+3. CONTABILITATE ȘI RAPOARTE
+
+Rapoartele sunt cele standard pentru vânzare, gestiune, NIR, stocuri, facturi și rapoarte Z. Nu există fișiere cu sufix Hotel Rin.
+
+Taxa hotelieră se verifică la TVA 0 și trebuie să reprezinte 2% din valoarea netă a cazării. Stornarea cazării trebuie să producă taxă cu semn negativ.
+
+Activitatea hotelieră completă nu este susținută de structura acestui export. Lipsesc camere, tipuri_camere, rezervari, rezervari_camere, hotel_setari, hotel_rezervari_facturi și hotel_rezervari_vanzari. Aceste tabele există numai în exportul Agecs Demo.
+
+4. DIFERENȚE DE STRUCTURĂ
+
+Exportul conține 90 de tabele.
+
+Lipsește reguli_cmp_override, prezentă în 9 exporturi.
+
+Lipsesc det_note.departament_listare și produse_servicii.cod_mapare_import_extern, prezente în 12 exporturi. Lipsește retururi.operator, prezentă în 12 exporturi. Lipsește continut_bonuri_consum.id_retur, prezentă în 8 exporturi.
+
+setari_platforma.listare_automata_comenzi_site este prezentă. Nu sunt prezente mapare_woo_pos și woo_order_imports, astfel încât activarea listării automate nu asigură singură importul WooCommerce.
+
+Structura hotelieră trebuie creată numai dacă Hotel Rin va utiliza efectiv app_hotel. Simplul calcul al taxei hoteliere în facturi nu impune aceste tabele.
+
+5. PERSONALIZĂRI ÎN ADMINISTRARE ȘI FACTURARE
+
+Factura administrativă activează panoul de cazare când denumirea produsului conține CAZARE. Sunt afișate baza netă, taxa hotelieră și totalul de booking, iar prețul cu TVA devine needitabil pe durata calculului.
+
+add_product.php introduce separat taxa de 2% cu TVA 0 și păstrează semnul la stornare. În lipsa unei denumiri CAZARE, formularul și listarea facturii folosesc fluxul comun. Personalizarea nu activează app_hotel și nu creează rezervări sau camere.
+
+6. FIȘIERE ACTIVE RELEVANTE
+
+login.php
+conectare.php
+app_vanzare/vanzare_magazin.php
+add_product.php
+factura.php

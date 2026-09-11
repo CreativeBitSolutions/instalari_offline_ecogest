@@ -1,0 +1,77 @@
+ACTIVITĂȚI TURKISH ȘI CONTABILITATE
+Client AGECS: client_id 17
+Export local analizat: u681731335_turkish.sql
+Tip client: magazin
+Data analizei: 23.08.2026
+
+1. ACCES ȘI APLICAȚIE
+
+Butonul Vânzare este disponibil. login.php direcționează clientul către app_vanzare_v2/agecs_login.php.
+
+Exportul local are comunicare_anaf = 0 și cu_imprimanta = 1. listare_automata_comenzi_site nu există în setari_platforma.
+
+2. REGULI DE LUCRU ÎN VÂNZARE
+
+Interfața afișează categoria MENIURI și include meniu_vanzare_widget.php. Butonul ONLINE este disponibil, iar Protocol este ascuns.
+
+Căutarea după cod de bare și butonul de cântar sunt ascunse. După introducerea cantității, focusul revine la căutarea după denumire.
+
+vanzare_adaug_meniu_pe_nota.php permite adăugarea meniurilor numai clienților 8 și 17.
+
+3. PERIOADA FISCALĂ ȘI CMP
+
+Rapoartele Turkish pot filtra după dată și oră calendaristică sau după interval de rapoarte Z. Ziua fiscală este stabilită prin deplasarea închiderii Z cu patru ore înapoi. Registrele de casă și bancă aplică o corecție de cinci ore la data rapoartelor Z.
+
+turkish_z_fiscal_cache păstrează maparea perioadelor fiscale. Schimbarea numărului raportului Z are reguli distincte pentru clientul 17, iar lista Z este furnizată prin ajax_lista_rapoarte_z_turkish.php.
+
+Exportul conține 16 reguli active în reguli_cmp_override. turkish_cmp_guard.php aplică protecție strictă începând cu 01.08.2026. Un CMP candidat care depășește de zece ori reperul sau scade sub o zecime din reper este înlocuit cu ultima valoare validă ori cu prețul de achiziție.
+
+Pentru produsul 267, orez, CMP-ul este fixat la 10,50 în intervalul 01.07.2026 până la 01.08.2026 ora 04:00.
+
+4. CONTABILITATE ȘI RAPOARTE
+
+Sunt folosite raport_gestiune_marfuri_turkish.php, raport_gestiune_marfuri_si_productie_turkish.php, raport_gestiune_materii_turkish.php, raport_gestiune_sgr_turkish.php, raport_gestiune_ambalaje_turkish.php și raport_gestiune_marfuri_si_productie_si_sgr_turkish.php.
+
+Situațiile de stoc dedicate sunt situatia_stocurilor_marfuri_turkish.php, situatia_stocurilor_materii_turkish.php și situatia_stocurilor_sgr_turkish.php. Producția folosește v2_raport_productie_turkish.php.
+
+Pentru iunie 2026 sunt fixate ținte contabile. Soldul inițial mărfuri este 47.078,14 lei, soldul final mărfuri este 38.241,00 lei, soldul inițial materii este 18.350,48 lei, soldul final materii este 35.664,26 lei, soldul inițial SGR este 5.033,00 lei, iar soldul final SGR este 4.762,00 lei.
+
+Țintele se aplică perioadei 01.06.2026 până la 30.06.2026 sau intervalului Z 595 până la 626, fără filtre suplimentare. Din 01.07.2026, deschiderea este preluată de la aceste ținte, iar diferențele de continuitate rămân în soldurile perioadelor ulterioare.
+
+Rapoartele vechi de gestiune și producție completă sunt ascunse. Rapoartele Turkish reprezintă ruta activă și trebuie comparate între ele pe aceeași perioadă fiscală.
+
+5. DIFERENȚE DE STRUCTURĂ
+
+Exportul conține 99 de tabele.
+
+Lipsește anaf_xml_facturi, prezentă în 11 exporturi.
+
+Lipsesc continut_bonuri_consum.id_retur și setari_platforma.listare_automata_comenzi_site, prezente în 8 exporturi.
+
+Sunt prezente reguli_cmp_override și tabela unică turkish_z_fiscal_cache. Sunt prezente structurile pentru meniuri personalizate și comenzile de tabletă.
+
+Crearea anaf_xml_facturi are sens numai dacă se activează stocarea locală a XML-urilor ANAF. id_retur este necesară numai pentru consumuri generate din retur. listare_automata_comenzi_site este necesară dacă se activează importul automat de comenzi online.
+
+6. PERSONALIZĂRI ÎN ADMINISTRARE ȘI FACTURARE
+
+header.php elimină raportul generic de gestiune și raportul vechi de producție completă. Formularele administrative sunt direcționate către rapoartele Turkish pentru mărfuri, materii, SGR, ambalaje, producție și combinațiile dintre acestea.
+
+Modalele de materii și stocuri permit filtrare după ora calendaristică sau după raport Z. Lista închiderilor este încărcată prin ajax_lista_rapoarte_z_turkish.php. Interfața folosește css/turkish-report-modals.css și js/turkish-report-modals.js numai pentru clientul 17.
+
+ajax_change_nr_raport_z.php cere selectarea înregistrării concrete din rapoarte_z. Modificarea numărului actualizează raportul selectat și structurile asociate după regulile Turkish, fără a folosi ramura generică bazată numai pe numărul vechi. Registrele de casă și bancă deplasează momentul raportului Z cu 5 ore pentru atribuirea zilei fiscale.
+
+Factura manuală și lista facturilor folosesc fluxul comun. Nu există o ramură Turkish în factura.php sau listeaza_fact.php.
+
+7. FIȘIERE ACTIVE RELEVANTE
+
+login.php
+app_vanzare_v2/vanzare_magazin.php
+app_vanzare_v2/vanzare_adaug_meniu_pe_nota.php
+turkish_fiscal_period_helper.php
+turkish_accounting_targets.php
+turkish_cmp_guard.php
+turkish_report_dispatch.php
+ajax_lista_rapoarte_z_turkish.php
+registru_de_casa.php
+registru_banca.php
+registru_casa_banca.php

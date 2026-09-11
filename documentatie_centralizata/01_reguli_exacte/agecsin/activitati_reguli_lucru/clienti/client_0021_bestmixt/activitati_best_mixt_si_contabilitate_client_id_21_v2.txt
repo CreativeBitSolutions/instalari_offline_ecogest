@@ -1,0 +1,56 @@
+ACTIVITĂȚI BEST MIXT ȘI CONTABILITATE
+Client AGECS: client_id 21
+Export local analizat: u681731335_bestmixt.sql
+Tip client: magazin
+Data analizei: 22.08.2026
+
+1. ACCES ȘI APLICAȚIE
+
+Butonul Vânzare este disponibil. login.php direcționează clientul către app_vanzare_v2/agecs_login.php.
+
+Exportul local are comunicare_anaf = 0 și cu_imprimanta = 0. listare_automata_comenzi_site nu există în setari_platforma.
+
+2. REGULI DE LUCRU
+
+Metoda Protocol este ascunsă. După adăugarea produsului, schimbarea categoriei și actualizarea bonului, focusul revine la căutarea după cod de bare.
+
+Sarcini operative este disponibil. Configurația conține importul vânzărilor offline din 11.08.2026. Importul creează note, detalii și mișcări BF, folosește numere noi de bon și păstrează prefixul OFFLINE-BESTMIXT-20260811.
+
+În reguli_vanzare există o regulă activă pentru produsul 911, denumită INVENTAR, valabilă în 10.06.2026. modificator_cantitate este 1. Regula trebuie verificată înainte de refolosirea produsului în alte perioade.
+
+3. CONTABILITATE ȘI RAPOARTE
+
+Raportul de gestiune dedicat este raport_gestiune_marfuri_bestmixt.php. Ieșirile provin numai din mișcări BF legate de note cu fiscalizat = 1. BC, PVI, AVIZ și bonurile fără confirmare fiscală nu intră în ieșirile acestui raport.
+
+Situația stocurilor dedicată este situatia_stocurilor_marfuri_bestmixt.php. calcul_situatia_stocurilor.php o selectează pentru gestiunea MĂRFURI.
+
+La 30.06.2026 ora 23:59, soldul valoric este adus la 5.873,00 lei pentru TVA 11%, 5.873,01 lei pentru TVA 21% și 11.746,01 lei cumulat. Ajustarea nu este afișată ca mișcare reală, dar este propagată în soldurile următoare.
+
+Pentru perioadele începute după schimbarea TVA din 01.08.2025, soldul inițial la 11% include istoricul de 9%, iar soldul inițial la 21% include istoricul de 19%.
+
+Tabela fiscalizare_raspunsuri este prezentă. Înaintea raportării, răspunsurile fiscale stocate sunt reconciliate cu note.fiscalizat.
+
+Raportul dedicat și situația stocurilor trebuie să aibă același sold final pentru aceeași perioadă și cotă TVA. Bonurile nefiscalizate rămân în afara ieșirilor până la confirmarea fiscală.
+
+4. DIFERENȚE DE STRUCTURĂ
+
+Exportul conține 99 de tabele.
+
+Lipsesc anaf_xml_facturi, prezentă în 11 exporturi, și reguli_cmp_override, prezentă în 9 exporturi.
+
+Lipsesc continut_bonuri_consum.id_retur și setari_platforma.listare_automata_comenzi_site, prezente în 8 exporturi.
+
+Sunt prezente fiscalizare_raspunsuri, actiuni_operative, sincronizarea offline și starea instalării offline. Aceste structuri susțin regulile curente.
+
+reguli_cmp_override nu este necesară pentru ajustarea valorică din 30.06.2026, deoarece aceasta este implementată în rapoartele dedicate. Tabela ar fi necesară numai pentru override CMP pe produse.
+
+5. FIȘIERE ACTIVE RELEVANTE
+
+login.php
+app_vanzare_v2/vanzare_magazin.php
+raport_gestiune_marfuri_bestmixt.php
+situatia_stocurilor_marfuri_bestmixt.php
+calcul_situatia_stocurilor.php
+fiscalizare_verificare_interval_service.php
+sarcini_operative.php
+sarcini_operative_taskuri.php

@@ -1,0 +1,55 @@
+ACTIVITĂȚI KORN ATELIER ȘI CONTABILITATE
+Client AGECS: client_id 1007
+Export local analizat: u681731335_kornatelier.sql
+Tip client: magazin
+Data analizei: 23.08.2026
+
+1. ACCES ȘI APLICAȚIE
+
+Butonul Vânzare este disponibil. login.php direcționează clientul către app_vanzare_v2/agecs_login.php.
+
+Exportul local are comunicare_anaf = 1, cu_imprimanta = 0 și listare_automata_comenzi_site = 1.
+
+2. IMPORTUL COMENZILOR ONLINE
+
+Interfața app_vanzare_v2 afișează Import Comenzi Online numai clienților 1007 și 8.
+
+api_import_comenzi_korn/import_woocommerce.php primește o comandă WooCommerce, validează cheia API, normalizează comanda și produsele, apoi scrie antetul în comenzi și liniile în det_comenzi. O comandă cu același ID este respinsă.
+
+vanzare_importa_comenzi_online.php preia comenzile locale din comenzi și det_comenzi. Comenzile anulate, eșuate, rambursate, cu mapare incompletă sau marcate cu eroare nu pot fi importate.
+
+Importul creează ori reutilizează bonul curent, adaugă liniile în det_note și marchează comanda cu importata_pos, nr_bon_pos, operator_import, locatie_import și data_import_pos. Metoda de plată este aleasă de operator la finalizarea bonului.
+
+Produsele sunt mapate prin cod_produs. O linie fără produs valid trebuie blocată înainte de finalizarea importului.
+
+3. CONTABILITATE ȘI RAPOARTE
+
+Nu există rapoarte cu sufix Korn Atelier. Sunt folosite rapoartele standard pentru gestiune, stocuri, NIR, facturi, mișcări și rapoarte Z.
+
+Controlul zilnic trebuie să compare comanda online, det_comenzi, bonul POS rezultat, det_note și metoda de plată aleasă. Marcajul importata_pos împiedică preluarea repetată a aceleiași comenzi.
+
+Comanda online nu generează ieșire de stoc înainte de finalizarea bonului. Mișcările BF se verifică după închiderea notei.
+
+4. DIFERENȚE DE STRUCTURĂ
+
+Exportul conține 90 de tabele.
+
+Lipsește anaf_xml_facturi, prezentă în 11 exporturi. Lipsește continut_bonuri_consum.id_retur, prezentă în 8 exporturi.
+
+Tabela comenzi conține toate coloanele cerute de importul POS: importata_pos, nr_bon_pos, operator_import, locatie_import, data_import_pos, telefon_client, metoda_plata și nume_client. det_comenzi conține cod_produs și valorile necesare importului.
+
+mapare_woo_pos și woo_order_imports nu sunt prezente. Fluxul Korn nu le folosește, deoarece maparea este transmisă direct prin cod_produs și starea importului este păstrată în comenzi.
+
+anaf_xml_facturi trebuie creată numai dacă se activează stocarea XML-urilor ANAF. id_retur este necesară numai pentru bonuri de consum generate din retur.
+
+5. PERSONALIZĂRI ÎN ADMINISTRARE ȘI FACTURARE
+
+Factura manuală, listarea PDF, facturile de achiziție și fluxurile ANAF folosesc implementarea comună. api_import_comenzi_korn/import_woocommerce.php nu emite facturi și nu modifică seriile documentelor fiscale.
+
+6. FIȘIERE ACTIVE RELEVANTE
+
+login.php
+app_vanzare_v2/vanzare_magazin.php
+app_vanzare_v2/vanzare_importa_comenzi_online.php
+api_import_comenzi_korn/import_woocommerce.php
+api_import_comenzi_korn/import_woocommerce_helpers.php

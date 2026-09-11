@@ -1,0 +1,19 @@
+categorie;sursa;rol;status
+offline;AGENTS.md;instrucțiuni repository și relația cu agecsin;activ
+offline;tipuri_instalari_offline.txt;catalogul tipurilor de instalare offline;activ
+offline;arhiveaza_pachet_client.ps1;reguli comune de împachetare;activ
+offline;arhiveaza_update_taverna_amicii.ps1;reguli de actualizare pentru restaurant;activ
+offline;OPTIMIZARI_VITEZA_RESTAURANT_TAVERNA_1008_1021.txt;reguli comune pentru 1008 și 1021;activ
+offline;PLAN_INSTALARE_AGECSDEMO_8.txt;plan client 8;activ
+offline;PLAN_OPTIMIZARI_VITEZA_LORAND_1019.txt;plan client 1019;activ
+offline;casaluanna\INSTALARE_CASALUANNA.txt;instalare client 19;activ
+offline;casaluanna\ACTUALIZARE_SYNC_ONLINE.txt;actualizare sincronizare client 19;activ
+offline;casaluanna\VERIFICARI_STATICE.txt;verificări client 19;activ
+offline;foxpro\docs\foxpro-raport-notes.md;reguli tehnice FoxPro;activ
+agecsin;activitati_reguli_lucru;reguli și activități per client;activ
+agecsin;sincronizare_online_app_vanzare\README.md;profiluri și importuri pentru magazine;activ
+agecsin;sincronizare_online_app_restaurant\sincronizare_date_offline.php;contract restaurant;cod sursă
+agecsin;offline_origin_schema.php;proveniență și identificatori offline;cod sursă
+agecsin;api\offline-products.php;catalog produse și TVA;cod sursă
+agecsin;api\offline-users.php;operatori și TVA;cod sursă
+agecsin;api\offline-tablet-orders.php;comenzi de tabletă;cod sursă
