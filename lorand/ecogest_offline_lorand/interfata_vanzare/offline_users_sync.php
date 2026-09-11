@@ -145,6 +145,63 @@ function ous_mirror_date_firma(PDO $pdo, array $dateFirma): bool
     return true;
 }
 
+function ous_has_pending_receipt(PDO $pdo): bool
+{
+    $conditions = [];
+    $detailColumns = ous_sqlite_columns($pdo, 'det_note');
+    if (isset($detailColumns['nr_bon'])) {
+        $conditions[] = 'EXISTS (SELECT 1 FROM det_note d WHERE d.nr_bon = n.nrbon)';
+    }
+
+    $noteColumns = ous_sqlite_columns($pdo, 'note');
+    foreach (['fiscalizat', 'valoare_vanzare_cu_tva', 'tva_colectata'] as $column) {
+        if (isset($noteColumns[$column])) {
+            $conditions[] = 'COALESCE(n.' . $column . ', 0) <> 0';
+        }
+    }
+
+    if (!$conditions) {
+        return false;
+    }
+
+    $stmt = $pdo->query(
+        "SELECT 1 FROM note n WHERE n.status = 'S' AND (" . implode(' OR ', $conditions) . ') LIMIT 1'
+    );
+    return (bool)$stmt->fetchColumn();
+}
+
+function ous_realign_empty_drafts(PDO $pdo, array $dateFirma): void
+{
+    $columns = ous_sqlite_columns($pdo, 'note');
+    $sets = [];
+    $params = [];
+    if (isset($columns['serie_casa_marcat']) && array_key_exists('serie_casa_marcat', $dateFirma)) {
+        $sets[] = 'serie_casa_marcat = ?';
+        $params[] = trim((string)$dateFirma['serie_casa_marcat']);
+    }
+    if (isset($columns['nui']) && array_key_exists('nui', $dateFirma)) {
+        $sets[] = 'nui = ?';
+        $params[] = max(0, (int)$dateFirma['nui']);
+    }
+    if (isset($columns['serie_memorie_fiscala']) && array_key_exists('serie_memorie_fiscala', $dateFirma)) {
+        $memory = trim((string)$dateFirma['serie_memorie_fiscala']);
+        $sets[] = 'serie_memorie_fiscala = ?';
+        $params[] = $memory === '0' ? '' : $memory;
+    }
+    if (!$sets) {
+        return;
+    }
+
+    $detailCondition = '';
+    if (isset(ous_sqlite_columns($pdo, 'det_note')['nr_bon'])) {
+        $detailCondition = ' AND NOT EXISTS (SELECT 1 FROM det_note d WHERE d.nr_bon = note.nrbon)';
+    }
+    $stmt = $pdo->prepare(
+        "UPDATE note SET " . implode(', ', $sets) . " WHERE status = 'S'" . $detailCondition
+    );
+    $stmt->execute($params);
+}
+
 
 function ous_mirror_vat_tables(PDO $pdo, array $coteTva, array $coduriCasaTva): array
 {
@@ -295,15 +352,33 @@ try {
     $inserted = 0;
     $updated = 0;
 
+    if (ous_has_pending_receipt($pdo)) {
+        throw new RuntimeException('Finalizeaza bonul curent inainte de actualizarea utilizatorilor si TVA.');
+    }
+
+    $pdo->exec('CREATE TABLE IF NOT EXISTS offline_online_operators (
+        admin_id INTEGER PRIMARY KEY,
+        synced_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+    )');
     $pdo->beginTransaction();
+    $pdo->exec('DELETE FROM offline_online_operators');
+    $registerOperator = $pdo->prepare('INSERT INTO offline_online_operators(admin_id, synced_at) VALUES (?, CURRENT_TIMESTAMP)');
     foreach ($users as $user) {
         if (!is_array($user)) {
-            continue;
+            throw new RuntimeException('Lista online contine un utilizator invalid.');
         }
         $adminId = (int)($user['admin_id'] ?? 0);
         if ($adminId <= 0) {
+            throw new RuntimeException('Lista online contine un ID de utilizator invalid.');
+        }
+        if (isset($user['active']) && (int)$user['active'] !== 1) {
             continue;
         }
+        if ((int)($user['locatie'] ?? $codLocatie) !== $codLocatie
+            || (string)($user['lucreaza_la'] ?? '') !== 'magazin') {
+            throw new RuntimeException('Utilizatorul primit nu apartine magazinului curent.');
+        }
+        $registerOperator->execute([$adminId]);
         $received++;
 
         $data = [];
@@ -380,7 +455,9 @@ try {
         }
     }
     $vatCounts = ous_mirror_vat_tables($pdo, $response['cote_tva'], $response['coduri_casa_tva']);
-    $companySynced = ous_mirror_date_firma($pdo, is_array($response['date_firma'] ?? null) ? $response['date_firma'] : []);
+    $dateFirma = is_array($response['date_firma'] ?? null) ? $response['date_firma'] : [];
+    $companySynced = ous_mirror_date_firma($pdo, $dateFirma);
+    ous_realign_empty_drafts($pdo, $dateFirma);
     $pdo->commit();
 
     ous_redirect('success', [
