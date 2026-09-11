@@ -13,34 +13,103 @@ while ($row = $inchidere_stmt->fetch(PDO::FETCH_ASSOC)){
 }
 $cod_inchidere_curenta=$ultim_inchidere+1;
 $_SESSION['ultim_inch']=$cod_inchidere_curenta;
-  $valoare_inchidere_sql = "SELECT sum($tabel_final_note.valoare_vanzare_cu_tva) as total_vz_c_tva from $tabel_final_note where $tabel_final_note.cod_inchidere=0 and $tabel_final_note.status='F'  and $tabel_final_note.locatie='$cod_locatie' and operator='$adm_id'; ";    	
+ 
+$offlineShiftIdentity = function_exists('restaurantIsOfflineSqlite')
+    && restaurantIsOfflineSqlite()
+    && function_exists('restaurant_sqlite_raport_z_current_identification');
+$shiftSeries = '';
+$shiftNui = 0;
+$shiftMemory = '';
+$shiftIdentitySql = '';
+$shiftIdentityParams = [];
+if ($offlineShiftIdentity) {
+    $shiftIdentity = restaurant_sqlite_raport_z_current_identification($pdo, (int)$cod_locatie);
+    $shiftSeries = trim((string)($shiftIdentity['serie_casa_marcat'] ?? ''));
+    $shiftNui = max(0, (int)($shiftIdentity['nui'] ?? 0));
+    $shiftMemory = trim((string)($shiftIdentity['serie_memorie_fiscala'] ?? ''));
+    if ($shiftMemory === '0') {
+        $shiftMemory = '';
+    }
+    $shiftIdentitySql = "
+        AND (COALESCE($tabel_final_note.serie_casa_marcat, '') = :shift_series OR COALESCE($tabel_final_note.serie_casa_marcat, '') = '')
+        AND (COALESCE($tabel_final_note.nui, 0) = :shift_nui OR COALESCE($tabel_final_note.nui, 0) = 0)
+        AND (COALESCE($tabel_final_note.serie_memorie_fiscala, '') = :shift_memory OR COALESCE($tabel_final_note.serie_memorie_fiscala, '') = '')";
+    $shiftIdentityParams = [
+        ':shift_series' => $shiftSeries,
+        ':shift_nui' => $shiftNui,
+        ':shift_memory' => $shiftMemory,
+    ];
+}
+
+  $valoare_inchidere_sql = "SELECT sum($tabel_final_note.valoare_vanzare_cu_tva) as total_vz_c_tva from $tabel_final_note where $tabel_final_note.cod_inchidere=0 and $tabel_final_note.status='F'  and $tabel_final_note.locatie='$cod_locatie' and operator='$adm_id'{$shiftIdentitySql}; ";    	
   $valoare_inchidere_stmt = $pdo->prepare($valoare_inchidere_sql);  
-$valoare_inchidere_stmt->execute();
+$valoare_inchidere_stmt->execute($shiftIdentityParams);
 while ($row = $valoare_inchidere_stmt->fetch(PDO::FETCH_ASSOC)){
 	$valoare_inchidere=$row['total_vz_c_tva'];
 }
-  $valoare_tva_inchidere_sql = "SELECT sum($tabel_final_note.tva_colectata) as total_tva_col from $tabel_final_note where $tabel_final_note.cod_inchidere=0 and $tabel_final_note.status='F'  and $tabel_final_note.locatie='$cod_locatie' and operator='$adm_id'; ";    	
+  $valoare_tva_inchidere_sql = "SELECT sum($tabel_final_note.tva_colectata) as total_tva_col from $tabel_final_note where $tabel_final_note.cod_inchidere=0 and $tabel_final_note.status='F'  and $tabel_final_note.locatie='$cod_locatie' and operator='$adm_id'{$shiftIdentitySql}; ";    	
   $valoare_tva_inchidere_stmt = $pdo->prepare($valoare_tva_inchidere_sql);  
-$valoare_tva_inchidere_stmt->execute();
+$valoare_tva_inchidere_stmt->execute($shiftIdentityParams);
 while ($row = $valoare_tva_inchidere_stmt->fetch(PDO::FETCH_ASSOC)){
 	$valoare_tva_inchidere=$row['total_tva_col'];
 }
- $ora_inchiderii = date("H:i:s", strtotime('+0 hours'));
+$ora_inchiderii = date("H:i:s", strtotime('+0 hours'));
  $data_inchiderii = date("Y-m-d", strtotime('+0 hours'));
 $idInchidere = 0;
-$adauga_inchidere = "insert into $tabel_final_inchideri_r(cod_inchidere,operator,valoare_cu_tva,tva_colectata,data_inchiderii,ora_inchiderii,locatie) values('$cod_inchidere_curenta','$adm_id','$valoare_inchidere','$valoare_tva_inchidere','$data_inchiderii','$ora_inchiderii','$cod_locatie');";	
-	try{
-$pdo->exec($adauga_inchidere) or die(print_r($pdo->errorInfo(), true));   
-$idInchidere = (int)$pdo->lastInsertId();
-}catch(PDOException $e)
-    {
-    echo $adauga_inchidere . "<br>" . $e->getMessage();
-    } 
-$bon_sql = "SELECT $tabel_final_note.nrbon from $tabel_final_note where $tabel_final_note.cod_inchidere=0 and $tabel_final_note.status='F'  and $tabel_final_note.locatie='$cod_locatie' and operator='$adm_id'";    	
+
+if ($offlineShiftIdentity) {
+    try {
+        $stmtInchidere = $pdo->prepare("INSERT INTO {$tabel_final_inchideri_r}
+            (cod_inchidere, operator, valoare_cu_tva, tva_colectata, data_inchiderii, ora_inchiderii, locatie, nr_raport_z, serie_casa_marcat, nui, serie_memorie_fiscala)
+            VALUES (:cod_inchidere, :operator, :valoare_cu_tva, :tva_colectata, :data_inchiderii, :ora_inchiderii, :locatie, 0, :serie_casa_marcat, :nui, :serie_memorie_fiscala)");
+        $stmtInchidere->execute([
+            ':cod_inchidere' => $cod_inchidere_curenta,
+            ':operator' => $adm_id,
+            ':valoare_cu_tva' => $valoare_inchidere,
+            ':tva_colectata' => $valoare_tva_inchidere,
+            ':data_inchiderii' => $data_inchiderii,
+            ':ora_inchiderii' => $ora_inchiderii,
+            ':locatie' => $cod_locatie,
+            ':serie_casa_marcat' => $shiftSeries,
+            ':nui' => $shiftNui,
+            ':serie_memorie_fiscala' => $shiftMemory,
+        ]);
+        $idInchidere = (int)$pdo->lastInsertId();
+    } catch (PDOException $e) {
+        error_log('Eroare inserare inchidere tura offline: ' . $e->getMessage());
+    }
+} else {
+    $adauga_inchidere = "insert into $tabel_final_inchideri_r(cod_inchidere,operator,valoare_cu_tva,tva_colectata,data_inchiderii,ora_inchiderii,locatie) values('$cod_inchidere_curenta','$adm_id','$valoare_inchidere','$valoare_tva_inchidere','$data_inchiderii','$ora_inchiderii','$cod_locatie');";	
+    try{
+    $pdo->exec($adauga_inchidere) or die(print_r($pdo->errorInfo(), true));   
+    $idInchidere = (int)$pdo->lastInsertId();
+    }catch(PDOException $e)
+        {
+        echo $adauga_inchidere . "<br>" . $e->getMessage();
+        }
+}
+$bon_sql = "SELECT $tabel_final_note.nrbon from $tabel_final_note where $tabel_final_note.cod_inchidere=0 and $tabel_final_note.status='F'  and $tabel_final_note.locatie='$cod_locatie' and operator='$adm_id'{$shiftIdentitySql}";	
 $bon_stmt = $pdo->prepare($bon_sql);  
-$bon_stmt->execute();
+$bon_stmt->execute($shiftIdentityParams);
 while ($row = $bon_stmt->fetch(PDO::FETCH_ASSOC)){ 
 $bon_de_inchis=$row['nrbon'];
+    if ($offlineShiftIdentity) {
+        $inchsql = "UPDATE $tabel_final_note
+            SET cod_inchidere = :cod_inchidere,
+                serie_casa_marcat = :serie_casa_marcat,
+                nui = :nui,
+                serie_memorie_fiscala = :serie_memorie_fiscala
+            WHERE nrbon = :nrbon";
+        $inchstmt = $pdo->prepare($inchsql);
+        $inchstmt->execute([
+            ':cod_inchidere' => $cod_inchidere_curenta,
+            ':serie_casa_marcat' => $shiftSeries,
+            ':nui' => $shiftNui,
+            ':serie_memorie_fiscala' => $shiftMemory,
+            ':nrbon' => $bon_de_inchis,
+        ]);
+        continue;
+    }
     $inchsql="update $tabel_final_note set cod_inchidere='$cod_inchidere_curenta' where nrbon='$bon_de_inchis'"; 	 
     $inchstmt = $pdo->prepare($inchsql);  
 $inchstmt->execute(); 
