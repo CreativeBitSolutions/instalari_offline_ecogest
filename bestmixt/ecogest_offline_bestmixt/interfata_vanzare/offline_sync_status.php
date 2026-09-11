@@ -50,15 +50,15 @@ function offline_sync_status_allowed_fields(string $table): array
 {
     $common = ['identificator_offline', 'cod_locatie', 'locatie'];
     $fields = [
-        'note' => ['nrbon', 'data_bon', 'ora_bon', 'operator', 'valoare_vanzare_cu_tva', 'tva_colectata', 'discount', 'numerar', 'card', 'cod_inchidere', 'nr_raport_z'],
+        'note' => ['nrbon', 'data_bon', 'ora_bon', 'operator', 'valoare_vanzare_cu_tva', 'tva_colectata', 'discount', 'numerar', 'card', 'cod_inchidere', 'nr_raport_z', 'nui', 'serie_memorie_fiscala'],
         'det_note' => ['id_vanz', 'nr_bon', 'nume_produs', 'cantitate', 'pret_vanzare', 'valoare_vanzare_cu_tva', 'discount', 'cota_tva'],
         'discounturi_acordate' => ['id_discount', 'id_vanz', 'id_operator', 'valoare_discount', 'procent_discount', 'data', 'ora'],
         'bonuri_casa_marcat' => ['id', 'nrbon', 'data', 'ora', 'de_trimis_la_casa_marcat'],
-        'inchideri_r_12' => ['id_inch', 'cod_inchidere', 'operator', 'data_inchiderii', 'ora_inchiderii', 'valoare_cu_tva', 'tva_colectata', 'nr_raport_z'],
-        'rapoarte_z' => ['id', 'nr_raport_z', 'data_ora_raport_z', 'serie_casa_marcat', 'numerar', 'card', 'credit', 'tichete_masa', 'tichete_valorice', 'plata_moderna', 'alte_metode'],
+        'inchideri_r_12' => ['id_inch', 'cod_inchidere', 'operator', 'data_inchiderii', 'ora_inchiderii', 'valoare_cu_tva', 'tva_colectata', 'nr_raport_z', 'nui', 'serie_memorie_fiscala'],
+        'rapoarte_z' => ['id', 'nr_raport_z', 'data_ora_raport_z', 'serie_casa_marcat', 'nui', 'serie_memorie_fiscala', 'numerar', 'card', 'credit', 'tichete_masa', 'tichete_valorice', 'plata_moderna', 'alte_metode'],
         'nir' => ['id_nir', 'nr_nir', 'data_nir', 'ora_nir', 'furnizor', 'nr_factura', 'valoare_cu_tva', 'tva', 'status'],
         'achizitii' => ['id_achiz', 'nr_nir', 'cod_produs', 'nume_produs', 'cantitate', 'pret_achizitie', 'valoare_cu_tva', 'cota_tva'],
-        'miscari' => ['id', 'fel_doc', 'nr_doc', 'nr_nota', 'cod_p', 'denumire_produs', 'nume_produs', 'tip_miscare', 'cantitate_misc', 'cantitate', 'pu', 'pret_achizitie', 'pret_vanzare', 'gestiune', 'data'],
+        'miscari' => ['id', 'fel_doc', 'nr_doc', 'nr_nota', 'nr_raport_z', 'nui', 'serie_memorie_fiscala', 'cod_p', 'denumire_produs', 'nume_produs', 'tip_miscare', 'cantitate_misc', 'cantitate', 'pu', 'pret_achizitie', 'pret_vanzare', 'gestiune', 'data'],
         'log_reglari_casa_marcat' => ['id', 'admin_id', 'tip_reglare', 'suma', 'motiv', 'data', 'ora'],
     ];
     return array_values(array_unique(array_merge($fields[$table] ?? [], $common)));

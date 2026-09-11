@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-const RESTAURANT_SQLITE_SCHEMA_VERSION = 2;
+const RESTAURANT_SQLITE_SCHEMA_VERSION = 3;
 function restaurant_sqlite_schema_statements(): array
 {
     return [
@@ -60,7 +60,9 @@ function restaurant_sqlite_schema_statements(): array
             cod_locatie INTEGER DEFAULT 0,
             den_loc TEXT DEFAULT '',
             denumire TEXT DEFAULT '',
-            serie_casa_marcat TEXT DEFAULT ''
+            serie_casa_marcat TEXT DEFAULT '',
+            nui INTEGER DEFAULT 0,
+            serie_memorie_fiscala TEXT DEFAULT ''
         )",
         "CREATE INDEX IF NOT EXISTS idx_loc_mese_12_cod_locatie ON loc_mese_12(cod_locatie)",
         "CREATE TABLE IF NOT EXISTS mese (
@@ -195,6 +197,8 @@ function restaurant_sqlite_schema_statements(): array
             serie_stornare TEXT DEFAULT '',
             text_subsol_factura TEXT DEFAULT '',
             serie_casa_marcat TEXT DEFAULT '',
+            nui INTEGER DEFAULT 0,
+            serie_memorie_fiscala TEXT DEFAULT '',
             mod_listare TEXT DEFAULT 'simplu',
             conducator_entitate TEXT DEFAULT '',
             vanzare_sub_stoc INTEGER DEFAULT 1,
@@ -229,6 +233,8 @@ function restaurant_sqlite_schema_statements(): array
             fiscalizat INTEGER DEFAULT 0,
             cod_inchidere INTEGER DEFAULT 0,
             nr_raport_z INTEGER DEFAULT 0,
+            nui INTEGER DEFAULT 0,
+            serie_memorie_fiscala TEXT DEFAULT '',
             camera_nota TEXT DEFAULT ''
         )",
         "CREATE INDEX IF NOT EXISTS idx_note_status_locatie ON note(status, locatie)",
@@ -430,6 +436,8 @@ function restaurant_sqlite_schema_statements(): array
             ora_inchiderii TEXT DEFAULT '',
             locatie INTEGER DEFAULT 0,
             nr_raport_z INTEGER DEFAULT 0,
+            nui INTEGER DEFAULT 0,
+            serie_memorie_fiscala TEXT DEFAULT '',
             totaluri_plata_json TEXT DEFAULT NULL
         )",
         "CREATE INDEX IF NOT EXISTS idx_inchideri_r_12_locatie_cod ON inchideri_r_12(locatie, cod_inchidere)",
@@ -555,6 +563,8 @@ function restaurant_sqlite_schema_statements(): array
             nr_raport_z INTEGER DEFAULT 0,
             cod_locatie INTEGER DEFAULT 0,
             serie_casa_marcat TEXT DEFAULT '',
+            nui INTEGER DEFAULT 0,
+            serie_memorie_fiscala TEXT DEFAULT '',
             numerar REAL DEFAULT 0,
             card REAL DEFAULT 0,
             credit REAL DEFAULT 0,
@@ -609,6 +619,7 @@ function restaurant_sqlite_apply_schema(PDO $pdo, int $codLocatie = 0): void
     $pdo->exec('CREATE UNIQUE INDEX IF NOT EXISTS idx_det_com_tableta_online_row ON det_com_tableta(nr_bon, online_id_vanz) WHERE online_id_vanz > 0');
     restaurant_sqlite_ensure_cod_locatie_columns($pdo);
     restaurant_sqlite_backfill_cod_locatie_values($pdo, $codLocatie);
+    restaurant_sqlite_ensure_raport_z_identity_index($pdo);
     restaurant_sqlite_ensure_cod_locatie_triggers($pdo);
 }
 
@@ -684,6 +695,115 @@ function restaurant_sqlite_table_exists(PDO $pdo, string $table): bool
     $stmt->execute([':table' => $table]);
     return ((int)$stmt->fetchColumn()) > 0;
 }
+
+function restaurant_sqlite_raport_z_current_identification(PDO $pdo, int $codLocatie): array
+{
+    $dateFirma = restaurant_sqlite_table_exists($pdo, 'date_firma')
+        ? ($pdo->query('SELECT * FROM date_firma LIMIT 1')->fetch(PDO::FETCH_ASSOC) ?: [])
+        : [];
+
+    $locMese = [];
+    if (restaurant_sqlite_table_exists($pdo, 'loc_mese_12')) {
+        $locColumns = restaurant_sqlite_table_columns($pdo, 'loc_mese_12');
+        $where = '';
+        $params = [];
+        if (isset($locColumns['cod_locatie'])) {
+            $where = ' WHERE cod_locatie = ?';
+            $params[] = $codLocatie;
+        } elseif (isset($locColumns['locatie'])) {
+            $where = ' WHERE locatie = ?';
+            $params[] = $codLocatie;
+        }
+        $stmt = $pdo->prepare('SELECT * FROM loc_mese_12' . $where . ' LIMIT 1');
+        $stmt->execute($params);
+        $locMese = $stmt->fetch(PDO::FETCH_ASSOC) ?: [];
+    }
+
+    $series = trim((string)($dateFirma['serie_casa_marcat'] ?? ''));
+    if ($series === '') {
+        $series = trim((string)($locMese['serie_casa_marcat'] ?? ''));
+    }
+
+    $nui = (int)($dateFirma['nui'] ?? 0);
+    if ($nui <= 0) {
+        $nui = max(0, (int)($locMese['nui'] ?? 0));
+    }
+
+    $memory = trim((string)($dateFirma['serie_memorie_fiscala'] ?? ''));
+    if ($memory === '' || $memory === '0') {
+        $memory = trim((string)($locMese['serie_memorie_fiscala'] ?? ''));
+    }
+    if ($memory === '0') {
+        $memory = '';
+    }
+
+    return [
+        'serie_casa_marcat' => $series,
+        'nui' => $nui,
+        'serie_memorie_fiscala' => $memory,
+    ];
+}
+
+function restaurant_sqlite_raport_z_next_number(PDO $pdo, int $codLocatie, int $nui = -1, string $memory = ''): int
+{
+    $identity = restaurant_sqlite_raport_z_current_identification($pdo, $codLocatie);
+    if ($nui < 0) {
+        $nui = $identity['nui'];
+    }
+    if ($memory === '') {
+        $memory = $identity['serie_memorie_fiscala'];
+    }
+
+    $stmt = $pdo->prepare("SELECT COALESCE(MAX(nr_raport_z), 0) + 1
+        FROM rapoarte_z
+        WHERE cod_locatie = ?
+          AND COALESCE(serie_casa_marcat, '') = ?
+          AND COALESCE(nui, 0) = ?
+          AND COALESCE(serie_memorie_fiscala, '') = ?");
+    $stmt->execute([$codLocatie, $identity['serie_casa_marcat'], $nui, $memory]);
+    return max(1, (int)$stmt->fetchColumn());
+}
+
+function restaurant_sqlite_ensure_raport_z_identity_index(PDO $pdo): void
+{
+    if (!restaurant_sqlite_table_exists($pdo, 'rapoarte_z')) {
+        return;
+    }
+
+    try {
+        $duplicates = (int)$pdo->query("SELECT COUNT(*) FROM (
+            SELECT cod_locatie,
+                   COALESCE(serie_casa_marcat, ''),
+                   COALESCE(nui, 0),
+                   COALESCE(serie_memorie_fiscala, ''),
+                   nr_raport_z
+            FROM rapoarte_z
+            GROUP BY cod_locatie,
+                     COALESCE(serie_casa_marcat, ''),
+                     COALESCE(nui, 0),
+                     COALESCE(serie_memorie_fiscala, ''),
+                     nr_raport_z
+            HAVING COUNT(*) > 1
+        )")->fetchColumn();
+        if ($duplicates > 0) {
+            error_log('Indexul fiscal extins pentru rapoarte_z nu a fost creat deoarece exista duplicate istorice.');
+            return;
+        }
+
+        $indexes = $pdo->query("PRAGMA index_list('rapoarte_z')")->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($indexes as $index) {
+            if (strtolower((string)($index['name'] ?? '')) === 'uq_rapoarte_z_offline_fiscal') {
+                $pdo->exec('DROP INDEX IF EXISTS "uq_rapoarte_z_offline_fiscal"');
+            }
+        }
+
+        $pdo->exec('CREATE UNIQUE INDEX IF NOT EXISTS uq_rapoarte_z_offline_fiscal_identity
+            ON rapoarte_z (cod_locatie, serie_casa_marcat, nui, serie_memorie_fiscala, nr_raport_z)');
+    } catch (Throwable $e) {
+        error_log('Nu s-a putut crea indexul fiscal extins pentru rapoarte_z: ' . $e->getMessage());
+    }
+}
+
 
 /**
  * Păstrează minimum 20 de mese temporare pentru împărțirea notelor.
@@ -794,6 +914,8 @@ function restaurant_sqlite_miscari_column_definitions(): array
         'cod_locatie' => 'INTEGER DEFAULT 0',
         'ora_miscarii' => "TEXT DEFAULT (time('now','localtime'))",
         'nr_raport_z' => 'INTEGER DEFAULT 0',
+        'nui' => 'INTEGER DEFAULT 0',
+        'serie_memorie_fiscala' => "TEXT DEFAULT ''",
     ];
 }
 
@@ -844,6 +966,8 @@ function restaurant_sqlite_miscari_default_expression(string $column, array $exi
         'cod_locatie' => '0',
         'ora_miscarii' => "time('now','localtime')",
         'nr_raport_z' => '0',
+        'nui' => '0',
+        'serie_memorie_fiscala' => "''",
     ];
 
     return $defaults[$column] ?? 'NULL';
@@ -1255,6 +1379,8 @@ function restaurant_sqlite_ensure_columns(PDO $pdo): void
             'den_loc' => "TEXT DEFAULT ''",
             'denumire' => "TEXT DEFAULT ''",
             'serie_casa_marcat' => "TEXT DEFAULT ''",
+            'nui' => 'INTEGER DEFAULT 0',
+            'serie_memorie_fiscala' => "TEXT DEFAULT ''",
         ],
         'observatii_predefinite' => [
             'id' => 'INTEGER DEFAULT 0',
@@ -1272,6 +1398,8 @@ function restaurant_sqlite_ensure_columns(PDO $pdo): void
             'nr_raport_z' => 'INTEGER DEFAULT 0',
             'cod_locatie' => 'INTEGER DEFAULT 0',
             'serie_casa_marcat' => "TEXT DEFAULT ''",
+            'nui' => 'INTEGER DEFAULT 0',
+            'serie_memorie_fiscala' => "TEXT DEFAULT ''",
             'numerar' => 'REAL DEFAULT 0',
             'card' => 'REAL DEFAULT 0',
             'credit' => 'REAL DEFAULT 0',
@@ -1293,6 +1421,8 @@ function restaurant_sqlite_ensure_columns(PDO $pdo): void
             'ora_inchiderii' => "TEXT DEFAULT ''",
             'locatie' => 'INTEGER DEFAULT 0',
             'nr_raport_z' => 'INTEGER DEFAULT 0',
+            'nui' => 'INTEGER DEFAULT 0',
+            'serie_memorie_fiscala' => "TEXT DEFAULT ''",
             'totaluri_plata_json' => 'TEXT DEFAULT NULL',
         ],
         'offline_sync_exported' => [
@@ -1395,6 +1525,8 @@ function restaurant_sqlite_ensure_columns(PDO $pdo): void
             'serie_stornare' => "TEXT DEFAULT ''",
             'text_subsol_factura' => "TEXT DEFAULT ''",
             'serie_casa_marcat' => "TEXT DEFAULT ''",
+            'nui' => 'INTEGER DEFAULT 0',
+            'serie_memorie_fiscala' => "TEXT DEFAULT ''",
             'mod_listare' => "TEXT DEFAULT 'simplu'",
             'conducator_entitate' => "TEXT DEFAULT ''",
             'vanzare_sub_stoc' => 'INTEGER DEFAULT 1',
@@ -1409,6 +1541,8 @@ function restaurant_sqlite_ensure_columns(PDO $pdo): void
         ],
         'note' => [
             'identificator_offline' => 'TEXT DEFAULT NULL',
+            'nui' => 'INTEGER DEFAULT 0',
+            'serie_memorie_fiscala' => "TEXT DEFAULT ''",
         ],
         'discounturi_acordate' => [
             'identificator_offline' => 'TEXT DEFAULT NULL',

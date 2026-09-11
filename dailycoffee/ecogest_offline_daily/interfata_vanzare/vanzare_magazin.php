@@ -25,6 +25,9 @@ $admin_firstname = $admin_user['admin_firstname'] ?? 'N/A';
 $admin_lastname = $admin_user['admin_lastname'] ?? 'N/A';
 
 // Creare/Preluare bon de vanzare
+$offlineSaleIdentity = offline_raport_z_current_identification($pdo, (int)$cod_locatie);
+$offlineSaleNui = (int)$offlineSaleIdentity['nui'];
+$offlineSaleMemory = (string)$offlineSaleIdentity['serie_memorie_fiscala'];
 $ccom_sql = "SELECT nrbon FROM $tabel_final_note WHERE status='S' AND operator=:adm_id AND locatie=:locatie";
 $ccom_stmt = $pdo->prepare($ccom_sql);
 $ccom_stmt->execute(['adm_id' => $adm_id, 'locatie' => $cod_locatie]);
@@ -39,12 +42,13 @@ if (!$existing_bon) {
                  valoare_vanzare_cu_tva, tva_colectata, discount,
                  operator, numerar, card, tichete, rest, protocol, glovo, virament_bancar,
                  status, cif_client, cod_masa, cod_inchidere, tableta, locatie, nr_raport_z,
+                 nui, serie_memorie_fiscala,
                  listat_nota_plata, fiscalizat)
             VALUES
                 (:nr_bon, :serie, date('now','localtime'), time('now','localtime'),
                  0, 0, 0,
                  :adm_id, 0, 0, 0, 0, 0, 0, 0,
-                 'S', '', :cod_masa, 0, 0, :locatie, 0,
+                 'S', '', :cod_masa, 0, 0, :locatie, 0, :nui, :serie_memorie_fiscala,
                  0, 0)";
     
     $stmt = $pdo->prepare($sql);
@@ -53,7 +57,9 @@ if (!$existing_bon) {
         ':serie'    => '',          // sau 'MAG', 'A1', etc., cum vrei tu
         ':adm_id'   => $adm_id,
         ':locatie'  => $cod_locatie,
-        ':cod_masa' => $cod_masa
+        ':cod_masa' => $cod_masa,
+        ':nui'      => $offlineSaleNui,
+        ':serie_memorie_fiscala' => $offlineSaleMemory,
     ]);
 
     $nr_bon = $next_bon;

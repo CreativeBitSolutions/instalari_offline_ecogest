@@ -30,14 +30,17 @@ $row = $stmtMax->fetch(PDO::FETCH_ASSOC);
 $nextBon = $row['lastBon'] + 1;
 
 // 2) Inserăm nota cu nrbon = lastBon + 1
-$sqlIns = "INSERT INTO $tabel_final_note (nrbon, operator, locatie, cod_masa) 
-       VALUES (:nrbon, :operator, :locatie, :cod_masa)";
+$raportZIdentity = restaurant_sqlite_raport_z_current_identification($pdo, (int)$cod_locatie);
+$sqlIns = "INSERT INTO $tabel_final_note (nrbon, operator, locatie, cod_masa, nui, serie_memorie_fiscala)
+       VALUES (:nrbon, :operator, :locatie, :cod_masa, :nui, :serie_memorie_fiscala)";
 $stmtIns = $pdo->prepare($sqlIns);
 $stmtIns->execute([
 'nrbon'    => $nextBon,
 'operator' => $operatorId,
 'locatie'  => $cod_locatie,
-'cod_masa' => $masa
+'cod_masa' => $masa,
+'nui' => $raportZIdentity['nui'],
+'serie_memorie_fiscala' => $raportZIdentity['serie_memorie_fiscala']
 ]);
 
 $_SESSION['nr_bon'] = $nextBon;

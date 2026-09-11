@@ -426,6 +426,9 @@ if ($client_agecs == 20 || $client_agecs == 8) {
     
     try {
         $pdo->beginTransaction();
+        $offlineFinalSaleIdentity = offline_raport_z_current_identification($pdo, (int)$cod_locatie);
+        $offlineFinalSaleNui = (int)$offlineFinalSaleIdentity['nui'];
+        $offlineFinalSaleMemory = (string)$offlineFinalSaleIdentity['serie_memorie_fiscala'];
 
         // Pas 3: Actualizează nota de vânzare
         // --- START MODIFICARE ---
@@ -433,13 +436,16 @@ if ($client_agecs == 20 || $client_agecs == 8) {
         $sql_update_nota = "UPDATE $tabel_final_note SET
                                 status = 'F', data_bon = :data, ora_bon = :ora, valoare_vanzare_cu_tva = :val,
                                 discount = :disc, tva_colectata = :tva, numerar = :num, card = :card,
-                                protocol = :prot, glovo = :glovo, cif_client = :cif
+                                protocol = :prot, glovo = :glovo, cif_client = :cif,
+                                nui = CASE WHEN COALESCE(nui, 0) = 0 THEN :nui ELSE nui END,
+                                serie_memorie_fiscala = CASE WHEN COALESCE(serie_memorie_fiscala, '') = '' THEN :serie_memorie_fiscala ELSE serie_memorie_fiscala END
                             WHERE nrbon = :nr_bon";
         $stmt_update_nota = $pdo->prepare($sql_update_nota);
         $stmt_update_nota->execute([
             'data' => $data_bon, 'ora' => $ora_bon, 'val' => $total_de_plata, 'disc' => $totals['total_disc'] ?? 0,
             'tva' => $totals['total_tva'] ?? 0, 'num' => $plata_numerar, 'card' => $plata_card,
-            'prot' => $plata_protocol, 'glovo' => $plata_glovo, 'cif' => $cif_client, 'nr_bon' => $nr_bon
+            'prot' => $plata_protocol, 'glovo' => $plata_glovo, 'cif' => $cif_client,
+            'nui' => $offlineFinalSaleNui, 'serie_memorie_fiscala' => $offlineFinalSaleMemory, 'nr_bon' => $nr_bon
         ]);
         // --- END MODIFICARE ---
 

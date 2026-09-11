@@ -190,8 +190,30 @@ function offline_sync_queue_sale_payload(PDO $pdo, int $nrBon): ?array
     $tables['bonuri_casa_marcat'] = offline_sync_queue_rows($pdo, 'bonuri_casa_marcat', 'nrbon = ?', [$nrBon], 'id');
     $closure = (int)($note['cod_inchidere'] ?? 0);
     $report = (int)($note['nr_raport_z'] ?? 0);
+    $reportNui = max(0, (int)($note['nui'] ?? 0));
+    $reportMemory = trim((string)($note['serie_memorie_fiscala'] ?? ''));
+    if ($reportMemory === '0') {
+        $reportMemory = '';
+    }
     $tables['inchideri_r_12'] = $closure > 0 ? offline_sync_queue_rows($pdo, 'inchideri_r_12', 'cod_inchidere = ? AND CAST(COALESCE(NULLIF(cod_locatie, 0), locatie, 0) AS INTEGER) = ?', [$closure, $location], 'id_inch') : [];
-    $tables['rapoarte_z'] = $report > 0 ? offline_sync_queue_rows($pdo, 'rapoarte_z', 'nr_raport_z = ? AND cod_locatie = ?', [$report, $location], 'id') : [];
+    $reportSeries = null;
+    if ($report > 0) {
+        $reportCandidates = offline_sync_queue_rows($pdo, 'rapoarte_z', "nr_raport_z = ? AND cod_locatie = ? AND COALESCE(nui, 0) = ? AND COALESCE(serie_memorie_fiscala, '') = ?", [$report, $location, $reportNui, $reportMemory], 'id');
+        if (count($reportCandidates) === 1) {
+            $reportSeries = (string)($reportCandidates[0]['serie_casa_marcat'] ?? '');
+        } elseif (count($reportCandidates) > 1) {
+            $currentReportIdentity = offline_raport_z_current_identification($pdo, $location);
+            foreach ($reportCandidates as $candidate) {
+                if ((string)($candidate['serie_casa_marcat'] ?? '') === (string)$currentReportIdentity['serie_casa_marcat']) {
+                    $reportSeries = (string)$candidate['serie_casa_marcat'];
+                    break;
+                }
+            }
+        }
+    }
+    $tables['rapoarte_z'] = ($report > 0 && $reportSeries !== null)
+        ? offline_sync_queue_rows($pdo, 'rapoarte_z', "nr_raport_z = ? AND cod_locatie = ? AND COALESCE(serie_casa_marcat, '') = ? AND COALESCE(nui, 0) = ? AND COALESCE(serie_memorie_fiscala, '') = ?", [$report, $location, $reportSeries, $reportNui, $reportMemory], 'id')
+        : [];
     if ((int)offline_sync_queue_config()['client_id'] === 2) {
         $tables['miscari'] = [];
     } else {

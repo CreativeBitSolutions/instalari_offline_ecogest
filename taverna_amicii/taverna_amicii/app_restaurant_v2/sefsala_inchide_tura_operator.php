@@ -13,7 +13,7 @@ function json_exit(array $payload, int $httpCode = 200): void {
     exit;
 }
 
-function sefsala_update_miscari_raport_z(PDO $pdo, int $nrRaportZ): void {
+function sefsala_update_miscari_raport_z(PDO $pdo, int $nrRaportZ, int $nui, string $serieMemorieFiscala): void {
     $driver = '';
     try {
         $driver = strtolower((string)$pdo->getAttribute(PDO::ATTR_DRIVER_NAME));
@@ -29,6 +29,16 @@ function sefsala_update_miscari_raport_z(PDO $pdo, int $nrRaportZ): void {
                 FROM note n
                 WHERE n.nrbon = miscari.nr_doc
                 LIMIT 1
+            ), nui = (
+                SELECT COALESCE(n.nui, 0)
+                FROM note n
+                WHERE n.nrbon = miscari.nr_doc
+                LIMIT 1
+            ), serie_memorie_fiscala = (
+                SELECT COALESCE(n.serie_memorie_fiscala, '')
+                FROM note n
+                WHERE n.nrbon = miscari.nr_doc
+                LIMIT 1
             )
             WHERE tip_miscare = 'O'
               AND fel_doc = 'BF'
@@ -37,14 +47,26 @@ function sefsala_update_miscari_raport_z(PDO $pdo, int $nrRaportZ): void {
                   FROM note n
                   WHERE n.nrbon = miscari.nr_doc
                     AND n.nr_raport_z = ?
+                    AND (COALESCE(n.nui, 0) = ? OR COALESCE(n.nui, 0) = 0)
+                    AND (COALESCE(n.serie_memorie_fiscala, '') = ? OR COALESCE(n.serie_memorie_fiscala, '') = '')
                     AND miscari.nr_raport_z <> n.nr_raport_z
               )
-        ")->execute([$nrRaportZ]);
+        ")->execute([$nrRaportZ, $nui, $serieMemorieFiscala]);
 
         $pdo->prepare("
             UPDATE miscari
             SET nr_raport_z = (
                 SELECT n.nr_raport_z
+                FROM note n
+                WHERE n.nrbon = miscari.nr_nota
+                LIMIT 1
+            ), nui = (
+                SELECT COALESCE(n.nui, 0)
+                FROM note n
+                WHERE n.nrbon = miscari.nr_nota
+                LIMIT 1
+            ), serie_memorie_fiscala = (
+                SELECT COALESCE(n.serie_memorie_fiscala, '')
                 FROM note n
                 WHERE n.nrbon = miscari.nr_nota
                 LIMIT 1
@@ -55,15 +77,17 @@ function sefsala_update_miscari_raport_z(PDO $pdo, int $nrRaportZ): void {
                   FROM note n
                   WHERE n.nrbon = miscari.nr_nota
                     AND n.nr_raport_z = ?
+                    AND (COALESCE(n.nui, 0) = ? OR COALESCE(n.nui, 0) = 0)
+                    AND (COALESCE(n.serie_memorie_fiscala, '') = ? OR COALESCE(n.serie_memorie_fiscala, '') = '')
                     AND miscari.nr_raport_z <> n.nr_raport_z
               )
-        ")->execute([$nrRaportZ]);
+        ")->execute([$nrRaportZ, $nui, $serieMemorieFiscala]);
 
         return;
     }
 
-    $pdo->prepare("UPDATE miscari m INNER JOIN note n ON n.nrbon = m.nr_doc SET m.nr_raport_z = n.nr_raport_z WHERE m.tip_miscare='O' AND m.fel_doc='BF' AND m.nr_raport_z<>n.nr_raport_z AND n.nr_raport_z=?")->execute([$nrRaportZ]);
-    $pdo->prepare("UPDATE miscari m INNER JOIN note n ON n.nrbon = m.nr_nota SET m.nr_raport_z = n.nr_raport_z WHERE m.fel_doc IN ('BC','BT') AND m.nr_raport_z<>n.nr_raport_z AND n.nr_raport_z=?")->execute([$nrRaportZ]);
+    $pdo->prepare("UPDATE miscari m INNER JOIN note n ON n.nrbon = m.nr_doc SET m.nr_raport_z = n.nr_raport_z WHERE m.tip_miscare='O' AND m.fel_doc='BF' AND m.nr_raport_z<>n.nr_raport_z AND n.nr_raport_z=? AND (COALESCE(n.nui, 0)=? OR COALESCE(n.nui, 0)=0) AND (COALESCE(n.serie_memorie_fiscala, '')=? OR COALESCE(n.serie_memorie_fiscala, '')='')")->execute([$nrRaportZ, $nui, $serieMemorieFiscala]);
+    $pdo->prepare("UPDATE miscari m INNER JOIN note n ON n.nrbon = m.nr_nota SET m.nr_raport_z = n.nr_raport_z WHERE m.fel_doc IN ('BC','BT') AND m.nr_raport_z<>n.nr_raport_z AND n.nr_raport_z=? AND (COALESCE(n.nui, 0)=? OR COALESCE(n.nui, 0)=0) AND (COALESCE(n.serie_memorie_fiscala, '')=? OR COALESCE(n.serie_memorie_fiscala, '')='')")->execute([$nrRaportZ, $nui, $serieMemorieFiscala]);
 }
 
 try {
@@ -88,6 +112,12 @@ try {
     $actorLocation = isset($actor['locatie']) ? (int)$actor['locatie'] : 0;
     if ($actorLocation <= 0) json_exit(['status' => 'error', 'message' => 'Locație nedeterminată.'], 400);
     $actorName = trim(((string)($actor['admin_firstname'] ?? '')) . ' ' . ((string)($actor['admin_lastname'] ?? '')));
+    $raportZIdentity = restaurant_sqlite_raport_z_current_identification($pdo, $actorLocation);
+    $raportZNui = (int)$raportZIdentity['nui'];
+    $raportZMemory = (string)$raportZIdentity['serie_memorie_fiscala'];
+    $raportZFilter = "
+        AND (COALESCE(nui, 0) = :raport_nui OR COALESCE(nui, 0) = 0)
+        AND (COALESCE(serie_memorie_fiscala, '') = :raport_memory OR COALESCE(serie_memorie_fiscala, '') = '')";
 
     $stmtTarget = $pdo->prepare("SELECT admin_firstname, admin_lastname FROM admins_12 WHERE admin_id = ? LIMIT 1");
     $stmtTarget->execute([$targetOperatorId]);
@@ -98,8 +128,8 @@ try {
     $pdo->beginTransaction();
 
     // 1. Verificăm mesele deschise pt operator
-    $stmtOpen = $pdo->prepare("SELECT COUNT(*) FROM note WHERE locatie = :loc AND operator = :op AND status = 'S'");
-    $stmtOpen->execute([':loc' => $actorLocation, ':op' => $targetOperatorId]);
+    $stmtOpen = $pdo->prepare("SELECT COUNT(*) FROM note WHERE locatie = :loc AND operator = :op AND status = 'S'{$raportZFilter}");
+    $stmtOpen->execute([':loc' => $actorLocation, ':op' => $targetOperatorId, ':raport_nui' => $raportZNui, ':raport_memory' => $raportZMemory]);
     if ((int)$stmtOpen->fetchColumn() > 0) {
         $pdo->rollBack();
         json_exit(['status' => 'error', 'message' => 'Operatorul are încă mese deschise.'], 409);
@@ -108,9 +138,9 @@ try {
     // 2. Sumar bonuri F
     $stmtSummary = $pdo->prepare("
         SELECT COUNT(*) AS bonuri_F, COALESCE(SUM(valoare_vanzare_cu_tva), 0) AS total_vanzari, COALESCE(SUM(tva_colectata), 0) AS total_tva
-        FROM note WHERE locatie = :loc AND operator = :op AND status = 'F' AND cod_inchidere = 0
+        FROM note WHERE locatie = :loc AND operator = :op AND status = 'F' AND cod_inchidere = 0{$raportZFilter}
     ");
-    $stmtSummary->execute([':loc' => $actorLocation, ':op' => $targetOperatorId]);
+    $stmtSummary->execute([':loc' => $actorLocation, ':op' => $targetOperatorId, ':raport_nui' => $raportZNui, ':raport_memory' => $raportZMemory]);
     $summary = $stmtSummary->fetch(PDO::FETCH_ASSOC);
 
     if ((int)($summary['bonuri_F'] ?? 0) <= 0) {
@@ -126,8 +156,8 @@ try {
     try {
         $idInchidere = 0;
         $stmtInsert = $pdo->prepare("
-            INSERT INTO inchideri_r_12 (cod_inchidere, operator, valoare_cu_tva, tva_colectata, data_inchiderii, ora_inchiderii, locatie, nr_raport_z)
-            VALUES (:cod_inchidere, :operator, :valoare_cu_tva, :tva_colectata, :data_inchiderii, :ora_inchiderii, :locatie, 0)
+            INSERT INTO inchideri_r_12 (cod_inchidere, operator, valoare_cu_tva, tva_colectata, data_inchiderii, ora_inchiderii, locatie, nr_raport_z, nui, serie_memorie_fiscala)
+            VALUES (:cod_inchidere, :operator, :valoare_cu_tva, :tva_colectata, :data_inchiderii, :ora_inchiderii, :locatie, 0, :nui, :serie_memorie_fiscala)
         ");
         $stmtInsert->execute([
             ':cod_inchidere'   => $codInchidereNou,
@@ -136,15 +166,17 @@ try {
             ':tva_colectata'   => $summary['total_tva'],
             ':data_inchiderii' => $current_date,
             ':ora_inchiderii'  => $current_time,
-            ':locatie'         => $actorLocation
+            ':locatie'         => $actorLocation,
+            ':nui'             => $raportZNui,
+            ':serie_memorie_fiscala' => $raportZMemory
         ]);
         $idInchidere = (int)$pdo->lastInsertId();
     } catch (Exception $e) {
         error_log("Eroare insert inchideri_r_12: " . $e->getMessage());
     }
 
-    $stmtUpdate = $pdo->prepare("UPDATE note SET cod_inchidere = :nou_cod WHERE locatie = :loc AND operator = :op AND status = 'F' AND cod_inchidere = 0");
-    $stmtUpdate->execute([':nou_cod' => $codInchidereNou, ':loc' => $actorLocation, ':op' => $targetOperatorId]);
+    $stmtUpdate = $pdo->prepare("UPDATE note SET cod_inchidere = :nou_cod, nui = :nui, serie_memorie_fiscala = :serie_memorie_fiscala WHERE locatie = :loc AND operator = :op AND status = 'F' AND cod_inchidere = 0{$raportZFilter}");
+    $stmtUpdate->execute([':nou_cod' => $codInchidereNou, ':nui' => $raportZNui, ':serie_memorie_fiscala' => $raportZMemory, ':loc' => $actorLocation, ':op' => $targetOperatorId, ':raport_nui' => $raportZNui, ':raport_memory' => $raportZMemory]);
     
     $pdo->commit();
 
@@ -257,51 +289,47 @@ try {
     $nr_raport_z_nou = 0;
     $idRaportZNou = 0;
 
-    $stmt_s = $pdo->prepare("SELECT COUNT(*) FROM note WHERE locatie = ? AND status = 'S' AND nr_raport_z = 0");
-    $stmt_s->execute([$actorLocation]);
+    $stmt_s = $pdo->prepare("SELECT COUNT(*) FROM note WHERE locatie = :loc AND status = 'S' AND nr_raport_z = 0{$raportZFilter}");
+    $stmt_s->execute(['loc' => $actorLocation, 'raport_nui' => $raportZNui, 'raport_memory' => $raportZMemory]);
     
     if ((int)$stmt_s->fetchColumn() === 0) {
-        $stmt_tot = $pdo->prepare("SELECT COUNT(*) FROM note WHERE locatie = ? AND status = 'F' AND nr_raport_z = 0");
-        $stmt_tot->execute([$actorLocation]);
+        $stmt_tot = $pdo->prepare("SELECT COUNT(*) FROM note WHERE locatie = :loc AND status = 'F' AND nr_raport_z = 0{$raportZFilter}");
+        $stmt_tot->execute(['loc' => $actorLocation, 'raport_nui' => $raportZNui, 'raport_memory' => $raportZMemory]);
         $total = $stmt_tot->fetchColumn();
 
-        $stmt_val = $pdo->prepare("SELECT COUNT(*) FROM note WHERE locatie = ? AND status = 'F' AND nr_raport_z = 0 AND cod_inchidere != 0");
-        $stmt_val->execute([$actorLocation]);
+        $stmt_val = $pdo->prepare("SELECT COUNT(*) FROM note WHERE locatie = :loc AND status = 'F' AND nr_raport_z = 0 AND cod_inchidere != 0{$raportZFilter}");
+        $stmt_val->execute(['loc' => $actorLocation, 'raport_nui' => $raportZNui, 'raport_memory' => $raportZMemory]);
         $valid = $stmt_val->fetchColumn();
 
         if ($total == $valid && $total != 0) {
             $pdo->beginTransaction();
             try {
-                $stmtSum = $pdo->prepare("SELECT COALESCE(SUM(numerar),0) as numerar, COALESCE(SUM(card),0) as card, COALESCE(SUM(tichete),0) as tichete, COALESCE(SUM(glovo),0) as glovo FROM note WHERE status='F' AND locatie=? AND nr_raport_z=0 AND cod_inchidere!=0");
-                $stmtSum->execute([$actorLocation]);
+                $stmtSum = $pdo->prepare("SELECT COALESCE(SUM(numerar),0) as numerar, COALESCE(SUM(card),0) as card, COALESCE(SUM(tichete),0) as tichete, COALESCE(SUM(glovo),0) as glovo FROM note WHERE status='F' AND locatie=:loc AND nr_raport_z=0 AND cod_inchidere!=0{$raportZFilter}");
+                $stmtSum->execute(['loc' => $actorLocation, 'raport_nui' => $raportZNui, 'raport_memory' => $raportZMemory]);
                 $sum = $stmtSum->fetch(PDO::FETCH_ASSOC);
 
-                $stmtLastZ = $pdo->prepare("SELECT MAX(nr_raport_z) FROM rapoarte_z WHERE cod_locatie = ?");
-                $stmtLastZ->execute([$actorLocation]);
-                $nr_raport_z_nou = ((int)$stmtLastZ->fetchColumn()) + 1;
+                $nr_raport_z_nou = restaurant_sqlite_raport_z_next_number($pdo, $actorLocation, $raportZNui, $raportZMemory);
 
-                $stmtSerie = $pdo->prepare("SELECT serie_casa_marcat FROM loc_mese_12 WHERE cod_locatie = ? LIMIT 1");
-                $stmtSerie->execute([$actorLocation]);
-                $serie = $stmtSerie->fetchColumn() ?: '';
+                $serie = $raportZIdentity['serie_casa_marcat'];
 
                 // Insert rapoarte_z cu DATETIME (singura tabelă unde avem această coloană specifică)
-                $insZ = $pdo->prepare("INSERT INTO rapoarte_z (nr_raport_z, cod_locatie, serie_casa_marcat, numerar, card, tichete_masa, plata_moderna, credit, tichete_valorice, avans_in_numerar, alte_metode, data_ora_raport_z) VALUES (?, ?, ?, ?, ?, ?, ?, 0, 0, 0, 0, ?)");
-                $insZ->execute([$nr_raport_z_nou, $actorLocation, $serie, $sum['numerar'], $sum['card'], $sum['tichete'], $sum['glovo'], $current_datetime]);
+                $insZ = $pdo->prepare("INSERT INTO rapoarte_z (nr_raport_z, cod_locatie, serie_casa_marcat, nui, serie_memorie_fiscala, numerar, card, tichete_masa, plata_moderna, credit, tichete_valorice, avans_in_numerar, alte_metode, data_ora_raport_z) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, 0, 0, ?)");
+                $insZ->execute([$nr_raport_z_nou, $actorLocation, $serie, $raportZNui, $raportZMemory, $sum['numerar'], $sum['card'], $sum['tichete'], $sum['glovo'], $current_datetime]);
                 $idRaportZNou = (int)$pdo->lastInsertId();
 
                 // Update DOAR nr_raport_z în note (fără data_ora)
-                $pdo->prepare("UPDATE note SET nr_raport_z = ? WHERE status = 'F' AND locatie = ? AND nr_raport_z = 0")->execute([$nr_raport_z_nou, $actorLocation]);
+                $pdo->prepare("UPDATE note SET nr_raport_z = :raport, nui = :nui, serie_memorie_fiscala = :memory WHERE status = 'F' AND locatie = :loc AND nr_raport_z = 0{$raportZFilter}")->execute(['raport' => $nr_raport_z_nou, 'nui' => $raportZNui, 'memory' => $raportZMemory, 'loc' => $actorLocation, 'raport_nui' => $raportZNui, 'raport_memory' => $raportZMemory]);
                 
-                $stmtCods = $pdo->prepare("SELECT DISTINCT cod_inchidere FROM note WHERE status='F' AND locatie=? AND nr_raport_z=?");
-                $stmtCods->execute([$actorLocation, $nr_raport_z_nou]);
+                $stmtCods = $pdo->prepare("SELECT DISTINCT cod_inchidere FROM note WHERE status='F' AND locatie=? AND nr_raport_z=? AND COALESCE(nui, 0)=? AND COALESCE(serie_memorie_fiscala, '')=?");
+                $stmtCods->execute([$actorLocation, $nr_raport_z_nou, $raportZNui, $raportZMemory]);
                 $cods = $stmtCods->fetchAll(PDO::FETCH_COLUMN);
                 if (!empty($cods)) {
                     $in = implode(',', array_fill(0, count($cods), '?'));
-                    $params = array_merge([$nr_raport_z_nou], $cods, [$actorLocation]);
-                    $pdo->prepare("UPDATE inchideri_r_12 SET nr_raport_z = ? WHERE cod_inchidere IN ($in) AND locatie = ?")->execute($params);
+                    $params = array_merge([$nr_raport_z_nou, $raportZNui, $raportZMemory], $cods, [$actorLocation, $raportZNui, $raportZMemory]);
+                    $pdo->prepare("UPDATE inchideri_r_12 SET nr_raport_z = ?, nui = ?, serie_memorie_fiscala = ? WHERE cod_inchidere IN ($in) AND locatie = ? AND (COALESCE(nui, 0)=? OR COALESCE(nui, 0)=0) AND (COALESCE(serie_memorie_fiscala, '')=? OR COALESCE(serie_memorie_fiscala, '')='')")->execute($params);
                 }
 
-                sefsala_update_miscari_raport_z($pdo, $nr_raport_z_nou);
+                sefsala_update_miscari_raport_z($pdo, $nr_raport_z_nou, $raportZNui, $raportZMemory);
 
                 $pdo->commit();
 

@@ -38,6 +38,19 @@ update_loading_status("Se generează raportul Z din sistem...");
         // 0. Preia nr_raport_z din GET sau fallback la cel mai mare (MAX)
         $requested_z = isset($_GET['nr_raport_z']) ? (int)$_GET['nr_raport_z'] : null;
         $cod_locatie = isset($_SESSION['cod_locatie']) ? intval($_SESSION['cod_locatie']) : 0;
+        $currentReportIdentity = restaurant_sqlite_raport_z_current_identification($pdo, $cod_locatie);
+        $serie_casa_marcat = array_key_exists('serie_casa_marcat', $_GET)
+            ? trim((string)$_GET['serie_casa_marcat'])
+            : (string)$currentReportIdentity['serie_casa_marcat'];
+        $nui = array_key_exists('nui', $_GET)
+            ? max(0, (int)$_GET['nui'])
+            : (int)$currentReportIdentity['nui'];
+        $serie_memorie_fiscala = array_key_exists('serie_memorie_fiscala', $_GET)
+            ? trim((string)$_GET['serie_memorie_fiscala'])
+            : (string)$currentReportIdentity['serie_memorie_fiscala'];
+        if ($serie_memorie_fiscala === '0') {
+            $serie_memorie_fiscala = '';
+        }
 
         // 1. Pregătește folderul JSON
         $client_id   = $_SESSION['client_id'];
@@ -57,10 +70,17 @@ update_loading_status("Se generează raportul Z din sistem...");
 
         // 3. Determină raportul Z curent: folosește GET dacă există, altfel MAX
         if ($requested_z > 0) {
-            $cur_z = $requested_z;
+            $stmtZ = $pdo->prepare("SELECT nr_raport_z FROM rapoarte_z
+                WHERE cod_locatie = ? AND COALESCE(serie_casa_marcat, '') = ?
+                  AND COALESCE(nui, 0) = ? AND COALESCE(serie_memorie_fiscala, '') = ?
+                  AND nr_raport_z = ? LIMIT 1");
+            $stmtZ->execute([$cod_locatie, $serie_casa_marcat, $nui, $serie_memorie_fiscala, $requested_z]);
+            $cur_z = (int)$stmtZ->fetchColumn();
         } else {
-            $stmtZ = $pdo->prepare("SELECT MAX(nr_raport_z) FROM rapoarte_z WHERE cod_locatie = ?");
-            $stmtZ->execute([$cod_locatie]);
+            $stmtZ = $pdo->prepare("SELECT MAX(nr_raport_z) FROM rapoarte_z
+                WHERE cod_locatie = ? AND COALESCE(serie_casa_marcat, '') = ?
+                  AND COALESCE(nui, 0) = ? AND COALESCE(serie_memorie_fiscala, '') = ?");
+            $stmtZ->execute([$cod_locatie, $serie_casa_marcat, $nui, $serie_memorie_fiscala]);
             $cur_z = (int)$stmtZ->fetchColumn();
         }
 
@@ -75,9 +95,11 @@ update_loading_status("Se generează raportul Z din sistem...");
              WHERE n.locatie     = :loc
                AND n.status      = 'F'
                AND n.nr_raport_z = :rz
+               AND COALESCE(n.nui, 0) = :nui
+               AND COALESCE(n.serie_memorie_fiscala, '') = :memory
         ";
         $stmtInterval = $pdo->prepare($sqlInterval);
-        $stmtInterval->execute(['loc' => $cod_locatie, 'rz' => $cur_z]);
+        $stmtInterval->execute(['loc' => $cod_locatie, 'rz' => $cur_z, 'nui' => $nui, 'memory' => $serie_memorie_fiscala]);
         $intervalRow = $stmtInterval->fetch(PDO::FETCH_ASSOC);
         $primaData   = $intervalRow['prima_data']  ?? '-';
         $ultimaData  = $intervalRow['ultima_data'] ?? '-';
@@ -95,11 +117,13 @@ update_loading_status("Se generează raportul Z din sistem...");
              WHERE n.locatie = :loc
                AND n.status  = 'F'
                AND n.nr_raport_z = :rz
+               AND COALESCE(n.nui, 0) = :nui
+               AND COALESCE(n.serie_memorie_fiscala, '') = :memory
              GROUP BY ps.nume
              ORDER BY ps.nume
         ";
         $stmtProd = $pdo->prepare($sqlProd);
-        $stmtProd->execute(['loc' => $cod_locatie, 'rz' => $cur_z]);
+        $stmtProd->execute(['loc' => $cod_locatie, 'rz' => $cur_z, 'nui' => $nui, 'memory' => $serie_memorie_fiscala]);
         $prodRows = $stmtProd->fetchAll(PDO::FETCH_ASSOC);
 
         $totalProduse = 0;
@@ -131,6 +155,8 @@ update_loading_status("Se generează raportul Z din sistem...");
          WHERE n.locatie     = :loc
            AND n.status      = 'F'
            AND n.nr_raport_z = :rz
+           AND COALESCE(n.nui, 0) = :nui
+           AND COALESCE(n.serie_memorie_fiscala, '') = :memory
          GROUP BY n.operator
          ORDER BY n.operator
     ";
@@ -146,16 +172,18 @@ update_loading_status("Se generează raportul Z din sistem...");
         WHERE n.locatie     = :loc
           AND n.status      = 'F'
           AND n.nr_raport_z = :rz
+          AND COALESCE(n.nui, 0) = :nui
+          AND COALESCE(n.serie_memorie_fiscala, '') = :memory
           AND ps.nume       = 'BACSIS'
         GROUP BY n.operator
     ";
     $stmtBacsis = $pdo->prepare($sqlBacsis);
-    $stmtBacsis->execute(['loc' => $cod_locatie, 'rz' => $cur_z]);
+    $stmtBacsis->execute(['loc' => $cod_locatie, 'rz' => $cur_z, 'nui' => $nui, 'memory' => $serie_memorie_fiscala]);
     $bacsisRows = $stmtBacsis->fetchAll(PDO::FETCH_KEY_PAIR);
 
 
     $stmtBacsis = $pdo->prepare($sqlBacsis);
-    $stmtBacsis->execute(['loc' => $cod_locatie, 'rz' => $cur_z]);
+    $stmtBacsis->execute(['loc' => $cod_locatie, 'rz' => $cur_z, 'nui' => $nui, 'memory' => $serie_memorie_fiscala]);
     $bacsisRows = $stmtBacsis->fetchAll(PDO::FETCH_KEY_PAIR);
 
     // ADĂUGAT: Total ONLINE (Glovo) pe raportul Z curent
@@ -163,17 +191,19 @@ update_loading_status("Se generează raportul Z din sistem...");
         SELECT COALESCE(SUM(n.glovo), 0) AS total_online
           FROM note n
          WHERE n.locatie     = :loc
-           AND n.status      = 'F'
-           AND n.nr_raport_z = :rz
+          AND n.status      = 'F'
+          AND n.nr_raport_z = :rz
+          AND COALESCE(n.nui, 0) = :nui
+          AND COALESCE(n.serie_memorie_fiscala, '') = :memory
     ";
     $stmtOnline = $pdo->prepare($sqlOnline);
-    $stmtOnline->execute(['loc' => $cod_locatie, 'rz' => $cur_z]);
+    $stmtOnline->execute(['loc' => $cod_locatie, 'rz' => $cur_z, 'nui' => $nui, 'memory' => $serie_memorie_fiscala]);
     $totalOnline = (float)$stmtOnline->fetchColumn();
 
 
 
     $stmtOp = $pdo->prepare($sqlOp);
-    $stmtOp->execute(['loc' => $cod_locatie, 'rz' => $cur_z]);
+    $stmtOp->execute(['loc' => $cod_locatie, 'rz' => $cur_z, 'nui' => $nui, 'memory' => $serie_memorie_fiscala]);
     $opRows = $stmtOp->fetchAll(PDO::FETCH_ASSOC);
 
     $continut .= "ÎNCASĂRI PE OSPĂTAR\n";

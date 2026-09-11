@@ -23,6 +23,8 @@ $fields = [
     'cont_banca',
     'cap_soc',
     'serie_casa_marcat',
+    'nui',
+    'serie_memorie_fiscala',
 ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_company'])) {
@@ -47,14 +49,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_company'])) {
                     banca = :banca,
                     cont_banca = :cont_banca,
                     cap_soc = :cap_soc,
-                    serie_casa_marcat = :serie_casa_marcat
+                    serie_casa_marcat = :serie_casa_marcat,
+                    nui = :nui,
+                    serie_memorie_fiscala = :serie_memorie_fiscala
             ");
         } else {
             $stmt = $pdo->prepare("
                 INSERT INTO $tabel_final_date_firma
-                    (den_ent, conducator_entitate, cod_fiscal, nr_reg_com, sediu, judet, banca, cont_banca, cap_soc, serie_casa_marcat)
+                    (den_ent, conducator_entitate, cod_fiscal, nr_reg_com, sediu, judet, banca, cont_banca, cap_soc, serie_casa_marcat, nui, serie_memorie_fiscala)
                 VALUES
-                    (:den_ent, :conducator_entitate, :cod_fiscal, :nr_reg_com, :sediu, :judet, :banca, :cont_banca, :cap_soc, :serie_casa_marcat)
+                    (:den_ent, :conducator_entitate, :cod_fiscal, :nr_reg_com, :sediu, :judet, :banca, :cont_banca, :cap_soc, :serie_casa_marcat, :nui, :serie_memorie_fiscala)
             ");
         }
 
@@ -210,6 +214,14 @@ try {
                     <div class="col-md-6">
                         <label for="serie_casa_marcat" class="form-label">Serie casa de marcat</label>
                         <input class="form-control" id="serie_casa_marcat" type="text" name="serie_casa_marcat" value="<?php echo company_form_value($company, 'serie_casa_marcat'); ?>">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="nui" class="form-label">NUI</label>
+                        <input class="form-control" id="nui" type="number" min="0" name="nui" value="<?php echo company_form_value($company, 'nui'); ?>">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="serie_memorie_fiscala" class="form-label">Serie memorie fiscală</label>
+                        <input class="form-control" id="serie_memorie_fiscala" type="text" name="serie_memorie_fiscala" value="<?php echo company_form_value($company, 'serie_memorie_fiscala'); ?>">
                     </div>
                 </div>
 

@@ -89,6 +89,62 @@ function ous_sqlite_columns(PDO $pdo, string $table): array
     return $columns;
 }
 
+function ous_mirror_date_firma(PDO $pdo, array $dateFirma): bool
+{
+    if (!$dateFirma) {
+        return false;
+    }
+
+    $columns = ous_sqlite_columns($pdo, 'date_firma');
+    if (!$columns) {
+        return false;
+    }
+
+    $allowed = [
+        'den_ent', 'cod_fiscal', 'nr_reg_com', 'sediu', 'judet', 'localitate', 'banca',
+        'cont_banca', 'conducator_entitate', 'serie_casa_marcat', 'nui',
+        'serie_memorie_fiscala', 'mod_listare', 'vanzare_sub_stoc', 'ajustare_adaos',
+    ];
+    $data = [];
+    foreach ($allowed as $column) {
+        if (!isset($columns[$column]) || !array_key_exists($column, $dateFirma)) {
+            continue;
+        }
+        $value = $dateFirma[$column];
+        if ($column === 'nui') {
+            $value = max(0, (int)$value);
+        } elseif ($column === 'serie_memorie_fiscala') {
+            $value = trim((string)$value);
+            if ($value === '0') {
+                $value = '';
+            }
+        }
+        $data[$column] = $value;
+    }
+
+    if (!$data) {
+        return false;
+    }
+
+    $count = (int)$pdo->query('SELECT COUNT(*) FROM date_firma')->fetchColumn();
+    $quoted = array_map(static fn(string $column): string => '"' . str_replace('"', '""', $column) . '"', array_keys($data));
+    if ($count > 0) {
+        $sets = [];
+        foreach ($quoted as $index => $column) {
+            $sets[] = $column . ' = ?';
+        }
+        $stmt = $pdo->prepare('UPDATE date_firma SET ' . implode(', ', $sets));
+        $stmt->execute(array_values($data));
+        return true;
+    }
+
+    $placeholders = array_fill(0, count($data), '?');
+    $stmt = $pdo->prepare('INSERT INTO date_firma (' . implode(', ', $quoted) . ') VALUES (' . implode(', ', $placeholders) . ')');
+    $stmt->execute(array_values($data));
+    return true;
+}
+
+
 function ous_mirror_vat_tables(PDO $pdo, array $coteTva, array $coduriCasaTva): array
 {
     $pdo->exec('DELETE FROM cote_tva');
@@ -310,6 +366,7 @@ try {
         }
     }
     $vatCounts = ous_mirror_vat_tables($pdo, $response['cote_tva'], $response['coduri_casa_tva']);
+    $companySynced = ous_mirror_date_firma($pdo, is_array($response['date_firma'] ?? null) ? $response['date_firma'] : []);
     $pdo->commit();
 
     ous_redirect('success', [

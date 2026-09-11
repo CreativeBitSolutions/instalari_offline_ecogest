@@ -26,6 +26,7 @@ try {
     require_once __DIR__ . '/tools/sqlite_schema.php';
     bestmixt_sqlite_apply_schema_if_needed($pdo);
     require_once __DIR__ . '/offline_sequence_state.php';
+    offline_raport_z_ensure_schema($pdo);
 } catch (PDOException $e) {
     die("Nu se poate deschide baza locală: " . $e->getMessage());
 }

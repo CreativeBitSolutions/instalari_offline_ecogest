@@ -8,22 +8,24 @@
       </div>
 
       <?php
+        $raportZIdentity = restaurant_sqlite_raport_z_current_identification($pdo, (int)$cod_locatie);
+        $nuiRaportZ = (int)$raportZIdentity['nui'];
+        $memoryRaportZ = (string)$raportZIdentity['serie_memorie_fiscala'];
         $sql = "SELECT COALESCE(SUM(numerar),0) AS total_numerar,
                        COALESCE(SUM(card),0)    AS total_card,
                        COALESCE(SUM(tichete),0) AS total_tichete
                 FROM $tabel_final_note
-                WHERE status='F' AND locatie=:loc AND nr_raport_z=0 AND cod_inchidere!=0";
+                WHERE status='F' AND locatie=:loc AND nr_raport_z=0 AND cod_inchidere!=0
+                  AND (COALESCE(nui, 0)=:nui OR COALESCE(nui, 0)=0)
+                  AND (COALESCE(serie_memorie_fiscala, '')=:memory OR COALESCE(serie_memorie_fiscala, '')='')";
         $st = $pdo->prepare($sql);
-        $st->execute([':loc'=>$cod_locatie]);
+        $st->execute([':loc'=>$cod_locatie, ':nui'=>$nuiRaportZ, ':memory'=>$memoryRaportZ]);
         $sum_data = $st->fetch(PDO::FETCH_ASSOC) ?: ['total_numerar'=>0,'total_card'=>0,'total_tichete'=>0];
         $total_numerar_z = number_format((float)$sum_data['total_numerar'], 2, '.', '');
         $total_card_z    = number_format((float)$sum_data['total_card'], 2, '.', '');
         $total_tichete_z = number_format((float)$sum_data['total_tichete'], 2, '.', '');
 
-        $st2 = $pdo->prepare("SELECT MAX(nr_raport_z) AS last_report FROM rapoarte_z WHERE cod_locatie = :loc");
-        $st2->execute([':loc'=>$cod_locatie]);
-        $last = (int)($st2->fetch(PDO::FETCH_ASSOC)['last_report'] ?? 0);
-        $nr_raport_z = $last + 1;
+        $nr_raport_z = restaurant_sqlite_raport_z_next_number($pdo, (int)$cod_locatie, $nuiRaportZ, $memoryRaportZ);
       ?>
 
       <div class="modal-body">

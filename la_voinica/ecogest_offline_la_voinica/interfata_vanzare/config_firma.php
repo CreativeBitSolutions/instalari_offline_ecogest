@@ -24,6 +24,8 @@ while ($row = $dstmt->fetch(PDO::FETCH_ASSOC)){
         $cont_banca=$row['cont_banca'];
         $cap_soc=$row['cap_soc'];
         $serie_casa_marcat=$row['serie_casa_marcat'];
+        $nui=(int)($row['nui'] ?? 0);
+        $serie_memorie_fiscala=(string)($row['serie_memorie_fiscala'] ?? '');
         $mod_listare=$row['mod_listare'];
         $cond_ent=$row['conducator_entitate'];
         $vanzare_sub_stoc=$row['vanzare_sub_stoc'];
@@ -37,7 +39,7 @@ while ($row = $dstmt->fetch(PDO::FETCH_ASSOC)){
 
 	
 	
-$stmt = $pdo->prepare("UPDATE $tabel_final_date_firma SET den_ent = :den_ent,cod_fiscal = :cod_fiscal,nr_reg_com = :nr_reg_com,sediu=:sediu,judet=:judet,banca=:banca,conducator_entitate=:cond_ent,cont_banca=:cont_banca,cap_soc=:cap_soc,serie_casa_marcat=:serie_casa_marcat,mod_listare=:mod_listare,vanzare_sub_stoc=:vanzare_sub_stoc,ajustare_adaos=:ajustare_adaos  WHERE den_ent= '$den_ent'");
+$stmt = $pdo->prepare("UPDATE $tabel_final_date_firma SET den_ent = :den_ent,cod_fiscal = :cod_fiscal,nr_reg_com = :nr_reg_com,sediu=:sediu,judet=:judet,banca=:banca,conducator_entitate=:cond_ent,cont_banca=:cont_banca,cap_soc=:cap_soc,serie_casa_marcat=:serie_casa_marcat,nui=:nui,serie_memorie_fiscala=:serie_memorie_fiscala,mod_listare=:mod_listare,vanzare_sub_stoc=:vanzare_sub_stoc,ajustare_adaos=:ajustare_adaos  WHERE den_ent= '$den_ent'");
 
 $criteria = [
 	'den_ent' => $_POST['den_ent'],
@@ -49,6 +51,8 @@ $criteria = [
     'cont_banca' => $_POST['cont_banca'],
     'cap_soc' => $_POST['cap_soc'],
     'serie_casa_marcat' => $_POST['serie_casa_marcat'],
+    'nui' => max(0, (int)($_POST['nui'] ?? 0)),
+    'serie_memorie_fiscala' => trim((string)($_POST['serie_memorie_fiscala'] ?? '')),
     'cond_ent' => $_POST['cond_ent'],
     'vanzare_sub_stoc' => $_POST['vanzare_sub_stoc'],
     'mod_listare' => $_POST['mod_listare'],
@@ -150,6 +154,14 @@ printf("<script>location.href='config_firma.php'</script>");	}
 	<div class="form-group">
 <label for="exampleInputPassword1">Serie Casa de Marcat:</label>
 <input class="form-control" id="exampleInputPassword1" type="text" name="serie_casa_marcat" placeholder="SB0000111111" value="<?php echo $serie_casa_marcat; ?>">
+	</div>
+	<div class="form-group">
+<label for="nui">NUI:</label>
+<input class="form-control" id="nui" type="number" min="0" name="nui" value="<?php echo $nui; ?>">
+	</div>
+	<div class="form-group">
+<label for="serie_memorie_fiscala">Serie memoriei fiscale:</label>
+<input class="form-control" id="serie_memorie_fiscala" type="text" name="serie_memorie_fiscala" value="<?php echo htmlspecialchars($serie_memorie_fiscala, ENT_QUOTES, 'UTF-8'); ?>">
 	</div>
 	<div class="form-group">
 <label for="exampleInputPassword1">Modul de Listare:</label>

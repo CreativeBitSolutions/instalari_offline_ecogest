@@ -2,7 +2,7 @@
 require_once __DIR__.'/database_connection.php';
 include __DIR__.'/header.php';
 $company=casa_one($pdo,'SELECT * FROM casa_online_company ORDER BY id LIMIT 1');
-$fields=['den_ent'=>'Denumire firmă','cod_fiscal'=>'Cod fiscal','nr_reg_com'=>'Registrul Comerțului','sediu'=>'Sediu','judet'=>'Județ','localitate'=>'Localitate','banca'=>'Banca','cont_banca'=>'IBAN','serie_factura_implicita'=>'Serie implicită','cota_tva_predefinita'=>'TVA implicit','email'=>'Email','telefon'=>'Telefon'];
+$fields=['den_ent'=>'Denumire firmă','cod_fiscal'=>'Cod fiscal','nr_reg_com'=>'Registrul Comerțului','sediu'=>'Sediu','judet'=>'Județ','localitate'=>'Localitate','banca'=>'Banca','cont_banca'=>'IBAN','serie_casa_marcat'=>'Serie casă de marcat','nui'=>'NUI memorie fiscală','serie_memorie_fiscala'=>'Seria memoriei fiscale','serie_factura_implicita'=>'Serie implicită','cota_tva_predefinita'=>'TVA implicit','email'=>'Email','telefon'=>'Telefon'];
 ?><main class="container-fluid"><h1 class="h3">Date preluate din online</h1><p>Datele firmei, seriile și utilizatorii se administrează în aplicația online. Produsele se actualizează și automat prin AutoScanner.</p>
 <div class="card p-3"><div><button class="btn btn-primary mb-2" data-casa-pull="company">Preia datele firmei și seriile</button> <button class="btn btn-primary mb-2" data-casa-pull="users">Preia utilizatorii și TVA</button> <button class="btn btn-primary mb-2" data-casa-pull="products">Preia produsele</button></div><p id="catalog-message" role="status"></p></div>
 <div class="card p-3"><h2 class="h4">Date firmă</h2><dl class="row"><?php foreach($fields as $field=>$label):?><dt class="col-md-4"><?=casa_h($label)?></dt><dd class="col-md-8"><?=casa_h($company[$field]??'')?></dd><?php endforeach;?></dl></div>

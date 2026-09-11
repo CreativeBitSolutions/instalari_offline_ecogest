@@ -4,6 +4,13 @@ $offlineZClosedNumber = (int)($_SESSION['offline_z_closed'] ?? 0);
 $offlineZError = trim((string)($_SESSION['offline_z_error'] ?? ''));
 unset($_SESSION['offline_shift_closed'], $_SESSION['offline_z_closed'], $_SESSION['offline_z_error']);
 
+$offlineZNextNumber = 1;
+try {
+    $offlineZNextNumber = offline_raport_z_next_number($pdo, (int)($cod_locatie ?? offline_sequence_config()['cod_locatie']));
+} catch (Throwable $e) {
+    $offlineZNextNumber = 1;
+}
+
 $offlineClosedShift = null;
 foreach ($offlinePendingClosures as $offlinePendingClosure) {
     if ((int)$offlinePendingClosure['cod_inchidere'] === $offlineShiftClosedCode) {
@@ -144,7 +151,7 @@ function offline_closure_ui_money($value): string
                             </div>
                             <div class="form-group col-md-4 mb-0">
                                 <label>Număr raport Z casa de marcat</label>
-                                <input type="number" min="1" class="form-control" name="nr_raport_z" required>
+                                <input type="number" min="1" class="form-control" name="nr_raport_z" value="<?php echo $offlineZNextNumber; ?>" required>
                             </div>
                         </div>
                         <input type="hidden" name="tichete_valorice" value="0">

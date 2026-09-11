@@ -26,12 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         try {
             $pdo->beginTransaction();
+            offline_raport_z_ensure_schema($pdo);
+            $identity = offline_raport_z_current_identification($pdo, $cod_locatie);
+            $serie_casa_marcat = $identity['serie_casa_marcat'];
+            $nui = $identity['nui'];
+            $serie_memorie_fiscala = $identity['serie_memorie_fiscala'];
 
             // 1) Seria casei pentru locație
-            $stmt = $pdo->prepare("SELECT serie_casa_marcat FROM loc_mese_12 WHERE cod_locatie = :loc LIMIT 1");
-            $stmt->execute(['loc' => $cod_locatie]);
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            $serie_casa_marcat = $row ? $row['serie_casa_marcat'] : '';
 
             // 2) Identifică Z-urile deja atașate notelor din acea zi (le ștergem din rapoarte_z)
             $stmt = $pdo->prepare("
@@ -41,14 +42,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                   AND locatie=:loc
                   AND data_bon=:data_bon
                   AND nr_raport_z <> 0
+                  AND (COALESCE(nui, 0) = :nui_filter OR COALESCE(nui, 0) = 0)
+                  AND (COALESCE(serie_memorie_fiscala, '') = :memory_filter OR COALESCE(serie_memorie_fiscala, '') = '')
             ");
-            $stmt->execute(['loc' => $cod_locatie, 'data_bon' => $data_bon]);
+            $stmt->execute([
+                'loc' => $cod_locatie,
+                'data_bon' => $data_bon,
+                'nui_filter' => $nui,
+                'memory_filter' => $serie_memorie_fiscala,
+            ]);
             $nr_z_de_sters = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
             if (!empty($nr_z_de_sters)) {
                 $in = implode(',', array_fill(0, count($nr_z_de_sters), '?'));
-                $sqlDel = "DELETE FROM rapoarte_z WHERE cod_locatie = ? AND nr_raport_z IN ($in)";
-                $params = array_merge([$cod_locatie], $nr_z_de_sters);
+                $sqlDel = "DELETE FROM rapoarte_z WHERE cod_locatie = ? AND COALESCE(serie_casa_marcat, '') = ? AND COALESCE(nui, 0) = ? AND COALESCE(serie_memorie_fiscala, '') = ? AND nr_raport_z IN ($in)";
+                $params = array_merge([$cod_locatie, $serie_casa_marcat, $nui, $serie_memorie_fiscala], $nr_z_de_sters);
                 $stmt = $pdo->prepare($sqlDel);
                 $stmt->execute($params);
                 // Dacă ai tabele derivate ale raportului Z, șterge aici în cascadă.
@@ -61,8 +69,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 WHERE status='F'
                   AND locatie=:loc
                   AND data_bon=:data_bon
+                  AND (COALESCE(nui, 0) = :nui_filter OR COALESCE(nui, 0) = 0)
+                  AND (COALESCE(serie_memorie_fiscala, '') = :memory_filter OR COALESCE(serie_memorie_fiscala, '') = '')
             ");
-            $stmt->execute(['loc' => $cod_locatie, 'data_bon' => $data_bon]);
+            $stmt->execute([
+                'loc' => $cod_locatie,
+                'data_bon' => $data_bon,
+                'nui_filter' => $nui,
+                'memory_filter' => $serie_memorie_fiscala,
+            ]);
 
             // 4) Calculează totalurile DIN NOTE pentru ziua țintă (logica ta: doar F, cod_inchidere != 0)
             $stmt = $pdo->prepare("
@@ -75,11 +90,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 FROM note
                 WHERE status='F'
                   AND locatie=:loc
-                  AND data_bon=:data_bon
-                  AND cod_inchidere <> 0
-                  AND nr_raport_z = 0
+                   AND data_bon=:data_bon
+                   AND cod_inchidere <> 0
+                   AND nr_raport_z = 0
+                   AND (COALESCE(nui, 0) = :nui_filter OR COALESCE(nui, 0) = 0)
+                   AND (COALESCE(serie_memorie_fiscala, '') = :memory_filter OR COALESCE(serie_memorie_fiscala, '') = '')
             ");
-            $stmt->execute(['loc' => $cod_locatie, 'data_bon' => $data_bon]);
+            $stmt->execute([
+                'loc' => $cod_locatie,
+                'data_bon' => $data_bon,
+                'nui_filter' => $nui,
+                'memory_filter' => $serie_memorie_fiscala,
+            ]);
             $sum_data = $stmt->fetch(PDO::FETCH_ASSOC);
 
             $cnt_note        = (int)($sum_data['cnt_note'] ?? 0);
@@ -94,23 +116,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $error = "Nu există note eligibile (status F, cod_inchidere != 0) pentru data $data_bon.";
             } else {
                 // 5) Generează următorul nr_raport_z disponibil pentru locație
-                $stmt = $pdo->prepare("SELECT COALESCE(MAX(nr_raport_z), 0) + 1 AS next_z FROM rapoarte_z WHERE cod_locatie = :loc");
-                $stmt->execute(['loc' => $cod_locatie]);
-                $next = $stmt->fetch(PDO::FETCH_ASSOC);
-                $nr_raport_z = (int)($next['next_z'] ?? 1);
-                if ($nr_raport_z < 1) $nr_raport_z = 1;
+                $nr_raport_z = offline_raport_z_next_number($pdo, $cod_locatie, $nui, $serie_memorie_fiscala);
 
                 // 6) Inserează raportul Z calculat
                 $stmt = $pdo->prepare("
                     INSERT INTO rapoarte_z
-                        (nr_raport_z, cod_locatie, serie_casa_marcat, numerar, card, credit, tichete_masa, tichete_valorice, plata_moderna, avans_in_numerar, alte_metode)
+                        (nr_raport_z, cod_locatie, serie_casa_marcat, nui, serie_memorie_fiscala, numerar, card, credit, tichete_masa, tichete_valorice, plata_moderna, avans_in_numerar, alte_metode)
                     VALUES
-                        (:nr_raport_z, :cod_locatie, :serie_casa_marcat, :numerar, :card, :credit, :tichete_masa, :tichete_valorice, :plata_moderna, :avans_in_numerar, :alte_metode)
+                        (:nr_raport_z, :cod_locatie, :serie_casa_marcat, :nui, :serie_memorie_fiscala, :numerar, :card, :credit, :tichete_masa, :tichete_valorice, :plata_moderna, :avans_in_numerar, :alte_metode)
                 ");
                 $stmt->execute([
                     'nr_raport_z'       => $nr_raport_z,
                     'cod_locatie'       => $cod_locatie,
                     'serie_casa_marcat' => $serie_casa_marcat,
+                    'nui'               => $nui,
+                    'serie_memorie_fiscala' => $serie_memorie_fiscala,
                     'numerar'           => round($total_numerar, 2),
                     'card'              => round($total_card, 2),
                     'credit'            => 0.00,
@@ -124,17 +144,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // 7) Asociază notele din acea zi la noul Z
                 $stmt = $pdo->prepare("
                     UPDATE note
-                    SET nr_raport_z = :nr_raport_z
+                    SET nr_raport_z = :nr_raport_z, nui = :nui, serie_memorie_fiscala = :serie_memorie_fiscala
                     WHERE status='F'
                       AND locatie=:loc
                       AND data_bon=:data_bon
                       AND cod_inchidere <> 0
                       AND nr_raport_z = 0
+                      AND (COALESCE(nui, 0) = :nui_filter OR COALESCE(nui, 0) = 0)
+                      AND (COALESCE(serie_memorie_fiscala, '') = :memory_filter OR COALESCE(serie_memorie_fiscala, '') = '')
                 ");
                 $stmt->execute([
                     'nr_raport_z' => $nr_raport_z,
+                    'nui'         => $nui,
+                    'serie_memorie_fiscala' => $serie_memorie_fiscala,
                     'loc'         => $cod_locatie,
-                    'data_bon'    => $data_bon
+                    'data_bon'    => $data_bon,
+                    'nui_filter' => $nui,
+                    'memory_filter' => $serie_memorie_fiscala,
                 ]);
 
                 // 8) Actualizează inchideri_r_12 pentru codurile de închidere din acea zi
@@ -143,14 +169,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     FROM note
                     WHERE status='F'
                       AND locatie=:loc
-                      AND data_bon=:data_bon
-                      AND cod_inchidere <> 0
-                      AND nr_raport_z = :nr_raport_z
+                       AND data_bon=:data_bon
+                       AND cod_inchidere <> 0
+                       AND nr_raport_z = :nr_raport_z
+                       AND COALESCE(nui, 0) = :nui
+                       AND COALESCE(serie_memorie_fiscala, '') = :serie_memorie_fiscala
                 ");
                 $stmt->execute([
                     'loc'         => $cod_locatie,
                     'data_bon'    => $data_bon,
-                    'nr_raport_z' => $nr_raport_z
+                    'nr_raport_z' => $nr_raport_z,
+                    'nui' => $nui,
+                    'serie_memorie_fiscala' => $serie_memorie_fiscala,
                 ]);
                 $coduri = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
@@ -158,13 +188,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $in = implode(',', array_fill(0, count($coduri), '?'));
                     $sqlUpd = "
                         UPDATE inchideri_r_12
-                        SET nr_raport_z = ?
+                        SET nr_raport_z = ?, nui = ?, serie_memorie_fiscala = ?
                         WHERE cod_inchidere IN ($in)
                           AND locatie = ?
+                          AND (COALESCE(nui, 0) = ? OR COALESCE(nui, 0) = 0)
+                          AND (COALESCE(serie_memorie_fiscala, '') = ? OR COALESCE(serie_memorie_fiscala, '') = '')
                     ";
-                    $params = array_merge([$nr_raport_z], $coduri, [$cod_locatie]);
+                    $params = array_merge([$nr_raport_z, $nui, $serie_memorie_fiscala], $coduri, [$cod_locatie, $nui, $serie_memorie_fiscala]);
                     $stmt = $pdo->prepare($sqlUpd);
                     $stmt->execute($params);
+                }
+
+                foreach ([['BF', 'nr_doc', true], ['BC', 'nr_nota', false], ['BT', 'nr_nota', false]] as [$document, $linkColumn, $outOnly]) {
+                    $extra = $outOnly ? " AND miscari.tip_miscare = 'O'" : '';
+                    $sqlMiscari = "UPDATE miscari SET nr_raport_z = ?, cod_locatie = ?, nui = ?, serie_memorie_fiscala = ?
+                        WHERE fel_doc = ?{$extra}
+                          AND EXISTS (SELECT 1 FROM note n WHERE n.nrbon = miscari.{$linkColumn}
+                            AND n.locatie = ? AND n.nr_raport_z = ? AND COALESCE(n.nui, 0) = ?
+                            AND COALESCE(n.serie_memorie_fiscala, '') = ? AND n.data_bon = ? )";
+                    $stmt = $pdo->prepare($sqlMiscari);
+                    $stmt->execute([$nr_raport_z, $cod_locatie, $nui, $serie_memorie_fiscala, $document, $cod_locatie, $nr_raport_z, $nui, $serie_memorie_fiscala, $data_bon]);
+                }
+
+                if (function_exists('offline_sequence_record')) {
+                    offline_sequence_record($pdo, 'nr_raport_z', $nr_raport_z, $cod_locatie, offline_raport_z_sequence_key($serie_casa_marcat, $nui, $serie_memorie_fiscala), 'z_regenerated', 'rapoarte_z', (string)$nr_raport_z);
                 }
 
                 $pdo->commit();
