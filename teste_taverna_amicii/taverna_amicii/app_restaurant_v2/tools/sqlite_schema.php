@@ -437,6 +437,7 @@ function restaurant_sqlite_schema_statements(): array
             ora_inchiderii TEXT DEFAULT '',
             locatie INTEGER DEFAULT 0,
             nr_raport_z INTEGER DEFAULT 0,
+            serie_casa_marcat TEXT DEFAULT '',
             nui INTEGER DEFAULT 0,
             serie_memorie_fiscala TEXT DEFAULT '',
             totaluri_plata_json TEXT DEFAULT NULL
@@ -1422,6 +1423,7 @@ function restaurant_sqlite_ensure_columns(PDO $pdo): void
             'ora_inchiderii' => "TEXT DEFAULT ''",
             'locatie' => 'INTEGER DEFAULT 0',
             'nr_raport_z' => 'INTEGER DEFAULT 0',
+            'serie_casa_marcat' => "TEXT DEFAULT ''",
             'nui' => 'INTEGER DEFAULT 0',
             'serie_memorie_fiscala' => "TEXT DEFAULT ''",
             'totaluri_plata_json' => 'TEXT DEFAULT NULL',

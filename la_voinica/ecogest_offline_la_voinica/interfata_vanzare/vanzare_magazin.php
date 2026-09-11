@@ -348,7 +348,14 @@ $offlinePendingReceiptCount = array_sum(array_map(static function (array $closur
     <label for="prod_filter_cod_bare" class="label-codbare">
         Caută Cod Bare <small class="shortcut-hint">(Ctrl) ( / x2 pentru total)</small>
     </label>
-    <input type="text" id="prod_filter_cod_bare" class="form-control">
+    <input type="text"
+           id="prod_filter_cod_bare"
+           class="form-control"
+           autocomplete="off"
+           autocorrect="off"
+           autocapitalize="off"
+           spellcheck="false"
+           aria-autocomplete="none">
 </div>
 <?php endif; ?>
                     <div class="form-group">
