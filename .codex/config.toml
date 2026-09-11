@@ -22,7 +22,7 @@ model_reasoning_effort = "max"
 # Safe interactive defaults. Change if your workflow needs otherwise.
 approval_policy = "never"
 sandbox_mode = "workspace-write"
-sandbox_workspace_write.writable_roots = ["C:/xampp/htdocs/github/agecsin"]
+
 [agents]
 enabled = true
 
