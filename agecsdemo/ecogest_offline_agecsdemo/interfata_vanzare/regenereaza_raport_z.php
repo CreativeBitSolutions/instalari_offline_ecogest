@@ -8,6 +8,102 @@ include('session.php');
 // Util: escapare HTML
 function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
 
+function offline_regeneration_historical_identity(PDO $pdo, int $location, string $date, array $fallback): array
+{
+    $noteStmt = $pdo->prepare("
+        SELECT DISTINCT
+            COALESCE(n.nr_raport_z, 0) AS nr_raport_z,
+            COALESCE(n.serie_casa_marcat, '') AS serie_casa_marcat,
+            COALESCE(n.nui, 0) AS nui,
+            COALESCE(n.serie_memorie_fiscala, '') AS serie_memorie_fiscala
+        FROM note n
+        WHERE n.status = 'F'
+          AND n.locatie = ?
+          AND n.data_bon = ?
+          AND (
+              COALESCE(n.nr_raport_z, 0) <> 0
+              OR COALESCE(n.serie_casa_marcat, '') <> ''
+              OR COALESCE(n.nui, 0) <> 0
+              OR COALESCE(n.serie_memorie_fiscala, '') NOT IN ('', '0')
+          )
+    ");
+    $noteStmt->execute([$location, $date]);
+    $noteRows = $noteStmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $reportNumbers = [];
+    $reportIdentityKeys = [];
+    $identityKeys = [];
+    $identityKey = static function (string $series, int $nui, string $memory): string {
+        $memory = $memory === '0' ? '' : $memory;
+        return $series . "\x1f" . $nui . "\x1f" . $memory;
+    };
+    $addIdentity = static function (string $series, int $nui, string $memory) use (&$identityKeys, $identityKey): void {
+        $key = $identityKey($series, $nui, $memory);
+        $identityKeys[$key] = [$series, $nui, $memory];
+    };
+
+    foreach ($noteRows as $row) {
+        $reportNumber = (int)($row['nr_raport_z'] ?? 0);
+        if ($reportNumber > 0) {
+            $reportNumbers[$reportNumber] = true;
+        }
+        $series = trim((string)($row['serie_casa_marcat'] ?? ''));
+        $nui = max(0, (int)($row['nui'] ?? 0));
+        $memory = trim((string)($row['serie_memorie_fiscala'] ?? ''));
+        if ($series !== '' || $nui > 0 || ($memory !== '' && $memory !== '0')) {
+            $addIdentity($series, $nui, $memory);
+            if ($reportNumber > 0) {
+                $reportIdentityKeys[$reportNumber][$identityKey($series, $nui, $memory)] = true;
+            }
+        }
+    }
+
+    if ($reportNumbers) {
+        $numbers = array_map('intval', array_keys($reportNumbers));
+        $placeholders = implode(',', array_fill(0, count($numbers), '?'));
+        $reportStmt = $pdo->prepare("
+            SELECT DISTINCT
+                r.nr_raport_z,
+                COALESCE(r.serie_casa_marcat, '') AS serie_casa_marcat,
+                COALESCE(r.nui, 0) AS nui,
+                COALESCE(r.serie_memorie_fiscala, '') AS serie_memorie_fiscala
+            FROM rapoarte_z r
+            WHERE r.cod_locatie = ?
+              AND r.nr_raport_z IN ({$placeholders})
+        ");
+        $reportStmt->execute(array_merge([$location], $numbers));
+        foreach ($reportStmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+            $reportNumber = (int)($row['nr_raport_z'] ?? 0);
+            $series = trim((string)($row['serie_casa_marcat'] ?? ''));
+            $nui = max(0, (int)($row['nui'] ?? 0));
+            $memory = trim((string)($row['serie_memorie_fiscala'] ?? ''));
+            $key = $identityKey($series, $nui, $memory);
+            if (isset($reportIdentityKeys[$reportNumber]) && !isset($reportIdentityKeys[$reportNumber][$key])) {
+                continue;
+            }
+            $addIdentity(
+                $series,
+                $nui,
+                $memory
+            );
+        }
+    }
+
+    if (count($identityKeys) > 1) {
+        throw new RuntimeException('Identitatea fiscala a notelor selectate este ambigua. Regenerarea a fost oprita.');
+    }
+    if (count($identityKeys) === 1) {
+        $identity = reset($identityKeys);
+        return [
+            'serie_casa_marcat' => $identity[0],
+            'nui' => $identity[1],
+            'serie_memorie_fiscala' => $identity[2],
+        ];
+    }
+
+    return $fallback;
+}
+
 // Citire cod_locatie din sesiune
 $cod_locatie = isset($_SESSION['cod_locatie']) ? (int)$_SESSION['cod_locatie'] : 0;
 if ($cod_locatie <= 0) {
@@ -27,7 +123,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             $pdo->beginTransaction();
             offline_raport_z_ensure_schema($pdo);
-            $identity = offline_raport_z_current_identification($pdo, $cod_locatie);
+            $currentIdentity = offline_raport_z_current_identification($pdo, $cod_locatie);
+            $identity = offline_regeneration_historical_identity($pdo, $cod_locatie, $data_bon, $currentIdentity);
             $serie_casa_marcat = $identity['serie_casa_marcat'];
             $nui = $identity['nui'];
             $serie_memorie_fiscala = $identity['serie_memorie_fiscala'];
@@ -42,12 +139,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                   AND locatie=:loc
                   AND data_bon=:data_bon
                   AND nr_raport_z <> 0
+                  AND (COALESCE(serie_casa_marcat, '') = :series_filter OR (:series_filter <> '' AND COALESCE(serie_casa_marcat, '') = ''))
                   AND (COALESCE(nui, 0) = :nui_filter OR COALESCE(nui, 0) = 0)
                   AND (COALESCE(serie_memorie_fiscala, '') = :memory_filter OR COALESCE(serie_memorie_fiscala, '') = '')
             ");
             $stmt->execute([
                 'loc' => $cod_locatie,
                 'data_bon' => $data_bon,
+                'series_filter' => $serie_casa_marcat,
                 'nui_filter' => $nui,
                 'memory_filter' => $serie_memorie_fiscala,
             ]);
@@ -69,12 +168,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 WHERE status='F'
                   AND locatie=:loc
                   AND data_bon=:data_bon
+                  AND (COALESCE(serie_casa_marcat, '') = :series_filter OR (:series_filter <> '' AND COALESCE(serie_casa_marcat, '') = ''))
                   AND (COALESCE(nui, 0) = :nui_filter OR COALESCE(nui, 0) = 0)
                   AND (COALESCE(serie_memorie_fiscala, '') = :memory_filter OR COALESCE(serie_memorie_fiscala, '') = '')
             ");
             $stmt->execute([
                 'loc' => $cod_locatie,
                 'data_bon' => $data_bon,
+                'series_filter' => $serie_casa_marcat,
                 'nui_filter' => $nui,
                 'memory_filter' => $serie_memorie_fiscala,
             ]);
@@ -93,12 +194,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                    AND data_bon=:data_bon
                    AND cod_inchidere <> 0
                    AND nr_raport_z = 0
+                   AND (COALESCE(serie_casa_marcat, '') = :series_filter OR (:series_filter <> '' AND COALESCE(serie_casa_marcat, '') = ''))
                    AND (COALESCE(nui, 0) = :nui_filter OR COALESCE(nui, 0) = 0)
                    AND (COALESCE(serie_memorie_fiscala, '') = :memory_filter OR COALESCE(serie_memorie_fiscala, '') = '')
             ");
             $stmt->execute([
                 'loc' => $cod_locatie,
                 'data_bon' => $data_bon,
+                'series_filter' => $serie_casa_marcat,
                 'nui_filter' => $nui,
                 'memory_filter' => $serie_memorie_fiscala,
             ]);
@@ -116,7 +219,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $error = "Nu existÄƒ note eligibile (status F, cod_inchidere != 0) pentru data $data_bon.";
             } else {
                 // 5) GenereazÄƒ urmÄƒtorul nr_raport_z disponibil pentru locaÈ›ie
-                $nr_raport_z = offline_raport_z_next_number($pdo, $cod_locatie, $nui, $serie_memorie_fiscala);
+                $nextReportStmt = $pdo->prepare("SELECT COALESCE(MAX(nr_raport_z), 0) + 1
+                    FROM rapoarte_z
+                    WHERE cod_locatie = ?
+                      AND COALESCE(serie_casa_marcat, '') = ?
+                      AND COALESCE(nui, 0) = ?
+                      AND COALESCE(serie_memorie_fiscala, '') = ?");
+                $nextReportStmt->execute([$cod_locatie, $serie_casa_marcat, $nui, $serie_memorie_fiscala]);
+                $nr_raport_z = max(1, (int)$nextReportStmt->fetchColumn());
 
                 // 6) InsereazÄƒ raportul Z calculat
                 $stmt = $pdo->prepare("
@@ -144,21 +254,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // 7) AsociazÄƒ notele din acea zi la noul Z
                 $stmt = $pdo->prepare("
                     UPDATE note
-                    SET nr_raport_z = :nr_raport_z, nui = :nui, serie_memorie_fiscala = :serie_memorie_fiscala
+                    SET nr_raport_z = :nr_raport_z, serie_casa_marcat = :serie_casa_marcat, nui = :nui, serie_memorie_fiscala = :serie_memorie_fiscala
                     WHERE status='F'
                       AND locatie=:loc
                       AND data_bon=:data_bon
                       AND cod_inchidere <> 0
                       AND nr_raport_z = 0
+                      AND (COALESCE(serie_casa_marcat, '') = :series_filter OR (:series_filter <> '' AND COALESCE(serie_casa_marcat, '') = ''))
                       AND (COALESCE(nui, 0) = :nui_filter OR COALESCE(nui, 0) = 0)
                       AND (COALESCE(serie_memorie_fiscala, '') = :memory_filter OR COALESCE(serie_memorie_fiscala, '') = '')
                 ");
                 $stmt->execute([
                     'nr_raport_z' => $nr_raport_z,
+                    'serie_casa_marcat' => $serie_casa_marcat,
                     'nui'         => $nui,
                     'serie_memorie_fiscala' => $serie_memorie_fiscala,
                     'loc'         => $cod_locatie,
-                    'data_bon'    => $data_bon
+                    'data_bon'    => $data_bon,
+                    'series_filter' => $serie_casa_marcat
                     , 'nui_filter' => $nui
                     , 'memory_filter' => $serie_memorie_fiscala
                 ]);
@@ -172,6 +285,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                        AND data_bon=:data_bon
                        AND cod_inchidere <> 0
                        AND nr_raport_z = :nr_raport_z
+                       AND COALESCE(serie_casa_marcat, '') = :serie_casa_marcat
                        AND COALESCE(nui, 0) = :nui
                        AND COALESCE(serie_memorie_fiscala, '') = :serie_memorie_fiscala
                 ");
@@ -179,6 +293,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'loc'         => $cod_locatie,
                     'data_bon'    => $data_bon,
                     'nr_raport_z' => $nr_raport_z,
+                    'serie_casa_marcat' => $serie_casa_marcat,
                     'nui'         => $nui,
                     'serie_memorie_fiscala' => $serie_memorie_fiscala,
                 ]);
@@ -188,26 +303,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $in = implode(',', array_fill(0, count($coduri), '?'));
                     $sqlUpd = "
                         UPDATE inchideri_r_12
-                        SET nr_raport_z = ?, nui = ?, serie_memorie_fiscala = ?
+                        SET nr_raport_z = ?, serie_casa_marcat = ?, nui = ?, serie_memorie_fiscala = ?
                         WHERE cod_inchidere IN ($in)
                           AND locatie = ?
+                          AND (COALESCE(serie_casa_marcat, '') = ? OR COALESCE(serie_casa_marcat, '') = '')
                           AND (COALESCE(nui, 0) = ? OR COALESCE(nui, 0) = 0)
                           AND (COALESCE(serie_memorie_fiscala, '') = ? OR COALESCE(serie_memorie_fiscala, '') = '')
                     ";
-                    $params = array_merge([$nr_raport_z, $nui, $serie_memorie_fiscala], $coduri, [$cod_locatie, $nui, $serie_memorie_fiscala]);
+                    $params = array_merge([$nr_raport_z, $serie_casa_marcat, $nui, $serie_memorie_fiscala], $coduri, [$cod_locatie, $serie_casa_marcat, $nui, $serie_memorie_fiscala]);
                     $stmt = $pdo->prepare($sqlUpd);
                     $stmt->execute($params);
                 }
 
                 foreach ([['BF', 'nr_doc', true], ['BC', 'nr_nota', false], ['BT', 'nr_nota', false]] as [$document, $linkColumn, $outOnly]) {
                     $extra = $outOnly ? " AND miscari.tip_miscare = 'O'" : '';
-                    $sqlMiscari = "UPDATE miscari SET nr_raport_z = ?, cod_locatie = ?, nui = ?, serie_memorie_fiscala = ?
+                    $sqlMiscari = "UPDATE miscari SET nr_raport_z = ?, cod_locatie = ?, serie_casa_marcat = ?, nui = ?, serie_memorie_fiscala = ?
                         WHERE fel_doc = ?{$extra}
                           AND EXISTS (SELECT 1 FROM note n WHERE n.nrbon = miscari.{$linkColumn}
-                            AND n.locatie = ? AND n.nr_raport_z = ? AND COALESCE(n.nui, 0) = ?
+                            AND n.locatie = ? AND n.nr_raport_z = ? AND COALESCE(n.serie_casa_marcat, '') = ?
+                            AND COALESCE(n.nui, 0) = ?
                             AND COALESCE(n.serie_memorie_fiscala, '') = ? AND n.data_bon = ? )";
                     $stmt = $pdo->prepare($sqlMiscari);
-                    $stmt->execute([$nr_raport_z, $cod_locatie, $nui, $serie_memorie_fiscala, $document, $cod_locatie, $nr_raport_z, $nui, $serie_memorie_fiscala, $data_bon]);
+                    $stmt->execute([$nr_raport_z, $cod_locatie, $serie_casa_marcat, $nui, $serie_memorie_fiscala, $document, $cod_locatie, $nr_raport_z, $serie_casa_marcat, $nui, $serie_memorie_fiscala, $data_bon]);
                 }
 
                 if (function_exists('offline_sequence_record')) {

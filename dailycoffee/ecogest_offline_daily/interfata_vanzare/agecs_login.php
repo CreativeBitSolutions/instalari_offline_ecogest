@@ -18,6 +18,9 @@ $_SESSION['cod_locatie'] = (int)$_config['cod_locatie_default'];
 	    
 	}
 	$cust_id = $_SESSION['client_id'];
+	if (!isset($_SESSION['offline_login_csrf']) || !is_string($_SESSION['offline_login_csrf'])) {
+		$_SESSION['offline_login_csrf'] = bin2hex(random_bytes(24));
+	}
 	?>
 <!DOCTYPE html>
 <html lang="ro">
@@ -195,10 +198,19 @@ while ($row = $dstmt->fetch(PDO::FETCH_ASSOC)) {
     <div class="buttons">
         <span class="actions-label">Export si administrare locala</span>
         <div class="sync-actions">
+            <form method="POST" action="offline_users_sync.php" class="users-sync-form">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars((string)$_SESSION['offline_login_csrf'], ENT_QUOTES, 'UTF-8'); ?>">
+                <button type="submit" class="button2" title="Preia utilizatorii, cotele TVA si datele firmei din online">UTILIZATORI SI TVA</button>
+            </form>
             <a class="button2 export-button" href="export_vanzari_offline.php" title="Deschide exportul manual de vanzari in format XML sau SQL" hidden aria-hidden="true">DESCARCA EXPORT XML / SQL</a>
             <a class="button2 license-button" href="offline_license_check.php" title="Verifica licenta aplicatiei offline">VERIFICA LICENTA</a>
             <a class="button2 cleanup-button" href="curatare_date_locale.php" title="Deschide preview-ul pentru curatarea bazei locale">CURATARE DATE LOCALE</a>
         </div>
+        <?php if (isset($_GET['users_sync'])): ?>
+            <span class="sync-status" style="color: <?php echo ($_GET['users_sync'] === 'success') ? '#166534' : '#991b1b'; ?>">
+                <?php echo htmlspecialchars((string)($_GET['message'] ?? ($_GET['users_sync'] === 'success' ? 'Utilizatorii, cotele TVA si datele firmei au fost sincronizate.' : 'Sincronizarea utilizatorilor si TVA nu a reusit.')), ENT_QUOTES, 'UTF-8'); ?>
+            </span>
+        <?php endif; ?>
     </div>
     <?php include __DIR__ . '/offline_pending_closures_notice.php'; ?>
 <form method="POST" action="admin_logincheck.php">

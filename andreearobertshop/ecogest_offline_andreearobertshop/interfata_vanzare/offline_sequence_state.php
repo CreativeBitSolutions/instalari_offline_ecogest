@@ -389,14 +389,16 @@ function offline_close_shift(PDO $pdo, string $notesTable, string $closuresTable
     try {
         offline_raport_z_ensure_schema($pdo);
         $identity = offline_raport_z_current_identification($pdo, $location);
+        $series = $identity['serie_casa_marcat'];
         $nui = $identity['nui'];
         $memory = $identity['serie_memorie_fiscala'];
         $code = offline_sequence_next_closure($pdo, $closuresTable, $location);
         $stmt = $pdo->prepare("SELECT COUNT(*), COALESCE(SUM(valoare_vanzare_cu_tva), 0), COALESCE(SUM(tva_colectata), 0)
             FROM {$notesTable} WHERE COALESCE(cod_inchidere, 0) = 0 AND status = 'F' AND locatie = :location AND operator = :operator
+              AND (COALESCE(serie_casa_marcat, '') = :series OR COALESCE(serie_casa_marcat, '') = '')
               AND (COALESCE(nui, 0) = :nui OR COALESCE(nui, 0) = 0)
               AND (COALESCE(serie_memorie_fiscala, '') = :memory OR COALESCE(serie_memorie_fiscala, '') = '')");
-        $stmt->execute([':location' => $location, ':operator' => $operator, ':nui' => $nui, ':memory' => $memory]);
+        $stmt->execute([':location' => $location, ':operator' => $operator, ':series' => $series, ':nui' => $nui, ':memory' => $memory]);
         [$saleCount, $total, $vat] = $stmt->fetch(PDO::FETCH_NUM);
         if ((int)$saleCount === 0) {
             throw new RuntimeException('Nu exista bonuri finalizate pentru inchiderea turei curente.');
@@ -405,21 +407,22 @@ function offline_close_shift(PDO $pdo, string $notesTable, string $closuresTable
         $config = offline_sequence_config();
         $identifier = $config['installation_uuid'] . '_inchideri_r_12_' . $code;
         $stmt = $pdo->prepare("INSERT INTO {$closuresTable}
-            (cod_inchidere, operator, valoare_cu_tva, tva_colectata, data_inchiderii, ora_inchiderii, locatie, cod_locatie, nui, serie_memorie_fiscala, identificator_offline)
-            VALUES (:code, :operator, :total, :vat, :date, :time, :location, :location, :nui, :memory, :identifier)");
+            (cod_inchidere, operator, valoare_cu_tva, tva_colectata, data_inchiderii, ora_inchiderii, locatie, cod_locatie, serie_casa_marcat, nui, serie_memorie_fiscala, identificator_offline)
+            VALUES (:code, :operator, :total, :vat, :date, :time, :location, :location, :series, :nui, :memory, :identifier)");
         $stmt->execute([
             ':code' => $code, ':operator' => $operator, ':total' => $total, ':vat' => $vat,
-            ':date' => $date, ':time' => $time, ':location' => $location, ':nui' => $nui, ':memory' => $memory, ':identifier' => $identifier,
+            ':date' => $date, ':time' => $time, ':location' => $location, ':series' => $series, ':nui' => $nui, ':memory' => $memory, ':identifier' => $identifier,
         ]);
 
-        $stmt = $pdo->prepare("UPDATE {$notesTable} SET cod_inchidere = :code, cod_locatie = :location, nui = :nui, serie_memorie_fiscala = :memory
+        $stmt = $pdo->prepare("UPDATE {$notesTable} SET cod_inchidere = :code, cod_locatie = :location, serie_casa_marcat = :series, nui = :nui, serie_memorie_fiscala = :memory
             WHERE COALESCE(cod_inchidere, 0) = 0 AND status = 'F' AND locatie = :location AND operator = :operator
+              AND (COALESCE(serie_casa_marcat, '') = :filter_series OR COALESCE(serie_casa_marcat, '') = '')
               AND (COALESCE(nui, 0) = :filter_nui OR COALESCE(nui, 0) = 0)
               AND (COALESCE(serie_memorie_fiscala, '') = :filter_memory OR COALESCE(serie_memorie_fiscala, '') = '')");
-        $stmt->execute([':code' => $code, ':location' => $location, ':operator' => $operator, ':nui' => $nui, ':memory' => $memory, ':filter_nui' => $nui, ':filter_memory' => $memory]);
-        offline_sequence_record($pdo, 'cod_inchidere', $code, $location, '', 'shift_closed', 'inchideri_r_12', $identifier);
-        $stmt = $pdo->prepare("SELECT nrbon FROM {$notesTable} WHERE status = 'F' AND locatie = ? AND cod_inchidere = ? AND COALESCE(nui, 0) = ? AND COALESCE(serie_memorie_fiscala, '') = ? ORDER BY nrbon");
-        $stmt->execute([$location, $code, $nui, $memory]);
+        $stmt->execute([':code' => $code, ':location' => $location, ':operator' => $operator, ':series' => $series, ':nui' => $nui, ':memory' => $memory, ':filter_series' => $series, ':filter_nui' => $nui, ':filter_memory' => $memory]);
+        offline_sequence_record($pdo, 'cod_inchidere', $code, $location, offline_raport_z_sequence_key($series, $nui, $memory), 'shift_closed', 'inchideri_r_12', $identifier);
+        $stmt = $pdo->prepare("SELECT nrbon FROM {$notesTable} WHERE status = 'F' AND locatie = ? AND cod_inchidere = ? AND COALESCE(serie_casa_marcat, '') = ? AND COALESCE(nui, 0) = ? AND COALESCE(serie_memorie_fiscala, '') = ? ORDER BY nrbon");
+        $stmt->execute([$location, $code, $series, $nui, $memory]);
         foreach ($stmt->fetchAll(PDO::FETCH_COLUMN) as $nrBon) {
             offline_sync_enqueue_sale_safely($pdo, (int)$nrBon);
         }
@@ -474,6 +477,7 @@ function offline_close_z_report(PDO $pdo, int $location, int $reportNumber, arra
             FROM inchideri_r_12 i
             WHERE CAST(COALESCE(NULLIF(i.cod_locatie, 0), i.locatie, 0) AS INTEGER) = ?
               AND COALESCE(i.nr_raport_z, 0) = 0
+              AND (COALESCE(i.serie_casa_marcat, '') = ? OR COALESCE(i.serie_casa_marcat, '') = '')
               AND (COALESCE(i.nui, 0) = ? OR COALESCE(i.nui, 0) = 0)
               AND (COALESCE(i.serie_memorie_fiscala, '') = ? OR COALESCE(i.serie_memorie_fiscala, '') = '')
               AND i.cod_inchidere IN ({$placeholders})
@@ -481,11 +485,12 @@ function offline_close_z_report(PDO $pdo, int $location, int $reportNumber, arra
                   SELECT 1 FROM note n
                   WHERE n.cod_inchidere = i.cod_inchidere
                     AND n.locatie = ? AND n.status = 'F' AND COALESCE(n.nr_raport_z, 0) = 0
+                    AND (COALESCE(n.serie_casa_marcat, '') = ? OR COALESCE(n.serie_casa_marcat, '') = '')
                     AND (COALESCE(n.nui, 0) = ? OR COALESCE(n.nui, 0) = 0)
                     AND (COALESCE(n.serie_memorie_fiscala, '') = ? OR COALESCE(n.serie_memorie_fiscala, '') = '')
               )
             ORDER BY i.cod_inchidere");
-        $stmt->execute(array_merge([$location, $nui, $memory], $closureCodes, [$location, $nui, $memory]));
+        $stmt->execute(array_merge([$location, $series, $nui, $memory], $closureCodes, [$location, $series, $nui, $memory]));
         $validCodes = array_map('intval', $stmt->fetchAll(PDO::FETCH_COLUMN));
         sort($validCodes);
         $requestedCodes = $closureCodes;
@@ -508,23 +513,25 @@ function offline_close_z_report(PDO $pdo, int $location, int $reportNumber, arra
             ':other' => $payments['alte_metode'], ':date_time' => $dateTime, ':identifier' => $identifier,
         ]);
 
-        $stmt = $pdo->prepare("UPDATE note SET nr_raport_z = ?, cod_locatie = ?, nui = ?, serie_memorie_fiscala = ?
+        $stmt = $pdo->prepare("UPDATE note SET nr_raport_z = ?, cod_locatie = ?, serie_casa_marcat = ?, nui = ?, serie_memorie_fiscala = ?
             WHERE status = 'F' AND locatie = ? AND COALESCE(nr_raport_z, 0) = 0
+            AND (COALESCE(serie_casa_marcat, '') = ? OR COALESCE(serie_casa_marcat, '') = '')
             AND (COALESCE(nui, 0) = ? OR COALESCE(nui, 0) = 0)
             AND (COALESCE(serie_memorie_fiscala, '') = ? OR COALESCE(serie_memorie_fiscala, '') = '')
             AND cod_inchidere IN ({$placeholders})");
-        $stmt->execute(array_merge([$reportNumber, $location, $nui, $memory, $location, $nui, $memory], $closureCodes));
+        $stmt->execute(array_merge([$reportNumber, $location, $series, $nui, $memory, $location, $series, $nui, $memory], $closureCodes));
         if ($stmt->rowCount() === 0) {
             throw new RuntimeException('Turele selectate nu contin bonuri disponibile pentru raportul Z.');
         }
 
-        $stmt = $pdo->prepare("UPDATE inchideri_r_12 SET nr_raport_z = ?, cod_locatie = ?, nui = ?, serie_memorie_fiscala = ?
+        $stmt = $pdo->prepare("UPDATE inchideri_r_12 SET nr_raport_z = ?, cod_locatie = ?, serie_casa_marcat = ?, nui = ?, serie_memorie_fiscala = ?
             WHERE COALESCE(nr_raport_z, 0) = 0
             AND CAST(COALESCE(NULLIF(cod_locatie, 0), locatie, 0) AS INTEGER) = ?
+            AND (COALESCE(serie_casa_marcat, '') = ? OR COALESCE(serie_casa_marcat, '') = '')
             AND (COALESCE(nui, 0) = ? OR COALESCE(nui, 0) = 0)
             AND (COALESCE(serie_memorie_fiscala, '') = ? OR COALESCE(serie_memorie_fiscala, '') = '')
             AND cod_inchidere IN ({$placeholders})");
-        $stmt->execute(array_merge([$reportNumber, $location, $nui, $memory, $location, $nui, $memory], $closureCodes));
+        $stmt->execute(array_merge([$reportNumber, $location, $series, $nui, $memory, $location, $series, $nui, $memory], $closureCodes));
 
         $updates = [
             ['BF', 'nr_doc', true],
@@ -533,23 +540,24 @@ function offline_close_z_report(PDO $pdo, int $location, int $reportNumber, arra
         ];
         foreach ($updates as [$document, $linkColumn, $outOnly]) {
             $extra = $outOnly ? " AND miscari.tip_miscare = 'O'" : '';
-            $sql = "UPDATE miscari SET nr_raport_z = ?, cod_locatie = ?, nui = ?, serie_memorie_fiscala = ?
+            $sql = "UPDATE miscari SET nr_raport_z = ?, cod_locatie = ?, serie_casa_marcat = ?, nui = ?, serie_memorie_fiscala = ?
                 WHERE fel_doc = ?{$extra}
                   AND EXISTS (SELECT 1 FROM note n WHERE n.nrbon = miscari.{$linkColumn}
                     AND n.locatie = ? AND n.nr_raport_z = ?
+                    AND (COALESCE(n.serie_casa_marcat, '') = ? OR COALESCE(n.serie_casa_marcat, '') = '')
                     AND (COALESCE(n.nui, 0) = ? OR COALESCE(n.nui, 0) = 0)
                     AND (COALESCE(n.serie_memorie_fiscala, '') = ? OR COALESCE(n.serie_memorie_fiscala, '') = '')
                     AND n.cod_inchidere IN ({$placeholders}))";
             $stmt = $pdo->prepare($sql);
-            $stmt->execute(array_merge([$reportNumber, $location, $nui, $memory, $document, $location, $reportNumber, $nui, $memory], $closureCodes));
+            $stmt->execute(array_merge([$reportNumber, $location, $series, $nui, $memory, $document, $location, $reportNumber, $series, $nui, $memory], $closureCodes));
         }
 
         offline_sequence_record($pdo, 'nr_raport_z', $reportNumber, $location, $sequenceSeries, 'z_closed', 'rapoarte_z', $identifier);
         $stmt = $pdo->prepare("SELECT nrbon FROM note
             WHERE status = 'F' AND locatie = ? AND nr_raport_z = ?
-              AND COALESCE(nui, 0) = ? AND COALESCE(serie_memorie_fiscala, '') = ?
+              AND COALESCE(serie_casa_marcat, '') = ? AND COALESCE(nui, 0) = ? AND COALESCE(serie_memorie_fiscala, '') = ?
             ORDER BY nrbon");
-        $stmt->execute([$location, $reportNumber, $nui, $memory]);
+        $stmt->execute([$location, $reportNumber, $series, $nui, $memory]);
         foreach ($stmt->fetchAll(PDO::FETCH_COLUMN) as $nrBon) {
             offline_sync_enqueue_sale_safely($pdo, (int)$nrBon);
         }

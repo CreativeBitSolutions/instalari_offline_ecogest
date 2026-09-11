@@ -214,12 +214,18 @@ function restaurant_sync_queue_shift_data(PDO $pdo, int $idInchidere, int $codLo
     }
 
     $closure['nr_raport_z'] = 0;
+    $closureSeries = trim((string)($closure['serie_casa_marcat'] ?? ''));
     $closureNui = max(0, (int)($closure['nui'] ?? 0));
     $closureMemory = trim((string)($closure['serie_memorie_fiscala'] ?? ''));
     if ($closureMemory === '0') {
         $closureMemory = '';
     }
-    $notes = restaurant_sync_queue_rows($pdo, "SELECT * FROM note WHERE locatie = ? AND status = 'F' AND cod_inchidere = ? AND COALESCE(nui, 0) = ? AND COALESCE(serie_memorie_fiscala, '') = ? ORDER BY nrbon", [$codLocatie, (int)$closure['cod_inchidere'], $closureNui, $closureMemory]);
+    $candidateSeriesRows = restaurant_sync_queue_rows($pdo, "SELECT DISTINCT COALESCE(serie_casa_marcat, '') AS serie_casa_marcat FROM note WHERE locatie = ? AND status = 'F' AND cod_inchidere = ? AND COALESCE(nui, 0) = ? AND COALESCE(serie_memorie_fiscala, '') = ?", [$codLocatie, (int)$closure['cod_inchidere'], $closureNui, $closureMemory]);
+    $candidateSeries = array_values(array_unique(array_map(static fn(array $row): string => trim((string)($row['serie_casa_marcat'] ?? '')), $candidateSeriesRows)));
+    $seriesPredicate = count($candidateSeries) > 1
+        ? "COALESCE(serie_casa_marcat, '') = ?"
+        : "(COALESCE(serie_casa_marcat, '') = ? OR COALESCE(serie_casa_marcat, '') = '')";
+    $notes = restaurant_sync_queue_rows($pdo, "SELECT * FROM note WHERE locatie = ? AND status = 'F' AND cod_inchidere = ? AND {$seriesPredicate} AND COALESCE(nui, 0) = ? AND COALESCE(serie_memorie_fiscala, '') = ? ORDER BY nrbon", [$codLocatie, (int)$closure['cod_inchidere'], $closureSeries, $closureNui, $closureMemory]);
     foreach ($notes as &$note) {
         $note['nr_raport_z'] = 0;
     }
@@ -244,13 +250,23 @@ function restaurant_sync_queue_z_data(PDO $pdo, int $idRaport, int $codLocatie):
     }
 
     $nrRaport = (int)($report['nr_raport_z'] ?? 0);
+    $reportSeries = trim((string)($report['serie_casa_marcat'] ?? ''));
     $reportNui = max(0, (int)($report['nui'] ?? 0));
     $reportMemory = trim((string)($report['serie_memorie_fiscala'] ?? ''));
     if ($reportMemory === '0') {
         $reportMemory = '';
     }
-    $closures = restaurant_sync_queue_rows($pdo, "SELECT * FROM inchideri_r_12 WHERE locatie = ? AND nr_raport_z = ? AND COALESCE(nui, 0) = ? AND COALESCE(serie_memorie_fiscala, '') = ? ORDER BY id_inch", [$codLocatie, $nrRaport, $reportNui, $reportMemory]);
-    $notes = restaurant_sync_queue_rows($pdo, "SELECT * FROM note WHERE locatie = ? AND status = 'F' AND nr_raport_z = ? AND COALESCE(nui, 0) = ? AND COALESCE(serie_memorie_fiscala, '') = ? ORDER BY nrbon", [$codLocatie, $nrRaport, $reportNui, $reportMemory]);
+    $candidateSeriesRows = restaurant_sync_queue_rows($pdo, "SELECT DISTINCT serie_casa_marcat FROM (
+        SELECT COALESCE(serie_casa_marcat, '') AS serie_casa_marcat FROM rapoarte_z WHERE cod_locatie = ? AND nr_raport_z = ? AND COALESCE(nui, 0) = ? AND COALESCE(serie_memorie_fiscala, '') = ?
+        UNION SELECT COALESCE(serie_casa_marcat, '') FROM note WHERE locatie = ? AND status = 'F' AND nr_raport_z = ? AND COALESCE(nui, 0) = ? AND COALESCE(serie_memorie_fiscala, '') = ?
+        UNION SELECT COALESCE(serie_casa_marcat, '') FROM inchideri_r_12 WHERE locatie = ? AND nr_raport_z = ? AND COALESCE(nui, 0) = ? AND COALESCE(serie_memorie_fiscala, '') = ?
+    ) identities", [$codLocatie, $nrRaport, $reportNui, $reportMemory, $codLocatie, $nrRaport, $reportNui, $reportMemory, $codLocatie, $nrRaport, $reportNui, $reportMemory]);
+    $candidateSeries = array_values(array_unique(array_map(static fn(array $row): string => trim((string)($row['serie_casa_marcat'] ?? '')), $candidateSeriesRows)));
+    $seriesPredicate = count($candidateSeries) > 1
+        ? "COALESCE(serie_casa_marcat, '') = ?"
+        : "(COALESCE(serie_casa_marcat, '') = ? OR COALESCE(serie_casa_marcat, '') = '')";
+    $closures = restaurant_sync_queue_rows($pdo, "SELECT * FROM inchideri_r_12 WHERE locatie = ? AND nr_raport_z = ? AND {$seriesPredicate} AND COALESCE(nui, 0) = ? AND COALESCE(serie_memorie_fiscala, '') = ? ORDER BY id_inch", [$codLocatie, $nrRaport, $reportSeries, $reportNui, $reportMemory]);
+    $notes = restaurant_sync_queue_rows($pdo, "SELECT * FROM note WHERE locatie = ? AND status = 'F' AND nr_raport_z = ? AND {$seriesPredicate} AND COALESCE(nui, 0) = ? AND COALESCE(serie_memorie_fiscala, '') = ? ORDER BY nrbon", [$codLocatie, $nrRaport, $reportSeries, $reportNui, $reportMemory]);
 
     return [
         'note' => $notes,

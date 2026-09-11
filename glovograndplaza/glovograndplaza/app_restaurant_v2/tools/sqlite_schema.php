@@ -260,6 +260,7 @@ function restaurant_sqlite_schema_statements(): array
             fiscalizat INTEGER DEFAULT 0,
             cod_inchidere INTEGER DEFAULT 0,
             nr_raport_z INTEGER DEFAULT 0,
+            serie_casa_marcat TEXT DEFAULT '',
             nui INTEGER DEFAULT 0,
             serie_memorie_fiscala TEXT DEFAULT '',
             camera_nota TEXT DEFAULT ''
@@ -1544,6 +1545,7 @@ function restaurant_sqlite_ensure_columns(PDO $pdo): void
         ],
         'note' => [
             'identificator_offline' => 'TEXT DEFAULT NULL',
+            'serie_casa_marcat' => "TEXT DEFAULT ''",
             'nui' => 'INTEGER DEFAULT 0',
             'serie_memorie_fiscala' => "TEXT DEFAULT ''",
         ],

@@ -9,6 +9,7 @@
 
       <?php
         $raportZIdentity = restaurant_sqlite_raport_z_current_identification($pdo, (int)$cod_locatie);
+        $seriesRaportZ = (string)$raportZIdentity['serie_casa_marcat'];
         $nuiRaportZ = (int)$raportZIdentity['nui'];
         $memoryRaportZ = (string)$raportZIdentity['serie_memorie_fiscala'];
         $sql = "SELECT COALESCE(SUM(numerar),0) AS total_numerar,
@@ -16,10 +17,11 @@
                        COALESCE(SUM(tichete),0) AS total_tichete
                 FROM $tabel_final_note
                 WHERE status='F' AND locatie=:loc AND nr_raport_z=0 AND cod_inchidere!=0
+                  AND (COALESCE(serie_casa_marcat, '')=:series OR COALESCE(serie_casa_marcat, '')='')
                   AND (COALESCE(nui, 0)=:nui OR COALESCE(nui, 0)=0)
                   AND (COALESCE(serie_memorie_fiscala, '')=:memory OR COALESCE(serie_memorie_fiscala, '')='')";
         $st = $pdo->prepare($sql);
-        $st->execute([':loc'=>$cod_locatie, ':nui'=>$nuiRaportZ, ':memory'=>$memoryRaportZ]);
+        $st->execute([':loc'=>$cod_locatie, ':series'=>$seriesRaportZ, ':nui'=>$nuiRaportZ, ':memory'=>$memoryRaportZ]);
         $sum_data = $st->fetch(PDO::FETCH_ASSOC) ?: ['total_numerar'=>0,'total_card'=>0,'total_tichete'=>0];
         $total_numerar_z = number_format((float)$sum_data['total_numerar'], 2, '.', '');
         $total_card_z    = number_format((float)$sum_data['total_card'], 2, '.', '');

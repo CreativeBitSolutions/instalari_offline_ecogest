@@ -27,6 +27,7 @@ $admin_lastname = $admin_user['admin_lastname'] ?? 'N/A';
 
 // Creare/Preluare bon de vanzare
 $offlineSaleIdentity = offline_raport_z_current_identification($pdo, (int)$cod_locatie);
+$offlineSaleSeries = (string)$offlineSaleIdentity['serie_casa_marcat'];
 $offlineSaleNui = (int)$offlineSaleIdentity['nui'];
 $offlineSaleMemory = (string)$offlineSaleIdentity['serie_memorie_fiscala'];
 $ccom_sql = "SELECT nrbon FROM $tabel_final_note WHERE status='S' AND operator=:adm_id AND locatie=:locatie";
@@ -37,15 +38,16 @@ $existing_bon = $ccom_stmt->fetch(PDO::FETCH_ASSOC);
 if (!$existing_bon) {
     $sql = "INSERT INTO $tabel_final_note
         (operator, locatie, cod_masa, status, cod_inchidere, nr_raport_z, cod_locatie,
-         nui, serie_memorie_fiscala, valoare_vanzare_cu_tva, tva_colectata, discount, numerar, card, tichete, rest, protocol, glovo)
+         serie_casa_marcat, nui, serie_memorie_fiscala, valoare_vanzare_cu_tva, tva_colectata, discount, numerar, card, tichete, rest, protocol, glovo)
         VALUES
-        (:adm_id, :locatie, :cod_masa, 'S', 0, 0, :locatie, :nui, :serie_memorie_fiscala,
+        (:adm_id, :locatie, :cod_masa, 'S', 0, 0, :locatie, :serie_casa_marcat, :nui, :serie_memorie_fiscala,
          0, 0, 0, 0, 0, 0, 0, 0, 0)";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
         'adm_id' => $adm_id,
         'locatie' => $cod_locatie,
         'cod_masa' => $cod_masa,
+        'serie_casa_marcat' => $offlineSaleSeries,
         'nui' => $offlineSaleNui,
         'serie_memorie_fiscala' => $offlineSaleMemory,
     ]);

@@ -27,7 +27,7 @@ function casa_pull_save(PDO $db,string $table,string $pk,array $row,?int $id=nul
 }
 function casa_pull_catalog(PDO $db,string $action,array $reply): int {
     $keys=['date_firma'=>'id','serii_documente'=>'id_serie','utilizatori'=>'id_utilizator','produse_servicii'=>'cod_produs','categorii'=>'id_categorie','categorii_locatii'=>'id','gestiuni'=>'id_gestiune','cote_tva'=>'id','coduri_casa_tva'=>'id','observatii_predefinite'=>'id','atribuiri_observatii_produse'=>'id'];
-    $required=['company'=>['date_firma','serii_documente'],'users'=>['utilizatori','cote_tva','coduri_casa_tva'],'products'=>['produse_servicii','cote_tva','coduri_casa_tva']];
+    $required=['company'=>['date_firma','serii_documente'],'users'=>['utilizatori','cote_tva','coduri_casa_tva','date_firma'],'products'=>['produse_servicii','cote_tva','coduri_casa_tva']];
     foreach($required[$action] as $table) if(!isset($reply['tables'][$table])||!is_array($reply['tables'][$table]))throw new RuntimeException('Export online incomplet.');
     if(in_array($action,['users','products'],true))foreach(['cote_tva','coduri_casa_tva'] as $table)if(!$reply['tables'][$table])throw new RuntimeException('Exportul online nu conține nomenclatorul '.$table.'. Preluarea a fost oprită.');
     if($action==='users'&&!$reply['tables']['utilizatori'])throw new RuntimeException('Lista online de utilizatori este goală. Conturile locale au fost păstrate.');

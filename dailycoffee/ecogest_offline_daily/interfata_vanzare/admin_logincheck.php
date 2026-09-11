@@ -2,6 +2,28 @@
 session_start();
 unset($_SESSION['error']);
 
+function offline_synced_operator_allowed(PDO $pdo, int $adminId): bool
+{
+    if (strtolower((string)$pdo->getAttribute(PDO::ATTR_DRIVER_NAME)) !== 'sqlite') {
+        return true;
+    }
+    $runtimeExists = (bool)$pdo->query("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'offline_reference_sync_runtime'")->fetchColumn();
+    if (!$runtimeExists) {
+        return true;
+    }
+    $mirrored = (int)$pdo->query('SELECT vat_mirrored FROM offline_reference_sync_runtime WHERE id = 1')->fetchColumn();
+    if ($mirrored !== 1) {
+        return true;
+    }
+    $operatorsExists = (bool)$pdo->query("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'offline_online_operators'")->fetchColumn();
+    if (!$operatorsExists) {
+        return false;
+    }
+    $stmt = $pdo->prepare('SELECT 1 FROM offline_online_operators WHERE admin_id = ? LIMIT 1');
+    $stmt->execute([$adminId]);
+    return (bool)$stmt->fetchColumn();
+}
+
 function redirectByRank($rank, $tabletaMode)
 {
     if ($rank == "administrator") {
@@ -59,6 +81,11 @@ function logIn()
     }
 
     if ($row) {
+        if (!offline_synced_operator_allowed($pdo, (int)$row['admin_id'])) {
+            $_SESSION['error'] = 'Utilizatorul nu mai are acces la această instalare offline.';
+            header('Location: agecs_login.php');
+            return;
+        }
         $_SESSION['error'] = '';
         $_SESSION['adminloggedin'] = $row['admin_id'];
 

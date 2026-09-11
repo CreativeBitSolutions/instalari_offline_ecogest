@@ -427,6 +427,7 @@ if ($client_agecs == 20 || $client_agecs == 8) {
     try {
         $pdo->beginTransaction();
         $offlineFinalSaleIdentity = offline_raport_z_current_identification($pdo, (int)$cod_locatie);
+        $offlineFinalSaleSeries = (string)$offlineFinalSaleIdentity['serie_casa_marcat'];
         $offlineFinalSaleNui = (int)$offlineFinalSaleIdentity['nui'];
         $offlineFinalSaleMemory = (string)$offlineFinalSaleIdentity['serie_memorie_fiscala'];
 
@@ -437,6 +438,7 @@ if ($client_agecs == 20 || $client_agecs == 8) {
                                 status = 'F', data_bon = :data, ora_bon = :ora, valoare_vanzare_cu_tva = :val,
                                 discount = :disc, tva_colectata = :tva, numerar = :num, card = :card,
                                 protocol = :prot, glovo = :glovo, cif_client = :cif,
+                                serie_casa_marcat = CASE WHEN COALESCE(serie_casa_marcat, '') = '' THEN :serie_casa_marcat ELSE serie_casa_marcat END,
                                 nui = CASE WHEN COALESCE(nui, 0) = 0 THEN :nui ELSE nui END,
                                 serie_memorie_fiscala = CASE WHEN COALESCE(serie_memorie_fiscala, '') = '' THEN :serie_memorie_fiscala ELSE serie_memorie_fiscala END
                             WHERE nrbon = :nr_bon";
@@ -445,7 +447,7 @@ if ($client_agecs == 20 || $client_agecs == 8) {
             'data' => $data_bon, 'ora' => $ora_bon, 'val' => $total_de_plata, 'disc' => $totals['total_disc'] ?? 0,
             'tva' => $totals['total_tva'] ?? 0, 'num' => $plata_numerar, 'card' => $plata_card,
             'prot' => $plata_protocol, 'glovo' => $plata_glovo, 'cif' => $cif_client,
-            'nui' => $offlineFinalSaleNui, 'serie_memorie_fiscala' => $offlineFinalSaleMemory, 'nr_bon' => $nr_bon
+            'serie_casa_marcat' => $offlineFinalSaleSeries, 'nui' => $offlineFinalSaleNui, 'serie_memorie_fiscala' => $offlineFinalSaleMemory, 'nr_bon' => $nr_bon
         ]);
         // --- END MODIFICARE ---
 

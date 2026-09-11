@@ -80,17 +80,20 @@ try {
 // care au nr_raport_z = 0 și sunt din locația curentă
 try {
     $updateNoteSql = "UPDATE note 
-                      SET nr_raport_z = :nr_raport_z, nui = :nui, serie_memorie_fiscala = :serie_memorie_fiscala
+                      SET nr_raport_z = :nr_raport_z, serie_casa_marcat = :serie_casa_marcat, nui = :nui, serie_memorie_fiscala = :serie_memorie_fiscala
                       WHERE status = 'F' 
                         AND locatie = :locatie 
                         AND nr_raport_z = 0
                         AND cod_inchidere != 0
+                        AND (COALESCE(serie_casa_marcat, '') = :filter_series OR COALESCE(serie_casa_marcat, '') = '')
                         AND (COALESCE(nui, 0) = :filter_nui OR COALESCE(nui, 0) = 0)
                         AND (COALESCE(serie_memorie_fiscala, '') = :filter_memory OR COALESCE(serie_memorie_fiscala, '') = '')";
     $stmt = $pdo->prepare($updateNoteSql);
     $stmt->execute([
         'nr_raport_z' => $user_nr_raport_z,
+        'serie_casa_marcat' => $serie_casa_marcat,
         'nui'         => $nui,
+        'filter_series' => $serie_casa_marcat,
         'serie_memorie_fiscala' => $serie_memorie_fiscala,
         'filter_nui' => $nui,
         'filter_memory' => $serie_memorie_fiscala,
@@ -107,12 +110,14 @@ try {
                      WHERE status = 'F' 
                        AND locatie = :locatie 
                        AND nr_raport_z = :nr_raport_z
+                       AND COALESCE(serie_casa_marcat, '') = :serie_casa_marcat
                        AND COALESCE(nui, 0) = :nui
                        AND COALESCE(serie_memorie_fiscala, '') = :serie_memorie_fiscala";
     $stmt = $pdo->prepare($selectCodSql);
     $stmt->execute([
         'locatie'     => $cod_locatie,
         'nr_raport_z' => $user_nr_raport_z,
+        'serie_casa_marcat' => $serie_casa_marcat,
         'nui'         => $nui,
         'serie_memorie_fiscala' => $serie_memorie_fiscala
     ]);
@@ -128,13 +133,14 @@ if (!empty($cod_inchideri)) {
         // Construiește clauza IN dinamică
         $inClause = implode(',', array_fill(0, count($cod_inchideri), '?'));
         $updateInchideriSql = "UPDATE inchideri_r_12 
-                               SET nr_raport_z = ?, nui = ?, serie_memorie_fiscala = ?
+                               SET nr_raport_z = ?, serie_casa_marcat = ?, nui = ?, serie_memorie_fiscala = ?
                                WHERE cod_inchidere IN ($inClause)
                                  AND locatie = ?
+                                 AND (COALESCE(serie_casa_marcat, '') = ? OR COALESCE(serie_casa_marcat, '') = '')
                                  AND (COALESCE(nui, 0) = ? OR COALESCE(nui, 0) = 0)
                                  AND (COALESCE(serie_memorie_fiscala, '') = ? OR COALESCE(serie_memorie_fiscala, '') = '')";
         // Parametrii: primul element este nr_raport_z, apoi lista de coduri, apoi cod_locatie
-        $params = array_merge([$user_nr_raport_z, $nui, $serie_memorie_fiscala], $cod_inchideri, [$cod_locatie, $nui, $serie_memorie_fiscala]);
+        $params = array_merge([$user_nr_raport_z, $serie_casa_marcat, $nui, $serie_memorie_fiscala], $cod_inchideri, [$cod_locatie, $serie_casa_marcat, $nui, $serie_memorie_fiscala]);
         $stmt = $pdo->prepare($updateInchideriSql);
         $stmt->execute($params);
     } catch (PDOException $e) {
@@ -156,6 +162,8 @@ try {
             FROM note n
             WHERE n.nrbon = miscari.nr_doc
             LIMIT 1
+        ), serie_casa_marcat = (
+            SELECT COALESCE(n.serie_casa_marcat, '') FROM note n WHERE n.nrbon = miscari.nr_doc LIMIT 1
         ), nui = (
             SELECT COALESCE(n.nui, 0) FROM note n WHERE n.nrbon = miscari.nr_doc LIMIT 1
         ), serie_memorie_fiscala = (
@@ -167,11 +175,15 @@ try {
               SELECT 1
               FROM note n
               WHERE n.nrbon = miscari.nr_doc
+                AND n.nr_raport_z = :bf_nr_z
+                AND COALESCE(n.serie_casa_marcat, '') = :bf_series
+                AND COALESCE(n.nui, 0) = :bf_nui
+                AND COALESCE(n.serie_memorie_fiscala, '') = :bf_memory
                 AND miscari.nr_raport_z <> n.nr_raport_z
           )
     ";
     $stBF = $pdo->prepare($sqlBF);
-    $stBF->execute();
+    $stBF->execute([':bf_nr_z' => $user_nr_raport_z, ':bf_series' => $serie_casa_marcat, ':bf_nui' => $nui, ':bf_memory' => $serie_memorie_fiscala]);
 
     // 2) BC (consum): n.nrbon = m.nr_nota
     $sqlBC = "
@@ -181,6 +193,8 @@ try {
             FROM note n
             WHERE n.nrbon = miscari.nr_nota
             LIMIT 1
+        ), serie_casa_marcat = (
+            SELECT COALESCE(n.serie_casa_marcat, '') FROM note n WHERE n.nrbon = miscari.nr_nota LIMIT 1
         ), nui = (
             SELECT COALESCE(n.nui, 0) FROM note n WHERE n.nrbon = miscari.nr_nota LIMIT 1
         ), serie_memorie_fiscala = (
@@ -191,11 +205,15 @@ try {
               SELECT 1
               FROM note n
               WHERE n.nrbon = miscari.nr_nota
+                AND n.nr_raport_z = :bc_nr_z
+                AND COALESCE(n.serie_casa_marcat, '') = :bc_series
+                AND COALESCE(n.nui, 0) = :bc_nui
+                AND COALESCE(n.serie_memorie_fiscala, '') = :bc_memory
                 AND miscari.nr_raport_z <> n.nr_raport_z
           )
     ";
     $stBC = $pdo->prepare($sqlBC);
-    $stBC->execute();
+    $stBC->execute([':bc_nr_z' => $user_nr_raport_z, ':bc_series' => $serie_casa_marcat, ':bc_nui' => $nui, ':bc_memory' => $serie_memorie_fiscala]);
 
     // 3) BT (bon transformare / producție): n.nrbon = m.nr_nota
     $sqlBT = "
@@ -205,6 +223,8 @@ try {
             FROM note n
             WHERE n.nrbon = miscari.nr_nota
             LIMIT 1
+        ), serie_casa_marcat = (
+            SELECT COALESCE(n.serie_casa_marcat, '') FROM note n WHERE n.nrbon = miscari.nr_nota LIMIT 1
         ), nui = (
             SELECT COALESCE(n.nui, 0) FROM note n WHERE n.nrbon = miscari.nr_nota LIMIT 1
         ), serie_memorie_fiscala = (
@@ -215,11 +235,15 @@ try {
               SELECT 1
               FROM note n
               WHERE n.nrbon = miscari.nr_nota
+                AND n.nr_raport_z = :bt_nr_z
+                AND COALESCE(n.serie_casa_marcat, '') = :bt_series
+                AND COALESCE(n.nui, 0) = :bt_nui
+                AND COALESCE(n.serie_memorie_fiscala, '') = :bt_memory
                 AND miscari.nr_raport_z <> n.nr_raport_z
           )
     ";
     $stBT = $pdo->prepare($sqlBT);
-    $stBT->execute();
+    $stBT->execute([':bt_nr_z' => $user_nr_raport_z, ':bt_series' => $serie_casa_marcat, ':bt_nui' => $nui, ':bt_memory' => $serie_memorie_fiscala]);
 
     $pdo->commit();
 
