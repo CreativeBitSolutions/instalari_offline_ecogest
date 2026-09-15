@@ -3,7 +3,7 @@ include('session.php');
 
 // Regula este izolată strict pentru 1008 și 1021. Ceilalți clienți continuă
 // imediat mai jos cu implementarea anterioară, fără modificări de raportare.
-if (in_array((int)($_SESSION['client_id'] ?? 0), [1008, 1021], true)) {
+    if (in_array((int)($_SESSION['client_id'] ?? 0), [25, 26, 1008, 1021], true)) {
     require __DIR__ . '/vanzare_listare_inchidere_zi_protocol_separat.php';
     exit;
 }

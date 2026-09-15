@@ -291,7 +291,7 @@ try {
         
         $wait = 0; while (file_exists($json_file_path) && $wait < 2) { sleep(1); $wait++; }
         if (!file_exists($json_file_path)) {
-            $json_array = ["status" => "success", "data" => [['id' => 0, 'data' => $current_date, 'ora' => $current_time, 'de_trimis_la_imprimanta' => 1, 'nrbon' => 0, 'locatie' => (int)$actorLocation, 'departament_listare' => "BAR", 'continut' => $continut]]];
+            $json_array = ["status" => "success", "data" => [['id' => 0, 'data' => $current_date, 'ora' => $current_time, 'de_trimis_la_imprimanta' => 1, 'nrbon' => -((int)$codInchidereNou * 10 + 1), 'locatie' => (int)$actorLocation, 'departament_listare' => "BAR", 'continut' => $continut]]];
             file_put_contents($json_file_path, json_encode($json_array, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
         }
     }

@@ -288,7 +288,7 @@ try {
 
         try {
             agecs_offline_printer_enqueue(
-                [['id' => 0, 'data' => $current_date, 'ora' => $current_time, 'de_trimis_la_imprimanta' => 1, 'nrbon' => 0, 'locatie' => (int)$actorLocation, 'departament_listare' => "BAR", 'continut' => $continut]],
+                [['id' => 0, 'data' => $current_date, 'ora' => $current_time, 'de_trimis_la_imprimanta' => 1, 'nrbon' => -((int)$codInchidereNou * 10 + 1), 'locatie' => (int)$actorLocation, 'departament_listare' => "BAR", 'continut' => $continut]],
                 'Închiderea turei operatorului a fost adăugată în coada imprimantei.'
             );
         } catch (Throwable $printerError) {

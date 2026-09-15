@@ -157,13 +157,14 @@ if ($has_S > 0) {
                 'data_ora_raport_z' => $data_ora_curenta
             ]);
             $idRaportZ = (int)$pdo->lastInsertId();
-        } catch (PDOException $e) {
+        } catch (Throwable $e) {
             error_log("[".date("Y-m-d H:i:s")."] Eroare insert raport Z: "
                       . $e->getMessage()
                       . " în " . __FILE__ . ":" . __LINE__ . "\n",
                       3, $logFile);
         }
 
+        if ($idRaportZ > 0) {
         // f) UPDATE note DOAR nr_raport_z (FĂRĂ data_ora)
         try {
             $upd = "UPDATE note
@@ -338,7 +339,7 @@ if ($has_S > 0) {
 
     $clienti_redirect = [3, 8, 9, 23, 25, 26, 1008, 1014, 1021];
 
-if (isset($_SESSION['client_id']) && in_array((int)$_SESSION['client_id'], $clienti_redirect, true)) {
+        if (isset($_SESSION['client_id']) && in_array((int)$_SESSION['client_id'], $clienti_redirect, true)) {
     $cur_z = (int)$nr_raport_z;
 
     $listareQuery = http_build_query([
@@ -351,6 +352,8 @@ if (isset($_SESSION['client_id']) && in_array((int)$_SESSION['client_id'], $clie
     exit;
 }
 
+        }
+
     }
 }
 
@@ -361,7 +364,6 @@ $currentClientId = (int)($_SESSION['client_id'] ?? 0);
 $showClosurePrinterStatus = false;
 if (
     $idRaportZ <= 0
-    && in_array($currentClientId, [1008, 1021], true)
     && is_array($pendingClosurePrint)
     && (int)($pendingClosurePrint['client_id'] ?? 0) === $currentClientId
     && (int)($pendingClosurePrint['location_id'] ?? 0) === $cod_locatie

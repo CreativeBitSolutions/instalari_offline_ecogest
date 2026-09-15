@@ -127,7 +127,7 @@ if ($total_bacsis > 0) {
         'data'                   => $current_date,
         'ora'                    => $current_time,
         'de_trimis_la_imprimanta'=> 1,
-        'nrbon'                  => 0,
+        'nrbon'                  => -((int)$ultim_inch * 10 + 1),
         'locatie'                => (int)$cod_locatie,
         'departament_listare'    => "BAR",
         'continut'               => $continut

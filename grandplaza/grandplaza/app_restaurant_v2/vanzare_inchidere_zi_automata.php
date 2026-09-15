@@ -15,6 +15,7 @@ $raportZIdentity = restaurant_sqlite_raport_z_current_identification($pdo, $cod_
 $serie_casa_marcat = $raportZIdentity['serie_casa_marcat'];
 $nui = $raportZIdentity['nui'];
 $serie_memorie_fiscala = $raportZIdentity['serie_memorie_fiscala'];
+$raportZInserat = false;
 
 // Verific dacă există bonuri cu status 'S' și nr_raport_z = 0
 $sql_s = "SELECT COUNT(*) FROM note
@@ -154,13 +155,15 @@ if ($has_S > 0) {
                 'alte_metode'       => $alte_metode,
                 'data_ora_raport_z' => $data_ora_curenta
             ]);
-        } catch (PDOException $e) {
+            $raportZInserat = true;
+        } catch (Throwable $e) {
             error_log("[".date("Y-m-d H:i:s")."] Eroare insert raport Z: "
                       . $e->getMessage()
                       . " în " . __FILE__ . ":" . __LINE__ . "\n",
                       3, $logFile);
         }
 
+        if ($raportZInserat) {
         // f) UPDATE note DOAR nr_raport_z (FĂRĂ data_ora)
         try {
             $upd = "UPDATE note
@@ -337,6 +340,8 @@ if (isset($_SESSION['client_id']) && in_array((int)$_SESSION['client_id'], $clie
     header("Location: vanzare_listare_inchidere_zi.php?{$listareQuery}");
     exit;
 }
+
+        }
 
     }
 }

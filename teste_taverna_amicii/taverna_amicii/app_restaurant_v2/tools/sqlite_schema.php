@@ -758,11 +758,15 @@ function restaurant_sqlite_raport_z_next_number(PDO $pdo, int $codLocatie, int $
 
     $stmt = $pdo->prepare("SELECT COALESCE(MAX(nr_raport_z), 0) + 1
         FROM rapoarte_z
-        WHERE cod_locatie = ?
+        WHERE CAST(COALESCE(cod_locatie, 0) AS INTEGER) = CAST(? AS INTEGER)
           AND COALESCE(serie_casa_marcat, '') = ?
-          AND COALESCE(nui, 0) = ?
+          AND CAST(COALESCE(nui, 0) AS INTEGER) = CAST(? AS INTEGER)
           AND COALESCE(serie_memorie_fiscala, '') = ?");
-    $stmt->execute([$codLocatie, $identity['serie_casa_marcat'], $nui, $memory]);
+    $stmt->bindValue(1, (int)$codLocatie, PDO::PARAM_INT);
+    $stmt->bindValue(2, (string)$identity['serie_casa_marcat'], PDO::PARAM_STR);
+    $stmt->bindValue(3, (int)$nui, PDO::PARAM_INT);
+    $stmt->bindValue(4, (string)$memory, PDO::PARAM_STR);
+    $stmt->execute();
     return max(1, (int)$stmt->fetchColumn());
 }
 

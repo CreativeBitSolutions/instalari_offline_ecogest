@@ -72,7 +72,7 @@ if (!function_exists('agecs_z_regular_report')) {
     function agecs_z_regular_report(PDO $pdo, int $clientId, int $locationId, int $reportNumber): string
     {
         // Pentru 1008 și 1021, notele PROTOCOL apar exclusiv pe al doilea document.
-        $separateProtocol = in_array($clientId, [1008, 1021], true);
+        $separateProtocol = in_array($clientId, [25, 26, 1008, 1021], true);
         $protocolFilter = $separateProtocol ? ' AND COALESCE(n.protocol, 0) <= 0 ' : '';
         $params = ['loc' => $locationId, 'rz' => $reportNumber];
         $interval = agecs_z_interval($pdo, $locationId, $reportNumber);
@@ -305,13 +305,13 @@ if (!function_exists('agecs_z_print_documents')) {
             'data' => date('Y-m-d'),
             'ora' => date('H:i:s'),
             'de_trimis_la_imprimanta' => 1,
-            'nrbon' => 0,
+            'nrbon' => -($reportNumber * 10 + 2),
             'locatie' => $locationId,
             'departament_listare' => 'BAR',
             'continut' => agecs_z_regular_report($pdo, $clientId, $locationId, $reportNumber),
         ]];
 
-        if (in_array($clientId, [1008, 1021], true)) {
+        if (in_array($clientId, [25, 26, 1008, 1021], true)) {
             $protocolContent = agecs_z_protocol_report($pdo, $locationId, $reportNumber);
             if ($protocolContent !== null) {
                 $documents[] = [
@@ -319,7 +319,7 @@ if (!function_exists('agecs_z_print_documents')) {
                     'data' => date('Y-m-d'),
                     'ora' => date('H:i:s'),
                     'de_trimis_la_imprimanta' => 1,
-                    'nrbon' => 0,
+                    'nrbon' => -($reportNumber * 10 + 3),
                     'locatie' => $locationId,
                     'departament_listare' => 'BAR',
                     'continut' => $protocolContent,
