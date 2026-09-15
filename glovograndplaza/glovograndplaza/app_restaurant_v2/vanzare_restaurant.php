@@ -607,10 +607,17 @@ document.addEventListener('DOMContentLoaded', function () {
   qtyInput.addEventListener('click', clearIfDefault);
   qtyInput.addEventListener('focus', clearIfDefault);
 
-  qtyInput.addEventListener('blur', function () {
-    if (qtyInput.value.trim() === '') {
+  function normalizeQuantity() {
+    var value = parseFloat(String(qtyInput.value).replace(',', '.'));
+    if (!isFinite(value) || value <= 0) {
       qtyInput.value = '1';
     }
+  }
+
+  qtyInput.addEventListener('change', normalizeQuantity);
+
+  qtyInput.addEventListener('blur', function () {
+    normalizeQuantity();
   });
 });
 

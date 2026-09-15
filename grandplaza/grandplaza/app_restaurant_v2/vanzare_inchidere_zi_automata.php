@@ -323,12 +323,10 @@ if ($has_S > 0) {
 
         // --------------- RAPORT VANZARI TOTALE IMPRIMANTA TERMICA---------------
 
-    $clienti_redirect = [3, 8, 9, 23, 25, 26, 1008];
+    $clienti_redirect = [3, 8, 9, 23, 25, 26, 1008, 1014, 1021];
 
 if (isset($_SESSION['client_id']) && in_array((int)$_SESSION['client_id'], $clienti_redirect, true)) {
-    $stmtZ = $pdo->prepare("SELECT MAX(nr_raport_z) FROM rapoarte_z WHERE cod_locatie = ? AND COALESCE(serie_casa_marcat, '') = ? AND COALESCE(nui, 0) = ? AND COALESCE(serie_memorie_fiscala, '') = ?");
-    $stmtZ->execute([$cod_locatie, $serie_casa_marcat, $nui, $serie_memorie_fiscala]);
-    $cur_z = (int)$stmtZ->fetchColumn();
+    $cur_z = (int)$nr_raport_z;
 
     $listareQuery = http_build_query([
         'nr_raport_z' => $cur_z,

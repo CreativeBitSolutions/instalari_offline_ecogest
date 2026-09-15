@@ -76,6 +76,10 @@ function offline_sync_queue_ensure_schema(PDO $pdo): void
         last_error TEXT NULL
     )");
     $pdo->exec('INSERT OR IGNORE INTO offline_sync_runtime (id) VALUES (1)');
+}
+
+function offline_sync_queue_recover_stale(PDO $pdo): void
+{
     $pdo->exec("UPDATE offline_sync_outbox SET status = 'retry', locked_at = NULL, next_attempt_at = CURRENT_TIMESTAMP
         WHERE status = 'sending' AND datetime(COALESCE(locked_at, created_at)) < datetime('now', '-3 minutes')");
 }
@@ -209,7 +213,7 @@ function offline_sync_queue_sale_payload(PDO $pdo, int $nrBon): ?array
         )
         : [];
     if ($report > 0 && $reportSeries === '') {
-        $reportCandidates = offline_sync_queue_rows($pdo, 'rapoarte_z', "nr_raport_z = ? AND cod_locatie = ? AND COALESCE(nui, 0) = ? AND COALESCE(serie_memorie_fiscala, '') = ?", [$report, $location, $reportNui, $reportMemory], 'id');
+        $reportCandidates = offline_sync_queue_rows($pdo, 'rapoarte_z', "nr_raport_z = ? AND cod_locatie = ? AND CAST(COALESCE(nui, 0) AS INTEGER) = CAST(? AS INTEGER) AND COALESCE(serie_memorie_fiscala, '') = ?", [$report, $location, $reportNui, $reportMemory], 'id');
         $candidateSeries = array_values(array_unique(array_map(static function (array $candidate): string {
             return trim((string)($candidate['serie_casa_marcat'] ?? ''));
         }, $reportCandidates)));
@@ -220,7 +224,7 @@ function offline_sync_queue_sale_payload(PDO $pdo, int $nrBon): ?array
         }
     }
     $tables['rapoarte_z'] = ($report > 0 && $reportSeries !== null)
-        ? offline_sync_queue_rows($pdo, 'rapoarte_z', "nr_raport_z = ? AND cod_locatie = ? AND COALESCE(serie_casa_marcat, '') = ? AND COALESCE(nui, 0) = ? AND COALESCE(serie_memorie_fiscala, '') = ?", [$report, $location, $reportSeries, $reportNui, $reportMemory], 'id')
+        ? offline_sync_queue_rows($pdo, 'rapoarte_z', "nr_raport_z = ? AND cod_locatie = ? AND COALESCE(serie_casa_marcat, '') = ? AND CAST(COALESCE(nui, 0) AS INTEGER) = CAST(? AS INTEGER) AND COALESCE(serie_memorie_fiscala, '') = ?", [$report, $location, $reportSeries, $reportNui, $reportMemory], 'id')
         : [];
     if ((int)offline_sync_queue_config()['client_id'] === 2) {
         $tables['miscari'] = [];

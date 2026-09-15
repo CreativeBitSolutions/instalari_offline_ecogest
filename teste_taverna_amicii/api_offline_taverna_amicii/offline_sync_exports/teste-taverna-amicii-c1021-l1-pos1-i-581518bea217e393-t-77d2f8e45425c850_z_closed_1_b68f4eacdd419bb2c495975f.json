@@ -1,0 +1,58 @@
+{
+    "schema_version": "offline-sync-v2",
+    "event_uuid": "teste-taverna-amicii-c1021-l1-pos1-i-581518bea217e393-t-77d2f8e45425c850:z_closed:1:b68f4eacdd419bb2c495975f",
+    "event_type": "z_closed",
+    "aggregate_type": "z_report",
+    "aggregate_id": "1",
+    "installation_uuid": "teste-taverna-amicii-c1021-l1-pos1-i-581518bea217e393-t-77d2f8e45425c850",
+    "sync_export_id": "teste-taverna-amicii-c1021-l1-pos1-i-581518bea217e393-t-77d2f8e45425c850:z_closed:1:b68f4eacdd419bb2c495975f",
+    "cod_locatie": 1,
+    "data_sync": "2026-09-15 13:39:59",
+    "utilizator_sync": {
+        "id": 0,
+        "nume": "Sincronizare automată",
+        "rank": "system"
+    },
+    "counts": {
+        "note": 0,
+        "det_note": 0,
+        "inchideri_r_12": 0,
+        "rapoarte_z": 1,
+        "discounturi_acordate": 0
+    },
+    "note": [],
+    "det_note": [],
+    "inchideri_r_12": [],
+    "rapoarte_z": [
+        {
+            "id": "1",
+            "nr_raport_z": "1",
+            "cod_locatie": 1,
+            "serie_casa_marcat": "",
+            "numerar": "12.0",
+            "card": "0.0",
+            "credit": "0.0",
+            "tichete_masa": "0.0",
+            "tichete_valorice": "0.0",
+            "plata_moderna": "0.0",
+            "avans_in_numerar": "0.0",
+            "alte_metode": "0.0",
+            "data_ora_raport_z": "2026-09-02 16:31:38",
+            "data_raport": "2026-09-02 13:31:38",
+            "identificator_offline": "rapoarte_z:1:teste-taverna-amicii-c1021-l1-pos1-i-581518bea217e393-t-77d2f8e45425c850:1",
+            "nui": "0",
+            "serie_memorie_fiscala": "",
+            "_sync": {
+                "export_id": "teste-taverna-amicii-c1021-l1-pos1-i-581518bea217e393-t-77d2f8e45425c850:z_closed:1:b68f4eacdd419bb2c495975f",
+                "source_table": "rapoarte_z",
+                "source_pk": "1",
+                "cod_locatie": 1,
+                "installation_uuid": "teste-taverna-amicii-c1021-l1-pos1-i-581518bea217e393-t-77d2f8e45425c850",
+                "sync_id": "rapoarte_z:1:teste-taverna-amicii-c1021-l1-pos1-i-581518bea217e393-t-77d2f8e45425c850:1"
+            },
+            "id_original": 1,
+            "nr_raport_z_original": 1
+        }
+    ],
+    "discounturi_acordate": []
+}

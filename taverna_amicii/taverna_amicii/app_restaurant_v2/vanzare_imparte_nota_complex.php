@@ -232,7 +232,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['products_json']) && i
 
         foreach ($productsData['notaNoua'] as $prod) {
             $pret_unitar_cu_tva = $prod['pret_vanzare'];
-            $cantitate = $prod['cantitate'];
+            $cantitate = (float)($prod['cantitate'] ?? 0);
+            if (!is_finite($cantitate) || $cantitate <= 0) {
+                $cantitate = 1.0;
+            }
             $cota_tva = $prod['cota_tva'];
             $valoare_vanzare_cu_tva = round($pret_unitar_cu_tva * $cantitate, 2);
             $tva_col = round($valoare_vanzare_cu_tva * $cota_tva / (100 + $cota_tva), 2);
@@ -246,7 +249,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['products_json']) && i
         
         foreach ($productsData['notaOriginala'] as $prod) {
             $pret_unitar_cu_tva = $prod['pret_vanzare'];
-            $cantitate_ramasa = $prod['cantitate'];
+            $cantitate_ramasa = (float)($prod['cantitate'] ?? 0);
             $cota_tva = $prod['cota_tva'];
             $valoare_vanzare_cu_tva = round($pret_unitar_cu_tva * $cantitate_ramasa, 2);
             $tva_col = round($valoare_vanzare_cu_tva * $cota_tva / (100 + $cota_tva), 2);
@@ -559,15 +562,15 @@ $(document).ready(function() {
     // Logica pentru butonul de confirmare
     $('#numpadConfirm').on('click', function() {
         const cantitateStr = $('#numpadDisplay').text();
-        const cantitateDeMutat = parseFloat(cantitateStr);
+        let cantitateDeMutat = parseFloat(cantitateStr);
 
         // Preluăm contextul salvat
         const uid = $('#numpadModal').data('uid');
         const direction = $('#numpadModal').data('direction');
 
-        if (isNaN(cantitateDeMutat) || cantitateDeMutat <= 0) {
-            alert("Cantitate invalidă.");
-            return;
+        if (!isFinite(cantitateDeMutat) || cantitateDeMutat <= 0) {
+            cantitateDeMutat = 1;
+            $('#numpadDisplay').text('1');
         }
         
         // Aici începe logica de mutare efectivă (preluată din funcția veche)

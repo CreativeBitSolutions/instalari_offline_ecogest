@@ -78,7 +78,10 @@ function importDetaliiInNota(PDO $pdoPOS, int $nr_bon, array $detalii): void {
   ");
   $data_bon = date('Y-m-d'); $ora_bon = date('H:i:s');
   foreach ($detalii as $r) {
-    $cant = (float)($r['cantitate'] ?? 0);
+    $cant = (float)str_replace(',', '.', (string)($r['cantitate'] ?? ''));
+    if (!is_finite($cant) || $cant <= 0) {
+      $cant = 1.0;
+    }
     $pretTVA = (float)($r['pret_cu_tva'] ?? 0);
     $cota = (float)($r['cota_tva'] ?? 0);
     $val_cu = round($pretTVA * $cant, 2);

@@ -19,8 +19,8 @@ function offline_sync_worker_acquire(PDO $pdo): string
     $token = bin2hex(random_bytes(12));
     $pdo->exec('BEGIN IMMEDIATE TRANSACTION');
     try {
-        $row = $pdo->query('SELECT locked_until FROM offline_sync_runtime WHERE id = 1')->fetch(PDO::FETCH_ASSOC);
-        if (!empty($row['locked_until']) && strtotime((string)$row['locked_until']) > time()) {
+        $row = $pdo->query("SELECT CASE WHEN datetime(locked_until) > datetime('now') THEN 1 ELSE 0 END AS busy FROM offline_sync_runtime WHERE id = 1")->fetch(PDO::FETCH_ASSOC);
+        if (!empty($row['busy'])) {
             $pdo->exec('ROLLBACK');
             return '';
         }
@@ -50,10 +50,15 @@ function offline_sync_worker_retry_delay(int $attempts): int
 
 try {
     offline_sync_queue_ensure_schema($pdo);
-    offline_sync_queue_discover($pdo);
     $token = offline_sync_worker_acquire($pdo);
     if ($token === '') {
         offline_sync_worker_json(200, ['status' => 'busy', 'queue' => offline_sync_queue_counts($pdo)]);
+    }
+
+    offline_sync_queue_recover_stale($pdo);
+    offline_sync_queue_discover($pdo);
+    if (session_status() === PHP_SESSION_ACTIVE) {
+        session_write_close();
     }
 
     $stmt = $pdo->query("SELECT * FROM offline_sync_outbox

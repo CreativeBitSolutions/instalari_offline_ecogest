@@ -135,30 +135,16 @@ if ($total_bacsis > 0) {
         'continut'               => $continut
     ]];
 
-    $json_file_path = "{$folder_path}/de_listat_la_imprimanta.json";
-
-    // 7) Așteaptă eventual și scrie fișierul
-    update_loading_status("Așteptăm preluarea datelor de către imprimanta BAR (Închidere Tură)...");
-    $wait = 0;
-    while (file_exists($json_file_path) && $wait < 60) {
-        sleep(10);
-        $wait += 10;
-    }
-    if (file_exists($json_file_path)) {
-        echo "<script>alert('Fișierul nu s-a putut genera deoarece există deja unul activ.');location.href='vanzare_restaurant.php';</script>";
-        exit();
-    }
-
-    $json_array = [
-        "status"  => "success",
-        "message" => "Date pentru închiderea turei generate cu succes.",
-        "data"    => $printData
+    $_SESSION['restaurant_pending_closure_print'] = [
+        'client_id' => (int)$client_id,
+        'location_id' => (int)$cod_locatie,
+        'closure_number' => (int)$ultim_inch,
+        'created_at' => time(),
+        'jobs' => $printData,
     ];
-    file_put_contents($json_file_path, json_encode($json_array, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 
     update_loading_status("Gata! Redirecționăm...");
     
-    // redirect
     echo "<script>location.href='vanzare_inchidere_zi_automata.php'</script>";
 } catch (PDOException $e) {
     error_log("Eroare la generarea datelor pentru închiderea turei: " . $e->getMessage());

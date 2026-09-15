@@ -47,6 +47,9 @@ update_loading_status("Se generează raportul Z din sistem...");
 
         // 1. Pregătește folderul JSON
         $client_id   = $_SESSION['client_id'];
+        $protocolNoteFilter = in_array((int)$client_id, [25, 26], true)
+            ? ' AND COALESCE(n.protocol, 0) <= 0 '
+            : '';
         $folder_path = RESTAURANT_OFFLINE_API_DIR . "/" . $client_id . "/" . $cod_locatie;
         if (!is_dir($folder_path)) {
             mkdir($folder_path, 0777, true);
@@ -60,15 +63,13 @@ update_loading_status("Se generează raportul Z din sistem...");
             sleep(10);
             $waited += 10;
         }
+        if (file_exists($json_file_path)) {
+            throw new RuntimeException('Imprimanta are deja un document în așteptare. Închiderea și raportul Z sunt salvate și pot fi relistate.');
+        }
 
         // 3. Determină raportul Z curent: folosește GET dacă există, altfel MAX
         if ($requested_z > 0) {
-            $stmtZ = $pdo->prepare("SELECT nr_raport_z FROM rapoarte_z
-                WHERE cod_locatie = ? AND COALESCE(serie_casa_marcat, '') = ?
-                  AND COALESCE(nui, 0) = ? AND COALESCE(serie_memorie_fiscala, '') = ?
-                  AND nr_raport_z = ? LIMIT 1");
-            $stmtZ->execute([$cod_locatie, $serie_casa_marcat, $nui, $serie_memorie_fiscala, $requested_z]);
-            $cur_z = (int)$stmtZ->fetchColumn();
+            $cur_z = $requested_z;
         } else {
             $stmtZ = $pdo->prepare("SELECT MAX(nr_raport_z) FROM rapoarte_z
                 WHERE cod_locatie = ? AND COALESCE(serie_casa_marcat, '') = ?
@@ -112,6 +113,7 @@ update_loading_status("Se generează raportul Z din sistem...");
                AND n.nr_raport_z = :rz
                AND COALESCE(n.nui, 0) = :nui
                AND COALESCE(n.serie_memorie_fiscala, '') = :memory
+               {$protocolNoteFilter}
              GROUP BY ps.nume
              ORDER BY ps.nume
         ";
@@ -150,6 +152,7 @@ update_loading_status("Se generează raportul Z din sistem...");
            AND n.nr_raport_z = :rz
            AND COALESCE(n.nui, 0) = :nui
            AND COALESCE(n.serie_memorie_fiscala, '') = :memory
+           {$protocolNoteFilter}
          GROUP BY n.operator
          ORDER BY n.operator
     ";
@@ -167,6 +170,7 @@ update_loading_status("Se generează raportul Z din sistem...");
           AND n.nr_raport_z = :rz
           AND COALESCE(n.nui, 0) = :nui
           AND COALESCE(n.serie_memorie_fiscala, '') = :memory
+          {$protocolNoteFilter}
           AND ps.nume       = 'BACSIS'
         GROUP BY n.operator
     ";
@@ -188,6 +192,7 @@ update_loading_status("Se generează raportul Z din sistem...");
           AND n.nr_raport_z = :rz
           AND COALESCE(n.nui, 0) = :nui
           AND COALESCE(n.serie_memorie_fiscala, '') = :memory
+          {$protocolNoteFilter}
     ";
     $stmtOnline = $pdo->prepare($sqlOnline);
     $stmtOnline->execute(['loc' => $cod_locatie, 'rz' => $cur_z, 'nui' => $nui, 'memory' => $serie_memorie_fiscala]);
@@ -268,14 +273,28 @@ update_loading_status("Se generează raportul Z din sistem...");
             'continut'                => $continut
         ]];
 
+        $pending = $_SESSION['restaurant_pending_closure_print'] ?? null;
+        if (
+            is_array($pending)
+            && (int)($pending['client_id'] ?? 0) === (int)$client_id
+            && (int)($pending['location_id'] ?? 0) === (int)$cod_locatie
+            && isset($pending['jobs'])
+            && is_array($pending['jobs'])
+        ) {
+            $printData = array_values(array_merge($pending['jobs'], $printData));
+        }
+
         $json_array = [
             'status'  => 'success',
             'message' => 'Raport Z pentru imprimantă generat.',
             'data'    => $printData
         ];
 
-        file_put_contents($json_file_path, json_encode($json_array, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-    } catch (PDOException $ex) {
+        if (file_put_contents($json_file_path, json_encode($json_array, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE), LOCK_EX) === false) {
+            throw new RuntimeException('Documentele nu au putut fi scrise în coada imprimantei.');
+        }
+        unset($_SESSION['restaurant_pending_closure_print']);
+    } catch (Throwable $ex) {
         error_log("[".date("Y-m-d H:i:s")."] Eroare raport termic: "
                   . $ex->getMessage()
                   . " în " . __FILE__ . ":" . __LINE__ . "\n",

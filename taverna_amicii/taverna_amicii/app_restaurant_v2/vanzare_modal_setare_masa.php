@@ -125,11 +125,11 @@ $hide_tura_actions_in_modal = in_array((int)($_SESSION['client_id'] ?? 0), [25, 
 
                 <?php
                 $stmt = $pdo->prepare("
-                  SELECT rz.nr_raport_z, MAX(CONCAT(n.data_bon,' ',n.ora_bon)) AS ultima_data_ora
-                  FROM rapoarte_z rz
-                  JOIN note n ON n.nr_raport_z = rz.nr_raport_z
-                  WHERE rz.cod_locatie = ?
-                  GROUP BY rz.nr_raport_z
+                  SELECT n.nr_raport_z, MAX(CONCAT(n.data_bon,' ',n.ora_bon)) AS ultima_data_ora
+                  FROM note n
+                  WHERE n.locatie = ?
+                    AND n.nr_raport_z > 0
+                  GROUP BY n.nr_raport_z
                   ORDER BY ultima_data_ora DESC
                 ");
                 $stmt->execute([$cod_locatie]);

@@ -148,16 +148,17 @@ while ($row = $pstmt2->fetch(PDO::FETCH_ASSOC)) {
 }
 
 
-// --- LOGICĂ MODIFICATĂ PENTRU CANTITATE ---
-$cantitate = 1.0; // Valoare implicită (predefinită)
+// Cantitatea zero sau nevalidă devine automat o unitate.
+$cantitate = 1.0;
 if (isset($_GET['cantitate_de_adaugat_prod'])) {
-    $cantitate_trimisa = (float)$_GET['cantitate_de_adaugat_prod'];
-    if ($cantitate_trimisa > 0) {
-        // Dacă a trimis ceva valid > 0 (inclusiv 0.5), folosim acea valoare
+    $cantitate_trimisa = (float)str_replace(',', '.', (string)$_GET['cantitate_de_adaugat_prod']);
+    if (is_finite($cantitate_trimisa) && $cantitate_trimisa > 0) {
         $cantitate = round($cantitate_trimisa, 2);
     }
+    if ($cantitate <= 0) {
+        $cantitate = 1.0;
+    }
 }
-// ------------------------------------------
 
 $valoare_vanzare_cu_tva = round($pret_vanzare * $cantitate, 2);
 $tva_col = round($valoare_vanzare_cu_tva * $cota_tva / (100 + $cota_tva), 2);

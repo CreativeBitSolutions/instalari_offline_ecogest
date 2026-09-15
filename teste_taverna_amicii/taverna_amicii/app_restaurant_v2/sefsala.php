@@ -172,6 +172,9 @@ foreach ($notes as $n) {
         <button type="button" id="btnProductReport" class="btn btn-warning btn-sm m-1">
             <i class="fas fa-file-alt"></i> Raport produse
         </button>
+        <a href="sefsala_recuperare_raport_z.php" class="btn btn-outline-danger btn-sm m-1">
+            <i class="fas fa-history"></i> Recuperare raport Z
+        </a>
         <button type="button" id="btnSyncOnline" class="btn btn-success btn-sm m-1">
             <i class="fas fa-sync-alt"></i> Sync Online
         </button>
@@ -213,7 +216,7 @@ foreach ($notes as $n) {
           </div>
           <div class="form-group">
             <label for="newQuantity">Cantitate Nouă</label>
-            <input type="number" class="form-control" id="newQuantity" step="0.01" required>
+            <input type="number" class="form-control" id="newQuantity" step="0.01" min="0.01" value="1" required>
           </div>
           <div class="form-group">
             <label for="modifyMotiv">Motivul Modificării</label>
@@ -424,12 +427,12 @@ $(document).ready(function() {
 
     $('#confirmModify').click(function() {
         const id_vanz = $('#modifyIdVanz').val();
-        const newQuantity = $('#newQuantity').val();
+        let newQuantity = parseFloat(String($('#newQuantity').val() || '').replace(',', '.'));
         const motiv = $('#modifyMotiv').val();
 
-        if (parseFloat(newQuantity) < 0) {
-            showInfoModal('warning', 'Atenție', 'Cantitatea nu poate fi negativă.');
-            return;
+        if (!isFinite(newQuantity) || newQuantity <= 0) {
+            newQuantity = 1;
+            $('#newQuantity').val('1');
         }
 
         $.ajax({

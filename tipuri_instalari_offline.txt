@@ -1,7 +1,7 @@
 TIPURI DE INSTALĂRI OFFLINE ECOGEST
 ====================================
 
-Data verificării codului: 04.09.2026
+Data verificării codului: 12.09.2026
 Rădăcina de lucru: C:\xampp\htdocs\github\instalari_offline_ecogest
 
 Acest fișier descrie instalarea activă din fiecare folder, tipul aplicației și personalizările care trebuie păstrate la copiere, compilare sau actualizare. Cheile API, parolele și alte valori sensibile nu sunt reproduse aici.
@@ -125,21 +125,31 @@ Baza: api_offline_ecogest_andreearobertshop\db_local\pos.db.
 Identitate configurată: andreearobertshop-c22-l1-pos1.
 
 Personalizări active:
-- butoanele Sume Tură, Sume Zi și Discount global sunt ascunse din antet.
+- pentru clientul 22, Sume Tură rămâne ascuns. Sume Zi, Discount global, Reglare dif. CM și Închide Tura urmează condițiile din aplicația online. Închide Tura apare când există bonuri finalizate care pot fi închise.
 - pe liniile bonului sunt ascunse discountul pe produs și modificarea numelui sau prețului produsului. Modificarea cantității și ștergerea liniei rămân disponibile.
+- butonul Numerar afișează și totalul bonului, iar valoarea este actualizată după adăugare, modificare sau ștergere.
+- butonul Protocol este ascuns pentru clientul 22.
 - focusul revine constant pe câmpul codului de bare după operațiile uzuale.
 - Enter primit de la scanner în câmpul de cod de bare pornește căutarea și adăugarea produsului.
+- codul scanat este normalizat prin eliminarea spațiilor înainte de căutare.
 - apăsarea Enter în afara unui câmp editabil produce avertizare și readuce focusul pe codul de bare.
 - când un cod nu există, apare un mesaj central cu codul scanat și se redă un semnal sonor. Mesajul poate fi închis cu X și dispare automat după 5 secunde.
 - răspunsul HTTP 404 cu JSON de tip Produs negăsit este tratat explicit, fără deschiderea modală greșită pentru cantitate.
+- instalarea nu include tabul custom „PROMOȚII”, valoarea `__PROMOTII__` sau integrarea `produse_promotionale.php`. Lista de categorii provine din catalogul offline.
 - unitatea H87 este afișată ca buc.
 - endpointul local pentru starea AutoScannerului există, iar loginul afișează erorile de răspuns într-o formă controlată.
+- sincronizarea utilizatorilor și a cotelor TVA folosește configurația `offline_sales_sync`, verifică bonul fiscal încă nepreluat și oglindește în SQLite datele din `date_firma`, inclusiv seria casei, NUI și seria memoriei fiscale.
+- coada persistentă de vânzări transmite evenimentele către importatorul online, cu recuperare pentru transmiteri rămase în starea `sending` și validare TLS prin certificatul local.
+- `casa_marcat_veribon` urmărește răspunsurile `BonANSWER`, `BonERR` și `BonOK` în API-ul local și le transmite endpointului VeriBon online.
+- instalarea nu include imprimanta BAR și nu folosește personalizările de imprimare sau sincronizarea tabletelor ale clientului Lorand.
 - administrarea NIR, produselor, categoriilor și furnizorilor rămâne blocată în offline.
 
 Componente livrate:
 - ecogest_autoscanner_products_magazin_1_4_6_0.
 - ecogest_casa_marcat_v3_inp.
+- casa_marcat_veribon.
 - shortcut ECOGEST AutoScanner și shortcut ECOGEST Casa de Marcat.
+- shortcut ECOGEST VeriBon.
 - folderul .playwright-cli din interiorul instalării este un artefact de test și nu intră în pachetul clientului.
 
 

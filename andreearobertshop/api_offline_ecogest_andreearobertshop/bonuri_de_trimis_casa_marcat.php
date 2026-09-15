@@ -1,6 +1,7 @@
 <?php
 // Setăm header-ul pentru a returna JSON
 header('Content-Type: application/json');
+require_once __DIR__ . '/printer_queue_atomic_helper.php';
 
 // Funcție pentru a trimite răspunsuri JSON și a termina execuția scriptului
 function send_response($status, $message, $data = null) {
@@ -64,23 +65,54 @@ $locatie = trim($_POST['locatie']);
 // Definim calea către fișierul bon_casa_marcat.json, în directorul client_id/locatie
 $file_path = __DIR__ . '/' . $client_id . '/' . $locatie . '/bon_casa_marcat.json';
 
-// Verificăm dacă fișierul există
-if (!file_exists($file_path)) {
+// Revendicăm atomic fișierul, pentru a nu concura cu trimiterea directă din interfața offline.
+try {
+    $claim = agecs_printer_queue_claim($file_path);
+} catch (Throwable $error) {
+    send_response('error', 'Fișierul fiscal nu a putut fi blocat pentru preluare.');
+}
+
+if (($claim['status'] ?? '') === 'empty') {
     send_response('success', 'Fișierul bon_casa_marcat.json nu a fost găsit în directorul: ' . $client_id . '/' . $locatie);
+}
+if (($claim['status'] ?? '') !== 'claimed') {
+    send_response('error', 'Fișierul fiscal nu a putut fi preluat în siguranță.');
 }
 
 // Citim conținutul fișierului
-$file_content = file_get_contents($file_path);
+$claimed_path = (string)($claim['path'] ?? '');
+$file_content = $claimed_path !== '' ? @file_get_contents($claimed_path) : false;
+if (!is_string($file_content)) {
+    $restored = agecs_printer_queue_restore_claim($claimed_path, $file_path);
+    send_response(
+        'error',
+        $restored
+            ? 'Fișierul fiscal nu a putut fi citit și a fost restaurat.'
+            : 'Fișierul fiscal nu a putut fi citit și necesită verificare manuală.'
+    );
+}
 
 // Verificăm dacă conținutul este un JSON valid (opțional)
 $json_data = json_decode($file_content, true);
 if (json_last_error() !== JSON_ERROR_NONE) {
-    send_response('error', 'Conținutul fișierului nu este un JSON valid.');
+    $restored = agecs_printer_queue_restore_claim($claimed_path, $file_path);
+    send_response(
+        'error',
+        $restored
+            ? 'Conținutul fișierului nu este un JSON valid și a fost restaurat.'
+            : 'Conținutul fișierului nu este un JSON valid și necesită verificare manuală.'
+    );
 }
 
-// Încercăm să ștergem fișierul după ce am preluat conținutul
-if (!unlink($file_path)) {
-    send_response('error', 'Fișierul a fost citit, dar nu s-a putut șterge.');
+// Ștergem revendicarea numai după citirea și validarea completă.
+if ($claimed_path === '' || !@unlink($claimed_path)) {
+    $restored = agecs_printer_queue_restore_claim($claimed_path, $file_path);
+    send_response(
+        'error',
+        $restored
+            ? 'Fișierul a fost citit, dar nu a putut fi eliminat. A fost restaurat.'
+            : 'Fișierul a fost citit, dar nu a putut fi eliminat și necesită verificare manuală.'
+    );
 }
 
 // Returnăm conținutul citit (care are deja structura JSON dorită)

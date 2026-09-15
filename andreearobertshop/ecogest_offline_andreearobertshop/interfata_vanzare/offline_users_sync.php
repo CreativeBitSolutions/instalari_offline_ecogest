@@ -32,14 +32,18 @@ function ous_config(): array
     return is_array($config) ? $config : [];
 }
 
-function ous_derive_users_api_url(array $config): string
+function ous_derive_users_api_url(array $restaurantConfig, array $config = []): string
 {
-    $explicit = trim((string)($config['offline_users_api_url'] ?? ''));
+    $sales = is_array($restaurantConfig['offline_sales_sync'] ?? null)
+        ? $restaurantConfig['offline_sales_sync']
+        : [];
+    $explicit = trim((string)($sales['users_api_url'] ?? ($config['offline_users_api_url'] ?? '')));
     if ($explicit !== '') {
         return $explicit;
     }
 
     $candidates = [
+        trim((string)($sales['api_url'] ?? '')),
         trim((string)($config['sync_import_url'] ?? '')),
         trim((string)($config['online_products_sync']['api_url'] ?? '')),
     ];
@@ -266,14 +270,17 @@ try {
 
     ous_ensure_runtime_tables($pdo);
 
-    $apiUrl = ous_derive_users_api_url($config);
-    $apiKey = trim((string)($config['sync_api_key'] ?? ($config['upload_key'] ?? '')));
-    $clientId = (int)($config['sync_client_id'] ?? ($config['client_id'] ?? 0));
-    $codLocatie = (int)($_SESSION['cod_locatie'] ?? ($config['cod_locatie_default'] ?? 0));
-    $timeout = max(5, (int)($config['users_sync_timeout_seconds'] ?? 30));
-    $verifySsl = ous_bool($config['users_sync_verify_ssl'] ?? true, true);
-    $sendKeyInQuery = ous_bool($config['users_sync_send_api_key_in_query'] ?? true, true);
-    $installationUuid = trim((string)($config['installation_uuid'] ?? ''));
+    $sales = is_array($restaurantConfig['offline_sales_sync'] ?? null)
+        ? $restaurantConfig['offline_sales_sync']
+        : (is_array($config['offline_sales_sync'] ?? null) ? $config['offline_sales_sync'] : []);
+    $apiUrl = ous_derive_users_api_url($restaurantConfig, $config);
+    $apiKey = trim((string)($sales['api_key'] ?? ($config['sync_api_key'] ?? ($config['upload_key'] ?? ''))));
+    $clientId = (int)($sales['client_id'] ?? ($config['sync_client_id'] ?? ($config['client_id'] ?? 0)));
+    $codLocatie = (int)($_SESSION['cod_locatie'] ?? ($sales['cod_locatie'] ?? ($config['cod_locatie_default'] ?? 0)));
+    $timeout = max(5, (int)($sales['timeout_seconds'] ?? ($config['users_sync_timeout_seconds'] ?? 30)));
+    $verifySsl = ous_bool($sales['verify_ssl'] ?? ($config['users_sync_verify_ssl'] ?? true), true);
+    $sendKeyInQuery = ous_bool($sales['send_api_key_in_query'] ?? ($config['users_sync_send_api_key_in_query'] ?? true), true);
+    $installationUuid = trim((string)($sales['installation_uuid'] ?? ($config['installation_uuid'] ?? '')));
 
     if ($apiUrl === '' || $apiKey === '' || $clientId <= 0 || $codLocatie <= 0) {
         ous_redirect('error', ['message' => 'Configuratia pentru preluarea utilizatorilor si TVA este incompleta.']);
@@ -320,7 +327,7 @@ try {
         ],
         CURLOPT_POSTFIELDS => $json,
     ];
-    $caBundlePath = trim((string)($config['ca_bundle_path'] ?? ''));
+    $caBundlePath = trim((string)($restaurantConfig['ca_bundle_path'] ?? ($config['ca_bundle_path'] ?? '')));
     if ($verifySsl && $caBundlePath !== '' && is_file($caBundlePath)) {
         $curlOptions[CURLOPT_CAINFO] = $caBundlePath;
     }
@@ -374,8 +381,10 @@ try {
     $inserted = 0;
     $updated = 0;
 
-    if (ous_has_pending_receipt($pdo)) {
-        throw new RuntimeException('Finalizeaza bonul curent inainte de actualizarea utilizatorilor si TVA.');
+    $fiscalFile = rtrim((string)($restaurantConfig['api_root_absolute'] ?? ($config['api_root_absolute'] ?? '')), '/\\')
+        . '/' . $clientId . '/' . $codLocatie . '/bon_casa_marcat.json';
+    if (is_file($fiscalFile) || ous_has_pending_receipt($pdo)) {
+        throw new RuntimeException('Finalizeaza bonul curent si asteapta preluarea fiscala inainte de actualizarea utilizatorilor si TVA.');
     }
 
     $pdo->beginTransaction();

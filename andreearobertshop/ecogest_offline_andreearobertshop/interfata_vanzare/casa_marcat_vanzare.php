@@ -4,6 +4,26 @@ ini_set('log_errors', 1); // Activează logarea erorilor
 ini_set('error_log', 'error_log.log'); // Specifică calea către fișierul de log
 include('session.php');
 require_once __DIR__ . '/offline_api_path.php';
+require_once __DIR__ . '/offline_fiscal_flow_helper.php';
+
+$andreearobertClientId = (int)($_SESSION['client_id'] ?? 0);
+$andreearobertLocationId = (int)($_SESSION['cod_locatie'] ?? 0);
+$andreearobertRequestedRelist = (int)($_POST['nota_de_relistat'] ?? $_GET['nota_de_relistat'] ?? 0);
+if ($andreearobertClientId === 22
+    && $andreearobertLocationId > 0
+    && isset($_SESSION['nr_bon'])
+    && is_file(andreearobert_fiscal_queue_path(
+        $andreearobertClientId,
+        $andreearobertLocationId
+    ))) {
+    $_SESSION['andreearobert_fiscal_after_url'] = $andreearobertRequestedRelist > 0
+        ? 'casa_marcat_vanzare.php?nota_de_relistat='
+            . rawurlencode((string)$andreearobertRequestedRelist)
+        : 'casa_marcat_vanzare.php';
+    unset($_SESSION['bon_procesat']);
+    header('Location: asteapta_casa_marcat.php');
+    exit;
+}
 
 // --- START BLOC NOU: Prevenire Execuție Dublă ---
 // Verificăm dacă acest bon a fost deja procesat în această sesiune
@@ -21,7 +41,7 @@ if (isset($_SESSION['nr_bon'])) {
 
 error_reporting(E_ALL); // Raportează toate tipurile de erori
 // Presupunem că variabila nota_de_relistat vine din sesiune sau este definită undeva
-$nota_de_relistat = $_POST['nota_de_relistat'] ?? 0;
+$nota_de_relistat = $_POST['nota_de_relistat'] ?? $_GET['nota_de_relistat'] ?? 0;
 
 if ($nota_de_relistat == 0) {
 
@@ -210,7 +230,9 @@ if ($nota_de_relistat == 0) {
 
     date_default_timezone_set("Europe/Bucharest");
     
-    // --- Inserția în tabela bonuri_casa_marcat și generarea fișierelor JSON (codul existent) ---
+    // --- Inserția în tabela bonuri_casa_marcat și generarea fișierelor JSON ---
+    $andreearobertFiscalJsonScris = false;
+    $andreearobertFiscalInsertId = 0;
     try {
         $insert_sql = "INSERT INTO bonuri_casa_marcat (data, ora, continut_bon, de_trimis_la_casa_marcat, nrbon, locatie)
                           VALUES (:data, :ora, :continut_bon, :de_trimis, :nrbon, :locatie)";
@@ -227,6 +249,7 @@ if ($nota_de_relistat == 0) {
             ':nrbon' => $nr_bon,
             ':locatie' => $cod_locatie
         ]);
+        $andreearobertFiscalInsertId = (int)$pdo->lastInsertId();
     
         if (isset($_SESSION['client_id'])) {
             $client_id = $_SESSION['client_id'];
@@ -254,11 +277,31 @@ if ($nota_de_relistat == 0) {
             $folder_path = offline_api_path($client_id, $locatie_val);
     
             if (!offline_api_ensure_dir($folder_path)) {
-                error_log("Nu s-a putut crea directorul API offline: " . $folder_path);
+                throw new RuntimeException(
+                    "Nu s-a putut crea directorul API offline: " . $folder_path
+                );
             }
-    
+
             $json_file_path = $folder_path . "/bon_casa_marcat.json";
-            file_put_contents($json_file_path, $json_data);
+            if ($json_data === false) {
+                throw new RuntimeException('Bonul fiscal nu a putut fi convertit în JSON.');
+            }
+            if ((int)$client_id === 22) {
+                if (!andreearobert_fiscal_publish_json($json_file_path, $json_data)) {
+                    $cleanup_stmt = $pdo->prepare(
+                        "DELETE FROM bonuri_casa_marcat
+                         WHERE id = :id AND de_trimis_la_casa_marcat = 1"
+                    );
+                    $cleanup_stmt->execute([':id' => $andreearobertFiscalInsertId]);
+                    $_SESSION['andreearobert_fiscal_after_url'] = 'casa_marcat_vanzare.php';
+                    unset($_SESSION['bon_procesat']);
+                    header('Location: asteapta_casa_marcat.php');
+                    exit;
+                }
+                $andreearobertFiscalJsonScris = true;
+            } elseif (@file_put_contents($json_file_path, $json_data) === false) {
+                throw new RuntimeException('Bonul fiscal nu a putut fi scris în coadă.');
+            }
     
             $update_sql = "UPDATE bonuri_casa_marcat 
                            SET de_trimis_la_casa_marcat = 0 
@@ -270,8 +313,43 @@ if ($nota_de_relistat == 0) {
             error_log("Client_id nu este setat în sesiune.");
         }
     
-    } catch (PDOException $e) {
+    } catch (Throwable $e) {
         error_log("Eroare la inserția bonului: " . $e->getMessage());
+        if ($andreearobertClientId === 22) {
+            if (!$andreearobertFiscalJsonScris && $andreearobertFiscalInsertId > 0) {
+                try {
+                    $cleanup_stmt = $pdo->prepare(
+                        "DELETE FROM bonuri_casa_marcat
+                         WHERE id = :id AND de_trimis_la_casa_marcat = 1"
+                    );
+                    $cleanup_stmt->execute([':id' => $andreearobertFiscalInsertId]);
+                } catch (Throwable $cleanupError) {
+                    error_log(
+                        'Curățarea bonului fiscal Andreea Robert a eșuat: '
+                        . $cleanupError->getMessage()
+                    );
+                }
+                unset($_SESSION['bon_procesat']);
+                http_response_code(503);
+                echo '<meta charset="utf-8"><p>Bonul fiscal nu a putut fi pregătit. Vânzarea nu trebuie încasată din nou.</p>';
+                echo '<p>Verificați coada fiscală și reîncercați numai trimiterea fiscală.</p>';
+                exit;
+            }
+
+            $_SESSION['andreearobert_fiscal_after_url'] = 'vanzare_magazin.php';
+            unset(
+                $_SESSION['nr_bon'],
+                $_SESSION['bon_procesat'],
+                $_SESSION['numerarprim'],
+                $_SESSION['cardprim'],
+                $_SESSION['cif_client'],
+                $_SESSION['rest_tichete'],
+                $_SESSION['total_tichete'],
+                $_SESSION['masa_curenta']
+            );
+            header('Location: asteapta_casa_marcat.php');
+            exit;
+        }
     }
     
     // --- Generarea datelor pentru imprimantă (codul existent) ---
@@ -467,6 +545,11 @@ if ($nota_de_relistat == 0) {
         unset($_SESSION['total_tichete']);
         unset($_SESSION['masa_curenta']);
     
+        if ((int)$client_agecs === 22 && $andreearobertFiscalJsonScris) {
+            $_SESSION['andreearobert_fiscal_after_url'] = 'vanzare_magazin.php';
+            header('Location: asteapta_casa_marcat.php');
+            exit;
+        }
 
     //redirect factura automata 
     if ($client_agecs == 2 || $client_agecs==8) {
@@ -502,8 +585,23 @@ if ($nota_de_relistat == 0) {
     }
         printf("<script>location.href='vanzare_magazin.php'</script>");
     
-    } catch (PDOException $e) {
+    } catch (Throwable $e) {
         error_log("Eroare la generarea datelor pentru imprimantă: " . $e->getMessage());
+        if ((int)$client_agecs === 22 && $andreearobertFiscalJsonScris) {
+            unset(
+                $_SESSION['nr_bon'],
+                $_SESSION['bon_procesat'],
+                $_SESSION['numerarprim'],
+                $_SESSION['cardprim'],
+                $_SESSION['cif_client'],
+                $_SESSION['rest_tichete'],
+                $_SESSION['total_tichete'],
+                $_SESSION['masa_curenta']
+            );
+            $_SESSION['andreearobert_fiscal_after_url'] = 'vanzare_magazin.php';
+            header('Location: asteapta_casa_marcat.php');
+            exit;
+        }
     }
 }
 else {
@@ -708,7 +806,9 @@ else {
 
     date_default_timezone_set("Europe/Bucharest");
     
-    // --- Inserția în tabela bonuri_casa_marcat și generarea fișierelor JSON (la fel ca mai sus) ---
+    // --- Inserția în tabela bonuri_casa_marcat și generarea fișierelor JSON ---
+    $andreearobertFiscalRelistJsonScris = false;
+    $andreearobertFiscalRelistInsertId = 0;
     try {
         $insert_sql = "INSERT INTO bonuri_casa_marcat (data, ora, continut_bon, de_trimis_la_casa_marcat, nrbon, locatie)
                           VALUES (:data, :ora, :continut_bon, :de_trimis, :nrbon, :locatie)";
@@ -727,6 +827,7 @@ else {
             ':nrbon' => $nr_bon,
             ':locatie' => $cod_locatie
         ]);
+        $andreearobertFiscalRelistInsertId = (int)$pdo->lastInsertId();
     
         if (isset($_SESSION['client_id'])) {
             $client_id = $_SESSION['client_id'];
@@ -754,11 +855,33 @@ else {
             $folder_path = offline_api_path($client_id, $locatie_val);
     
             if (!offline_api_ensure_dir($folder_path)) {
-                error_log("Nu s-a putut crea directorul API offline: " . $folder_path);
+                throw new RuntimeException(
+                    "Nu s-a putut crea directorul API offline: " . $folder_path
+                );
             }
-    
+
             $json_file_path = $folder_path . "/bon_casa_marcat.json";
-            file_put_contents($json_file_path, $json_data);
+            if ($json_data === false) {
+                throw new RuntimeException('Bonul fiscal nu a putut fi convertit în JSON.');
+            }
+            if ((int)$client_id === 22) {
+                if (!andreearobert_fiscal_publish_json($json_file_path, $json_data)) {
+                    $cleanup_stmt = $pdo->prepare(
+                        "DELETE FROM bonuri_casa_marcat
+                         WHERE id = :id AND de_trimis_la_casa_marcat = 1"
+                    );
+                    $cleanup_stmt->execute([':id' => $andreearobertFiscalRelistInsertId]);
+                    $_SESSION['andreearobert_fiscal_after_url'] =
+                        'casa_marcat_vanzare.php?nota_de_relistat='
+                        . rawurlencode((string)$nota_de_relistat);
+                    unset($_SESSION['bon_procesat']);
+                    header('Location: asteapta_casa_marcat.php');
+                    exit;
+                }
+                $andreearobertFiscalRelistJsonScris = true;
+            } elseif (@file_put_contents($json_file_path, $json_data) === false) {
+                throw new RuntimeException('Bonul fiscal nu a putut fi scris în coadă.');
+            }
     
             $update_sql = "UPDATE bonuri_casa_marcat 
                            SET de_trimis_la_casa_marcat = 0 
@@ -770,8 +893,43 @@ else {
             error_log("Client_id nu este setat în sesiune.");
         }
     
-    } catch (PDOException $e) {
+    } catch (Throwable $e) {
         error_log("Eroare la inserția bonului (nota relistata): " . $e->getMessage());
+        if ($andreearobertClientId === 22) {
+            if (!$andreearobertFiscalRelistJsonScris && $andreearobertFiscalRelistInsertId > 0) {
+                try {
+                    $cleanup_stmt = $pdo->prepare(
+                        "DELETE FROM bonuri_casa_marcat
+                         WHERE id = :id AND de_trimis_la_casa_marcat = 1"
+                    );
+                    $cleanup_stmt->execute([':id' => $andreearobertFiscalRelistInsertId]);
+                } catch (Throwable $cleanupError) {
+                    error_log(
+                        'Curățarea bonului fiscal relistat Andreea Robert a eșuat: '
+                        . $cleanupError->getMessage()
+                    );
+                }
+                unset($_SESSION['bon_procesat']);
+                http_response_code(503);
+                echo '<meta charset="utf-8"><p>Bonul fiscal nu a putut fi pregătit. Vânzarea nu trebuie încasată din nou.</p>';
+                echo '<p>Verificați coada fiscală și reîncercați numai trimiterea fiscală.</p>';
+                exit;
+            }
+
+            $_SESSION['andreearobert_fiscal_after_url'] = 'vanzare_magazin.php';
+            unset(
+                $_SESSION['nr_bon'],
+                $_SESSION['bon_procesat'],
+                $_SESSION['numerarprim'],
+                $_SESSION['cardprim'],
+                $_SESSION['cif_client'],
+                $_SESSION['rest_tichete'],
+                $_SESSION['total_tichete'],
+                $_SESSION['masa_curenta']
+            );
+            header('Location: asteapta_casa_marcat.php');
+            exit;
+        }
     }
     
     // --- Generarea datelor pentru imprimantă (la fel ca mai sus) ---
@@ -968,10 +1126,31 @@ else {
         unset($_SESSION['total_tichete']);
         unset($_SESSION['masa_curenta']);
     
+        if ((int)$client_agecs === 22 && $andreearobertFiscalRelistJsonScris) {
+            $_SESSION['andreearobert_fiscal_after_url'] = 'vanzare_magazin.php';
+            header('Location: asteapta_casa_marcat.php');
+            exit;
+        }
+
         printf("<script>location.href='vanzare_magazin.php'</script>");
     
-    } catch (PDOException $e) {
+    } catch (Throwable $e) {
         error_log("Eroare la generarea datelor pentru imprimantă (nota relistata): " . $e->getMessage());
+        if ((int)$client_agecs === 22 && $andreearobertFiscalRelistJsonScris) {
+            unset(
+                $_SESSION['nr_bon'],
+                $_SESSION['bon_procesat'],
+                $_SESSION['numerarprim'],
+                $_SESSION['cardprim'],
+                $_SESSION['cif_client'],
+                $_SESSION['rest_tichete'],
+                $_SESSION['total_tichete'],
+                $_SESSION['masa_curenta']
+            );
+            $_SESSION['andreearobert_fiscal_after_url'] = 'vanzare_magazin.php';
+            header('Location: asteapta_casa_marcat.php');
+            exit;
+        }
     }
 }
 ?>

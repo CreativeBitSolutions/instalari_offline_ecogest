@@ -153,4 +153,21 @@ For changes involving both agecsin and instalari_offline_ecogest:
 - keep installer-specific compatibility logic in instalari_offline_ecogest
   when appropriate.
 
+## Offline sales feature parity
+
+For an offline sales installation, client-specific behavior and visual design
+must follow the corresponding online AGECS sales implementation for the same
+client, unless the offline architecture requires a local adapter such as
+SQLite, the local synchronization queue, or a local fiscal integration.
+
+Do not add the custom promotions category tab to offline sales installations.
+Do not add `__PROMOTII__`, `produse_promotionale.php`, or an equivalent custom
+promotions integration to an offline client. The product category list remains
+the one provided by the offline catalog.
+
+Do not copy Lorand-specific BAR printer, tablet, or payment-note printing
+features into an offline client that does not use that hardware. This exception
+does not override parity for the ordinary sales interface, alerts, sounds,
+focus behavior, payment controls, or client-specific business rules.
+
 User instructions always take precedence over this orchestration policy.

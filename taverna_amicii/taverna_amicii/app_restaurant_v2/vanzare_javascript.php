@@ -442,9 +442,12 @@ var masa = <?php echo isset($m_n) ? json_encode($m_n) : 'null'; ?>;
     // AICI ESTE MODIFICAREA PENTRU OBSERVATII (fără regex, parsing DOM)
   $(document).on('click', '.adaug_prod:not(.disabled)', function () {
       const codP = $(this).attr('value');
-      const cant = $('#cantitate_de_adaugat_prod').val() || 1;
-      
-      // Definim askObs exact aici, la click pe produs
+      const cantitateInput = $('#cantitate_de_adaugat_prod');
+      const cantitateValoare = parseFloat(String(cantitateInput.val() || '').replace(',', '.'));
+      const cant = isFinite(cantitateValoare) && cantitateValoare > 0 ? cantitateValoare : 1;
+      cantitateInput.val(cant);
+
+       // Definim askObs exact aici, la click pe produs
       const askObs = $(this).data('ask-obs'); 
 
       $.get('vanzare_adaug_prod_pe_nota.php',

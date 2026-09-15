@@ -1,0 +1,57 @@
+{
+    "schema_version": "offline-sync-v2",
+    "event_uuid": "teste-taverna-amicii-c1021-l1-pos1-i-581518bea217e393-t-77d2f8e45425c850:shift_closed:2:a916c5e95b6fbe4cced12c40",
+    "event_type": "shift_closed",
+    "aggregate_type": "shift",
+    "aggregate_id": "2",
+    "installation_uuid": "teste-taverna-amicii-c1021-l1-pos1-i-581518bea217e393-t-77d2f8e45425c850",
+    "sync_export_id": "teste-taverna-amicii-c1021-l1-pos1-i-581518bea217e393-t-77d2f8e45425c850:shift_closed:2:a916c5e95b6fbe4cced12c40",
+    "cod_locatie": 1,
+    "data_sync": "2026-09-15 13:39:59",
+    "utilizator_sync": {
+        "id": 0,
+        "nume": "Sincronizare automată",
+        "rank": "system"
+    },
+    "counts": {
+        "note": 0,
+        "det_note": 0,
+        "inchideri_r_12": 1,
+        "rapoarte_z": 0,
+        "discounturi_acordate": 0
+    },
+    "note": [],
+    "det_note": [],
+    "inchideri_r_12": [
+        {
+            "id_inch": "2",
+            "cod_inchidere": "2",
+            "operator": "1",
+            "valoare_cu_tva": "29.0",
+            "tva_colectata": "5.03",
+            "data_inchiderii": "2026-09-03",
+            "ora_inchiderii": "04:49:52",
+            "locatie": "1",
+            "nr_raport_z": 0,
+            "totaluri_plata_json": "{\"numerar\":17,\"card\":0,\"tichete\":0,\"protocol\":12,\"glovo\":0,\"virament_bancar\":0,\"bacsis_numerar\":0,\"bacsis_card\":0,\"bacsis\":0,\"cod_inchidere\":2,\"nrbon_min\":3,\"nrbon_max\":5,\"interval_note\":\"3-5\",\"operator_id\":1,\"locatie\":1,\"generat_la\":\"2026-09-03 04:49:52\"}",
+            "cod_locatie": 1,
+            "identificator_offline": "inchideri_r_12:1:teste-taverna-amicii-c1021-l1-pos1-i-581518bea217e393-t-77d2f8e45425c850:2",
+            "serie_casa_marcat": "",
+            "nui": "0",
+            "serie_memorie_fiscala": "",
+            "_sync": {
+                "export_id": "teste-taverna-amicii-c1021-l1-pos1-i-581518bea217e393-t-77d2f8e45425c850:shift_closed:2:a916c5e95b6fbe4cced12c40",
+                "source_table": "inchideri_r_12",
+                "source_pk": "2",
+                "cod_locatie": 1,
+                "installation_uuid": "teste-taverna-amicii-c1021-l1-pos1-i-581518bea217e393-t-77d2f8e45425c850",
+                "sync_id": "inchideri_r_12:1:teste-taverna-amicii-c1021-l1-pos1-i-581518bea217e393-t-77d2f8e45425c850:2"
+            },
+            "id_inch_original": 2,
+            "cod_inchidere_original": 2,
+            "nr_raport_z_original": 0
+        }
+    ],
+    "rapoarte_z": [],
+    "discounturi_acordate": []
+}

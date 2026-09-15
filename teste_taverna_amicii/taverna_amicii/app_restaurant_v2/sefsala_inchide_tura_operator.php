@@ -359,7 +359,16 @@ try {
                     $trigger_z = true; // Dăm flag interfeței să ceară listarea raportului termic Z
                 }
             } catch (Exception $e) {
-                $pdo->rollBack();
+                if ($pdo->inTransaction()) {
+                    $pdo->rollBack();
+                }
+                error_log('Eroare generare raport Z automat după închiderea turei: ' . $e->getMessage());
+                json_exit([
+                    'status' => 'error',
+                    'message' => "Tura pentru $targetName a fost închisă cu codul $codInchidereNou, dar raportul Z nu a putut fi generat. Folosiți recuperarea raportului Z.",
+                    'cod_inchidere' => $codInchidereNou,
+                    'nr_raport_z' => 0
+                ], 500);
             }
         }
     }

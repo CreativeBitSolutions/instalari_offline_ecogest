@@ -47,5 +47,19 @@
     "send_api_key_in_query": true,
     "verify_ssl": true,
     "allow_http_without_session": true
+  },
+  "offline_sales_sync": {
+    "enabled": true,
+    "automatic": true,
+    "interval_seconds": 30,
+    "allow_login_worker": true,
+    "client_id": 22,
+    "cod_locatie": 1,
+    "api_url": "https://agecs.agecs.in/sincronizare_online_app_vanzare/api_import_operatiuni_offline.php",
+    "users_api_url": "https://agecs.agecs.in/api/offline-users.php",
+    "api_key": "99b9d36718db0ce233e2ea3a39d7936322364e268140274e8bf37297ede4878b",
+    "timeout_seconds": 45,
+    "verify_ssl": true,
+    "send_api_key_in_query": false
   }
 }

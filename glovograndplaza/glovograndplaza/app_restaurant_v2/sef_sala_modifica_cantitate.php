@@ -289,7 +289,10 @@ try {
     switch ($action) {
         case 'modify_quantity':
             $id_vanz = intval($_POST['id_vanz']);
-            $new_quantity = floatval($_POST['new_quantity']);
+            $new_quantity = floatval(str_replace(',', '.', (string)($_POST['new_quantity'] ?? '')));
+            if (!is_finite($new_quantity) || $new_quantity <= 0) {
+                $new_quantity = 1.0;
+            }
             $motiv = trim($_POST['motiv']);
             $stmt = $pdo->prepare("SELECT * FROM det_note WHERE id_vanz = ?");
             $stmt->execute([$id_vanz]);

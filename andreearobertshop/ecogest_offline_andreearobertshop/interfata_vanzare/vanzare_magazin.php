@@ -292,9 +292,11 @@ $offlinePendingReceiptCount = array_sum(array_map(static function (array $closur
             ?>
            <?php if ($client_agecs != 22): ?>
     <button data-toggle="modal" data-target="#sume_sertar" class="header-btn">💰 Sume Tura</button>
+<?php endif; ?>
+            <?php if ($client_agecs != 999): ?>
     <button data-toggle="modal" data-target="#sume_zi_curenta_modal" class="header-btn">📈 Sume Zi</button>
 <?php endif; ?>
-            <?php if ($client_agecs != 22 && $client_agecs != 18): ?>
+            <?php if ($client_agecs != 999 && $client_agecs != 18): ?>
             <button data-toggle="modal" data-target="#DiscountGlobal" class="header-btn">🏷️ Discount </button>
 
 <?php endif; ?>
@@ -304,7 +306,7 @@ $offlinePendingReceiptCount = array_sum(array_map(static function (array $closur
             echo "<button type='button' id='verifica_stoc_btn' data-toggle='modal' data-target='#verificaStocModal' class='header-btn'>📦 $btnText</button>";
             ?>
             <button data-toggle="modal" data-target="#relistareboncasamarcat" class="header-btn">📠 Retrim. Bon la CM</button>
-            <?php if ($client_agecs != 18): ?>
+            <?php if ($client_agecs != 999 && $client_agecs != 18): ?>
             <a href='reglare_casa_marcat.php'><button class='header-btn'>🔨 Reglare dif. CM</button></a>
             <?php endif; ?>
             <?php if ((int)$client_agecs === 6): ?>
@@ -315,7 +317,7 @@ $offlinePendingReceiptCount = array_sum(array_map(static function (array $closur
             <?php endif; ?>
             </div>
             <div class="grup-actiuni header-secondary-actions">
-               <?php if ($client_agecs != 22): ?>
+               <?php if ($client_agecs != 999): ?>
     <?php
     $bon_sql = "SELECT COUNT(*) FROM $tabel_final_note WHERE cod_inchidere=0 AND status='F' AND locatie=:locatie AND operator=:adm_id";
     $bon_stmt = $pdo->prepare($bon_sql);
@@ -523,14 +525,36 @@ $loc_curenta = (int)$cod_locatie;
             <input type="hidden" name="masa_curenta" value="<?php echo $cod_masa; ?>">
             <input type="hidden" id="cif_client_hidden" name="cif_client">
             <input type="hidden" id="baniprimiti_hidden" name="baniprimiti" value="">
-            <button class="footer-btn btn-success" type="submit" name="finaliz_bon" value="numerar">💵 Numerar</button>
+<?php if ((int)($_SESSION['client_id'] ?? 0) === 22): ?>
+
+    <button class="footer-btn btn-success numerar-total-btn"
+            type="submit"
+            name="finaliz_bon"
+            value="numerar">
+
+        <span>💵 Num.</span>
+
+        <span id="numerar-total-caption" class="numerar-total-value">
+            <?php echo number_format((float)$total_val_vz_cu_tva, 2, '.', ''); ?>
+        </span>
+
+    </button>
+
+<?php else: ?>
+
+    <button class="footer-btn btn-success"
+            type="submit"
+            name="finaliz_bon"
+            value="numerar">💵 Numerar</button>
+
+<?php endif; ?>
             <button class="footer-btn btn-primary" type="submit" name="finaliz_bon" value="card">💳 Card</button>
             <button class="footer-btn btn-info" type="button" data-toggle="modal" data-target="#Plata_numerar_si_card">💶 Mix</button>
             
             <?php
             $client_agecs = $_SESSION['client_id'] ?? null;
-            // Ascundem butonul Protocol pentru clientii 17, 18, 21
-            if (!in_array($client_agecs, [17, 18, 21])): ?>
+            // Ascundem butonul Protocol pentru clientii 17, 18, 21,22
+            if (!in_array($client_agecs, [17, 18, 21,22])): ?>
                 <button class="footer-btn btn-secondary" type="submit" name="finaliz_bon" value="protocol">📝 Protocol</button>
             <?php endif; ?>
 
@@ -1926,6 +1950,18 @@ $('#btn_clear_debug_micotex').on('click', function() {
         $('#lista_produse_bon').append(itemHTML);
     }
     
+    function updateNumerarButtonTotal(total) {
+    if (String(clientId) !== '22') {
+        return;
+    }
+
+    const totalNumeric = parseFloat(total);
+
+    $('#numerar-total-caption').text(
+        isNaN(totalNumeric) ? '0.00' : totalNumeric.toFixed(2)
+    );
+}
+
     function recalculateTotals() {
         let totalBon = 0;
         $('.receipt-item').each(function() {
@@ -1935,7 +1971,10 @@ $('#btn_clear_debug_micotex').on('click', function() {
         });
 
         const totalFormatted = totalBon.toFixed(2);
-        
+
+// Actualizează și suma din butonul Numerar pentru clientul 22
+updateNumerarButtonTotal(totalBon);
+
         if ($('#total_de_incasat_display').length) {
             $('#total_de_incasat_display').text(totalFormatted);
             $('#suma-incasata-input').val(totalFormatted);
@@ -2435,7 +2474,9 @@ $('#btn_clear_debug_micotex').on('click', function() {
     }
     
     async function processBarcode() {
-        const codBare = barcodeFilterInput.val();
+const codBare = String(barcodeFilterInput.val() || '')
+    .replace(/\s+/g, '')
+    .trim();
         if (!codBare) return;
 
         // helper: adaugă folosind DETALII (fără lookup prin cod_bare)
@@ -2682,6 +2723,10 @@ $('#btn_clear_debug_micotex').on('click', function() {
             
             // Restul logicii originale, care depinde de elementele încărcate
             let total = parseFloat($('#total_de_incasat_display').text().replace(',', '.')) || 0;
+
+// Actualizează suma din butonul Numerar pentru clientul 22
+updateNumerarButtonTotal(total);
+
             $('#totalmixt').val(total.toFixed(2));
             $('#numerar').val(total.toFixed(2));   // fără .attr('max', ...)
             $('#card').val('0.00');                // fără .attr('max', ...)

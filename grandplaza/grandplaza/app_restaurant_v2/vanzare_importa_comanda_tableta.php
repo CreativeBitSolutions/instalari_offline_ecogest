@@ -71,7 +71,10 @@ function oti_import_details(PDO $pdo, int $noteId, array $details): void
     ");
 
     foreach ($details as $row) {
-        $quantity = (float)($row['cantitate'] ?? 0);
+        $quantity = (float)str_replace(',', '.', (string)($row['cantitate'] ?? ''));
+        if (!is_finite($quantity) || $quantity <= 0) {
+            $quantity = 1.0;
+        }
         $vatRate = (float)($row['cota_tva'] ?? 0);
         $valueWithoutVat = (float)($row['valoare_vanzare'] ?? 0);
         $valueWithVat = (float)($row['valoare_vanzare_cu_tva'] ?? 0);

@@ -25,8 +25,14 @@ $(function(){
   const cantitateInput = $('#cantitate_de_adaugat_prod');
   let first = true;
 
+  function normalizeQuantity() {
+    const value = parseFloat(String(cantitateInput.val() || '').replace(',', '.'));
+    if (!isFinite(value) || value <= 0) cantitateInput.val('1');
+  }
+
   $('#openNumpadBtn').on('click', function(){ $('#numpadModal').modal('show'); });
   $('#numpadModal').on('shown.bs.modal', function(){ first = true; });
+  $('#numpadModal').on('hidden.bs.modal', normalizeQuantity);
 
   $(document).on('click','.numpad-btn', function(){
     // MODIFICARE AICI: am folosit .attr('data-value') pentru a-l prelua direct ca text (string)

@@ -1,0 +1,15 @@
+{
+    "status": "success",
+    "message": "Date pentru imprimantă generate cu succes.",
+    "data": [
+        {
+            "data": "2026-09-12",
+            "ora": "06:22:32",
+            "de_trimis_la_imprimanta": 1,
+            "nrbon": 5,
+            "locatie": 1,
+            "departament_listare": "MAGAZIN",
+            "continut": "\n\nC.I.F.: \nC.I.F. CLIENT: \n2026-09-12 06:22:32\nLEI\nOPERATOR:  \n\nProdus: 7DAYS MINI CACAO 185\nCantitate: 1.0 H87 X 12.50 LEI\nValoare Vânzare: 12.50 LEI\n\nTOTAL LEI: 12.50 LEI\nRest: 0.00 LEI\n\nFARA TVA: 2.170 LEI\nTOTAL TVA: 2.170 LEI\n\nNr. nota: 5\n"
+        }
+    ]
+}
