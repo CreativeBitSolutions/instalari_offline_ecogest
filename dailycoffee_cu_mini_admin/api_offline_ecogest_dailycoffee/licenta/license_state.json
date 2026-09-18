@@ -1,0 +1,13 @@
+{
+    "license": {
+        "version": 1,
+        "client_id": 2,
+        "hardware_serial": "0000_0000_0000_0000_0026_B778_42D5_DC45.",
+        "installation_uuid": "dailycoffee-c2-l2-pos1-i-e5ca6a38584a468b",
+        "issued_at": "2026-09-17T07:14:28+03:00",
+        "expires_at": "2026-10-17T07:14:28+03:00"
+    },
+    "signature": "IhzsqVxH7zqZ0a9Q3fopWSmET3FJLT8FGvvsRUcl02T87iuAkQ5LSf8UP9IDnmzn9c4zfT7uql9SDAGIw0LuFUWPC7WGMTi3V0OTfOgMuhPAwf7YlXCIs50CW9ezME9UC1B+QOjO0SSx2hXeoAUoe2vtXJKzT6xvS3bzxoUrdxA/PQcUBgXsRU6vrOKHm21yojZHI2kTCjdgq6VtbxwbKYi4RA/Sbru6s71XH9OWIjFKyYCrO3A3tTE4frfS4+er9rBQ70kgEK2tAOpCTqThtV7wrqLZx70eStieowQz3KXmp+l/+8UxFLfZJzGYGrcP861lA9iOzEQKQJx+j3z79Q==",
+    "signature_algorithm": "SHA256withRSA",
+    "saved_at": "2026-09-17T06:14:30+02:00"
+}

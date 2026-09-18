@@ -71,9 +71,11 @@ if (!function_exists('agecs_z_interval')) {
 if (!function_exists('agecs_z_regular_report')) {
     function agecs_z_regular_report(PDO $pdo, int $clientId, int $locationId, int $reportNumber): string
     {
-        // Pentru 1008 și 1021, notele PROTOCOL apar exclusiv pe al doilea document.
-        $separateProtocol = in_array($clientId, [25, 26, 1008, 1021], true);
-        $protocolFilter = $separateProtocol ? ' AND COALESCE(n.protocol, 0) <= 0 ' : '';
+        // Pentru 25 și 26, notele PROTOCOL nu apar pe raportul Z de produse.
+        // Pentru 1008 și 1021, acestea apar exclusiv pe al doilea document.
+        $separateProtocol = in_array($clientId, [1008, 1021], true);
+        $excludeProtocolFromMainReport = in_array($clientId, [25, 26, 1008, 1021], true);
+        $protocolFilter = $excludeProtocolFromMainReport ? ' AND COALESCE(n.protocol, 0) <= 0 ' : '';
         $params = ['loc' => $locationId, 'rz' => $reportNumber];
         $interval = agecs_z_interval($pdo, $locationId, $reportNumber);
 
@@ -164,7 +166,7 @@ if (!function_exists('agecs_z_regular_report')) {
         $out .= 'TOTAL NUMERAR: ' . agecs_z_number($grand['numerar']) . " LEI\n";
         $out .= 'TOTAL CARD: ' . agecs_z_number($grand['card']) . " LEI\n";
         $out .= 'TOTAL TICHETE: ' . agecs_z_number($grand['tichete']) . " LEI\n";
-        if (!$separateProtocol) {
+        if (!$excludeProtocolFromMainReport) {
             $out .= 'TOTAL PROTOCOL: ' . agecs_z_number($grand['protocol']) . " LEI\n";
         }
         $out .= 'TOTAL ONLINE: ' . agecs_z_number($grand['glovo']) . " LEI\n";
@@ -311,7 +313,7 @@ if (!function_exists('agecs_z_print_documents')) {
             'continut' => agecs_z_regular_report($pdo, $clientId, $locationId, $reportNumber),
         ]];
 
-        if (in_array($clientId, [25, 26, 1008, 1021], true)) {
+        if (in_array($clientId, [1008, 1021], true)) {
             $protocolContent = agecs_z_protocol_report($pdo, $locationId, $reportNumber);
             if ($protocolContent !== null) {
                 $documents[] = [

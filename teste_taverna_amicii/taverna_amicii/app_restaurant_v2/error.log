@@ -5,3 +5,5 @@
 [2026-09-15 13:50:23] Eroare insert raport Z: SQLSTATE[23000]: Integrity constraint violation: 19 UNIQUE constraint failed: rapoarte_z.cod_locatie, rapoarte_z.serie_casa_marcat, rapoarte_z.nui, rapoarte_z.serie_memorie_fiscala, rapoarte_z.nr_raport_z în C:\xampp\htdocs\github\instalari_offline_ecogest\teste_taverna_amicii\taverna_amicii\app_restaurant_v2\vanzare_inchidere_zi_automata.php:163
 [2026-09-15 13:50:23] WARNING - Eroare update miscari: SQLSTATE[HY000]: General error: 1 no such column: serie_casa_marcat
 [2026-09-15 14:06:49] WARNING - Eroare update miscari: SQLSTATE[HY000]: General error: 1 no such column: serie_casa_marcat
+[2026-09-15 14:19:31] WARNING - Eroare update miscari: SQLSTATE[HY000]: General error: 1 no such column: serie_casa_marcat
+[2026-09-15 14:30:41] WARNING - Eroare update miscari: SQLSTATE[HY000]: General error: 1 no such column: serie_casa_marcat

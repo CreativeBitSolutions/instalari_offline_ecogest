@@ -3,6 +3,7 @@ declare(strict_types=1);
 include('session.php');
 require_once __DIR__ . '/totaluri_plata_helper.php';
 require_once __DIR__ . '/offline_printer_flow_helper.php';
+require_once __DIR__ . '/raport_z_imprimanta_helper.php';
 header('Content-Type: application/json; charset=utf-8');
 
 date_default_timezone_set('Europe/Bucharest');
@@ -354,9 +355,20 @@ try {
                     });
                 }
                 
-                $clienti_redirect = [3, 8, 9, 23, 25, 26, 1008, 1021];
-                if (in_array($client_id, $clienti_redirect, true)) {
-                    $trigger_z = true; // Dăm flag interfeței să ceară listarea raportului termic Z
+                if ($client_id > 0) {
+                    try {
+                        $raportZJobs = agecs_z_print_documents($pdo, $client_id, $actorLocation, $nr_raport_z_nou);
+                        if (!agecs_offline_printer_enqueue(
+                            $raportZJobs,
+                            'Raportul Z a fost adăugat automat în coada imprimantei.'
+                        )) {
+                            throw new RuntimeException('Coada imprimantei nu a putut fi actualizată.');
+                        }
+                    } catch (Throwable $printError) {
+                        error_log('Raportul Z ' . $nr_raport_z_nou . ' a fost generat, dar nu a putut fi adăugat în coada imprimantei: ' . $printError->getMessage());
+                        $_SESSION['offline_printer_error'] = 'Raportul Z este salvat, dar documentul nu a putut fi pus în coada imprimantei. Folosiți relistarea.';
+                        $trigger_z = true;
+                    }
                 }
             } catch (Exception $e) {
                 if ($pdo->inTransaction()) {

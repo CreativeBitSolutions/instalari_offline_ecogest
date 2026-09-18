@@ -85,6 +85,14 @@ try {
         unset($document);
     }
 
+    $hasProtocolDocument = false;
+    foreach ($documents as $document) {
+        if (strpos((string)($document['continut'] ?? ''), 'RAPORT PRODUSE PROTOCOL') !== false) {
+            $hasProtocolDocument = true;
+            break;
+        }
+    }
+
     $queueHelper = rtrim((string)$baseDirectory, '/\\')
         . DIRECTORY_SEPARATOR . 'printer_queue_atomic_helper.php';
     if (!is_file($queueHelper)) {
@@ -94,12 +102,16 @@ try {
     if (!agecs_printer_queue_append_documents(
         $queuePath,
         $documents,
-        'Închiderea turei, raportul Z și raportul PROTOCOL au fost grupate pentru imprimare.'
+        $hasProtocolDocument
+            ? 'Închiderea turei, raportul Z și raportul PROTOCOL au fost grupate pentru imprimare.'
+            : 'Închiderea turei și raportul Z au fost grupate pentru imprimare.'
     )) {
         throw new RuntimeException('Coada combinată de imprimare nu a putut fi scrisă.');
     }
     unset($_SESSION['restaurant_pending_closure_print']);
-    agecs_special_z_update_loading_status('Închiderea, raportul Z și foaia PROTOCOL au fost trimise împreună la imprimantă.');
+    agecs_special_z_update_loading_status($hasProtocolDocument
+        ? 'Închiderea, raportul Z și foaia PROTOCOL au fost trimise împreună la imprimantă.'
+        : 'Închiderea și raportul Z au fost trimise împreună la imprimantă.');
 } catch (Throwable $error) {
     error_log('vanzare_listare_inchidere_zi: ' . $error->getMessage());
     $_SESSION['offline_printer_error'] = 'Închiderea și raportul Z sunt salvate, dar documentele nu au putut fi puse în coada imprimantei. Folosiți relistarea după verificarea scannerului.';

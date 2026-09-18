@@ -31,7 +31,7 @@ $nui = max(0, (int)($_POST['nui'] ?? $_GET['nui'] ?? $currentIdentity['nui']));
 $memory = restaurant_offline_z_recovery_normalize_memory((string)($_POST['serie_memorie_fiscala'] ?? $_GET['serie_memorie_fiscala'] ?? $currentIdentity['serie_memorie_fiscala']));
 $reportNumber = max(0, (int)($_POST['nr_raport_z'] ?? $_GET['nr_raport_z'] ?? 0));
 $reportTime = trim((string)($_POST['ora_raport_z'] ?? date('H:i:s')));
-$printMode = (string)($_POST['mod_tiparire'] ?? 'none');
+$printMode = (string)($_POST['mod_tiparire'] ?? 'all');
 $action = (string)($_POST['action'] ?? '');
 $preview = null;
 $success = '';
@@ -40,6 +40,7 @@ $error = '';
 $syncResult = null;
 $syncEventUuid = '';
 $reportNumberSuggested = false;
+$availableDays = [];
 
 if (!isset($_SESSION['csrf_sefsala_recuperare_z'])) {
     $_SESSION['csrf_sefsala_recuperare_z'] = bin2hex(random_bytes(24));
@@ -52,6 +53,7 @@ try {
     if (!$historicalIdentities && $_SERVER['REQUEST_METHOD'] !== 'POST') {
         $historicalIdentities = [['serie_casa_marcat' => $cashSeries, 'nui' => $nui, 'serie_memorie_fiscala' => $memory]];
     }
+    $availableDays = restaurant_offline_z_recovery_available_days($pdo, $adminLocation, $cashSeries, $nui, $memory);
     if ($reportNumber <= 0) {
         $suggestedReportNumber = restaurant_offline_z_recovery_suggest_report_number(
             $pdo,
@@ -122,13 +124,18 @@ try {
                     : 'Datele locale au fost reparate, dar pachetul pentru actualizarea online nu a putut fi pregătit. Detalii: ' . $syncError->getMessage();
             }
 
-            $printResult = restaurant_offline_z_recovery_queue_print(
-                $pdo,
-                $clientId,
-                $adminLocation,
-                $result,
-                trim((string)($admin['admin_firstname'] ?? '') . ' ' . (string)($admin['admin_lastname'] ?? ''))
-            );
+            try {
+                $printResult = restaurant_offline_z_recovery_queue_print(
+                    $pdo,
+                    $clientId,
+                    $adminLocation,
+                    $result,
+                    trim((string)($admin['admin_firstname'] ?? '') . ' ' . (string)($admin['admin_lastname'] ?? ''))
+                );
+            } catch (Throwable $printError) {
+                error_log('Recuperare Z: datele locale au fost salvate, dar tipărirea a eșuat: ' . $printError->getMessage());
+                $printResult = ['queued' => false, 'documents' => 0, 'message' => 'Datele au fost reparate, dar documentele nu au putut fi puse în coada imprimantei.'];
+            }
             $onlineSyncStatus = (string)($syncResult['local_status'] ?? '');
             if ($onlineSyncStatus === 'sent') {
                 $onlineSyncMessage = ' Actualizarea dedicată online a fost confirmată.';
@@ -343,6 +350,23 @@ function restaurant_offline_z_h(string $value): string
             </div>
         <?php endif; ?>
     <?php endif; ?>
+
+    <div class="card mt-3">
+        <div class="card-header">Zile disponibile pentru recuperarea raportului Z</div>
+        <div class="card-body">
+            <?php if ($availableDays): ?>
+                <?php foreach ($availableDays as $availableDay): ?>
+                    <div><?php echo restaurant_offline_z_h((string)$availableDay['report_date']); ?>,
+                        <?php echo restaurant_offline_z_h((string)$availableDay['unassigned_count']); ?> note nelegate,
+                        <?php echo restaurant_offline_z_h((string)$availableDay['operator_count']); ?> operatori,
+                        <?php echo restaurant_offline_z_h(number_format((float)$availableDay['total_value'], 2, ',', '.')); ?> lei
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <span class="text-muted">Nu există zile cu note offline finalizate și nelegate la un raport Z pentru locația și identitatea fiscală selectate.</span>
+            <?php endif; ?>
+        </div>
+    </div>
 
     <?php if ($recentSyncs): ?>
         <div class="card mt-3">

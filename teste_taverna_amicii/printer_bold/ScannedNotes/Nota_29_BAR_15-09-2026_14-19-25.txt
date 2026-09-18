@@ -1,0 +1,15 @@
+﻿<b><size="11">NOTA PROTOCOL</size></b>
+<b><size="11">TAVERNA AMICII</size></b>
+<b><size="11">2026-09-15 14:19:25</size></b>
+<b><size="11">OPERATOR: OSPATAR1 -</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">AVALANCHE 200ML</size></b>
+<b><size="11">  1.0 x 21.00 = 21.00 LEI (TVA 21.0%)</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">TOTAL: 21.00 LEI</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">Prot.: 21.00 LEI</size></b>
+<b><size="11">TOTAL 21.0%: 21.00 LEI</size></b>
+<b><size="11">--------------------</size></b>
+<b><size="11">Nr. nota: 29</size></b>
+<b><size="11">Va multumim!</size></b>

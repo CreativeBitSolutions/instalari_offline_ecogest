@@ -2,6 +2,7 @@
 declare(strict_types=1);
 include('session.php');
 require_once __DIR__ . '/totaluri_plata_helper.php';
+require_once __DIR__ . '/sefsala_raport_z_print_helper.php';
 header('Content-Type: application/json; charset=utf-8');
 
 date_default_timezone_set('Europe/Bucharest');
@@ -230,6 +231,7 @@ try {
     // ==========================================================
     // 5. GENERARE LISTARE IMPRIMANTA (bon inchidere tura operator)
     // ==========================================================
+    $json_file_path = '';
     if ($client_id > 0) {
         $stmtList = $pdo->prepare("SELECT numerar, card, tichete, protocol, glovo, virament_bancar FROM note WHERE cod_inchidere = ? AND locatie = ?");
         $stmtList->execute([$codInchidereNou, $actorLocation]);
@@ -353,9 +355,16 @@ try {
                     });
                 }
                 
-                $clienti_redirect = [3, 8, 9, 23, 25, 26, 1008];
-                if (in_array($client_id, $clienti_redirect, true)) {
-                    $trigger_z = true; // Dăm flag interfeței să ceară listarea raportului termic Z
+                if ($client_id > 0 && $json_file_path !== '') {
+                    try {
+                        $raportZJobs = sefsala_offline_z_jobs($pdo, $client_id, $actorLocation, $nr_raport_z_nou, $raportZNui, $raportZMemory);
+                        if (!sefsala_offline_append_jobs($json_file_path, $raportZJobs)) {
+                            throw new RuntimeException('Coada imprimantei nu a putut fi actualizată.');
+                        }
+                    } catch (Throwable $printError) {
+                        error_log('Raportul Z ' . $nr_raport_z_nou . ' a fost generat, dar nu a putut fi adăugat în coada imprimantei: ' . $printError->getMessage());
+                        $trigger_z = true;
+                    }
                 }
             } catch (Exception $e) {
                 if ($pdo->inTransaction()) {

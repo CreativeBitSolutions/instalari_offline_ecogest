@@ -4,7 +4,7 @@
 - Client local în interfață: 999
 - Locație: 2
 - Tip: magazin cu gestiune locală extinsă
-- Instalare: `dailycoffee`
+- Instalare: `dailycoffee_cu_mini_admin`
 
 ## Reguli
 
@@ -13,9 +13,8 @@ Daily Coffee este singura instalare de magazin documentată cu NIR, achiziții �
 ## Surse
 
 - `tipuri_instalari_offline.txt`, secțiunea Daily Coffee.
-- `dailycoffee\config_offline_dailycoffee.json`.
+- `dailycoffee_cu_mini_admin\config_offline_dailycoffee.json`.
 - `agecsin\activitati_reguli_lucru\daily_coffee_client_id_2`.
 - `sincronizare_online_app_vanzare\import_operatiuni_offline.php`.
 
 Nu se copiază în documentație bazele SQLite, bonurile sau exporturile operaționale.
-

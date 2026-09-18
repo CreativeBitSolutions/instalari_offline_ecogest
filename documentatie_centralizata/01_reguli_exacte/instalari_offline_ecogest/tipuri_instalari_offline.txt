@@ -19,7 +19,7 @@ REGULĂ STRICTĂ PENTRU PROIECTELE DE COMPILARE
 1. REGULI COMUNE INSTALĂRILOR DE MAGAZIN
 =========================================
 
-Foldere vizate: agremprejba, andreearobertshop, bestmixt, dailycoffee, la_voinica, lorand și agecsdemo.
+Foldere vizate: agremprejba, andreearobertshop, bestmixt, dailycoffee_cu_mini_admin, la_voinica, lorand și agecsdemo.
 
 Structura obișnuită:
 - ecogest_offline_<client>: sursele PHP ale interfeței de vânzare și locul în care se păstrează executabilul compilat cu ExeOutput for PHP.
@@ -232,8 +232,8 @@ Tip: MAGAZIN CU GESTIUNE LOCALĂ EXTINSĂ, vânzare plus NIR și operațiuni de 
 Client folosit de interfață locală: 999.
 Client de sincronizare online: 2.
 Locație: 2.
-Aplicație: dailycoffee\ecogest_offline_daily.
-API local: dailycoffee\api_offline_ecogest_dailycoffee.
+Aplicație: dailycoffee_cu_mini_admin\ecogest_offline_dailycoffee.
+API local: dailycoffee_cu_mini_admin\api_offline_ecogest_dailycoffee.
 Baza: api_offline_ecogest_dailycoffee\db_local\pos.db.
 Profil de sincronizare: dailycoffee.
 Identitate configurată: dailycoffee-c2-l2-pos1.

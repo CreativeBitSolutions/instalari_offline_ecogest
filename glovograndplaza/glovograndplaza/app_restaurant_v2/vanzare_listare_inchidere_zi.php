@@ -274,43 +274,6 @@ update_loading_status("Se generează raportul Z din sistem...");
         ]];
 
         $pending = $_SESSION['restaurant_pending_closure_print'] ?? null;
-        if (in_array((int)$client_id, [25, 26], true)) {
-            $protocolStmt = $pdo->prepare("SELECT COALESCE(ps.nume, 'Produs fără denumire') AS produs,
-                                                  COALESCE(SUM(dn.cantitate), 0) AS cantitate,
-                                                  COALESCE(SUM(dn.valoare_vanzare_cu_tva), 0) AS valoare
-                                             FROM det_note dn
-                                             JOIN note n ON n.nrbon = dn.nr_bon
-                                             LEFT JOIN produse_servicii ps ON ps.cod_produs = dn.cod_p
-                                            WHERE n.locatie = :loc
-                                              AND n.status = 'F'
-                                              AND n.nr_raport_z = :rz
-                                              AND COALESCE(n.nui, 0) = :nui
-                                              AND COALESCE(n.serie_memorie_fiscala, '') = :memory
-                                              AND COALESCE(n.protocol, 0) > 0
-                                            GROUP BY COALESCE(ps.nume, 'Produs fără denumire')
-                                            ORDER BY produs");
-            $protocolStmt->execute(['loc' => $cod_locatie, 'rz' => $cur_z, 'nui' => $nui, 'memory' => $serie_memorie_fiscala]);
-            $protocolRows = $protocolStmt->fetchAll(PDO::FETCH_ASSOC);
-            if ($protocolRows) {
-                $protocolContent = "RAPORT PRODUSE PROTOCOL\nNr. raport Z: {$cur_z}\nLocația: {$cod_locatie}\n--------------------\n";
-                $protocolTotal = 0.0;
-                foreach ($protocolRows as $protocolRow) {
-                    $protocolContent .= number_format((float)$protocolRow['cantitate'], 3) . ' x ' . $protocolRow['produs'] . ' = ' . number_format((float)$protocolRow['valoare'], 2) . " LEI\n";
-                    $protocolTotal += (float)$protocolRow['valoare'];
-                }
-                $protocolContent .= "--------------------\nTOTAL PRODUSE PROTOCOL: " . number_format($protocolTotal, 2) . " LEI\nTOTAL PROTOCOL: " . number_format($protocolTotal, 2) . " LEI\n";
-                $printData[] = [
-                    'id' => 0,
-                    'data' => date('Y-m-d'),
-                    'ora' => date('H:i:s'),
-                    'de_trimis_la_imprimanta' => 1,
-                    'nrbon' => -($cur_z * 10 + 3),
-                    'locatie' => (int)$cod_locatie,
-                    'departament_listare' => 'BAR',
-                    'continut' => $protocolContent,
-                ];
-            }
-        }
 
         if (
             is_array($pending)

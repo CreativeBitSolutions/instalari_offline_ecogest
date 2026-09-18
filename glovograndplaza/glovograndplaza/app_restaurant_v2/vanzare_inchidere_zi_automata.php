@@ -1,6 +1,7 @@
 <?php //vanzare_inchidere_zi_automata.php
 // Include fișierul de sesiune (conține conexiunea la BD și obiectul $pdo)
 include('session.php');
+require_once __DIR__ . '/sefsala_raport_z_print_helper.php';
 
 date_default_timezone_set('Europe/Bucharest');
 
@@ -326,20 +327,33 @@ if ($has_S > 0) {
 
         // --------------- RAPORT VANZARI TOTALE IMPRIMANTA TERMICA---------------
 
-    $clienti_redirect = [3, 8, 9, 23, 25, 26, 1008, 1014, 1021];
-
-if (isset($_SESSION['client_id']) && in_array((int)$_SESSION['client_id'], $clienti_redirect, true)) {
-    $cur_z = (int)$nr_raport_z;
-
-    $listareQuery = http_build_query([
-        'nr_raport_z' => $cur_z,
-        'serie_casa_marcat' => $serie,
-        'nui' => $nui,
-        'serie_memorie_fiscala' => $serie_memorie_fiscala,
-    ]);
-    header("Location: vanzare_listare_inchidere_zi.php?{$listareQuery}");
-    exit;
-}
+        $clientIdPrint = (int)($_SESSION['client_id'] ?? 0);
+        $zQueued = false;
+        if ($clientIdPrint > 0) {
+            try {
+                $zJobs = sefsala_offline_z_jobs($pdo, $clientIdPrint, (int)$cod_locatie, (int)$nr_raport_z, (int)$nui, (string)$serie_memorie_fiscala);
+                $pending = $_SESSION['restaurant_pending_closure_print'] ?? null;
+                if (is_array($pending) && isset($pending['jobs']) && is_array($pending['jobs'])) {
+                    $zJobs = array_values(array_merge($pending['jobs'], $zJobs));
+                }
+                $queueDirectory = rtrim((string)RESTAURANT_OFFLINE_API_DIR, '/\\') . DIRECTORY_SEPARATOR . $clientIdPrint . DIRECTORY_SEPARATOR . (int)$cod_locatie;
+                if (!is_dir($queueDirectory) && !mkdir($queueDirectory, 0777, true) && !is_dir($queueDirectory)) {
+                    throw new RuntimeException('Folderul cozii imprimantei nu a putut fi creat.');
+                }
+                $zQueued = sefsala_offline_append_jobs($queueDirectory . DIRECTORY_SEPARATOR . 'de_listat_la_imprimanta.json', $zJobs);
+                if (!$zQueued) {
+                    throw new RuntimeException('Coada imprimantei nu a putut fi actualizată.');
+                }
+                unset($_SESSION['restaurant_pending_closure_print']);
+            } catch (Throwable $printError) {
+                error_log('Raportul Z ' . $nr_raport_z . ' a fost generat, dar nu a putut fi pus direct în coada imprimantei: ' . $printError->getMessage());
+            }
+        }
+        if (!$zQueued) {
+            $listareQuery = http_build_query(['nr_raport_z' => (int)$nr_raport_z, 'serie_casa_marcat' => $serie, 'nui' => $nui, 'serie_memorie_fiscala' => $serie_memorie_fiscala]);
+            header("Location: vanzare_listare_inchidere_zi.php?{$listareQuery}");
+            exit;
+        }
 
         }
 

@@ -129,6 +129,25 @@ function restaurant_offline_z_recovery_notes(PDO $pdo, int $locationId, string $
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function restaurant_offline_z_recovery_available_days(PDO $pdo, int $locationId, string $cashSeries, int $nui, string $memory): array
+{
+    $stmt = $pdo->prepare("SELECT DATE(data_bon) AS report_date,
+                                 SUM(CASE WHEN status = 'F' AND nr_raport_z = 0 THEN 1 ELSE 0 END) AS unassigned_count,
+                                 COUNT(DISTINCT CASE WHEN status = 'F' AND nr_raport_z = 0 THEN operator END) AS operator_count,
+                                 COALESCE(SUM(CASE WHEN status = 'F' AND nr_raport_z = 0 THEN valoare_vanzare_cu_tva ELSE 0 END), 0) AS total_value,
+                                 SUM(CASE WHEN status = 'S' THEN 1 ELSE 0 END) AS open_count
+                            FROM note
+                           WHERE locatie = ?
+                             AND COALESCE(serie_casa_marcat, '') = ?
+                             AND CAST(COALESCE(nui, 0) AS INTEGER) = CAST(? AS INTEGER)
+                             AND COALESCE(serie_memorie_fiscala, '') = ?
+                           GROUP BY DATE(data_bon)
+                          HAVING unassigned_count > 0 AND open_count = 0
+                           ORDER BY report_date DESC");
+    $stmt->execute([$locationId, trim($cashSeries), max(0, $nui), restaurant_offline_z_recovery_normalize_memory($memory)]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 function restaurant_offline_z_recovery_suggest_report_number(PDO $pdo, int $locationId, string $date, string $cashSeries, int $nui, string $memory): int
 {
     $date = restaurant_offline_z_recovery_validate_date($date);

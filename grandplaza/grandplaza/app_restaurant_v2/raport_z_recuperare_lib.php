@@ -129,6 +129,25 @@ function restaurant_offline_z_recovery_notes(PDO $pdo, int $locationId, string $
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function restaurant_offline_z_recovery_available_days(PDO $pdo, int $locationId, string $cashSeries, int $nui, string $memory): array
+{
+    $stmt = $pdo->prepare("SELECT DATE(data_bon) AS report_date,
+                                 SUM(CASE WHEN status = 'F' AND nr_raport_z = 0 THEN 1 ELSE 0 END) AS unassigned_count,
+                                 COUNT(DISTINCT CASE WHEN status = 'F' AND nr_raport_z = 0 THEN operator END) AS operator_count,
+                                 COALESCE(SUM(CASE WHEN status = 'F' AND nr_raport_z = 0 THEN valoare_vanzare_cu_tva ELSE 0 END), 0) AS total_value,
+                                 SUM(CASE WHEN status = 'S' THEN 1 ELSE 0 END) AS open_count
+                            FROM note
+                           WHERE locatie = ?
+                             AND COALESCE(serie_casa_marcat, '') = ?
+                             AND CAST(COALESCE(nui, 0) AS INTEGER) = CAST(? AS INTEGER)
+                             AND COALESCE(serie_memorie_fiscala, '') = ?
+                           GROUP BY DATE(data_bon)
+                          HAVING unassigned_count > 0 AND open_count = 0
+                           ORDER BY report_date DESC");
+    $stmt->execute([$locationId, trim($cashSeries), max(0, $nui), restaurant_offline_z_recovery_normalize_memory($memory)]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 function restaurant_offline_z_recovery_suggest_report_number(PDO $pdo, int $locationId, string $date, string $cashSeries, int $nui, string $memory): int
 {
     $date = restaurant_offline_z_recovery_validate_date($date);
@@ -788,6 +807,9 @@ function restaurant_offline_z_recovery_shift_documents(PDO $pdo, int $locationId
 
 function restaurant_offline_z_recovery_printer_available(): bool
 {
+    if (is_file(__DIR__ . '/sefsala_raport_z_print_helper.php') && defined('RESTAURANT_OFFLINE_API_DIR')) {
+        return true;
+    }
     if (!is_file(__DIR__ . '/offline_printer_flow_helper.php')
         || !is_file(__DIR__ . '/raport_z_imprimanta_helper.php')
         || !defined('RESTAURANT_OFFLINE_API_DIR')) {
@@ -806,6 +828,31 @@ function restaurant_offline_z_recovery_queue_print(PDO $pdo, int $clientId, int 
     }
     if (!restaurant_offline_z_recovery_printer_available()) {
         return ['queued' => false, 'documents' => 0, 'message' => 'Datele au fost reparate. Această instalație nu are configurată coada locală pentru tipărire.'];
+    }
+    if (is_file(__DIR__ . '/sefsala_raport_z_print_helper.php')) {
+        require_once __DIR__ . '/sefsala_raport_z_print_helper.php';
+        $documents = (string)$result['print_mode'] === 'all'
+            ? restaurant_offline_z_recovery_shift_documents($pdo, $locationId, (array)$result['closure_codes'], (string)$result['date'], (string)$result['cash_series'], (int)$result['nui'], (string)$result['memory'], $actorLabel)
+            : [];
+        $zDocuments = sefsala_offline_z_jobs($pdo, $clientId, $locationId, (int)$result['report_number'], (int)$result['nui'], (string)$result['memory']);
+        foreach ($zDocuments as &$document) {
+            $document['data'] = (string)$result['date'];
+            $document['ora'] = (string)$result['time'];
+        }
+        unset($document);
+        $documents = array_merge($documents, $zDocuments);
+        if (!$documents) {
+            return ['queued' => false, 'documents' => 0, 'message' => 'Datele au fost reparate. Nu există documente de tipărit.'];
+        }
+        $queueDirectory = rtrim((string)RESTAURANT_OFFLINE_API_DIR, '/\\')
+            . DIRECTORY_SEPARATOR . $clientId . DIRECTORY_SEPARATOR . $locationId;
+        if (!is_dir($queueDirectory) && !mkdir($queueDirectory, 0777, true) && !is_dir($queueDirectory)) {
+            throw new RuntimeException('Folderul cozii imprimantei nu a putut fi creat.');
+        }
+        if (!sefsala_offline_append_jobs($queueDirectory . DIRECTORY_SEPARATOR . 'de_listat_la_imprimanta.json', $documents)) {
+            throw new RuntimeException('Coada imprimantei nu a putut fi actualizată.');
+        }
+        return ['queued' => true, 'documents' => count($documents), 'message' => 'Documentele au fost puse în coada locală a imprimantei.'];
     }
     require_once __DIR__ . '/offline_printer_flow_helper.php';
     require_once __DIR__ . '/raport_z_imprimanta_helper.php';

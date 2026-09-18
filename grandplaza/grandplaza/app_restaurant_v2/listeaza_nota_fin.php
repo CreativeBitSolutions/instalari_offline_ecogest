@@ -99,7 +99,8 @@ if (empty($_SESSION['nr_bon'])) {
 
         $produseGrupate = [];
         foreach ($rowsDet as $row) {
-            $cheie = trim($row['nume'])
+            $row['observatie_produs'] = (string)($row['observatie_produs'] ?? '');
+            $cheie = trim((string)($row['nume'] ?? ''))
                    . (trim($row['observatie_produs']) !== '' ? '_'.$row['observatie_produs'] : '');
             if (!isset($produseGrupate[$cheie])) {
                 $produseGrupate[$cheie] = $row;
@@ -130,7 +131,7 @@ if (empty($_SESSION['nr_bon'])) {
         $total_nota = 0;
         foreach ($produseGrupate as $prod) {
             $linie = $prod['nume'];
-            if (trim($prod['observatie_produs']) !== '') {
+            if (trim((string)($prod['observatie_produs'] ?? '')) !== '') {
                 $linie .= ' '.$prod['observatie_produs'];
             }
             $linie .= $cr;

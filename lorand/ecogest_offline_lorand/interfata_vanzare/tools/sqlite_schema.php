@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 if (!defined('LORAND_SQLITE_SCHEMA_VERSION')) {
-    define('LORAND_SQLITE_SCHEMA_VERSION', 1);
+    define('LORAND_SQLITE_SCHEMA_VERSION', 2);
 }
 
 function lorand_sqlite_quote_identifier(string $identifier): string
@@ -150,6 +150,116 @@ function lorand_sqlite_apply_schema(PDO $pdo): void
         )"
     );
     $pdo->exec('CREATE INDEX IF NOT EXISTS idx_offline_sync_outbox_due ON offline_sync_outbox (status, next_attempt_at, id)');
+
+    $pdo->exec(
+        "CREATE TABLE IF NOT EXISTS site_comenzi (
+            id_local INTEGER PRIMARY KEY AUTOINCREMENT,
+            id_comanda_online INTEGER NOT NULL,
+            uuid_comanda TEXT NOT NULL,
+            numar_comanda TEXT NOT NULL,
+            cod_locatie INTEGER NOT NULL DEFAULT 1,
+            status_comanda TEXT NOT NULL DEFAULT 'noua',
+            status_sync_pos TEXT NOT NULL DEFAULT 'sincronizata',
+            status_plata TEXT NOT NULL DEFAULT 'neplatita',
+            metoda_plata TEXT NOT NULL DEFAULT 'la_ridicare',
+            tip_predare TEXT NOT NULL DEFAULT 'ridicare',
+            data_ridicare TEXT NULL,
+            moneda TEXT NOT NULL DEFAULT 'RON',
+            subtotal REAL NOT NULL DEFAULT 0,
+            discount_total REAL NOT NULL DEFAULT 0,
+            taxa_serviciu REAL NOT NULL DEFAULT 0,
+            taxa_livrare REAL NOT NULL DEFAULT 0,
+            total REAL NOT NULL DEFAULT 0,
+            observatii TEXT NULL,
+            client_nume_snapshot TEXT NOT NULL DEFAULT '',
+            client_email_snapshot TEXT NOT NULL DEFAULT '',
+            client_telefon_snapshot TEXT NOT NULL DEFAULT '',
+            factura_solicitata INTEGER NOT NULL DEFAULT 0,
+            factura_denumire TEXT NOT NULL DEFAULT '',
+            factura_cui TEXT NOT NULL DEFAULT '',
+            factura_nr_reg_com TEXT NOT NULL DEFAULT '',
+            factura_tara TEXT NOT NULL DEFAULT '',
+            factura_judet TEXT NOT NULL DEFAULT '',
+            factura_localitate TEXT NOT NULL DEFAULT '',
+            factura_adresa TEXT NOT NULL DEFAULT '',
+            factura_cod_postal TEXT NOT NULL DEFAULT '',
+            livrare_tara TEXT NOT NULL DEFAULT '',
+            livrare_judet TEXT NOT NULL DEFAULT '',
+            livrare_localitate TEXT NOT NULL DEFAULT '',
+            livrare_adresa TEXT NOT NULL DEFAULT '',
+            livrare_cod_postal TEXT NOT NULL DEFAULT '',
+            nr_bon_pos INTEGER NOT NULL DEFAULT 0,
+            operator_import INTEGER NOT NULL DEFAULT 0,
+            claim_token TEXT NOT NULL DEFAULT '',
+            importata_la TEXT NULL,
+            creata_la TEXT NOT NULL,
+            actualizata_la TEXT NOT NULL,
+            sincronizata_la TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(id_comanda_online),
+            UNIQUE(uuid_comanda),
+            UNIQUE(numar_comanda)
+        )"
+    );
+    $pdo->exec('CREATE INDEX IF NOT EXISTS idx_site_comenzi_status ON site_comenzi(status_comanda, status_sync_pos)');
+    $pdo->exec('CREATE INDEX IF NOT EXISTS idx_site_comenzi_locatie ON site_comenzi(cod_locatie, creata_la)');
+
+    $pdo->exec(
+        "CREATE TABLE IF NOT EXISTS site_comenzi_produse (
+            id_local INTEGER PRIMARY KEY AUTOINCREMENT,
+            id_linie_online INTEGER NOT NULL,
+            id_comanda_online INTEGER NOT NULL,
+            cod_produs INTEGER NOT NULL,
+            nume_produs_snapshot TEXT NOT NULL,
+            imagine_snapshot TEXT NOT NULL DEFAULT '',
+            um_snapshot TEXT NOT NULL DEFAULT '',
+            departament_snapshot TEXT NOT NULL DEFAULT '',
+            cantitate REAL NOT NULL DEFAULT 1,
+            cota_tva REAL NOT NULL DEFAULT 0,
+            pret_unitar_cu_tva REAL NOT NULL DEFAULT 0,
+            discount_linie REAL NOT NULL DEFAULT 0,
+            valoare_fara_tva REAL NOT NULL DEFAULT 0,
+            tva REAL NOT NULL DEFAULT 0,
+            valoare_cu_tva REAL NOT NULL DEFAULT 0,
+            observatie_produs TEXT NOT NULL DEFAULT '',
+            optiuni_json TEXT NULL,
+            UNIQUE(id_linie_online),
+            FOREIGN KEY(id_comanda_online) REFERENCES site_comenzi(id_comanda_online) ON DELETE CASCADE
+        )"
+    );
+    $pdo->exec('CREATE INDEX IF NOT EXISTS idx_site_comenzi_produse_comanda ON site_comenzi_produse(id_comanda_online)');
+    $pdo->exec('CREATE INDEX IF NOT EXISTS idx_site_comenzi_produse_produs ON site_comenzi_produse(cod_produs)');
+
+    $pdo->exec(
+        "CREATE TABLE IF NOT EXISTS site_comenzi_sync_state (
+            id INTEGER PRIMARY KEY CHECK (id = 1),
+            last_event_id INTEGER NOT NULL DEFAULT 0,
+            last_sync_at TEXT NULL,
+            last_success_at TEXT NULL,
+            last_error TEXT NULL,
+            updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+        )"
+    );
+    $pdo->exec('INSERT OR IGNORE INTO site_comenzi_sync_state(id, last_event_id) VALUES (1, 0)');
+
+    $pdo->exec(
+        "CREATE TABLE IF NOT EXISTS site_comenzi_outbox (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            event_uuid TEXT NOT NULL,
+            id_comanda_online INTEGER NOT NULL,
+            actiune TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            status TEXT NOT NULL DEFAULT 'pending',
+            attempts INTEGER NOT NULL DEFAULT 0,
+            next_attempt_at TEXT NULL,
+            last_http_code INTEGER NULL,
+            last_error TEXT NULL,
+            created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            sent_at TEXT NULL,
+            UNIQUE(event_uuid)
+        )"
+    );
+    $pdo->exec('CREATE INDEX IF NOT EXISTS idx_site_comenzi_outbox_status ON site_comenzi_outbox(status, next_attempt_at, id)');
+
     $pdo->exec(
         "CREATE TABLE IF NOT EXISTS offline_sync_entity_state (
             entity_type TEXT NOT NULL,
