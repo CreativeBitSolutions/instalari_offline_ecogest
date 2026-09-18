@@ -229,6 +229,7 @@ $offlinePendingReceiptCount = array_sum(array_map(static function (array $closur
                 echo "<a href='rapoarte_produse_lorand.php' class='header-btn' style='text-decoration:none'>📊 Rapoarte + PROTOCOL</a>";
             }
             if ((int)$client_agecs === 1019) echo "<a href='configurare_imprimanta_lorand.php' class='header-btn' style='text-decoration:none'>🖨️ Imprimantă</a>";
+            if ((int)$client_agecs === 1019) echo "<a href='vanzare_comenzi_site.php' class='header-btn' style='text-decoration:none'>🌐 Comenzi Site</a>";
             ?>
            <?php if ($client_agecs != 22): ?>
     <button data-toggle="modal" data-target="#sume_sertar" class="header-btn">💰 Sume Tura</button>

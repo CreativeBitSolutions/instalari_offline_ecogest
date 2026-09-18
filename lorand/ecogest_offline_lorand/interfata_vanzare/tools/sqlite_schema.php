@@ -150,7 +150,42 @@ function lorand_sqlite_apply_schema(PDO $pdo): void
         )"
     );
     $pdo->exec('CREATE INDEX IF NOT EXISTS idx_offline_sync_outbox_due ON offline_sync_outbox (status, next_attempt_at, id)');
+    $pdo->exec(
+        "CREATE TABLE IF NOT EXISTS offline_sync_entity_state (
+            entity_type TEXT NOT NULL,
+            entity_id TEXT NOT NULL,
+            payload_sha256 TEXT NOT NULL,
+            updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (entity_type, entity_id)
+        )"
+    );
+    $pdo->exec(
+        "CREATE TABLE IF NOT EXISTS offline_sync_runtime (
+            id INTEGER PRIMARY KEY CHECK (id = 1),
+            lock_token TEXT NULL,
+            locked_until TEXT NULL,
+            last_tick_at TEXT NULL,
+            last_success_at TEXT NULL,
+            last_error TEXT NULL
+        )"
+    );
+    $pdo->exec('INSERT OR IGNORE INTO offline_sync_runtime (id) VALUES (1)');
 
+    $pdo->exec(
+        "CREATE TABLE IF NOT EXISTS offline_license_runtime (
+            id INTEGER PRIMARY KEY CHECK (id = 1),
+            last_seen_epoch INTEGER NOT NULL DEFAULT 0,
+            last_server_epoch INTEGER NOT NULL DEFAULT 0,
+            last_attempt_epoch INTEGER NOT NULL DEFAULT 0,
+            last_success_epoch INTEGER NOT NULL DEFAULT 0,
+            last_error TEXT NOT NULL DEFAULT '',
+            updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+        )"
+    );
+    $pdo->exec('INSERT OR IGNORE INTO offline_license_runtime (id) VALUES (1)');
+
+    // AGECS Storefront -> Lorand offline POS. Tabele separate de fluxul operational existent.
+    // Nu se stocheaza parole ale clientilor in SQLite.
     $pdo->exec(
         "CREATE TABLE IF NOT EXISTS site_comenzi (
             id_local INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -239,7 +274,7 @@ function lorand_sqlite_apply_schema(PDO $pdo): void
             updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
         )"
     );
-    $pdo->exec('INSERT OR IGNORE INTO site_comenzi_sync_state(id, last_event_id) VALUES (1, 0)');
+    $pdo->exec('INSERT OR IGNORE INTO site_comenzi_sync_state(id, last_event_id) VALUES(1, 0)');
 
     $pdo->exec(
         "CREATE TABLE IF NOT EXISTS site_comenzi_outbox (
@@ -259,40 +294,6 @@ function lorand_sqlite_apply_schema(PDO $pdo): void
         )"
     );
     $pdo->exec('CREATE INDEX IF NOT EXISTS idx_site_comenzi_outbox_status ON site_comenzi_outbox(status, next_attempt_at, id)');
-
-    $pdo->exec(
-        "CREATE TABLE IF NOT EXISTS offline_sync_entity_state (
-            entity_type TEXT NOT NULL,
-            entity_id TEXT NOT NULL,
-            payload_sha256 TEXT NOT NULL,
-            updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            PRIMARY KEY (entity_type, entity_id)
-        )"
-    );
-    $pdo->exec(
-        "CREATE TABLE IF NOT EXISTS offline_sync_runtime (
-            id INTEGER PRIMARY KEY CHECK (id = 1),
-            lock_token TEXT NULL,
-            locked_until TEXT NULL,
-            last_tick_at TEXT NULL,
-            last_success_at TEXT NULL,
-            last_error TEXT NULL
-        )"
-    );
-    $pdo->exec('INSERT OR IGNORE INTO offline_sync_runtime (id) VALUES (1)');
-
-    $pdo->exec(
-        "CREATE TABLE IF NOT EXISTS offline_license_runtime (
-            id INTEGER PRIMARY KEY CHECK (id = 1),
-            last_seen_epoch INTEGER NOT NULL DEFAULT 0,
-            last_server_epoch INTEGER NOT NULL DEFAULT 0,
-            last_attempt_epoch INTEGER NOT NULL DEFAULT 0,
-            last_success_epoch INTEGER NOT NULL DEFAULT 0,
-            last_error TEXT NOT NULL DEFAULT '',
-            updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
-        )"
-    );
-    $pdo->exec('INSERT OR IGNORE INTO offline_license_runtime (id) VALUES (1)');
 
     $pdo->exec(
         "CREATE TABLE IF NOT EXISTS observatii_predefinite (
