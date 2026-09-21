@@ -14,6 +14,31 @@ function offline_sync_worker_json(int $code, array $data): void
     exit;
 }
 
+function offline_sync_worker_critical_import_issues(?array $response): array
+{
+    if (!is_array($response) || !is_array($response['results'] ?? null)) {
+        return [];
+    }
+
+    $issues = [];
+    foreach (['note', 'det_note'] as $table) {
+        $tableStats = is_array($response['results'][$table] ?? null)
+            ? $response['results'][$table]
+            : [];
+        foreach ((array)($tableStats['errors'] ?? []) as $error) {
+            $error = trim((string)$error);
+            if ($error !== '') {
+                $issues[] = $table . ': ' . $error;
+            }
+        }
+        if ((int)($tableStats['skipped'] ?? 0) > 0 && empty($tableStats['errors'])) {
+            $issues[] = $table . ': exista randuri omise la import.';
+        }
+    }
+
+    return array_slice($issues, 0, 12);
+}
+
 function offline_sync_worker_acquire(PDO $pdo): string
 {
     $token = bin2hex(random_bytes(12));
@@ -132,10 +157,12 @@ try {
     $response = is_string($responseBody) ? json_decode($responseBody, true) : null;
 
     $ack = is_array($response) && is_array($response['event_ack'] ?? null) ? $response['event_ack'] : [];
+    $responseIssues = offline_sync_worker_critical_import_issues($response);
     $accepted = $httpCode >= 200 && $httpCode < 300
         && in_array((string)($ack['status'] ?? ''), ['processed', 'already_processed'], true)
         && hash_equals((string)$event['event_uuid'], (string)($ack['event_uuid'] ?? ''))
-        && hash_equals((string)$event['payload_sha256'], (string)($ack['payload_sha256'] ?? ''));
+        && hash_equals((string)$event['payload_sha256'], (string)($ack['payload_sha256'] ?? ''))
+        && !$responseIssues;
 
     if ($accepted) {
         $stmt = $pdo->prepare("UPDATE offline_sync_outbox SET status = 'sent', sent_at = CURRENT_TIMESTAMP, locked_at = NULL, last_http_code = ?, last_error = NULL WHERE id = ?");
@@ -149,8 +176,11 @@ try {
     }
 
     $message = $curlError !== '' ? $curlError : (string)($response['message'] ?? ('Raspuns online HTTP ' . $httpCode));
+    if ($responseIssues) {
+        $message = 'Import online incomplet. Evenimentul ramane in coada pentru retrimitere. ' . implode(' | ', $responseIssues);
+    }
     $missingAckFromSuccessfulResponse = $httpCode >= 200 && $httpCode < 300 && !$ack;
-    $retryable = $httpCode === 0 || $httpCode === 429 || $httpCode >= 500 || $missingAckFromSuccessfulResponse || (bool)($response['retryable'] ?? false);
+    $retryable = $httpCode === 0 || $httpCode === 429 || $httpCode >= 500 || $missingAckFromSuccessfulResponse || (bool)($response['retryable'] ?? false) || (bool)$responseIssues;
     if ($retryable) {
         $delay = offline_sync_worker_retry_delay($attempts);
         $stmt = $pdo->prepare("UPDATE offline_sync_outbox SET status = 'retry', next_attempt_at = datetime('now', '+' || ? || ' seconds'), locked_at = NULL, last_http_code = ?, last_error = ? WHERE id = ?");

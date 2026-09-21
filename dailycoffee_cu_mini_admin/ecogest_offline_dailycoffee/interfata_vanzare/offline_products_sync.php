@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/database_connection.php';
+require_once __DIR__ . '/cache_tools.php';
 
 function dps_json(array $payload, int $status = 200): void
 {
@@ -788,6 +789,7 @@ try {
     $caBundle = trim((string)($syncConfig['ca_bundle_path'] ?? $config['ca_bundle_path'] ?? ''));
     $force = (string)($_GET['force'] ?? $_POST['force'] ?? '') === '1';
     $preview = (string)($_GET['preview'] ?? $_POST['preview'] ?? '') === '1';
+    $checkOnly = (string)($_GET['check_only'] ?? $_POST['check_only'] ?? '') === '1';
 
     if ($apiUrl === '' || $apiKey === '' || $clientId !== 2 || $location !== 2) {
         dps_json(['status' => 'disabled']);
@@ -801,6 +803,30 @@ try {
         'cod_locatie' => $location,
         'include_all_locations' => 1,
     ];
+
+    if ($checkOnly) {
+        $hashQuery = $baseQuery + ['hash_only' => 1];
+        if ($remoteHash !== '') {
+            $hashQuery['local_hash'] = $remoteHash;
+        }
+        $hashResponse = dps_http_get($apiUrl, $apiKey, $hashQuery, $timeout, $verifySsl, $caBundle);
+        $onlineHash = trim((string)($hashResponse['products_hash'] ?? ''));
+        $needsInitialSync = $remoteHash === '';
+        $changed = $needsInitialSync || (($hashResponse['changed'] ?? null) !== false);
+        dps_state_update($pdo, [
+            'last_check_at' => date('Y-m-d H:i:s'),
+            'last_status' => $changed ? 'changed' : 'unchanged',
+            'last_error' => null,
+        ]);
+        dps_json([
+            'status' => $changed ? 'changed' : 'unchanged',
+            'changed' => $changed,
+            'needs_initial_sync' => $needsInitialSync,
+            'products_hash' => $onlineHash,
+            'products_count' => (int)($hashResponse['products_count'] ?? 0),
+            'local_products_count' => (int)($state['products_count'] ?? 0),
+        ]);
+    }
 
     if (!$preview && !$force && $remoteHash !== '') {
         $hashResponse = dps_http_get($apiUrl, $apiKey, $baseQuery + [
@@ -871,6 +897,12 @@ try {
         ? dps_sync_product_locations($pdo, $productLocations, $mappingScope)
         : 0;
     $pdo->commit();
+
+    // Catalogul local s-a schimbat. Golim doar cache-ul instalarii curente,
+    // astfel incat urmatoarea scanare sa reconstruiasca datele produsului cu
+    // pretul, cota TVA si disponibilitatea actualizate.
+    invalidate_prodlists_for_client_location($clientId, $location);
+    invalidate_barcodes_for_client_location($clientId, $location);
 
     $newHash = trim((string)($response['products_hash'] ?? ''));
     dps_state_update($pdo, [

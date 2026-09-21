@@ -34,6 +34,13 @@
         catalogTimer = window.setTimeout(catalogTick, delay);
     }
 
+    function publishCatalogStatus(data) {
+        if (!data || (data.status !== 'changed' && data.status !== 'unchanged')) {
+            return;
+        }
+        window.dispatchEvent(new CustomEvent('offline-catalog-status-update', { detail: data }));
+    }
+
     function ensureBadge() {
         if (badge || !document.body) {
             return;
@@ -70,6 +77,20 @@
         }
     }
 
+    function refreshTransmissionIndicator() {
+        fetch('offline_sync_status.php?indicator=' + Date.now(), {
+            headers: { 'Accept': 'application/json' },
+            cache: 'no-store'
+        }).then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            if (data && data.status === 'success') {
+                window.dispatchEvent(new CustomEvent('offline-sync-status-update', { detail: data }));
+            }
+        }).catch(function () {
+        });
+    }
+
     function tick() {
         if (running) {
             return;
@@ -87,6 +108,9 @@
             return response.json();
         }).then(function (data) {
             render(data);
+            if (data && ['retry', 'blocked', 'sent'].indexOf(data.status) !== -1) {
+                refreshTransmissionIndicator();
+            }
             var queue = data && data.queue ? data.queue : {};
             var active = (queue.pending || 0) + (queue.sending || 0);
             if (active > 0) {
@@ -132,17 +156,15 @@
         catalogRunning = true;
         var controller = window.AbortController ? new AbortController() : null;
         var timeout = window.setTimeout(function () { if (controller) { controller.abort(); } }, 15000);
-        fetch('offline_products_sync.php', {
-            method: 'POST',
+        fetch('offline_products_sync.php?check_only=1', {
+            method: 'GET',
             headers: { 'Accept': 'application/json' },
             cache: 'no-store',
             signal: controller ? controller.signal : undefined
         }).then(function (response) {
             return response.json();
         }).then(function (data) {
-            if (data && data.status === 'synced' && /vanzare_magazin\.php$/i.test(window.location.pathname)) {
-                window.location.reload();
-            }
+            publishCatalogStatus(data);
         }).catch(function () {
         }).finally(function () {
             window.clearTimeout(timeout);
@@ -150,6 +172,10 @@
             scheduleCatalog(catalogIntervalMs);
         });
     }
+
+    window.offlineCatalogCheckNow = function () {
+        scheduleCatalog(0);
+    };
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function () {

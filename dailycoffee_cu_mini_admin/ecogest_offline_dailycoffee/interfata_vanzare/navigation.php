@@ -234,6 +234,9 @@ while ($row = $dstmt->fetch(PDO::FETCH_ASSOC)){
             <span class="nav-link-text">Produse vandute</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseprodvandute">
+            <li>
+              <a href="vanzari_pos.php">Vanzari POS, doar vizualizare</a>
+            </li>
              <form method="post"><h6 style='text-indent:20px;color:white'>   De la</h6><input class="form-control" name="data_start" value="<?php echo date('Y-m-d');?>" type="date"/><br/> <h6 style='text-indent:20px;color:white'>   Până la</h6><input class="form-control" name="data_end" value="<?php echo date('Y-m-d');?>" type="date"/><br/>
   <select style="width:100%" class="js-example-basic-single" name="gst">
     <option value="MP">Materii Prime</option>

@@ -101,7 +101,6 @@ $salesStmt = $pdo->prepare(
             n.locatie,
             n.operator,
             n.valoare_vanzare_cu_tva,
-            n.discount,
             n.tva_colectata,
             n.numerar,
             n.card,
@@ -116,7 +115,7 @@ $salesStmt = $pdo->prepare(
      LEFT JOIN det_note d ON d.nr_bon = n.nrbon
      WHERE $whereSql
      GROUP BY n.nrbon
-     ORDER BY date(n.data_bon) DESC, time(n.ora_bon) DESC, n.nrbon DESC
+     ORDER BY n.nrbon DESC, time(n.ora_bon) DESC, date(n.data_bon) DESC
      LIMIT 500"
 );
 $salesStmt->execute($params);
@@ -148,10 +147,8 @@ if ($selectedBon > 0) {
                     d.pret_vanzare,
                     d.valoare_vanzare,
                     d.valoare_vanzare_cu_tva,
-                    d.discount,
                     d.cota_tva,
                     d.tva_col,
-                    d.pachet,
                     d.data,
                     d.ora,
                     p.um
@@ -275,8 +272,6 @@ $baseQuery = $filters;
                                 <th>Valoare fara TVA</th>
                                 <th>TVA</th>
                                 <th>Total TVA</th>
-                                <th>Discount</th>
-                                <th>Pachet</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -291,8 +286,6 @@ $baseQuery = $filters;
                                     <td><?php echo money_ro($row['valoare_vanzare']); ?></td>
                                     <td><?php echo h($row['cota_tva']); ?>%</td>
                                     <td><?php echo money_ro($row['valoare_vanzare_cu_tva']); ?></td>
-                                    <td><?php echo money_ro($row['discount']); ?></td>
-                                    <td><?php echo h($row['pachet']); ?></td>
                                 </tr>
                             <?php endforeach; ?>
                             </tbody>
@@ -318,7 +311,6 @@ $baseQuery = $filters;
                     <th>Locatie</th>
                     <th>Operator</th>
                     <th>Total</th>
-                    <th>Discount</th>
                     <th>TVA</th>
                     <th>Numerar</th>
                     <th>Card</th>
@@ -343,7 +335,6 @@ $baseQuery = $filters;
                         <td><?php echo h($row['locatie']); ?></td>
                         <td><?php echo h($row['operator']); ?></td>
                         <td><?php echo money_ro($row['valoare_vanzare_cu_tva']); ?></td>
-                        <td><?php echo money_ro($row['discount']); ?></td>
                         <td><?php echo money_ro($row['tva_colectata']); ?></td>
                         <td><?php echo money_ro($row['numerar']); ?></td>
                         <td><?php echo money_ro($row['card']); ?></td>
@@ -357,7 +348,7 @@ $baseQuery = $filters;
                     </tr>
                 <?php endforeach; ?>
                 <?php if (!$sales): ?>
-                    <tr><td colspan="19" class="text-center text-muted">Nu exista vanzari pentru filtrele selectate.</td></tr>
+                    <tr><td colspan="18" class="text-center text-muted">Nu exista vanzari pentru filtrele selectate.</td></tr>
                 <?php endif; ?>
                 </tbody>
             </table>

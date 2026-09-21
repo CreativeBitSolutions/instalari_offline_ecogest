@@ -10,6 +10,13 @@ function redirect_categories()
     exit;
 }
 
+$catalogReadOnly = offline_catalog_is_online_managed();
+
+if ($catalogReadOnly && ($_SERVER['REQUEST_METHOD'] === 'POST' || isset($_GET['delete']))) {
+    $_SESSION['error_message'] = 'Categoriile se gestioneaza exclusiv in online. Sincronizarea produselor ramane disponibila.';
+    redirect_categories();
+}
+
 function upload_category_image($file, $current = '')
 {
     if (!isset($file) || $file['error'] === UPLOAD_ERR_NO_FILE) {
@@ -162,8 +169,14 @@ $categories = $pdo->query(
     <?php foreach ($messages as $message): ?><div class="alert alert-success"><?php echo htmlspecialchars($message); ?></div><?php endforeach; ?>
     <?php foreach ($errors as $error): ?><div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div><?php endforeach; ?>
 
+    <?php if ($catalogReadOnly): ?>
+        <div class="alert alert-info">Produsele si categoriile se gestioneaza exclusiv in online. Aceasta pagina este disponibila doar pentru vizualizare.</div>
+    <?php endif; ?>
+
     <div class="mb-3">
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#categoryModal" data-mode="add">Adauga categorie</button>
+        <?php if (!$catalogReadOnly): ?>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#categoryModal" data-mode="add">Adauga categorie</button>
+        <?php endif; ?>
     </div>
 
     <div class="card">
@@ -184,12 +197,18 @@ $categories = $pdo->query(
                 <?php foreach ($categories as $cat): ?>
                     <tr>
                         <td>
-                            <button class="btn btn-sm btn-warning edit-category"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#categoryModal"
-                                    data-category='<?php echo htmlspecialchars(json_encode($cat, JSON_UNESCAPED_UNICODE), ENT_QUOTES); ?>'>Editare</button>
+                            <?php if ($catalogReadOnly): ?>
+                                <span class="badge bg-secondary">Gestionare in online</span>
+                            <?php else: ?>
+                                <button class="btn btn-sm btn-warning edit-category"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#categoryModal"
+                                        data-category='<?php echo htmlspecialchars(json_encode($cat, JSON_UNESCAPED_UNICODE), ENT_QUOTES); ?>'>Editare</button>
+                            <?php endif; ?>
                             <a class="btn btn-sm btn-info" href="produse_admin.php?id_categorie=<?php echo (int)$cat['id_categorie']; ?>">Produse</a>
-                            <a class="btn btn-sm btn-danger" href="categorii_admin.php?delete=<?php echo (int)$cat['id_categorie']; ?>" onclick="return confirm('Stergere categorie?')">Sterge</a>
+                            <?php if (!$catalogReadOnly): ?>
+                                <a class="btn btn-sm btn-danger" href="categorii_admin.php?delete=<?php echo (int)$cat['id_categorie']; ?>" onclick="return confirm('Stergere categorie?')">Sterge</a>
+                            <?php endif; ?>
                         </td>
                         <td><?php echo (int)$cat['id_categorie']; ?></td>
                         <td><?php if (!empty($cat['imagine'])): ?><img class="cat-img" src="<?php echo htmlspecialchars($cat['imagine']); ?>"><?php endif; ?></td>
@@ -205,6 +224,7 @@ $categories = $pdo->query(
     </div>
 </div>
 
+<?php if (!$catalogReadOnly): ?>
 <div class="modal fade" id="categoryModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -238,9 +258,11 @@ $categories = $pdo->query(
         </div>
     </div>
 </div>
+<?php endif; ?>
 
 <script src="vendor/offline/bootstrap5/bootstrap.bundle.min.js"></script>
 <script>
+<?php if (!$catalogReadOnly): ?>
 const emptyCategory = { id_categorie: '', den_categ: '', desc_categ: '', se_vinde: '1' };
 
 function fillCategoryForm(category, mode) {
@@ -261,6 +283,7 @@ document.querySelectorAll('.edit-category').forEach(function (button) {
         fillCategoryForm(JSON.parse(this.dataset.category), 'save');
     });
 });
+<?php endif; ?>
 </script>
 </body>
 </html>

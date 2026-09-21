@@ -196,8 +196,8 @@ function offline_transaction_reset_execute(PDO $pdo, array $config): array
 
         offline_transaction_reset_update_existing_columns($pdo, 'admins_12', ['conectat' => '0']);
         offline_transaction_reset_update_existing_columns($pdo, 'mese', [
-            'stare' => '0', 'sold' => '0', 'cod_bratara' => 'NULL',
-            'date_posesor' => 'NULL', 'vandut_intrare' => '0', 'masa_comenzi_online' => '0',
+            'stare' => '0', 'sold' => '0', 'cod_bratara' => "''",
+            'date_posesor' => "''", 'vandut_intrare' => '0', 'masa_comenzi_online' => '0',
         ]);
         offline_transaction_reset_update_existing_columns($pdo, 'offline_sync_runtime', [
             'lock_token' => 'NULL', 'locked_until' => 'NULL', 'last_tick_at' => 'NULL',

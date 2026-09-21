@@ -16,6 +16,13 @@ function redirect_products()
     exit;
 }
 
+$catalogReadOnly = offline_catalog_is_online_managed();
+
+if ($catalogReadOnly && ($_SERVER['REQUEST_METHOD'] === 'POST' || isset($_GET['delete']))) {
+    $_SESSION['error_message'] = 'Produsele se gestioneaza exclusiv in online. Sincronizarea produselor ramane disponibila.';
+    redirect_products();
+}
+
 function clean_text_value($value)
 {
     return mb_strtoupper(trim((string)$value), 'UTF-8');
@@ -187,6 +194,10 @@ if (isset($_SESSION['success_message'])) {
     $messages[] = $_SESSION['success_message'];
     unset($_SESSION['success_message']);
 }
+if (isset($_SESSION['error_message'])) {
+    $errors[] = $_SESSION['error_message'];
+    unset($_SESSION['error_message']);
+}
 
 $categories = $pdo->query("SELECT id_categorie, den_categ FROM categorii ORDER BY den_categ")->fetchAll(PDO::FETCH_ASSOC);
 $gestiuni = $pdo->query("SELECT id_gestiune, denumire_gestiune FROM gestiuni ORDER BY denumire_gestiune")->fetchAll(PDO::FETCH_ASSOC);
@@ -285,10 +296,16 @@ foreach ($coteTva as $tva) {
         <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
     <?php endforeach; ?>
 
+    <?php if ($catalogReadOnly): ?>
+        <div class="alert alert-info">Produsele si categoriile se gestioneaza exclusiv in online. Aceasta pagina este disponibila doar pentru vizualizare, iar sincronizarea din online poate actualiza catalogul local.</div>
+    <?php endif; ?>
+
     <div class="card mb-3">
         <div class="card-body">
             <div class="d-flex flex-wrap gap-2 mb-3">
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal" data-mode="add">Adauga produs</button>
+                <?php if (!$catalogReadOnly): ?>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal" data-mode="add">Adauga produs</button>
+                <?php endif; ?>
                 <a class="btn btn-outline-primary" href="produse_admin.php?activ=1">Produse active</a>
                 <a class="btn btn-outline-secondary" href="produse_admin.php?activ=0">Produse inactive</a>
                 <a class="btn btn-outline-dark" href="produse_admin.php">Toate</a>
@@ -351,12 +368,18 @@ foreach ($coteTva as $tva) {
                 <?php foreach ($products as $row): ?>
                     <tr>
                         <td>
-                            <button class="btn btn-sm btn-warning edit-product"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#productModal"
-                                    data-product='<?php echo htmlspecialchars(json_encode($row, JSON_UNESCAPED_UNICODE), ENT_QUOTES); ?>'>Editare</button>
+                            <?php if ($catalogReadOnly): ?>
+                                <span class="badge bg-secondary">Gestionare in online</span>
+                            <?php else: ?>
+                                <button class="btn btn-sm btn-warning edit-product"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#productModal"
+                                        data-product='<?php echo htmlspecialchars(json_encode($row, JSON_UNESCAPED_UNICODE), ENT_QUOTES); ?>'>Editare</button>
+                            <?php endif; ?>
                             <a class="btn btn-sm btn-success" href="retete_admin.php?cod_p=<?php echo (int)$row['cod_produs']; ?>">Reteta</a>
-                            <a class="btn btn-sm btn-danger" href="produse_admin.php?delete=<?php echo (int)$row['cod_produs']; ?>" onclick="return confirm('Stergere produs?')">Sterge</a>
+                            <?php if (!$catalogReadOnly): ?>
+                                <a class="btn btn-sm btn-danger" href="produse_admin.php?delete=<?php echo (int)$row['cod_produs']; ?>" onclick="return confirm('Stergere produs?')">Sterge</a>
+                            <?php endif; ?>
                         </td>
                         <td><?php echo (int)$row['cod_produs']; ?></td>
                         <td><?php if (!empty($row['imagine'])): ?><img class="product-img" src="<?php echo htmlspecialchars($row['imagine']); ?>"><?php endif; ?></td>
@@ -381,6 +404,7 @@ foreach ($coteTva as $tva) {
     </div>
 </div>
 
+<?php if (!$catalogReadOnly): ?>
 <div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -427,9 +451,11 @@ foreach ($coteTva as $tva) {
         </div>
     </div>
 </div>
+<?php endif; ?>
 
 <script src="vendor/offline/bootstrap5/bootstrap.bundle.min.js"></script>
 <script>
+<?php if (!$catalogReadOnly): ?>
 const emptyProduct = {
     cod_produs: '', nume: '', descriere: '', pret_achizitie: '0', pret_cu_tva: '0',
     tip: 'produs', cota_tva: '', um: 'BUC', id_categorie: '', id_gestiune: '',
@@ -461,6 +487,7 @@ document.querySelectorAll('.edit-product').forEach(function (button) {
         fillProductForm(JSON.parse(this.dataset.product), 'save');
     });
 });
+<?php endif; ?>
 </script>
 </body>
 </html>

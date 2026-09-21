@@ -244,7 +244,7 @@ $offlinePendingReceiptCount = array_sum(array_map(static function (array $closur
             <button data-toggle="modal" data-target="#relistareboncasamarcat" class="header-btn">📠 Retrim. Bon la CM</button>
             <a href='reglare_casa_marcat.php'><button class='header-btn'>🔨 Reglare dif. CM</button></a>
             <button type="button" class="header-btn" data-toggle="modal" data-target="#adminModal"><i class="fas fa-tools"></i> Admin</button>
-            <button type="button" class="header-btn btn-info" data-toggle="modal" data-target="#offlineSyncStatusModal" title="Situație transmitere date online"><i class="fas fa-cloud-upload-alt"></i> Transmitere online</button>
+            <button type="button" id="offlineSyncStatusButton" class="header-btn btn-info" data-toggle="modal" data-target="#offlineSyncStatusModal" title="Situație transmitere date online"><i class="fas fa-cloud-upload-alt"></i> Transmitere online <span id="offlineSyncErrorBadge" class="offline-sync-error-badge d-none" aria-live="polite">0</span></button>
             <!-- Buton Export -->
 <button class="header-btn" data-toggle="modal" data-target="#exportOfflineModal" hidden aria-hidden="true">
     💾 Export BD
@@ -671,6 +671,7 @@ $offlinePendingReceiptCount = array_sum(array_map(static function (array $closur
 <?php include('modal_sume_zi_curenta.php');?>
 <?php include('modal_ghiduri.php');?>
 <?php include('modal_situatie_sincronizare.php');?>
+<?php include('offline_catalog_sync_alert.php');?>
 
 <?php include('modal_cui_verificare_offline.php'); ?>
 <div class="modal fade" id="numeric-keyboard-modal" tabindex="-1" role="dialog">

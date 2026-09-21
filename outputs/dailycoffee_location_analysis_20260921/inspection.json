@@ -1,0 +1,54 @@
+{
+  "inspectSummary": {
+    "recordCount": 9,
+    "truncated": false,
+    "metadata": {
+      "revision": "xljq12",
+      "target": {
+        "id": "wb/tmxnh1",
+        "beforeLines": 0,
+        "afterLines": 0
+      },
+      "kind": {
+        "requested": "workbook,sheet,table",
+        "tokens": [
+          "workbook",
+          "sheet",
+          "table"
+        ]
+      },
+      "include": {
+        "tokens": []
+      },
+      "exclude": {
+        "tokens": []
+      },
+      "notices": []
+    }
+  },
+  "formulaSummary": {
+    "recordCount": 1,
+    "truncated": false,
+    "metadata": {
+      "revision": "sg9ag1",
+      "target": {
+        "id": "wb/ume3ku",
+        "beforeLines": 0,
+        "afterLines": 0
+      },
+      "kind": {
+        "requested": "formula",
+        "tokens": [
+          "formula"
+        ]
+      },
+      "include": {
+        "tokens": []
+      },
+      "exclude": {
+        "tokens": []
+      },
+      "notices": []
+    }
+  }
+}

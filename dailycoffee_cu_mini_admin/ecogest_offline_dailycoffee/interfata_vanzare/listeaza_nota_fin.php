@@ -1,4 +1,13 @@
 <?php
+require_once __DIR__ . '/session.php';
+
+error_log(sprintf(
+    '[DAILYCOFFEE][PROTOCOL] curatare sesiune si revenire la vanzare, nr_bon=%s, admin_id=%s, locatie=%s',
+    (string)($_GET['nr_bon'] ?? $_SESSION['nr_bon'] ?? ''),
+    (string)($_SESSION['admin_id'] ?? ''),
+    (string)($_SESSION['cod_locatie'] ?? '')
+));
+
 //include('listeaza_nota.php');
 	
 	unset($_SESSION['nr_bon']);

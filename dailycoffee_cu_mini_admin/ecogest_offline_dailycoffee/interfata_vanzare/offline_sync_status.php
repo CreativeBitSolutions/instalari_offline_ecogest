@@ -55,7 +55,7 @@ function offline_sync_status_allowed_fields(string $table): array
     $common = ['identificator_offline', 'cod_locatie', 'locatie'];
     $fields = [
         'note' => ['nrbon', 'data_bon', 'ora_bon', 'operator', 'valoare_vanzare_cu_tva', 'tva_colectata', 'discount', 'numerar', 'card', 'cod_inchidere', 'nr_raport_z', 'nui', 'serie_memorie_fiscala'],
-        'det_note' => ['id_vanz', 'nr_bon', 'nume_produs', 'cantitate', 'pret_vanzare', 'valoare_vanzare_cu_tva', 'discount', 'cota_tva'],
+        'det_note' => ['id_vanz', 'nr_bon', 'cod_p', 'nume_produs', 'cantitate', 'pret_vanzare', 'valoare_vanzare_cu_tva', 'discount', 'cota_tva'],
         'discounturi_acordate' => ['id_discount', 'id_vanz', 'id_operator', 'valoare_discount', 'procent_discount', 'data', 'ora'],
         'bonuri_casa_marcat' => ['id', 'nrbon', 'data', 'ora', 'de_trimis_la_casa_marcat'],
         'inchideri_r_12' => ['id_inch', 'cod_inchidere', 'operator', 'data_inchiderii', 'ora_inchiderii', 'valoare_cu_tva', 'tva_colectata', 'nr_raport_z', 'nui', 'serie_memorie_fiscala'],
@@ -129,6 +129,83 @@ function offline_sync_status_add_operator_names(array &$items, array $operatorNa
     }
 }
 
+function offline_sync_status_compare_desc($leftValue, $rightValue, bool $numeric = false): int
+{
+    if ($numeric) {
+        return (int)$rightValue <=> (int)$leftValue;
+    }
+
+    return strcmp(trim((string)$rightValue), trim((string)$leftValue));
+}
+
+function offline_sync_status_compare_rows(string $table, array $left, array $right): int
+{
+    $leftData = (array)($left['data'] ?? []);
+    $rightData = (array)($right['data'] ?? []);
+    $sortFields = [
+        'note' => [
+            ['nrbon', true],
+            ['ora_bon', false],
+            ['data_bon', false],
+        ],
+        'det_note' => [
+            ['nr_bon', true],
+            ['id_vanz', true],
+        ],
+        'discounturi_acordate' => [
+            ['data', false],
+            ['ora', false],
+            ['id_discount', true],
+        ],
+        'bonuri_casa_marcat' => [
+            ['nrbon', true],
+            ['ora', false],
+            ['data', false],
+            ['id', true],
+        ],
+        'inchideri_r_12' => [
+            ['cod_inchidere', true],
+            ['ora_inchiderii', false],
+            ['data_inchiderii', false],
+            ['id_inch', true],
+        ],
+        'rapoarte_z' => [
+            ['nr_raport_z', true],
+            ['data_ora_raport_z', false],
+            ['id', true],
+        ],
+        'nir' => [
+            ['id_nir', true],
+            ['data_nir', false],
+            ['ora_nir', false],
+        ],
+        'achizitii' => [
+            ['nr_nir', true],
+            ['id_achiz', true],
+        ],
+        'miscari' => [
+            ['id', true],
+        ],
+        'log_reglari_casa_marcat' => [
+            ['id', true],
+        ],
+    ];
+
+    foreach ($sortFields[$table] ?? [] as [$field, $numeric]) {
+        $comparison = offline_sync_status_compare_desc(
+            $leftData[$field] ?? '',
+            $rightData[$field] ?? '',
+            $numeric
+        );
+        if ($comparison !== 0) {
+            return $comparison;
+        }
+    }
+
+    return (int)($right['transmission']['event_id'] ?? 0)
+        <=> (int)($left['transmission']['event_id'] ?? 0);
+}
+
 function offline_sync_status_extract_rows(array $events): array
 {
     $items = [];
@@ -188,6 +265,95 @@ function offline_sync_status_extract_rows(array $events): array
     return $items;
 }
 
+function offline_sync_status_error_rows(array $events): array
+{
+    $errors = [];
+
+    foreach ($events as $event) {
+        $lastError = trim((string)($event['last_error'] ?? ''));
+        if ($lastError === '') {
+            continue;
+        }
+
+        $detailRowsByCode = [];
+        $xmlText = trim((string)($event['payload_xml'] ?? ''));
+        if ($xmlText !== '') {
+            $previous = libxml_use_internal_errors(true);
+            $xml = simplexml_load_string($xmlText, 'SimpleXMLElement', LIBXML_NONET | LIBXML_NOCDATA);
+            libxml_clear_errors();
+            libxml_use_internal_errors($previous);
+
+            if ($xml) {
+                foreach ($xml->table as $tableNode) {
+                    if (trim((string)$tableNode['name']) !== 'det_note') {
+                        continue;
+                    }
+                    foreach ($tableNode->row as $rowNode) {
+                        $row = [];
+                        foreach ($rowNode->children() as $column => $value) {
+                            $row[(string)$column] = trim((string)$value);
+                        }
+                        $code = trim((string)($row['cod_p'] ?? ''));
+                        if ($code !== '') {
+                            $detailRowsByCode[$code][] = $row;
+                        }
+                    }
+                }
+            }
+        }
+
+        $missingCodes = [];
+        if (preg_match_all('/\bcod[_\s]?p(?:\s+offline)?\s*(?:=|:)?\s*([0-9]+)/iu', $lastError, $matches)) {
+            foreach ((array)($matches[1] ?? []) as $code) {
+                $code = trim((string)$code);
+                if ($code !== '') {
+                    $missingCodes[$code] = true;
+                }
+            }
+        }
+
+        $eventBase = [
+            'event_id' => (int)($event['id'] ?? 0),
+            'event_uuid' => trim((string)($event['event_uuid'] ?? '')),
+            'event_type' => trim((string)($event['event_type'] ?? '')),
+            'aggregate_type' => trim((string)($event['aggregate_type'] ?? '')),
+            'aggregate_id' => trim((string)($event['aggregate_id'] ?? '')),
+            'cod_locatie' => (int)($event['cod_locatie'] ?? 0),
+            'status' => trim((string)($event['status'] ?? '')),
+            'attempts' => (int)($event['attempts'] ?? 0),
+            'created_at' => offline_sync_status_local_time($event['created_at'] ?? null),
+            'next_attempt_at' => offline_sync_status_local_time($event['next_attempt_at'] ?? null),
+            'last_error' => $lastError,
+        ];
+
+        if ($missingCodes) {
+            foreach (array_keys($missingCodes) as $code) {
+                $detail = $detailRowsByCode[$code][0] ?? [];
+                $productName = trim((string)($detail['nume_produs'] ?? ''));
+                $bonNumber = trim((string)($detail['nr_bon'] ?? ''));
+                $errors[] = array_merge($eventBase, [
+                    'type' => 'missing_product',
+                    'cod_produs' => $code,
+                    'nume_produs' => $productName,
+                    'nr_bon' => $bonNumber,
+                    'instruction' => 'Creează în aplicația online produsul cu cod produs ' . $code . '. După salvare, păstrează același cod și lasă sincronizarea să reîncerce vânzarea.',
+                ]);
+            }
+            continue;
+        }
+
+        $errors[] = array_merge($eventBase, [
+            'type' => 'sync_error',
+            'cod_produs' => '',
+            'nume_produs' => '',
+            'nr_bon' => '',
+            'instruction' => 'Verifică mesajul de eroare, corectează cauza în aplicația online și lasă sincronizarea să reîncerce operațiunea.',
+        ]);
+    }
+
+    return array_slice($errors, 0, 200);
+}
+
 if (empty($_SESSION['admin_id'])) {
     offline_sync_status_response(401, [
         'status' => 'error',
@@ -218,8 +384,8 @@ try {
     $tables = [];
     foreach ($items as $table => $tableItems) {
         $rows = array_values($tableItems);
-        usort($rows, static function (array $left, array $right): int {
-            return (int)$right['transmission']['event_id'] <=> (int)$left['transmission']['event_id'];
+        usort($rows, static function (array $left, array $right) use ($table): int {
+            return offline_sync_status_compare_rows($table, $left, $right);
         });
         foreach ($rows as $item) {
             $status = (string)$item['transmission']['status'];
@@ -251,6 +417,15 @@ try {
     }
     unset($event);
 
+    $errorEvents = $pdo->query("SELECT id, event_uuid, event_type, aggregate_type, aggregate_id,
+            cod_locatie, status, attempts, next_attempt_at, last_error, created_at, payload_xml
+        FROM offline_sync_outbox
+        WHERE status IN ('retry', 'blocked', 'sending')
+          AND TRIM(COALESCE(last_error, '')) <> ''
+        ORDER BY id DESC
+        LIMIT 100")->fetchAll(PDO::FETCH_ASSOC);
+    $errors = offline_sync_status_error_rows($errorEvents);
+
     $config = offline_sync_queue_config();
     offline_sync_status_response(200, [
         'status' => 'success',
@@ -259,6 +434,11 @@ try {
         'counts' => $elementCounts,
         'transmission_counts' => $transmissionCounts,
         'tables' => $tables,
+        'errors' => $errors,
+        'error_count' => count($errors),
+        'error_event_count' => count(array_unique(array_map(static function (array $error): int {
+            return (int)($error['event_id'] ?? 0);
+        }, $errors))),
         'runtime' => [
             'last_tick_at' => offline_sync_status_local_time($runtime['last_tick_at'] ?? null),
             'last_success_at' => offline_sync_status_local_time($runtime['last_success_at'] ?? null),

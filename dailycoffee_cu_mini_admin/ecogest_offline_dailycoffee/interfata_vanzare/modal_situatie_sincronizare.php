@@ -28,6 +28,15 @@
     #offlineSyncStatusModal .sync-status.sending { background: #0d6efd; }
     #offlineSyncStatusModal .sync-status.retry { background: #d97706; }
     #offlineSyncStatusModal .sync-status.blocked { background: #dc3545; }
+    #offlineSyncStatusModal .sync-tab-error { color: #b42318; font-weight: 700; }
+    #offlineSyncStatusModal .sync-tab-error .sync-tab-count { background: #dc3545; color: #fff; }
+    #offlineSyncStatusModal .sync-error-instruction { min-width: 340px; max-width: 520px; white-space: normal; color: #1f2937; }
+    #offlineSyncStatusModal .sync-error-product { min-width: 180px; white-space: normal; }
+    #offlineSyncStatusButton.has-sync-errors { background: #dc3545; border-color: #b02a37; color: #fff; }
+    #offlineSyncStatusButton.has-sync-errors:hover,
+    #offlineSyncStatusButton.has-sync-errors:focus { background: #bb2d3b; border-color: #a52834; color: #fff; }
+    #offlineSyncStatusButton .offline-sync-error-badge { display: inline-block; min-width: 20px; margin-left: 4px; padding: 1px 6px; border-radius: 10px; background: #fff; color: #b42318; font-size: 12px; font-weight: 700; line-height: 1.35; text-align: center; vertical-align: 1px; }
+    #offlineSyncStatusButton .offline-sync-error-badge.d-none { display: none; }
     @media (max-width: 760px) {
         #offlineSyncStatusModal .sync-counts { grid-template-columns: repeat(2, minmax(110px, 1fr)); }
         #offlineSyncStatusModal .sync-meta { grid-template-columns: 1fr; }
@@ -87,6 +96,7 @@
     'use strict';
 
     var activeTab = 'note';
+    var userSelectedTab = false;
     var currentData = null;
     var statusLabels = {
         sent: 'Confirmat',
@@ -102,7 +112,7 @@
     };
     var tableDefinitions = [
         { key: 'note', label: 'Note', columns: [['nrbon', 'Bon'], ['data_bon', 'Data'], ['ora_bon', 'Ora'], ['operator_nume', 'Operator'], ['valoare_vanzare_cu_tva', 'Total cu TVA'], ['tva_colectata', 'TVA'], ['numerar', 'Numerar'], ['card', 'Card'], ['cod_inchidere', 'Închidere'], ['nr_raport_z', 'Raport Z']] },
-        { key: 'det_note', label: 'Detalii note', columns: [['id_vanz', 'ID linie'], ['nr_bon', 'Bon'], ['nume_produs', 'Produs'], ['cantitate', 'Cantitate'], ['pret_vanzare', 'Preț'], ['valoare_vanzare_cu_tva', 'Valoare'], ['discount', 'Discount'], ['cota_tva', 'TVA %']] },
+        { key: 'det_note', label: 'Detalii note', columns: [['id_vanz', 'ID linie'], ['nr_bon', 'Bon'], ['cod_p', 'Cod produs'], ['nume_produs', 'Produs'], ['cantitate', 'Cantitate'], ['pret_vanzare', 'Preț'], ['valoare_vanzare_cu_tva', 'Valoare'], ['discount', 'Discount'], ['cota_tva', 'TVA %']] },
         { key: 'discounturi_acordate', label: 'Discounturi', columns: [['id_discount', 'ID'], ['id_vanz', 'ID linie'], ['operator_nume', 'Operator'], ['valoare_discount', 'Valoare'], ['procent_discount', 'Procent'], ['data', 'Data'], ['ora', 'Ora']] },
         { key: 'bonuri_casa_marcat', label: 'Bonuri casă', columns: [['id', 'ID'], ['nrbon', 'Bon'], ['data', 'Data'], ['ora', 'Ora'], ['locatie', 'Locație']] },
         { key: 'inchideri_r_12', label: 'Închideri', columns: [['id_inch', 'ID'], ['cod_inchidere', 'Închidere'], ['operator_nume', 'Operator'], ['data_inchiderii', 'Data'], ['ora_inchiderii', 'Ora'], ['valoare_cu_tva', 'Total cu TVA'], ['tva_colectata', 'TVA'], ['nr_raport_z', 'Raport Z']] },
@@ -118,6 +128,24 @@
         if (element) {
             element.textContent = value === null || value === undefined || value === '' ? '-' : String(value);
         }
+    }
+
+    function updateSyncButton(data) {
+        var button = document.getElementById('offlineSyncStatusButton');
+        var badge = document.getElementById('offlineSyncErrorBadge');
+        if (!button || !badge) {
+            return;
+        }
+
+        var errorCount = Number(data && data.error_count ? data.error_count : 0);
+        var runtimeError = data && data.runtime && data.runtime.last_error ? 1 : 0;
+        var totalErrors = errorCount + runtimeError;
+        button.classList.toggle('has-sync-errors', totalErrors > 0);
+        badge.classList.toggle('d-none', totalErrors === 0);
+        badge.textContent = totalErrors > 99 ? '99+' : String(totalErrors);
+        button.title = totalErrors > 0
+            ? 'Există ' + totalErrors + ' ' + (totalErrors === 1 ? 'eroare activă' : 'erori active') + ' la transmiterea online. Deschide pentru detalii.'
+            : 'Situație transmitere date online';
     }
 
     function statusBadge(status) {
@@ -175,6 +203,49 @@
         });
     }
 
+    function renderErrorTable() {
+        var head = document.getElementById('offlineSyncTableHead');
+        var body = document.getElementById('offlineSyncTableBody');
+        var errors = currentData && Array.isArray(currentData.errors) ? currentData.errors : [];
+        var columns = ['Operațiune', 'Bon', 'Cod produs', 'Produs', 'Stare', 'Încercări', 'Creat', 'Eroare', 'Ce trebuie făcut'];
+        head.innerHTML = '';
+        body.innerHTML = '';
+        setText('offlineSyncTableTitle', 'Erori active (' + errors.length + ')');
+
+        columns.forEach(function (label) {
+            var th = document.createElement('th');
+            th.textContent = label;
+            head.appendChild(th);
+        });
+
+        if (!errors.length) {
+            var empty = document.createElement('tr');
+            var emptyCell = document.createElement('td');
+            emptyCell.colSpan = columns.length;
+            emptyCell.className = 'text-center text-muted py-3';
+            emptyCell.textContent = 'Nu există erori active de transmitere.';
+            empty.appendChild(emptyCell);
+            body.appendChild(empty);
+            return;
+        }
+
+        errors.forEach(function (error) {
+            var row = document.createElement('tr');
+            addCell(row, typeLabels[error.aggregate_type] || error.aggregate_type || error.event_type || '-');
+            addCell(row, error.nr_bon);
+            addCell(row, error.cod_produs);
+            addCell(row, error.nume_produs, 'sync-error-product');
+            var statusCell = document.createElement('td');
+            statusCell.appendChild(statusBadge(error.status));
+            row.appendChild(statusCell);
+            addCell(row, error.attempts);
+            addCell(row, error.created_at);
+            addCell(row, error.last_error, 'sync-error-text');
+            addCell(row, error.instruction, 'sync-error-instruction');
+            body.appendChild(row);
+        });
+    }
+
     function renderTransmissionTable() {
         var head = document.getElementById('offlineSyncTableHead');
         var body = document.getElementById('offlineSyncTableBody');
@@ -216,6 +287,10 @@
         document.querySelectorAll('#offlineSyncTabs .nav-link').forEach(function (tab) {
             tab.classList.toggle('active', tab.getAttribute('data-sync-tab') === key);
         });
+        if (key === '__errors') {
+            renderErrorTable();
+            return;
+        }
         if (key === '__transmissions') {
             renderTransmissionTable();
             return;
@@ -232,7 +307,12 @@
         var available = tableDefinitions.filter(function (definition) {
             return data.tables[definition.key] && data.tables[definition.key].total > 0;
         });
+        available.unshift({ key: '__errors', label: 'Erori', total: Number(data.error_count || 0) });
         available.push({ key: '__transmissions', label: 'Transmiteri', total: data.events.length });
+
+        if (Number(data.error_count || 0) > 0 && !userSelectedTab) {
+            activeTab = '__errors';
+        }
 
         available.forEach(function (definition) {
             var item = document.createElement('li');
@@ -240,19 +320,27 @@
             var link = document.createElement('button');
             link.type = 'button';
             link.className = 'nav-link';
+            if (definition.key === '__errors' && definition.total > 0) {
+                link.classList.add('sync-tab-error');
+            }
             link.setAttribute('data-sync-tab', definition.key);
             link.appendChild(document.createTextNode(definition.label));
             var count = document.createElement('span');
             count.className = 'sync-tab-count';
-            count.textContent = definition.key === '__transmissions' ? definition.total : data.tables[definition.key].total;
+            count.textContent = definition.key === '__transmissions' || definition.key === '__errors'
+                ? definition.total
+                : data.tables[definition.key].total;
             link.appendChild(count);
-            link.addEventListener('click', function () { activateTab(definition.key); });
+            link.addEventListener('click', function () {
+                userSelectedTab = true;
+                activateTab(definition.key);
+            });
             item.appendChild(link);
             tabs.appendChild(item);
         });
 
         if (!available.some(function (definition) { return definition.key === activeTab; })) {
-            activeTab = available[0].key;
+            activeTab = Number(data.error_count || 0) > 0 ? '__errors' : (available[1] ? available[1].key : available[0].key);
         }
         activateTab(activeTab);
     }
@@ -265,8 +353,10 @@
         var sending = Number(counts.sending || 0);
         var sent = Number(counts.sent || 0);
         var blocked = Number(counts.blocked || 0);
+        var errorCount = Number(data.error_count || 0);
         var summary = document.getElementById('offlineSyncSummary');
 
+        updateSyncButton(data);
         setText('syncCountSent', sent);
         setText('syncCountPending', pending);
         setText('syncCountSending', sending);
@@ -278,7 +368,10 @@
         setText('syncGeneratedAt', data.generated_at ? 'Actualizat: ' + data.generated_at : '');
 
         summary.className = 'sync-summary';
-        if (blocked > 0) {
+        if (errorCount > 0) {
+            summary.classList.add('is-error');
+            summary.textContent = errorCount + ' ' + (errorCount === 1 ? 'eroare activă' : 'erori active') + ' la transmitere. Deschide fila „Erori”. Pentru un produs lipsă, creează produsul în online cu codul indicat, apoi sincronizarea va reîncerca vânzarea.';
+        } else if (blocked > 0) {
             summary.classList.add('is-error');
             summary.textContent = blocked + ' elemente sunt blocate și necesită verificare.';
         } else if (pending + retry + sending > 0) {
@@ -317,6 +410,7 @@
             var summary = document.getElementById('offlineSyncSummary');
             summary.className = 'sync-summary is-error';
             summary.textContent = error.message;
+            updateSyncButton({ error_count: 1, runtime: { last_error: error.message } });
         }).finally(function () {
             if (refresh) {
                 refresh.disabled = false;
@@ -324,9 +418,32 @@
         });
     }
 
+    function loadSyncButtonIndicator() {
+        fetch('offline_sync_status.php?indicator=' + Date.now(), {
+            headers: { 'Accept': 'application/json' },
+            cache: 'no-store'
+        }).then(function (response) {
+            return response.json().then(function (data) {
+                if (!response.ok || data.status !== 'success') {
+                    throw new Error(data.message || 'Starea sincronizării nu poate fi citită.');
+                }
+                return data;
+            });
+        }).then(updateSyncButton).catch(function () {
+        });
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
-        $('#offlineSyncStatusModal').on('show.bs.modal', loadStatus);
+        $('#offlineSyncStatusModal').on('show.bs.modal', function () {
+            userSelectedTab = false;
+            loadStatus();
+        });
         document.getElementById('offlineSyncRefresh').addEventListener('click', loadStatus);
+        window.addEventListener('offline-sync-status-update', function (event) {
+            updateSyncButton(event.detail || {});
+        });
+        loadSyncButtonIndicator();
+        window.setInterval(loadSyncButtonIndicator, 30000);
     });
 }());
 </script>

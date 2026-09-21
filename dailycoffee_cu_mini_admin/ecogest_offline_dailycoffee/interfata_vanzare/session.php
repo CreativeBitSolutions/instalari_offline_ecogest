@@ -1,4 +1,11 @@
-<?php session_start();
+<?php
+// Toate avertismentele PHP ale instalarii offline Daily Coffee se scriu in
+// acelasi fisier, indiferent de directorul din care este executat scriptul.
+ini_set('log_errors', '1');
+ini_set('error_log', __DIR__ . DIRECTORY_SEPARATOR . 'error_log.log');
+error_reporting(E_ALL);
+
+session_start();
 date_default_timezone_set("Europe/Bucharest");
 
 $session_login_redirect = isset($session_login_redirect) ? $session_login_redirect : 'agecs_login.php';
@@ -48,4 +55,14 @@ if (!$row || !offline_session_operator_allowed($pdo, (int)$user_check)) {
 }
 
 $live_id = 12;
+
+/**
+ * Pentru Daily Coffee, catalogul local al locatiei 2 este alimentat din online.
+ * Sincronizarea ramane permisa, dar modificarile manuale din mini-admin nu sunt.
+ */
+function offline_catalog_is_online_managed(): bool
+{
+    return (int)($_SESSION['client_id'] ?? 0) === 2
+        && (int)($_SESSION['cod_locatie'] ?? 0) === 2;
+}
 ?>

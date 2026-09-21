@@ -221,23 +221,61 @@ try {
             'sgr_sticla'  => $produs_info['sgr_sticla']  ?? 0,
         ];
     } else {
-        // Date transmise direct din UI (din card-ul produsului)
-        $cod_p = $_GET['prod'] ?? null;
-        if (!$cod_p) throw new Exception("Cod produs lipsa.");
-
-        $nume_produs  = $_GET['nume_produs'] ?? '';
-        $pret_vanzare = (float)($_GET['pret_vanzare'] ?? 0);
-        $cota_tva     = (float)($_GET['cota_tva'] ?? 0);
-        $um           = $_GET['um'] ?? 'buc';
-        $gestiune     = $_GET['gestiune'] ?? '';
-
-        $sgr_flags = [
-            'sgr'         => $_GET['sgr']         ?? 0,
-            'sgr_pet'     => $_GET['sgr_pet']     ?? 0,
-            'sgr_alumin'  => $_GET['sgr_alumin']  ?? 0,
-            'sgr_sticla'  => $_GET['sgr_sticla']  ?? 0,
-        ];
+        // Din UI se acceptă numai codul produsului. Denumirea, prețul,
+        // cota TVA și marcajele SGR se recitesc mai jos din nomenclatorul local.
+        // Nu folosim valorile primite în query string, deoarece pot fi vechi
+        // sau pot reprezenta id-ul cotei TVA în locul procentului.
+        $cod_p = (int)($_GET['prod'] ?? 0);
+        if ($cod_p <= 0) throw new Exception("Cod produs lipsa.");
     }
+
+    // Nomenclatorul local este sursa unică pentru datele înscrise în det_note.
+    // Reinterogarea este necesară și pentru codul de bare, unde cache-ul poate
+    // conține temporar date mai vechi după sincronizarea produselor.
+    $canonicalCodProdus = (int)($cod_p ?? ($produs_info['cod_produs'] ?? 0));
+    if ($canonicalCodProdus <= 0) {
+        throw new Exception("Cod produs lipsa.");
+    }
+
+    $sql_canonical_product = "SELECT
+                                  n.cod_produs, n.nume, n.pret_cu_tva, n.cota_tva, n.um,
+                                  n.sgr, n.sgr_pet, n.sgr_alumin, n.sgr_sticla,
+                                  g.denumire_gestiune
+                              FROM {$tabel_final_nomenclator} n
+                              LEFT JOIN gestiuni g ON n.id_gestiune = g.id_gestiune
+                              WHERE n.cod_produs = :cod_p
+                                AND n.activ = 1
+                                AND EXISTS (
+                                    SELECT 1 FROM produse_servicii_locatii psl
+                                    WHERE psl.cod_produs = n.cod_produs
+                                      AND psl.cod_locatie = :cod_locatie
+                                      AND psl.activ = 1
+                                )
+                              LIMIT 1";
+    $stmt_canonical_product = $pdo->prepare($sql_canonical_product);
+    $stmt_canonical_product->execute([
+        ':cod_p' => $canonicalCodProdus,
+        ':cod_locatie' => $cod_locatie,
+    ]);
+    $produs_info = $stmt_canonical_product->fetch(PDO::FETCH_ASSOC);
+
+    if (!$produs_info) {
+        throw new Exception('Produsul nu este disponibil pentru locatia configurata.');
+    }
+
+    $cod_p        = (int)$produs_info['cod_produs'];
+    $nume_produs  = $produs_info['nume'];
+    $pret_vanzare = (float)$produs_info['pret_cu_tva'];
+    $cota_tva     = (float)$produs_info['cota_tva'];
+    $um           = $produs_info['um'];
+    $gestiune     = $produs_info['denumire_gestiune'];
+
+    $sgr_flags = [
+        'sgr'         => $produs_info['sgr']         ?? 0,
+        'sgr_pet'     => $produs_info['sgr_pet']     ?? 0,
+        'sgr_alumin'  => $produs_info['sgr_alumin']  ?? 0,
+        'sgr_sticla'  => $produs_info['sgr_sticla']  ?? 0,
+    ];
 
     $availability = $pdo->prepare("SELECT 1 FROM produse_servicii n
         WHERE n.cod_produs = :cod_produs
@@ -322,6 +360,7 @@ try {
 
             $sql_update = "UPDATE {$tabel_final_det_note}
                            SET cantitate = cantitate + :cantitate,
+                               cota_tva = :cota_tva,
                                tva_col = tva_col + :tva_col,
                                valoare_vanzare = valoare_vanzare + :valoare_vanzare,
                                valoare_vanzare_cu_tva = valoare_vanzare_cu_tva + :valoare_cu_tva,
@@ -331,6 +370,7 @@ try {
             $stmt_update = $pdo->prepare($sql_update);
             $stmt_update->execute([
                 ':cantitate'       => $cantitate,
+                ':cota_tva'        => $cota_tva,
                 ':tva_col'         => $tva_col,
                 ':valoare_vanzare' => $valoare_vanzare,
                 ':valoare_cu_tva'  => $valoare_vanzare_cu_tva,

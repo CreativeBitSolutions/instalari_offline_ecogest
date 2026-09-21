@@ -4,7 +4,7 @@ include('session.php');
 // --- Setări inițiale ---
 ini_set('display_errors', 0);
 ini_set('log_errors', 1);
-ini_set('error_log', 'error_log.log');
+ini_set('error_log', __DIR__ . DIRECTORY_SEPARATOR . 'error_log.log');
 error_reporting(E_ALL);
 date_default_timezone_set("Europe/Bucharest");
 
@@ -407,6 +407,13 @@ if ($client_agecs == 20 || $client_agecs == 8) {
             $plata_protocol = $total_de_plata;
                         $_SESSION['protocol']=$total_de_plata;
 
+            error_log(sprintf(
+                '[DAILYCOFFEE][PROTOCOL] finalizare inceputa, nr_bon=%s, admin_id=%s, locatie=%s',
+                (string)$nr_bon,
+                (string)$adm_id,
+                (string)$cod_locatie
+            ));
+
             $redirect_url = 'listeaza_nota_fin.php';
             break;
              // --- START MODIFICARE ---
@@ -461,6 +468,11 @@ if ($client_agecs == 20 || $client_agecs == 8) {
 
         if ($tip_plata === 'protocol') {
             // pentru protocol se listează altfel
+            error_log(sprintf(
+                '[DAILYCOFFEE][PROTOCOL] finalizare confirmata si pusa in coada, nr_bon=%s, locatie=%s',
+                (string)$nr_bon,
+                (string)$cod_locatie
+            ));
             header('Location: ' . $redirect_url . '?nr_bon=' . $nr_bon);
         } else {
             header('Location: ' . $redirect_url);
@@ -469,7 +481,10 @@ if ($client_agecs == 20 || $client_agecs == 8) {
 
     } catch (PDOException $e) {
         $pdo->rollBack();
-        error_log("Eroare la finalizarea bonului ($nr_bon): " . $e->getMessage());
+        $errorPrefix = $tip_plata === 'protocol'
+            ? '[DAILYCOFFEE][PROTOCOL]'
+            : '[DAILYCOFFEE][VANZARE]';
+        error_log($errorPrefix . " Eroare la finalizarea bonului ($nr_bon): " . $e->getMessage());
         die("Eroare la finalizarea bonului: " . $e->getMessage());
     }
 }
