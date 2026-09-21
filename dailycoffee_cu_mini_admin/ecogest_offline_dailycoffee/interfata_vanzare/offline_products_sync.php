@@ -790,6 +790,7 @@ try {
     $force = (string)($_GET['force'] ?? $_POST['force'] ?? '') === '1';
     $preview = (string)($_GET['preview'] ?? $_POST['preview'] ?? '') === '1';
     $checkOnly = (string)($_GET['check_only'] ?? $_POST['check_only'] ?? '') === '1';
+    $requestTimeout = $checkOnly ? min($timeout, 5) : $timeout;
 
     if ($apiUrl === '' || $apiKey === '' || $clientId !== 2 || $location !== 2) {
         dps_json(['status' => 'disabled']);
@@ -809,7 +810,7 @@ try {
         if ($remoteHash !== '') {
             $hashQuery['local_hash'] = $remoteHash;
         }
-        $hashResponse = dps_http_get($apiUrl, $apiKey, $hashQuery, $timeout, $verifySsl, $caBundle);
+        $hashResponse = dps_http_get($apiUrl, $apiKey, $hashQuery, $requestTimeout, $verifySsl, $caBundle);
         $onlineHash = trim((string)($hashResponse['products_hash'] ?? ''));
         $needsInitialSync = $remoteHash === '';
         $changed = $needsInitialSync || (($hashResponse['changed'] ?? null) !== false);
@@ -832,7 +833,7 @@ try {
         $hashResponse = dps_http_get($apiUrl, $apiKey, $baseQuery + [
             'hash_only' => 1,
             'local_hash' => $remoteHash,
-        ], $timeout, $verifySsl, $caBundle);
+        ], $requestTimeout, $verifySsl, $caBundle);
         dps_state_update($pdo, [
             'last_check_at' => date('Y-m-d H:i:s'),
             'last_status' => 'checked',

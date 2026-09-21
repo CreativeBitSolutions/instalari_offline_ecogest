@@ -98,6 +98,7 @@
     var activeTab = 'note';
     var userSelectedTab = false;
     var currentData = null;
+    var indicatorRunning = false;
     var statusLabels = {
         sent: 'Confirmat',
         pending: 'În așteptare',
@@ -419,9 +420,20 @@
     }
 
     function loadSyncButtonIndicator() {
+        if (indicatorRunning) {
+            return;
+        }
+        indicatorRunning = true;
+        var controller = window.AbortController ? new AbortController() : null;
+        var timeout = window.setTimeout(function () {
+            if (controller) {
+                controller.abort();
+            }
+        }, 5000);
         fetch('offline_sync_status.php?indicator=' + Date.now(), {
             headers: { 'Accept': 'application/json' },
-            cache: 'no-store'
+            cache: 'no-store',
+            signal: controller ? controller.signal : undefined
         }).then(function (response) {
             return response.json().then(function (data) {
                 if (!response.ok || data.status !== 'success') {
@@ -430,6 +442,9 @@
                 return data;
             });
         }).then(updateSyncButton).catch(function () {
+        }).finally(function () {
+            window.clearTimeout(timeout);
+            indicatorRunning = false;
         });
     }
 
@@ -443,7 +458,7 @@
             updateSyncButton(event.detail || {});
         });
         loadSyncButtonIndicator();
-        window.setInterval(loadSyncButtonIndicator, 30000);
+        window.setInterval(loadSyncButtonIndicator, 60000);
     });
 }());
 </script>

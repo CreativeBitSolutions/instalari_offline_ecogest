@@ -1,5 +1,5 @@
 <?php
-// load_prod.php (VERSIUNE FĂRĂ CACHE)
+// load_prod.php
 
 include('session.php');
 
@@ -9,11 +9,10 @@ ini_set('log_errors', 1);
 ini_set('error_log', 'error_log.log');
 error_reporting(E_ALL);
 
-// === ADAUGAT: INSTRUCTIUNI STRICTE PENTRU A PREVENI ORICE FEL DE CACHE ===
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // O dată din trecut
-header("Pragma: no-cache");
-// === SFARSIT BLOC ADAUGAT ===
+// Cache scurt pentru răspunsurile de listare. Sincronizarea catalogului
+// invalidează cache-ul local, iar durata redusă limitează eventualele date
+// vechi după o modificare manuală.
+header("Cache-Control: private, max-age=5, must-revalidate");
 
 // -- Parametrii request-ului --
 $categ      = $_GET['categ'] ?? 'all';

@@ -81,7 +81,10 @@ try {
     }
 
     offline_sync_queue_recover_stale($pdo);
-    offline_sync_queue_discover($pdo);
+    $discover = (string)($_GET['discover'] ?? $_POST['discover'] ?? '') !== '0';
+    if ($discover) {
+        offline_sync_queue_discover($pdo);
+    }
     if (session_status() === PHP_SESSION_ACTIVE) {
         session_write_close();
     }

@@ -361,6 +361,39 @@ if (empty($_SESSION['admin_id'])) {
     ]);
 }
 
+if (isset($_GET['indicator'])) {
+    try {
+        offline_sync_queue_ensure_schema($pdo);
+        $transmissionCounts = offline_sync_queue_counts($pdo);
+        $runtime = $pdo->query('SELECT last_tick_at, last_success_at, last_error FROM offline_sync_runtime WHERE id = 1')
+            ->fetch(PDO::FETCH_ASSOC) ?: [];
+        $errorCount = (int)$pdo->query("SELECT COUNT(*) FROM offline_sync_outbox
+            WHERE status IN ('retry', 'blocked', 'sending')
+              AND TRIM(COALESCE(last_error, '')) <> ''")->fetchColumn();
+        $config = offline_sync_queue_config();
+        offline_sync_status_response(200, [
+            'status' => 'success',
+            'client_id' => (int)$config['client_id'],
+            'cod_locatie' => (int)$config['cod_locatie'],
+            'counts' => $transmissionCounts,
+            'transmission_counts' => $transmissionCounts,
+            'error_count' => $errorCount,
+            'error_event_count' => $errorCount,
+            'runtime' => [
+                'last_tick_at' => offline_sync_status_local_time($runtime['last_tick_at'] ?? null),
+                'last_success_at' => offline_sync_status_local_time($runtime['last_success_at'] ?? null),
+                'last_error' => trim((string)($runtime['last_error'] ?? '')),
+            ],
+            'generated_at' => (new DateTime('now', new DateTimeZone('Europe/Bucharest')))->format('Y-m-d H:i:s'),
+        ]);
+    } catch (Throwable $e) {
+        offline_sync_status_response(500, [
+            'status' => 'error',
+            'message' => $e->getMessage(),
+        ]);
+    }
+}
+
 try {
     offline_sync_queue_ensure_schema($pdo);
     offline_sync_queue_discover($pdo, 100);
