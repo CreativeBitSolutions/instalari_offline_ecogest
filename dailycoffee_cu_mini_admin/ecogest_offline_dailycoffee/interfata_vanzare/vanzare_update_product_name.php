@@ -1,6 +1,12 @@
 <?php //vanzare_update_product_name.php
 include('session.php');
 
+if ((int)($_SESSION['client_id'] ?? 0) === 2) {
+    http_response_code(403);
+    echo "Modificarea produsului din detaliul bonului este dezactivată pentru această instalare. Se poate aplica doar discount.";
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_vanz'], $_POST['new_name'], $_POST['new_price'])) {
     
     $id_vanz = (int)$_POST['id_vanz'];

@@ -814,6 +814,7 @@ $offlinePendingReceiptCount = array_sum(array_map(static function (array $closur
 </div>
 
 
+<?php if ((int)($_SESSION['client_id'] ?? 0) !== 2): ?>
 <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -855,7 +856,7 @@ $offlinePendingReceiptCount = array_sum(array_map(static function (array $closur
         </div>
     </div>
 </div>
-
+<?php endif; ?>
 
 
  <script src="js/jquery-3.6.0.min.js"></script>
@@ -1345,6 +1346,7 @@ let searchTimeout = null;
         if (!ascundeActiuni) {
             actiuniHTML = `
                 <button name="${item.id_vanz}" value="${item.cod_p}" data-value="${item.cota_tva}" class="btn btn-sm btn-success discount-btn discount mb-1" title="Aplică discount">%</button>
+                <?php if ((int)($_SESSION['client_id'] ?? 0) !== 2): ?>
                 <button type="button" class="btn btn-sm btn-info edit-product-btn mb-1"
                     data-idvanz="${item.id_vanz}" data-codp="${item.cod_p}"
                     data-current-name="${escapeHTML(item.nume)}"
@@ -1352,6 +1354,7 @@ let searchTimeout = null;
                     title="Modifică Produs">
                     <i class="fas fa-pencil-alt"></i>
                 </button>
+                <?php endif; ?>
             `;
         }
 
@@ -1726,6 +1729,7 @@ $('#quantity-keyboard-display').on('keydown', function(e) {
     // ======== END: ÎMBUNĂTĂȚIRI UZABILITATE ========
     
     
+<?php if ((int)($_SESSION['client_id'] ?? 0) !== 2): ?>
     // ======== START BLOC: LOGICA PENTRU MODIFICARE PRODUS (NUME ȘI PREȚ) ========
 
 // Deschide modalul și populează datele la click pe butonul de editare
@@ -1882,6 +1886,7 @@ $('#editProductModal .modal-footer').on('click', '#saveProductChanges, #saveProd
 });
 
 // ======== END BLOC: LOGICA PENTRU MODIFICARE PRODUS ========
+<?php endif; ?>
 
     // ======== GESTIONAREA EVENIMENTELOR GENERALE (KEYBOARD SHORTCUTS) ========
     

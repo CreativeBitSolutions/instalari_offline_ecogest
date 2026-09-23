@@ -5,6 +5,12 @@
  */
 include('session.php');
 
+if ((int)($_SESSION['client_id'] ?? 0) === 2) {
+    http_response_code(403);
+    echo "Modificarea permanentă a prețului este dezactivată pentru această instalare. Prețurile se gestionează online. Se poate aplica doar discount.";
+    exit;
+}
+
 ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 ini_set('error_log', 'error_log.log');
